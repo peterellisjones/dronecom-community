@@ -1,0 +1,52 @@
+name: Bug report
+description: Something broke, crashed, or behaved wrong
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. Screenshots, save files, and logs can be dragged straight into any text box below.
+  - type: input
+    id: version
+    attributes:
+      label: Game version
+      description: Shown in the main menu. If you can't find it, write "unknown".
+      placeholder: e.g. 0.3.1-beta
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux / Steam Deck
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What were you doing, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: If you can make it happen again, list the steps.
+      placeholder: |
+        1. Start a skirmish on ...
+        2. ...
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / error message
+      description: Paste any error text or log excerpt here.
+      render: text
+    validations:
+      required: false

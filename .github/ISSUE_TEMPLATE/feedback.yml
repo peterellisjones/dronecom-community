@@ -1,0 +1,18 @@
+name: Feedback / suggestion
+description: Balance, UX, missing features — anything that isn't a bug
+labels: ["feedback"]
+body:
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Your feedback
+      description: What would you change, and why? What were you trying to do when you ran into this?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Game version
+      description: Optional, but helpful — shown in the main menu.
+    validations:
+      required: false
