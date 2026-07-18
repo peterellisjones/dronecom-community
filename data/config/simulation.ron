@@ -1,3 +1,4 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/simulation.md
 // Simulation configuration — autopilot, deck ops, sensors, tasking, sectors.
 SimConfig(
     autopilot: (
