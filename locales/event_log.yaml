@@ -583,6 +583,18 @@ event:
       ru: "атака отклонена · оружие не подходит для цели"
       zh: "攻击被拒 — 武器不适用于目标"
       "zh-TW": "攻擊被拒 — 武器不適用於目標"
+    engagement_rejected_ineffective:
+      en: "attack rejected · weapon too weak for target"
+      de: "Angriff abgelehnt · Waffe zu schwach für Ziel"
+      es: "ataque rechazado · arma demasiado débil para el objetivo"
+      fr: "attaque refusée · arme trop faible pour la cible"
+      it: "attacco rifiutato · arma troppo debole per il bersaglio"
+      ja: "攻撃却下 — 兵装が目標に威力不足"
+      ko: "공격 거부 — 표적에 위력 부족한 무장"
+      "pt-BR": "ataque rejeitado · arma fraca demais para o alvo"
+      ru: "атака отклонена · оружие слишком слабое для цели"
+      zh: "攻击被拒 — 武器威力不足以对付目标"
+      "zh-TW": "攻擊被拒 — 武器威力不足以對付目標"
     engagement_rejected_win_condition_asset:
       en: "attack rejected · unit is the win-condition asset (re-issue with confirmation to commit it)"
       de: "Angriff abgelehnt · Einheit ist das Siegbedingungs-Schiff (zum Festlegen mit Bestätigung erneut befehlen)"

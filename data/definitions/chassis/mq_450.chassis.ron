@@ -1,3 +1,4 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
 (
     id: "mq_450",
     designator: "MQ-450",
