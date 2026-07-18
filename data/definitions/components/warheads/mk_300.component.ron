@@ -1,0 +1,15 @@
+(
+    id: "mk_300",
+    designator: "MK-300",
+    codename: "Avalanche",
+    category: Warheads,
+    mount_rule: SoleInCategory,
+    weight: 200.0,
+    power_draw: 0.0,
+    allowed: [],
+    payload: Warhead((
+        damage: 300.0,
+        blast_radius: 150.0,
+        proximity_fuze_radius_m: 30.0,
+    )),
+)

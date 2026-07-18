@@ -1,0 +1,15 @@
+(
+    id: "mk_120",
+    designator: "MK-120",
+    codename: "Hammer",
+    category: Warheads,
+    mount_rule: SoleInCategory,
+    weight: 80.0,
+    power_draw: 0.0,
+    allowed: [],
+    payload: Warhead((
+        damage: 120.0,
+        blast_radius: 100.0,
+        proximity_fuze_radius_m: 30.0,
+    )),
+)

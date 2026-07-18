@@ -1,0 +1,44 @@
+_version: 2
+
+# S-F #1853: gesture mission-preview verbs that have no `mission.verb.*` entry
+# (the anchor×posture verbs live in `mission.yaml`). The cursor preview shows
+# these in caps; the friendly verb cycle (Accompany / Form group / RTB) uses
+# them. `cycle_hint` is the terse "press TAB to cycle" affordance shown when
+# more than one candidate is available.
+gesture:
+  form_group:
+    de: "Gruppe bilden"
+    en: "Form group"
+    es: "Formar grupo"
+    fr: "Former un groupe"
+    it: "Forma gruppo"
+    ja: "編隊を形成"
+    ko: "편대 구성"
+    "pt-BR": "Formar grupo"
+    ru: "Сформировать группу"
+    zh: "编组"
+    "zh-TW": "編組"
+  rtb:
+    de: "Bergen"
+    en: "Recover"
+    es: "Recuperar"
+    fr: "Récupérer"
+    it: "Recupera"
+    ja: "回収"
+    ko: "회수"
+    "pt-BR": "Recuperar"
+    ru: "Принять"
+    zh: "回收"
+    "zh-TW": "回收"
+  cycle_hint:
+    de: "TAB"
+    en: "TAB"
+    es: "TAB"
+    fr: "TAB"
+    it: "TAB"
+    ja: "TAB"
+    ko: "TAB"
+    "pt-BR": "TAB"
+    ru: "TAB"
+    zh: "TAB"
+    "zh-TW": "TAB"

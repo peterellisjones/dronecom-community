@@ -1,0 +1,18 @@
+(
+    id: BlueprintId("153dd637-e1d9-4e7e-89a7-5658df0aae19"),
+    codename: "Radar Scout",
+    designator: "RQ-10",
+    chassis_id: "rq_10",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Air-search radar (Polaris) — a cheap, expendable illuminator that can
+        // range a track ALONE, unlike the passive Standard Scout (#2524). Unarmed,
+        // so AI procurement classifies it Scout(Radar) via the #2366 machinery.
+        (kind: Component(component_id: "an_aps_440")),
+        // RWR — threat warning (knows when it is being locked / painted).
+        (kind: Component(component_id: "an_alr_90")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

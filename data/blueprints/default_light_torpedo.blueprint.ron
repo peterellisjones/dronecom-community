@@ -1,0 +1,16 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-00000000000f"),
+    codename: "Standard Light Torpedo",
+    designator: "MK-30",
+    chassis_id: "mk_30",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Active-sonar homing seeker (forms an audible fire-control lock)
+        (kind: Component(component_id: "an_sqs_30")),
+        // Light ASW warhead
+        (kind: Component(component_id: "mk_46lw")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

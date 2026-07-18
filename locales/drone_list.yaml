@@ -1,0 +1,58 @@
+_version: 2
+
+drone_list:
+  status:
+    stowed:
+      de: "Verstaut"
+      en: "Stowed"
+      es: "Almacenado"
+      fr: "Arrimé"
+      it: "Stivato"
+      ja: "格納中"
+      ko: "격납"
+      "pt-BR": "Armazenado"
+      ru: "На хранении"
+      zh: "存放"
+      "zh-TW": "存放"
+    servicing:
+      de: "Wartung"
+      en: "Servicing"
+      es: "En servicio"
+      fr: "Entretien"
+      it: "Manutenzione"
+      ja: "整備中"
+      ko: "정비 중"
+      "pt-BR": "Em manutenção"
+      ru: "Обслуживание"
+      zh: "维护中"
+      "zh-TW": "維護中"
+  # The unit's *actual* live emission (#2377) — RADIATING / SILENT — distinct
+  # from the *commanded* EMCON permission (`doctrine.emcon.*`, display.yaml:
+  # "Radiate" / "Silent" as an editor toggle verb, not a state readout). A unit
+  # with no live active emitter shows the blank-value placeholder instead (no
+  # locale key needed).
+  emcon:
+    radiating:
+      de: "Strahlt"
+      en: "Radiating"
+      es: "Irradiando"
+      fr: "Émet"
+      it: "Irradia"
+      ja: "放射中"
+      ko: "방사 중"
+      "pt-BR": "Irradiando"
+      ru: "Излучает"
+      zh: "辐射中"
+      "zh-TW": "輻射中"
+    silent:
+      de: "Lautlos"
+      en: "Silent"
+      es: "Silencioso"
+      fr: "Silencieux"
+      it: "Silenzioso"
+      ja: "静粛"
+      ko: "침묵"
+      "pt-BR": "Silencioso"
+      ru: "Тихо"
+      zh: "静默"
+      "zh-TW": "靜默"

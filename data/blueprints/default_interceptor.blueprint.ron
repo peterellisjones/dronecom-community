@@ -1,0 +1,24 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-00000000000a"),
+    codename: "Standard Interceptor",
+    designator: "MQ-160",
+    chassis_id: "mq_160",
+    fuel_tank_percent: 0.9,
+    inventory: [
+        // EO/IR turret (passive — engages network/IR-cued targets)
+        (kind: Component(component_id: "an_aaq_55")),
+        // RWR
+        (kind: Component(component_id: "an_alr_90")),
+        // IR Missile 1 (M-100)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // IR Missile 2 (M-100)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // IR Missile 3 (M-100)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // IR Missile 4 (M-100)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

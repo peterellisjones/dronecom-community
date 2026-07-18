@@ -1,0 +1,16 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-000000000009"),
+    codename: "Cruise Missile",
+    designator: "M-500",
+    chassis_id: "m_500",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Active radar seeker (terminal anti-ship homing)
+        (kind: Component(component_id: "an_apg_15")),
+        // Heavy ship-killer warhead
+        (kind: Component(component_id: "mk_300")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: TerrainFollow,
+    default_altitude: Chassis,
+)

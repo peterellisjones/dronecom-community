@@ -1,0 +1,4149 @@
+_version: 2
+
+info_panel:
+  # #1527/#1701: vehicle inspect panel GROUP row (entity_view.rs) — the row
+  # label, plus the per-member Detach action (every member, leader included —
+  # leadership is derived) and its glossary tooltip. Disband now lives only in
+  # the group panel. Button strings mirror group_panel.members.detach.
+  group:
+    label:
+      de: "Gruppe"
+      en: "Group"
+      es: "Grupo"
+      fr: "Groupe"
+      it: "Gruppo"
+      ja: "グループ"
+      ko: "그룹"
+      "pt-BR": "Grupo"
+      ru: "Группа"
+      zh: "编组"
+      "zh-TW": "編組"
+    # Leader badge shown after the group link when the inspected unit is the
+    # group's leader. Mirrors group_panel.members.leader.
+    leader:
+      de: "Anführer"
+      en: "leader"
+      es: "líder"
+      fr: "chef"
+      it: "capo"
+      ja: "リーダー"
+      ko: "대장"
+      "pt-BR": "líder"
+      ru: "ведущий"
+      zh: "领队"
+      "zh-TW": "領隊"
+    detach:
+      de: "Lösen"
+      en: "Detach"
+      es: "Separar"
+      fr: "Détacher"
+      it: "Distacca"
+      ja: "分離"
+      ko: "분리"
+      "pt-BR": "Separar"
+      ru: "Отсоединить"
+      zh: "分离"
+      "zh-TW": "分離"
+    detach_tooltip:
+      de: "Diese Einheit aus ihrer Gruppe lösen; sie wird allein."
+      en: "Detach this unit from its group, leaving it solo."
+      es: "Separar esta unidad de su grupo; queda en solitario."
+      fr: "Détacher cette unité de son groupe ; elle devient autonome."
+      it: "Distacca questa unità dal gruppo; resta da sola."
+      ja: "このユニットをグループから分離し、単独にします。"
+      ko: "이 유닛을 그룹에서 분리하여 단독으로 만듭니다."
+      "pt-BR": "Separar esta unidade do grupo, deixando-a sozinha."
+      ru: "Отсоединить эту единицу от группы; станет одиночной."
+      zh: "将该单位从编组中分离，使其单独行动。"
+      "zh-TW": "將該單位從編組中分離，使其單獨行動。"
+  # DC-1002: shared rename UX strings — used by both the vehicle inspect
+  # header (entity_view.rs) and the group inspect header (group_view.rs).
+  rename:
+    tooltip:
+      de: "Umbenennen"
+      en: "Rename"
+      es: "Renombrar"
+      fr: "Renommer"
+      it: "Rinomina"
+      ja: "名前を変更"
+      ko: "이름 변경"
+      "pt-BR": "Renomear"
+      ru: "Переименовать"
+      zh: "重命名"
+      "zh-TW": "重新命名"
+    placeholder:
+      de: "Name"
+      en: "Name"
+      es: "Nombre"
+      fr: "Nom"
+      it: "Nome"
+      ja: "名前"
+      ko: "이름"
+      "pt-BR": "Nome"
+      ru: "Имя"
+      zh: "名称"
+      "zh-TW": "名稱"
+    save:
+      de: "Speichern"
+      en: "Save"
+      es: "Guardar"
+      fr: "Enregistrer"
+      it: "Salva"
+      ja: "保存"
+      ko: "저장"
+      "pt-BR": "Salvar"
+      ru: "Сохранить"
+      zh: "保存"
+      "zh-TW": "儲存"
+    cancel:
+      de: "Abbrechen"
+      en: "Cancel"
+      es: "Cancelar"
+      fr: "Annuler"
+      it: "Annulla"
+      ja: "キャンセル"
+      ko: "취소"
+      "pt-BR": "Cancelar"
+      ru: "Отменить"
+      zh: "取消"
+      "zh-TW": "取消"
+  tasking_status:
+    # DC-819: a group still assembling all members before running its mission.
+    forming_up:
+      de: "Sammeln"
+      en: "Forming up"
+      es: "Formando"
+      fr: "Rassemblement"
+      it: "Formazione"
+      ja: "編成中"
+      ko: "편성 중"
+      "pt-BR": "Formando"
+      ru: "Сбор"
+      zh: "集结中"
+      "zh-TW": "集結中"
+    # S9: STATUS readouts for the consolidated mission-status vocabulary
+    # (referenced from `dc_types::mission::Mission::status_readout`). Terse
+    # tactical activity words; non-English values are best-effort.
+    on_station:
+      de: Auf Station
+      en: On station
+      es: En posición
+      fr: En station
+      it: In stazione
+      ja: 配置完了
+      ko: 배치 완료
+      "pt-BR": Em posição
+      ru: На позиции
+      zh: 就位
+      "zh-TW": 就位
+    # #2672: a unit still routing onto its assigned station (Hold / Patrol
+    # orbit / Screen transit, or a Standoff still closing to its band) — the
+    # arrived word ("on station" / "orbiting" / "holding range") must not read
+    # while it is still en route.
+    en_route:
+      de: Im Anmarsch
+      en: En route
+      es: En ruta
+      fr: En route
+      it: In rotta
+      ja: 進出中
+      ko: 이동 중
+      "pt-BR": Em rota
+      ru: В пути
+      zh: 前出中
+      "zh-TW": 前出中
+    # #2672: a follower still routing to catch up to its leader — "joining" the
+    # formation, not yet in trail.
+    joining:
+      de: Aufschließen
+      en: Joining
+      es: Incorporándose
+      fr: Ralliement
+      it: Ricongiungimento
+      ja: 合流中
+      ko: 합류 중
+      "pt-BR": Incorporando
+      ru: Присоединение
+      zh: 归队中
+      "zh-TW": 歸隊中
+    holding_range:
+      de: Abstand haltend
+      en: Holding range
+      es: Manteniendo distancia
+      fr: Distance maintenue
+      it: Mantiene distanza
+      ja: 距離保持中
+      ko: 거리 유지 중
+      "pt-BR": Mantendo distância
+      ru: Держит дистанцию
+      zh: 保持距离中
+      "zh-TW": 保持距離中
+    tracking:
+      de: Verfolgt
+      en: Tracking
+      es: Siguiendo
+      fr: En suivi
+      it: In tracciamento
+      ja: 追尾中
+      ko: 추적 중
+      "pt-BR": Rastreando
+      ru: Сопровождение
+      zh: 跟踪中
+      "zh-TW": 跟蹤中
+    closing:
+      de: Nähert sich
+      en: Closing
+      es: Acercándose
+      fr: En approche
+      it: In avvicinamento
+      ja: 接近中
+      ko: 접근 중
+      "pt-BR": Aproximando
+      ru: Сближение
+      zh: 接近中
+      "zh-TW": 接近中
+    searching_lkp:
+      de: Sucht letzte Position
+      en: Searching LKP
+      es: Buscando última posición
+      fr: Recherche dernière position
+      it: Cerca ultima posizione
+      ja: 最終位置探索中
+      ko: 최종 위치 수색 중
+      "pt-BR": Buscando última posição
+      ru: Поиск последней позиции
+      zh: 搜索最后位置
+      "zh-TW": 搜尋最後位置
+    acquiring:
+      de: Zielerfassung
+      en: Acquiring
+      es: Adquiriendo
+      fr: Acquisition
+      it: Acquisizione
+      ja: 捕捉中
+      ko: 포착 중
+      "pt-BR": Adquirindo
+      ru: Захват цели
+      zh: 捕获中
+      "zh-TW": 捕獲中
+    evading:
+      de: Weicht aus
+      en: Evading
+      es: Evadiendo
+      fr: Évasion
+      it: In evasione
+      ja: 回避中
+      ko: 회피 중
+      "pt-BR": Evadindo
+      ru: Уклонение
+      zh: 规避中
+      "zh-TW": 規避中
+    # #2206: unit is stuck with no valid route — holds position and retries.
+    no_route:
+      de: "KEINE ROUTE"
+      en: "NO ROUTE"
+      es: "SIN RUTA"
+      fr: "AUCUNE ROUTE"
+      it: "NESSUNA ROTTA"
+      ja: "経路なし"
+      ko: "경로 없음"
+      "pt-BR": "SEM ROTA"
+      ru: "НЕТ МАРШРУТА"
+      zh: "无路径"
+      "zh-TW": "無路徑"
+    # #2300: a launcher is holding fire because its target is inside the
+    # fired munition's derived dead zone (aspect-withheld, not out of range).
+    dead_zone:
+      de: "TOTZONE"
+      en: "DEAD ZONE"
+      es: "ZONA MUERTA"
+      fr: "ZONE MORTE"
+      it: "ZONA MORTA"
+      ja: "デッドゾーン"
+      ko: "사각지대"
+      "pt-BR": "ZONA MORTA"
+      ru: "МЁРТВАЯ ЗОНА"
+      zh: "死区"
+      "zh-TW": "死區"
+    terrain_masked:
+      de: "GELÄNDE"
+      en: "TERRAIN"
+      es: "TERRENO"
+      fr: "RELIEF"
+      it: "TERRENO"
+      ja: "地形"
+      ko: "지형"
+      "pt-BR": "TERRENO"
+      ru: "РЕЛЬЕФ"
+      zh: "地形"
+      "zh-TW": "地形"
+    # #2520: a launcher is holding fire because the target's range is not
+    # trustworthily resolved for a committed automatic shot — a single passive
+    # platform's range can be confidently wrong. It keeps closing to resolve.
+    range_uncertain:
+      de: "KEINE ENTF"
+      en: "NO RANGE"
+      es: "SIN ALCANCE"
+      fr: "SANS DIST"
+      it: "SENZA DIST"
+      ja: "距離不明"
+      ko: "거리 미상"
+      "pt-BR": "SEM ALCANCE"
+      ru: "НЕТ ДАЛЬН"
+      zh: "距离未知"
+      "zh-TW": "距離未知"
+    error:
+      no_compatible_carrier:
+        de: Kein kompatibler Träger
+        en: No Compatible Carrier
+        es: Sin portador compatible
+        fr: Pas de porteur compatible
+        it: Nessun vettore compatibile
+        ja: 互換キャリアなし
+        ko: 호환 모함 없음
+        "pt-BR": Sem portador compatível
+        ru: Нет совместимого носителя
+        zh: 无兼容母舰
+        "zh-TW": 無相容母艦
+      not_recoverable:
+        de: Nicht rückholbar
+        en: Not Recoverable
+        es: No recuperable
+        fr: Non récupérable
+        it: Non recuperabile
+        ja: 回収不可
+        ko: 회수 불가
+        "pt-BR": Não recuperável
+        ru: Не подлежит возврату
+        zh: 无法回收
+        "zh-TW": 無法回收
+      no_ammo:
+        de: Keine Munition
+        en: No Ammo
+        es: Sin munición
+        fr: Pas de munitions
+        it: Senza munizioni
+        ja: 弾薬なし
+        ko: 탄약 없음
+        "pt-BR": Sem munição
+        ru: Нет боеприпасов
+        zh: 无弹药
+        "zh-TW": 無彈藥
+      cannot_engage:
+        de: Kein Angriff möglich
+        en: Cannot Engage
+        es: No puede atacar
+        fr: Engagement impossible
+        it: Impossibile ingaggiare
+        ja: 交戦不可
+        ko: 교전 불가
+        "pt-BR": Não pode engajar
+        ru: Атака невозможна
+        zh: 无法交战
+        "zh-TW": 無法交戰
+      target_not_found:
+        de: Ziel nicht gefunden
+        en: Target Not Found
+        es: Objetivo no encontrado
+        fr: Cible introuvable
+        it: Bersaglio non trovato
+        ja: 目標未発見
+        ko: 표적 미발견
+        "pt-BR": Alvo não encontrado
+        ru: Цель не обнаружена
+        zh: 未找到目标
+        "zh-TW": 未找到目標
+      doctrine_hold:
+        de: Waffensperre
+        en: Weapons Hold
+        es: Armas retenidas
+        fr: Armes en attente
+        it: Armi in attesa
+        ja: 兵装保留
+        ko: 무장 보류
+        "pt-BR": Armas em espera
+        ru: Огонь запрещён
+        zh: 武器待命
+        "zh-TW": 武器待命
+  engagement_phase:
+    pursuing:
+      de: Verfolgend
+      en: Pursuing
+      es: Persiguiendo
+      fr: En poursuite
+      it: Inseguimento
+      ja: 追跡中
+      ko: 추적 중
+      "pt-BR": Perseguindo
+      ru: Преследование
+      zh: 追踪中
+      "zh-TW": 追蹤中
+    launching:
+      de: Startend
+      en: Launching
+      es: Lanzando
+      fr: Lancement
+      it: Lancio
+      ja: 発射中
+      ko: 발사 중
+      "pt-BR": Lançando
+      ru: Запуск
+      zh: 发射中
+      "zh-TW": 發射中
+    committed:
+      de: Feuerbereit
+      en: Committed
+      es: Comprometido
+      fr: Engagé
+      it: Impegnato
+      ja: 攻撃確定
+      ko: 교전 확정
+      "pt-BR": Comprometido
+      ru: Применено
+      zh: 已投射
+      "zh-TW": 已投射
+  guidance_phase:
+    midcourse:
+      de: Mittelphase
+      en: Midcourse
+      es: Fase media
+      fr: Phase médiane
+      it: Fase intermedia
+      ja: 中間誘導
+      ko: 중간 유도
+      "pt-BR": Fase média
+      ru: Маршевая фаза
+      zh: 中段制导
+      "zh-TW": 中段導引
+    terminal:
+      de: Endphase
+      en: Terminal
+      es: Fase terminal
+      fr: Phase terminale
+      it: Fase terminale
+      ja: 終末誘導
+      ko: 종말 유도
+      "pt-BR": Fase terminal
+      ru: Конечная фаза
+      zh: 末段制导
+      "zh-TW": 末段導引
+    coasting:
+      de: Antriebslos
+      en: Coasting
+      es: Sin guía
+      fr: Vol balistique
+      it: Volo inerziale
+      ja: 慣性飛行
+      ko: 관성 비행
+      "pt-BR": Voo inercial
+      ru: Инерциальный полёт
+      zh: 惯性飞行
+      "zh-TW": 慣性飛行
+  nav:
+    de: Nav
+    en: Nav
+    es: Nav
+    fr: Nav
+    it: Nav
+    ja: ナビ
+    ko: 항법
+    "pt-BR": Nav
+    ru: Нав
+    zh: 导航
+    "zh-TW": 導航
+  # DC-1178: ALT/TERR vertical-mode selector label and segment labels.
+  alt_mode_label:
+    de: Modus
+    en: Mode
+    es: Modo
+    fr: Mode
+    it: Modalità
+    ja: モード
+    ko: 모드
+    "pt-BR": Modo
+    ru: Режим
+    zh: 模式
+    "zh-TW": 模式
+  alt_mode:
+    alt:
+      de: ALT
+      en: ALT
+      es: ALT
+      fr: ALT
+      it: ALT
+      ja: ALT
+      ko: ALT
+      "pt-BR": ALT
+      ru: ВЫС
+      zh: ALT
+      "zh-TW": ALT
+    terr:
+      de: GELÄNDE
+      en: TERR
+      es: TERR
+      fr: TERR
+      it: TERR
+      ja: 地形
+      ko: 지형
+      "pt-BR": TERR
+      ru: РЕЛЬЕФ
+      zh: 地形
+      "zh-TW": 地形
+    terrain_follow_active:
+      de: "Geländefolgeflug: minimale Sicherheitshöhe AGL"
+      en: "Terrain follow: minimum safe AGL"
+      es: "Seguimiento de terreno: AGL mínimo seguro"
+      fr: "Suivi de terrain : AGL minimum de sécurité"
+      it: "Inseguimento terreno: AGL minimo di sicurezza"
+      ja: "地形追従：最低安全AGL高度"
+      ko: "지형 추종：최소 안전 AGL"
+      "pt-BR": "Acompanhamento de terreno: AGL mínimo seguro"
+      ru: "Следование рельефу: минимальная безопасная высота AGL"
+      zh: "地形跟随：最低安全AGL高度"
+      "zh-TW": "地形跟隨：最低安全AGL高度"
+    # DC-1178: glossary tooltips for the ALT / TERR mode buttons.
+    alt_tooltip:
+      de: "Höhenhaltung: feste Höhe über mittlerem Meeresspiegel (MSL) halten"
+      en: "Altitude hold: maintain a fixed altitude above mean sea level (MSL)"
+      es: "Mantenimiento de altitud: mantener una altitud fija sobre el nivel medio del mar (MSL)"
+      fr: "Maintien d'altitude : tenir une altitude fixe au-dessus du niveau moyen de la mer (MSL)"
+      it: "Mantenimento quota: mantenere una quota fissa sul livello medio del mare (MSL)"
+      ja: "高度保持：平均海面 (MSL) からの一定高度を維持"
+      ko: "고도 유지：평균 해수면(MSL) 기준 고정 고도 유지"
+      "pt-BR": "Manutenção de altitude: manter uma altitude fixa acima do nível médio do mar (MSL)"
+      ru: "Удержание высоты: постоянная высота над средним уровнем моря (MSL)"
+      zh: "高度保持：维持平均海平面 (MSL) 之上的固定高度"
+      "zh-TW": "高度保持：維持平均海平面 (MSL) 之上的固定高度"
+    terr_tooltip:
+      de: "Geländefolgeflug: dicht über Grund auf minimaler Sicherheitshöhe (AGL), verdeckt unter dem Radarhorizont"
+      en: "Terrain follow: hug the ground at minimum safe height (AGL) to stay masked below the radar horizon"
+      es: "Seguimiento de terreno: pegado al suelo a la altura mínima segura (AGL), oculto bajo el horizonte radar"
+      fr: "Suivi de terrain : au ras du sol à la hauteur minimale de sécurité (AGL), masqué sous l'horizon radar"
+      it: "Inseguimento terreno: radente al suolo alla quota minima di sicurezza (AGL), mascherato sotto l'orizzonte radar"
+      ja: "地形追従：最低安全高度 (AGL) で地表に沿って飛行し、レーダー水平線下に隠れる"
+      ko: "지형 추종：최소 안전 고도(AGL)로 지면을 따라 비행하여 레이더 지평선 아래 은폐"
+      "pt-BR": "Acompanhamento de terreno: rente ao solo na altura mínima segura (AGL), oculto abaixo do horizonte de radar"
+      ru: "Следование рельефу: у земли на минимальной безопасной высоте (AGL), скрытно ниже радиогоризонта"
+      zh: "地形跟随：以最低安全高度 (AGL) 贴地飞行，隐蔽于雷达地平线之下"
+      "zh-TW": "地形跟隨：以最低安全高度 (AGL) 貼地飛行，隱蔽於雷達地平線之下"
+  # DC-1146.4: engine-order speed bells (NAV row).
+  speed_bell_label:
+    de: GSW
+    en: SPD
+    es: VEL
+    fr: VIT
+    it: VEL
+    ja: 速力
+    ko: 속력
+    "pt-BR": VEL
+    ru: СКР
+    zh: 航速
+    "zh-TW": 航速
+  speed_auto:
+    de: AUTO
+    en: AUTO
+    es: AUTO
+    fr: AUTO
+    it: AUTO
+    ja: 自動
+    ko: 자동
+    "pt-BR": AUTO
+    ru: АВТО
+    zh: 自动
+    "zh-TW": 自動
+  # DC-1155: each bell carries both its caps mode-name (`label`) and a glossary
+  # hover tooltip explaining its speed regime, following the glossary
+  # "CAPS — explanation." convention. Bell semantics are the single source of
+  # truth in `dc_types::SpeedBell`.
+  speed_bell:
+    # DC-1155: STOP (all-stop, 0 kts) — only shown for platforms that can hold a
+    # dead stop (surface, submarine, hovering rotary); fixed-wing airframes stall.
+    stop:
+      label:
+        de: Stopp
+        en: Stop
+        es: Alto
+        fr: Stop
+        it: Alt
+        ja: 停止
+        ko: 정지
+        "pt-BR": Parar
+        ru: Стоп
+        zh: 停车
+        "zh-TW": 停車
+      tooltip:
+        de: "STOPP: Maschinen stopp; Geschwindigkeit null halten."
+        en: "STOP: all stop; hold zero speed."
+        es: "ALTO: máquinas paradas; mantener velocidad cero."
+        fr: "STOP : stop machines ; maintenir une vitesse nulle."
+        it: "ALT: macchine ferme; mantenere velocità zero."
+        ja: "停止：機関停止。速力ゼロを保持。"
+        ko: "정지：기관 정지. 속력 0 유지."
+        "pt-BR": "PARAR: máquinas paradas; manter velocidade zero."
+        ru: "СТОП: стоп машина; держать нулевую скорость."
+        zh: "停车：停止机器；保持零航速。"
+        "zh-TW": "停車：停止機器；保持零航速。"
+    loiter:
+      label:
+        de: Kreisen
+        en: Loiter
+        es: Merodeo
+        fr: Attente
+        it: Attesa
+        ja: 待機
+        ko: 선회
+        "pt-BR": Espera
+        ru: Барраж
+        zh: 盘旋
+        "zh-TW": 盤旋
+      tooltip:
+        de: "KREISEN: langsamste Dauergeschwindigkeit; sparsame Fahrt mit minimaler Leistung."
+        en: "LOITER: slowest sustainable speed; minimum-throttle economical cruise."
+        es: "MERODEO: velocidad sostenible más baja; crucero económico a mínima potencia."
+        fr: "ATTENTE : vitesse soutenue la plus basse ; allure économique à régime minimal."
+        it: "ATTESA: velocità sostenibile più bassa; andatura economica al minimo regime."
+        ja: "待機：持続可能な最低速力。最小スロットルの経済巡航。"
+        ko: "선회：지속 가능한 최저 속력. 최소 출력의 경제 순항."
+        "pt-BR": "ESPERA: menor velocidade sustentável; cruzeiro econômico a mínima potência."
+        ru: "БАРРАЖ: минимальная устойчивая скорость; экономичный ход на малом газе."
+        zh: "盘旋：可持续的最低航速；最小油门经济巡航。"
+        "zh-TW": "盤旋：可持續的最低航速；最小油門經濟巡航。"
+    cruise:
+      label:
+        de: Marsch
+        en: Cruise
+        es: Crucero
+        fr: Croisière
+        it: Crociera
+        ja: 巡航
+        ko: 순항
+        "pt-BR": Cruzeiro
+        ru: Крейсер
+        zh: 巡航
+        "zh-TW": 巡航
+      tooltip:
+        de: "MARSCH: die ausgelegte sparsame Marschgeschwindigkeit."
+        en: "CRUISE: the designed economical cruise speed."
+        es: "CRUCERO: la velocidad de crucero económica de diseño."
+        fr: "CROISIÈRE : la vitesse de croisière économique de conception."
+        it: "CROCIERA: la velocità di crociera economica di progetto."
+        ja: "巡航：設計上の経済巡航速力。"
+        ko: "순항：설계상의 경제 순항 속력."
+        "pt-BR": "CRUZEIRO: a velocidade de cruzeiro econômica de projeto."
+        ru: "КРЕЙСЕР: расчётная экономичная крейсерская скорость."
+        zh: "巡航：设计的经济巡航航速。"
+        "zh-TW": "巡航：設計的經濟巡航航速。"
+    full:
+      label:
+        de: Voll
+        en: Full
+        es: Plena
+        fr: Pleine
+        it: Piena
+        ja: 全速
+        ko: 전속
+        "pt-BR": Plena
+        ru: Полный
+        zh: 全速
+        "zh-TW": 全速
+      tooltip:
+        de: "VOLL: hohe Marschfahrt, zwischen Marsch und Höchstfahrt."
+        en: "FULL: high cruise, between cruise and flank."
+        es: "PLENA: crucero alto, entre crucero y máxima."
+        fr: "PLEINE : croisière élevée, entre croisière et maxi."
+        it: "PIENA: crociera alta, tra crociera e massima."
+        ja: "全速：高速巡航。巡航と最大戦速の中間。"
+        ko: "전속：고속 순항. 순항과 최대전속 사이."
+        "pt-BR": "PLENA: cruzeiro alto, entre cruzeiro e máxima."
+        ru: "ПОЛНЫЙ: повышенный крейсерский ход, между крейсерским и самым полным."
+        zh: "全速：高速巡航，介于巡航与最大战速之间。"
+        "zh-TW": "全速：高速巡航，介於巡航與最大戰速之間。"
+    flank:
+      label:
+        de: Höchst
+        en: Flank
+        es: Máxima
+        fr: Maxi
+        it: Massima
+        ja: 最大戦速
+        ko: 최대전속
+        "pt-BR": Máxima
+        ru: Самый полный
+        zh: 最大战速
+        "zh-TW": 最大戰速
+      tooltip:
+        de: "HÖCHST: Höchstgeschwindigkeit bei voller Leistung."
+        en: "FLANK: maximum speed at full throttle."
+        es: "MÁXIMA: velocidad máxima a plena potencia."
+        fr: "MAXI : vitesse maximale à pleine puissance."
+        it: "MASSIMA: velocità massima a piena potenza."
+        ja: "最大戦速：全開での最大速力。"
+        ko: "최대전속：전출력에서의 최대 속력."
+        "pt-BR": "MÁXIMA: velocidade máxima a plena potência."
+        ru: "САМЫЙ ПОЛНЫЙ: максимальная скорость на полном газе."
+        zh: "最大战速：全速油门下的最大航速。"
+        "zh-TW": "最大戰速：全速油門下的最大航速。"
+  fuel:
+    de: Treibstoff
+    en: Fuel
+    es: Combustible
+    fr: Carburant
+    it: Carburante
+    ja: 燃料
+    ko: 연료
+    "pt-BR": Combustível
+    ru: Топливо
+    zh: 燃料
+    "zh-TW": 燃料
+  # Richer tooltips (#1532): the BINGO warning tag appended to the FUEL readout
+  # when a unit is low on fuel, and the CEIL label prefixed before the service
+  # ceiling on the SPC readout.
+  bingo_tag:
+    de: "BINGO"
+    en: "BINGO FUEL"
+    es: "BINGO"
+    fr: "BINGO"
+    it: "BINGO"
+    ja: "ビンゴ"
+    ko: "빙고"
+    "pt-BR": "BINGO"
+    ru: "БИНГО"
+    zh: "最低油量"
+    "zh-TW": "最低油量"
+  ceiling_tag:
+    de: "GIPF"
+    en: "CEIL"
+    es: "TECHO"
+    fr: "PLAF"
+    it: "TANG"
+    ja: "上昇限度"
+    ko: "상승한도"
+    "pt-BR": "TETO"
+    ru: "ПОТОЛ"
+    zh: "升限"
+    "zh-TW": "升限"
+  # Caps mil-status codes for the RDY readout on a stowed-unit tooltip (#1532).
+  stowed_status:
+    recovering:
+      de: "AUFNAHME"
+      en: "RECOVERING"
+      es: "RECUPERANDO"
+      fr: "RÉCUPÉRATION"
+      it: "RECUPERO"
+      ja: "収容中"
+      ko: "회수 중"
+      "pt-BR": "RECUPERANDO"
+      ru: "ПРИЁМ"
+      zh: "回收中"
+      "zh-TW": "回收中"
+    refueling:
+      de: "BETANKUNG"
+      en: "REFUELING"
+      es: "REPOSTANDO"
+      fr: "RAVITAILLEMENT"
+      it: "RIFORNIMENTO"
+      ja: "給油中"
+      ko: "급유 중"
+      "pt-BR": "REABASTECENDO"
+      ru: "ЗАПРАВКА"
+      zh: "加油中"
+      "zh-TW": "加油中"
+    rearming:
+      de: "BEWAFFNUNG"
+      en: "REARMING"
+      es: "REARMANDO"
+      fr: "RÉARMEMENT"
+      it: "RIARMO"
+      ja: "再武装中"
+      ko: "재무장 중"
+      "pt-BR": "REARMANDO"
+      ru: "ПЕРЕВООР"
+      zh: "再武装中"
+      "zh-TW": "再武裝中"
+    ready:
+      de: "BEREIT"
+      en: "READY"
+      es: "LISTO"
+      fr: "PRÊT"
+      it: "PRONTO"
+      ja: "準備完了"
+      ko: "준비 완료"
+      "pt-BR": "PRONTO"
+      ru: "ГОТОВ"
+      zh: "就绪"
+      "zh-TW": "就緒"
+    launching:
+      de: "START"
+      en: "LAUNCHING"
+      es: "LANZANDO"
+      fr: "LANCEMENT"
+      it: "IN LANCIO"
+      ja: "発艦中"
+      ko: "발진 중"
+      "pt-BR": "LANÇANDO"
+      ru: "ЗАПУСК"
+      zh: "起飞中"
+      "zh-TW": "起飛中"
+    # #2696 status·location vocabulary — a loose round in stores, a round loaded
+    # into a launcher/loadout, and the two transfer directions.
+    in_stores:
+      de: "IM LAGER"
+      en: "IN STORES"
+      es: "EN PAÑOL"
+      fr: "EN SOUTE"
+      it: "IN DEPOSITO"
+      ja: "在庫"
+      ko: "저장고"
+      "pt-BR": "NO PAIOL"
+      ru: "НА СКЛАДЕ"
+      zh: "库存中"
+      "zh-TW": "庫存中"
+  # #2696 launch-facility tags shown against inventory / ordnance entries, and
+  # the stowage location word a ready platform reports (flight-deck → HANGAR).
+  # Facility tags. Values are mixed-case; uppercasing is a display concern the
+  # code applies (`FacilityUi::facility_tag`), matching the datablock / section-
+  # header convention — so the value is never double-uppercased in the source.
+  # CJK has no case (rendered as-is); VLS is a universal acronym (stays caps).
+  facility:
+    flight_deck:
+      de: "Flugdeck"
+      en: "Flight Deck"
+      es: "Cubierta de vuelo"
+      fr: "Pont d'envol"
+      it: "Ponte di volo"
+      ja: "飛行甲板"
+      ko: "비행 갑판"
+      "pt-BR": "Convés de voo"
+      ru: "Полётная палуба"
+      zh: "飞行甲板"
+      "zh-TW": "飛行甲板"
+    heli_pad:
+      de: "Helideck"
+      en: "Heli Pad"
+      es: "Helipuerto"
+      fr: "Hélipont"
+      it: "Elisuperficie"
+      ja: "ヘリ甲板"
+      ko: "헬기 갑판"
+      "pt-BR": "Heliponto"
+      ru: "Верт. площадка"
+      zh: "直升机甲板"
+      "zh-TW": "直升機甲板"
+    well_deck:
+      de: "Dockdeck"
+      en: "Well Deck"
+      es: "Dique interior"
+      fr: "Radier"
+      it: "Bacino allagabile"
+      ja: "ウェルデッキ"
+      ko: "웰 데크"
+      "pt-BR": "Doca interna"
+      ru: "Док-камера"
+      zh: "坞舱"
+      "zh-TW": "塢艙"
+    air_launch:
+      de: "Luftstart"
+      en: "Air Launch"
+      es: "Lanzamiento aéreo"
+      fr: "Lancement aérien"
+      it: "Lancio aereo"
+      ja: "空中発射"
+      ko: "공중 발사"
+      "pt-BR": "Lançamento aéreo"
+      ru: "Возд. пуск"
+      zh: "空中发射"
+      "zh-TW": "空中發射"
+    # Universal military acronym — Vertical Launch System — identical in every
+    # locale; an acronym stays uppercase even in the mixed-case source.
+    vls:
+      de: "VLS"
+      en: "VLS"
+      es: "VLS"
+      fr: "VLS"
+      it: "VLS"
+      ja: "VLS"
+      ko: "VLS"
+      "pt-BR": "VLS"
+      ru: "VLS"
+      zh: "VLS"
+      "zh-TW": "VLS"
+    torpedo_tube:
+      de: "Torpedorohr"
+      en: "Torpedo Tube"
+      es: "Tubo lanzatorpedos"
+      fr: "Tube lance-torpilles"
+      it: "Tubo lanciasiluri"
+      ja: "魚雷発射管"
+      ko: "어뢰 발사관"
+      "pt-BR": "Tubo de torpedo"
+      ru: "Торп. аппарат"
+      zh: "鱼雷发射管"
+      "zh-TW": "魚雷發射管"
+    hangar:
+      de: "Hangar"
+      en: "Hangar"
+      es: "Hangar"
+      fr: "Hangar"
+      it: "Hangar"
+      ja: "格納庫"
+      ko: "격납고"
+      "pt-BR": "Hangar"
+      ru: "Ангар"
+      zh: "机库"
+      "zh-TW": "機庫"
+  # DC-387: own-vehicle cavitation warning under the STATUS row. `%{boost}` is
+  # the extra source level (dB) gained from cavitation vs. the cavitation knee.
+  cavitating:
+    de: "KAVITATION (+%{boost}DB)"
+    en: "CAVITATING (+%{boost}DB)"
+    es: "CAVITANDO (+%{boost}DB)"
+    fr: "CAVITATION (+%{boost}DB)"
+    it: "CAVITAZIONE (+%{boost}DB)"
+    ja: "キャビテーション (+%{boost}DB)"
+    ko: "캐비테이션 (+%{boost}DB)"
+    "pt-BR": "CAVITANDO (+%{boost}DB)"
+    ru: "КАВИТАЦИЯ (+%{boost}ДБ)"
+    zh: "空泡 (+%{boost}DB)"
+    "zh-TW": "空泡 (+%{boost}DB)"
+  # DC-992: `info_panel.auto_rtb.*` keys moved into the doctrine subtree
+  # (`info_panel.doctrine.auto_rtb.*`) when the standalone Auto-RTB
+  # checkbox was folded into the shared doctrine editor.
+  # DC-993: `rtb_now` / `rtb_now_tooltip` keys removed — the standalone
+  # "RTB Now" button was subsumed by the unified Mission selector's
+  # `mission.rtb` row.
+  doctrine:
+    # DC-35.7.7 Task 14: muted badge appended to the doctrine label on a
+    # multi-leader's per-vehicle doctrine row, clarifying that the edit
+    # applies group-wide (because `Group` lives on the leader, the existing
+    # per-vehicle DoctrineCommand path already updates the whole group).
+    group_badge:
+      de: "(Gruppe)"
+      en: "(group)"
+      es: "(grupo)"
+      fr: "(groupe)"
+      it: "(gruppo)"
+      ja: "(グループ)"
+      ko: "(그룹)"
+      "pt-BR": "(grupo)"
+      ru: "(группа)"
+      zh: "(编组)"
+      "zh-TW": "(編組)"
+    posture:
+      label:
+        de: Haltung
+        en: Posture
+        es: Postura
+        fr: Posture
+        it: Postura
+        ja: 姿勢
+        ko: 태세
+        "pt-BR": Postura
+        ru: Тактика
+        zh: 姿态
+        "zh-TW": 姿態
+      # Value labels (pursue/defend/evade) are the canonical `doctrine.posture.*`
+      # keys (display.yaml), shared with the designer (#1935).
+      # Posture is universal across anchors (ADR-0007 §4); the only mission that
+      # disables a posture is RTB (a terminal recovery mission never chases, so
+      # it excludes Pursue). No per-mission table — just the one RTB reason.
+      disabled:
+        rtb:
+          de: "Kehrt zur Basis zurück; weicht nicht zur Verfolgung ab."
+          en: "Returning to base; it won't divert to chase."
+          es: "Regresando a la base; no se desviará para perseguir."
+          fr: "Retour à la base ; ne déviera pas pour poursuivre."
+          it: "In rientro alla base; non devierà per inseguire."
+          ja: "基地へ帰投中。追跡のために針路を変えない。"
+          ko: "기지로 귀환 중; 추격을 위해 우회하지 않는다."
+          "pt-BR": "Retornando à base; não se desviará para perseguir."
+          ru: "Возвращается на базу; не отклонится для преследования."
+          zh: "正在返回基地；不会转向追击。"
+          "zh-TW": "正在返回基地；不會轉向追擊。"
+    roe:
+      label:
+        de: Feuerleitung
+        en: Fire Control
+        es: Control de fuego
+        fr: Contrôle de tir
+        it: Controllo del fuoco
+        ja: 射撃管制
+        ko: 사격 통제
+        "pt-BR": Controle de fogo
+        ru: Управление огнём
+        zh: 火力控制
+        "zh-TW": 火力控制
+      # Value labels (hold_fire/engage_known/engage_unknown) are the canonical
+      # `doctrine.roe.*` keys (display.yaml), shared with the designer (#1935).
+      disabled:
+        # Shown when an engage ROE is disabled because the unit (or, for a
+        # group, every member) has no weapon — an engage ROE can never fire on
+        # an unarmed unit (#1854). HoldFire stays selectable.
+        no_weapons:
+          de: "Keine Waffen verbaut; eine Bekämpfungs-ROE würde nie feuern."
+          en: "No weapons fitted; an engage ROE would never fire."
+          es: "Sin armas instaladas; una ROE de ataque nunca dispararía."
+          fr: "Aucune arme installée ; une ROE d'engagement ne ferait jamais feu."
+          it: "Nessun'arma installata; una ROE d'ingaggio non farebbe mai fuoco."
+          ja: "武装なし。交戦規則を設定しても発砲することはない。"
+          ko: "무장 없음; 교전 규칙으로는 결코 발포하지 않습니다."
+          "pt-BR": "Sem armas instaladas; uma ROE de engajamento nunca dispararia."
+          ru: "Вооружение отсутствует; ROE на поражение никогда не откроет огонь."
+          zh: "未装备武器；交战规则永不开火。"
+          "zh-TW": "未裝備武器；交戰規則永不開火。"
+    emission:
+      # #1863: the count of members actually emitting vs. those that could, shown
+      # as a warning on the doctrine line when it contradicts the EMCON order
+      # (e.g. "RADIATE · ! 1/4 EMITTING"). Mirrors the MCP game://groups tally.
+      emitting:
+        de: Strahlend
+        en: Emitting
+        es: Emitiendo
+        fr: Émission
+        it: In emissione
+        ja: 放射中
+        ko: 방사 중
+        "pt-BR": Emitindo
+        ru: Излучают
+        zh: 辐射中
+        "zh-TW": 輻射中
+    firing_discipline:
+      label:
+        de: Feuerdisziplin
+        en: Fire Discipline
+        es: Disciplina de fuego
+        fr: Discipline de tir
+        it: Disciplina di fuoco
+        ja: 射撃規律
+        ko: 사격 규율
+        "pt-BR": Disciplina de fogo
+        ru: Дисциплина огня
+        zh: 射击纪律
+        "zh-TW": 射擊紀律
+    emcon:
+      label:
+        de: Emissionen
+        en: EMCON
+        es: Emisiones
+        fr: Émissions
+        it: Emissioni
+        ja: 放射管理
+        ko: 방출
+        "pt-BR": Emissões
+        ru: Излучение
+        zh: 辐射管制
+        "zh-TW": 輻射管制
+      # Value labels (active=Radiate / passive=Silent) are the canonical
+      # `doctrine.emcon.*` keys (display.yaml), shared with the designer (#1935).
+      silent_locked_tooltip:
+        de: "Dieses Fahrzeug hat keine aktiven Sensoren: immer lautlos"
+        en: "This vehicle has no active sensors: always silent"
+        es: "Este vehículo no tiene sensores activos: siempre en silencio"
+        fr: "Ce véhicule n'a aucun capteur actif : toujours silencieux"
+        it: "Questo veicolo non ha sensori attivi: sempre in silenzio"
+        ja: "この機体にはアクティブセンサーがありません：常に静粛"
+        ko: "이 기체에는 능동 센서가 없습니다：항상 침묵"
+        "pt-BR": "Este veículo não tem sensores ativos: sempre em silêncio"
+        ru: "У этой единицы нет активных датчиков: всегда в тишине"
+        zh: "此载具没有主动传感器：始终静默"
+        "zh-TW": "此載具沒有主動感測器：始終靜默"
+    # DC-992/DC-1054: engagement-range sliders in the shared doctrine editor.
+    # `inner` (engage_within) = acquisition radius — engage contacts within it.
+    # `outer` (break_off_at) = Defensive break-off leash from patrol origin.
+    # Hysteresis requires `outer >= inner`; the widget clamps before dispatch.
+    engagement_range:
+      engage_within:
+        de: BEKÄMPFEN INNERHALB
+        en: ENGAGE WITHIN
+        es: ATACAR DENTRO DE
+        fr: ENGAGER À MOINS DE
+        it: INGAGGIA ENTRO
+        ja: 交戦範囲
+        ko: 교전 범위
+        "pt-BR": ENGAJAR DENTRO DE
+        ru: АТАКОВАТЬ В ПРЕДЕЛАХ
+        zh: 交战范围内
+        "zh-TW": 交戰範圍內
+      engage_within_tooltip:
+        de: "Das Feuer auf feindliche Kontakte eröffnen, die in diese Reichweite kommen"
+        en: "Open fire on hostile contacts that come within this range"
+        es: "Abrir fuego sobre contactos hostiles que entren en este alcance"
+        fr: "Ouvrir le feu sur les contacts hostiles qui entrent dans cette portée"
+        it: "Aprire il fuoco sui contatti ostili che entrano in questo raggio"
+        ja: "この範囲内に入った敵コンタクトに発砲する"
+        ko: "이 범위 내로 들어온 적 접촉에 발포"
+        "pt-BR": "Abrir fogo sobre contatos hostis que entrem neste alcance"
+        ru: "Открывать огонь по враждебным контактам в пределах этой дальности"
+        zh: "对进入此范围的敌方目标开火"
+        "zh-TW": "對進入此範圍的敵方目標開火"
+      break_off_at:
+        de: ABBRECHEN BEI
+        en: BREAK OFF AT
+        es: ROMPER A
+        fr: ROMPRE À
+        it: DISIMPEGNA A
+        ja: 離脱距離
+        ko: 이탈 거리
+        "pt-BR": DESENGAJAR EM
+        ru: ПРЕКРАЩАТЬ НА
+        zh: 脱离距离
+        "zh-TW": 脫離距離
+      break_off_at_tooltip:
+        de: "Nur defensiv: eine Verfolgung abbrechen, wenn sich das Ziel über diese Reichweite vom Patrouillenpunkt hinaus bewegt"
+        en: "Defensive only: break off a chase when the target moves beyond this range from the patrol point"
+        es: "Solo defensivo: abandonar la persecución cuando el objetivo se aleje más de este alcance del punto de patrulla"
+        fr: "Défensif uniquement : abandonner la poursuite lorsque la cible dépasse cette portée par rapport au point de patrouille"
+        it: "Solo difensivo: interrompere l'inseguimento quando il bersaglio supera questo raggio dal punto di pattuglia"
+        ja: "防御時のみ: 目標が哨戒地点からこの距離を超えたら追跡を中止する"
+        ko: "방어 시에만: 목표가 초계 지점에서 이 거리를 벗어나면 추격 중단"
+        "pt-BR": "Apenas defensivo: abandonar a perseguição quando o alvo ultrapassar este alcance do ponto de patrulha"
+        ru: "Только в обороне: прекращать преследование, когда цель выходит за эту дальность от точки патрулирования"
+        zh: "仅防御：当目标超出巡逻点的此范围时停止追击"
+        "zh-TW": "僅防禦：當目標超出巡邏點的此範圍時停止追擊"
+    safety_range:
+      evade_within:
+        de: Ausweichen innerhalb
+        en: Evade within
+        es: Evadir dentro de
+        fr: Esquiver à moins de
+        it: Evadi entro
+        ja: 回避範囲
+        ko: 회피 범위
+        "pt-BR": Evadir dentro de
+        ru: Уклоняться в пределах
+        zh: 规避范围内
+        "zh-TW": 規避範圍內
+      evade_within_tooltip:
+        de: "Fliehen, wenn eine Bedrohung in diese Reichweite kommt"
+        en: "Flee when a threat comes within this range"
+        es: "Huir cuando una amenaza entre en este alcance"
+        fr: "Fuir lorsqu'une menace entre dans cette portée"
+        it: "Fuggire quando una minaccia entra in questo raggio"
+        ja: "脅威がこの範囲内に入ったら逃避する"
+        ko: "위협이 이 범위 내로 들어오면 도주"
+        "pt-BR": "Fugir quando uma ameaça entrar neste alcance"
+        ru: "Бежать, когда угроза входит в эту дальность"
+        zh: "当威胁进入此范围时逃离"
+        "zh-TW": "當威脅進入此範圍時逃離"
+      resume_beyond:
+        de: Fortsetzen jenseits
+        en: Resume beyond
+        es: Reanudar más allá de
+        fr: Reprendre au-delà de
+        it: Riprendi oltre
+        ja: 再開距離
+        ko: 재개 거리
+        "pt-BR": Retomar além de
+        ru: Возобновлять за
+        zh: 恢复距离
+        "zh-TW": 恢復距離
+      resume_beyond_tooltip:
+        de: "Die Flucht beenden und die Aufgabe wieder aufnehmen, sobald die Bedrohung über diese Reichweite hinaus ist"
+        en: "Stop fleeing and resume the task once the threat is beyond this range"
+        es: "Dejar de huir y reanudar la tarea cuando la amenaza esté más allá de este alcance"
+        fr: "Cesser de fuir et reprendre la tâche une fois que la menace dépasse cette portée"
+        it: "Smettere di fuggire e riprendere il compito quando la minaccia supera questo raggio"
+        ja: "脅威がこの距離を超えたら逃避をやめて任務を再開する"
+        ko: "위협이 이 거리를 벗어나면 도주를 멈추고 임무 재개"
+        "pt-BR": "Parar de fugir e retomar a tarefa quando a ameaça ultrapassar este alcance"
+        ru: "Прекращать бегство и возобновлять задание, когда угроза выходит за эту дальность"
+        zh: "当威胁超出此范围时停止逃离并恢复任务"
+        "zh-TW": "當威脅超出此範圍時停止逃離並恢復任務"
+    # DC-992: Auto-RTB toggle moved into the shared doctrine editor from
+    # the standalone Row 9 checkbox in entity_view. Keys re-homed from
+    # `info_panel.auto_rtb.*` to keep the doctrine subtree self-contained.
+    auto_rtb:
+      label:
+        de: Auto-RTB
+        en: Auto RTB
+        es: RTB automático
+        fr: RTB auto
+        it: RTB automatico
+        ja: 自動RTB
+        ko: 자동 RTB
+        "pt-BR": RTB automático
+        ru: Авто-RTB
+        zh: 自动返航
+        "zh-TW": 自動返航
+      tooltip:
+        de: Automatisch zum Träger zurückkehren bei niedrigem Treibstoff
+        en: Automatically return to carrier when fuel is low
+        es: Regresar automáticamente al portaaviones cuando el combustible esté bajo
+        fr: Retour automatique au porte-avions quand le carburant est faible
+        it: Ritorno automatico alla portaerei con carburante basso
+        ja: 燃料低下時に自動的に母艦へ帰還
+        ko: 연료 부족 시 자동으로 항모로 귀환
+        "pt-BR": Retornar automaticamente ao porta-aviões quando combustível estiver baixo
+        ru: Автоматическое возвращение на авианосец при низком уровне топлива
+        zh: 燃料不足时自动返回母舰
+        "zh-TW": 燃料不足時自動返回母艦
+  # DC-993: `patrol_button` / `patrol_tooltip` keys removed — the
+  # standalone "Patrol" buttons in the per-vehicle inspect panel were
+  # subsumed by the unified Mission selector's `mission.patrol` row.
+  min_altitude_tooltip:
+    de: "Mindesthöhe: %{value}m"
+    en: "Minimum altitude: %{value}m"
+    es: "Altitud mínima: %{value}m"
+    fr: "Altitude minimale : %{value}m"
+    it: "Altitudine minima: %{value}m"
+    ja: "最低高度: %{value}m"
+    ko: "최소 고도: %{value}m"
+    "pt-BR": "Altitude mínima: %{value}m"
+    ru: "Минимальная высота: %{value}м"
+    zh: "最低高度: %{value}m"
+    "zh-TW": "最低高度: %{value}m"
+  max_altitude_tooltip:
+    de: "Maximalhöhe: %{value}m"
+    en: "Maximum altitude: %{value}m"
+    es: "Altitud máxima: %{value}m"
+    fr: "Altitude maximale : %{value}m"
+    it: "Altitudine massima: %{value}m"
+    ja: "最大高度: %{value}m"
+    ko: "최대 고도: %{value}m"
+    "pt-BR": "Altitude máxima: %{value}m"
+    ru: "Максимальная высота: %{value}м"
+    zh: "最大高度: %{value}m"
+    "zh-TW": "最大高度: %{value}m"
+  min_depth_tooltip:
+    de: "Mindesttiefe: %{value}m"
+    en: "Minimum depth: %{value}m"
+    es: "Profundidad mínima: %{value}m"
+    fr: "Profondeur minimale : %{value}m"
+    it: "Profondità minima: %{value}m"
+    ja: "最小深度: %{value}m"
+    ko: "최소 심도: %{value}m"
+    "pt-BR": "Profundidade mínima: %{value}m"
+    ru: "Минимальная глубина: %{value}м"
+    zh: "最小深度: %{value}m"
+    "zh-TW": "最小深度: %{value}m"
+  max_depth_tooltip:
+    de: "Maximaltiefe: %{value}m"
+    en: "Maximum depth: %{value}m"
+    es: "Profundidad máxima: %{value}m"
+    fr: "Profondeur maximale : %{value}m"
+    it: "Profondità massima: %{value}m"
+    ja: "最大深度: %{value}m"
+    ko: "최대 심도: %{value}m"
+    "pt-BR": "Profundidade máxima: %{value}m"
+    ru: "Максимальная глубина: %{value}м"
+    zh: "最大深度: %{value}m"
+    "zh-TW": "最大深度: %{value}m"
+  target_altitude:
+    de: Zielhöhe
+    en: Target Alt
+    es: Alt. objetivo
+    fr: Alt. cible
+    it: Alt. obiettivo
+    ja: 目標高度
+    ko: 목표 고도
+    "pt-BR": Alt. alvo
+    ru: Цел. высота
+    zh: 目标高度
+    "zh-TW": 目標高度
+  autopilot:
+    label:
+      de: Status
+      en: Status
+      es: Estado
+      fr: Statut
+      it: Stato
+      ja: 状態
+      ko: 상태
+      "pt-BR": Status
+      ru: Статус
+      zh: 状态
+      "zh-TW": 狀態
+    idle:
+      de: Bereit
+      en: Idle
+      es: Inactivo
+      fr: Inactif
+      it: Inattivo
+      ja: 待機
+      ko: 대기
+      "pt-BR": Inativo
+      ru: Ожидание
+      zh: 待机
+      "zh-TW": 待機
+    navigating:
+      de: Navigiert
+      en: Navigating
+      es: Navegando
+      fr: En navigation
+      it: In navigazione
+      ja: 航行中
+      ko: 항행 중
+      "pt-BR": Navegando
+      ru: Навигация
+      zh: 航行中
+      "zh-TW": 航行中
+    navigating_to:
+      de: "Navigiert nach"
+      en: "Navigating to"
+      es: "Navegando a"
+      fr: "Navigation vers"
+      it: "Navigazione verso"
+      ja: "航行先"
+      ko: "항행 목적지"
+      "pt-BR": "Navegando para"
+      ru: "Навигация к"
+      zh: "航行至"
+      "zh-TW": "航行至"
+    following:
+      de: Folgt
+      en: Following
+      es: Siguiendo
+      fr: En poursuite
+      it: In seguimento
+      ja: 追従中
+      ko: 추종 중
+      "pt-BR": Seguindo
+      ru: Следование
+      zh: 跟随中
+      "zh-TW": 跟隨中
+    trailing:
+      de: Verfolgt
+      en: Trailing
+      es: Rastreando
+      fr: En filature
+      it: Pedinamento
+      ja: 追尾中
+      ko: 미행 중
+      "pt-BR": Rastreando
+      ru: Слежение
+      zh: 尾随中
+      "zh-TW": 尾隨中
+    clearing:
+      de: Räumung
+      en: Clearing
+      es: Despejando
+      fr: En dégagement
+      it: In disimpegno
+      ja: 離脱中
+      ko: 이탈 중
+      "pt-BR": Desengajando
+      ru: Отход
+      zh: 脱离中
+      "zh-TW": 脫離中
+    loitering:
+      de: Patrouilliert
+      en: Loitering
+      es: Merodeando
+      fr: En patrouille
+      it: In pattugliamento
+      ja: 遊弋中
+      ko: 배회 중
+      "pt-BR": Patrulhando
+      ru: Патрулирование
+      zh: 巡逻中
+      "zh-TW": 巡邏中
+    attacking:
+      de: Angriff
+      en: Attacking
+      es: Atacando
+      fr: En attaque
+      it: In attacco
+      ja: 攻撃中
+      ko: 공격 중
+      "pt-BR": Atacando
+      ru: Атака
+      zh: 攻击中
+      "zh-TW": 攻擊中
+    standoff:
+      de: Abstandshalten
+      en: Standoff
+      es: A distancia
+      fr: À distance
+      it: A distanza
+      ja: 距離維持
+      ko: 거리 유지
+      "pt-BR": À distância
+      ru: На дистанции
+      zh: 保持距离
+      "zh-TW": 保持距離
+    launching:
+      de: Startvorgang
+      en: Launching
+      es: Lanzando
+      fr: Lancement
+      it: Lancio
+      ja: 発射中
+      ko: 발사 중
+      "pt-BR": Lançando
+      ru: Запуск
+      zh: 发射中
+      "zh-TW": 發射中
+    evading:
+      de: Ausweichen
+      en: Evading
+      es: Evadiendo
+      fr: En évasion
+      it: In evasione
+      ja: 回避中
+      ko: 회피 중
+      "pt-BR": Evadindo
+      ru: Уклонение
+      zh: 规避中
+      "zh-TW": 規避中
+    returning:
+      de: Rückkehr
+      en: Returning
+      es: Regresando
+      fr: Retour
+      it: In rientro
+      ja: 帰投中
+      ko: 귀환 중
+      "pt-BR": Retornando
+      ru: Возврат
+      zh: 返航中
+      "zh-TW": 返航中
+    holding_pattern:
+      de: Warteschleife
+      en: Holding Pattern
+      es: Patrón de espera
+      fr: "Circuit d'attente"
+      it: "Circuito d'attesa"
+      ja: 待機旋回
+      ko: 대기 선회
+      "pt-BR": Padrão de espera
+      ru: Зона ожидания
+      zh: 等待航线
+      "zh-TW": 等待航線
+    landing:
+      de: Landung
+      en: Landing
+      es: Aterrizando
+      fr: Atterrissage
+      it: Atterraggio
+      ja: 着陸中
+      ko: 착륙 중
+      "pt-BR": Pousando
+      ru: Посадка
+      zh: 降落中
+      "zh-TW": 降落中
+    orbiting:
+      de: Kreisend
+      en: Orbiting
+      es: Orbitando
+      fr: En orbite
+      it: In orbita
+      ja: 旋回中
+      ko: 선회 중
+      "pt-BR": Orbitando
+      ru: На орбите
+      zh: 盘旋中
+      "zh-TW": 盤旋中
+  target_depth:
+    de: Zieltiefe
+    en: Target Depth
+    es: Prof. objetivo
+    fr: Prof. cible
+    it: Prof. obiettivo
+    ja: 目標深度
+    ko: 목표 심도
+    "pt-BR": Prof. alvo
+    ru: Цел. глубина
+    zh: 目标深度
+    "zh-TW": 目標深度
+  inventory_capacity:
+    de: Platz belegt
+    en: Space used
+    es: espacio usado
+    fr: espace utilisé
+    it: spazio usato
+    ja: 使用容量
+    ko: 사용 공간
+    "pt-BR": espaço usado
+    ru: занято места
+    zh: 已用空间
+    "zh-TW": 已用空間
+  inventory_empty:
+    de: Inventar leer
+    en: Inventory empty
+    es: Inventario vacío
+    fr: Inventaire vide
+    it: Inventario vuoto
+    ja: 在庫なし
+    ko: 재고 없음
+    "pt-BR": Inventário vazio
+    ru: Инвентарь пуст
+    zh: 库存为空
+    "zh-TW": 庫存為空
+  # Composed contact subtitle — word order is owned by each language.
+  # %{affiliation} = contact_affiliation.* value, %{class} = contact_class.* value.
+  contact_subtitle:
+    de: "%{affiliation} %{class}"
+    en: "%{affiliation} %{class}"
+    es: "%{class} %{affiliation}"
+    fr: "%{class} %{affiliation}"
+    it: "%{class} %{affiliation}"
+    ja: "%{affiliation}%{class}"
+    ko: "%{affiliation} %{class}"
+    "pt-BR": "%{class} %{affiliation}"
+    ru: "%{affiliation} %{class}"
+    zh: "%{affiliation}%{class}"
+    "zh-TW": "%{affiliation}%{class}"
+  contact_affiliation:
+    enemy:
+      de: Feindlich
+      en: Hostile
+      es: Hostil
+      fr: Hostile
+      it: Ostile
+      ja: 敵性
+      ko: 적대
+      "pt-BR": Hostil
+      ru: Враждебный
+      zh: 敌对
+      "zh-TW": 敵對
+    unknown:
+      de: Unbekannt
+      en: Unknown
+      es: Desconocido
+      fr: Inconnu
+      it: Sconosciuto
+      ja: 不明
+      ko: 미식별
+      "pt-BR": Desconhecido
+      ru: Неизвестный
+      zh: 不明
+      "zh-TW": 不明
+    allied:
+      de: Verbündet
+      en: Allied
+      es: Aliado
+      fr: Allié
+      it: Alleato
+      ja: 同盟
+      ko: 동맹
+      "pt-BR": Aliado
+      ru: Союзник
+      zh: 盟友
+      "zh-TW": 盟友
+    neutral:
+      de: Neutral
+      en: Neutral
+      es: Neutral
+      fr: Neutre
+      it: Neutrale
+      ja: 中立
+      ko: 중립
+      "pt-BR": Neutro
+      ru: Нейтральный
+      zh: 中立
+      "zh-TW": 中立
+    friendly:
+      de: Freund
+      en: Friendly
+      es: Amigo
+      fr: Ami
+      it: Amico
+      ja: 味方
+      ko: 아군
+      "pt-BR": Amigo
+      ru: Дружественный
+      zh: 友方
+      "zh-TW": 友方
+  contact_class:
+    unknown:
+      de: Unbekannter Kontakt
+      en: Unknown Contact
+      es: Contacto desconocido
+      fr: Contact inconnu
+      it: Contatto sconosciuto
+      ja: 不明な目標
+      ko: 미상 접촉
+      "pt-BR": Contato desconhecido
+      ru: Неизвестный контакт
+      zh: 未知目标
+      "zh-TW": 未知目標
+    air:
+      de: Luftdrohne
+      en: Air Drone
+      es: Dron aéreo
+      fr: Drone aérien
+      it: Drone aereo
+      ja: 航空ドローン
+      ko: 항공 드론
+      "pt-BR": Drone aéreo
+      ru: Воздушный дрон
+      zh: 空中无人机
+      "zh-TW": 空中無人機
+    helicopter:
+      de: Drehflügeldrohne
+      en: Rotary Wing Drone
+      es: Dron de ala rotatoria
+      fr: Drone à voilure tournante
+      it: Drone ad ala rotante
+      ja: 回転翼ドローン
+      ko: 회전익 드론
+      "pt-BR": Drone de asa rotativa
+      ru: Дрон с несущим винтом
+      zh: 旋翼无人机
+      "zh-TW": 旋翼無人機
+    surface:
+      de: Überwasserschiff
+      en: Surface Ship
+      es: Barco de superficie
+      fr: Navire de surface
+      it: Nave di superficie
+      ja: 水上艦
+      ko: 수상함
+      "pt-BR": Navio de superfície
+      ru: Надводный корабль
+      zh: 水面舰艇
+      "zh-TW": 水面艦艇
+    subsurface:
+      de: U-Boot
+      en: Submarine
+      es: Submarino
+      fr: Sous-marin
+      it: Sottomarino
+      ja: 潜水艦
+      ko: 잠수함
+      "pt-BR": Submarino
+      ru: Подводная лодка
+      zh: 潜艇
+      "zh-TW": 潛艇
+    land:
+      de: Landfahrzeug
+      en: Land Vehicle
+      es: Vehículo terrestre
+      fr: Véhicule terrestre
+      it: Veicolo terrestre
+      ja: 陸上車両
+      ko: 지상 차량
+      "pt-BR": Veículo terrestre
+      ru: Наземное транспортное средство
+      zh: 陆地车辆
+      "zh-TW": 陸地車輛
+    command_ship:
+      de: Träger
+      en: Carrier
+      es: Portador
+      fr: Porte-drones
+      it: Portadroni
+      ja: 母艦
+      ko: 모함
+      "pt-BR": Porta-drones
+      ru: Авианосец
+      zh: 母舰
+      "zh-TW": 母艦
+    missile:
+      de: Rakete
+      en: Missile
+      es: Misil
+      fr: Missile
+      it: Missile
+      ja: ミサイル
+      ko: 미사일
+      "pt-BR": Míssil
+      ru: Ракета
+      zh: 导弹
+      "zh-TW": 飛彈
+    torpedo:
+      de: Torpedo
+      en: Torpedo
+      es: Torpedo
+      fr: Torpille
+      it: Siluro
+      ja: 魚雷
+      ko: 어뢰
+      "pt-BR": Torpedo
+      ru: Торпеда
+      zh: 鱼雷
+      "zh-TW": 魚雷
+  unit_feet:
+    de: FT
+    en: FT
+    es: FT
+    fr: FT
+    it: FT
+    ja: FT
+    ko: FT
+    "pt-BR": FT
+    ru: ФТ
+    zh: FT
+    "zh-TW": FT
+  unit_meters:
+    de: M
+    en: M
+    es: M
+    fr: M
+    it: M
+    ja: M
+    ko: M
+    "pt-BR": M
+    ru: М
+    zh: M
+    "zh-TW": M
+  view_blueprint:
+    de: Bauplan anzeigen
+    en: View Blueprint
+    es: Ver plano
+    fr: Voir le plan
+    it: Visualizza progetto
+    ja: 設計図を表示
+    ko: 설계도 보기
+    "pt-BR": Ver projeto
+    ru: Просмотр чертежа
+    zh: 查看蓝图
+    "zh-TW": 檢視藍圖
+  navigate_back:
+    de: Zurück
+    en: Back
+    es: Atrás
+    fr: Retour
+    it: Indietro
+    ja: 戻る
+    ko: 뒤로
+    "pt-BR": Voltar
+    ru: Назад
+    zh: 返回
+    "zh-TW": 返回
+  despawn:
+    de: Entfernen
+    en: Despawn
+    es: Eliminar
+    fr: Supprimer
+    it: Rimuovi
+    ja: 除去
+    ko: 제거
+    "pt-BR": Remover
+    ru: Удалить
+    zh: 移除
+    "zh-TW": 移除
+  deck_ops:
+    promote:
+      de: Vorziehen
+      en: Promote
+      es: Priorizar
+      fr: Avancer
+      it: Promuovi
+      ja: 優先
+      ko: 우선
+      "pt-BR": Priorizar
+      ru: Повысить
+      zh: 提升
+      "zh-TW": 提升
+    # Deck pipeline phase names reached via
+    # `format!("info_panel.deck_ops.phase.{phase_name}")` in
+    # `crates/dc_ui_client/src/info_panel/pipeline_status.rs`. Concrete phase
+    # names come from `PhaseConfig` tables in `crates/dc_core/src/deck_ops/*.rs`
+    # (flight_deck, air_launch, torpedo_tube, well_deck, vls).
+    phase:
+      hangar:
+        de: Hangar
+        en: Hangar
+        es: Hangar
+        fr: Hangar
+        it: Hangar
+        ja: 格納庫
+        ko: 격납고
+        "pt-BR": Hangar
+        ru: Ангар
+        zh: 机库
+        "zh-TW": 機庫
+      elevator:
+        de: Aufzug
+        en: Elevator
+        es: Elevador
+        fr: Ascenseur
+        it: Elevatore
+        ja: エレベーター
+        ko: 엘리베이터
+        "pt-BR": Elevador
+        ru: Подъёмник
+        zh: 升降机
+        "zh-TW": 升降機
+      deck:
+        de: Deck
+        en: Deck
+        es: Cubierta
+        fr: Pont
+        it: Ponte
+        ja: 甲板
+        ko: 갑판
+        "pt-BR": Convés
+        ru: Палуба
+        zh: 甲板
+        "zh-TW": 甲板
+      catapult:
+        de: Katapult
+        en: Catapult
+        es: Catapulta
+        fr: Catapulte
+        it: Catapulta
+        ja: カタパルト
+        ko: 캐터펄트
+        "pt-BR": Catapulta
+        ru: Катапульта
+        zh: 弹射器
+        "zh-TW": 彈射器
+      landing:
+        de: Landung
+        en: Landing
+        es: Aterrizaje
+        fr: Atterrissage
+        it: Atterraggio
+        ja: 着陸
+        ko: 착륙
+        "pt-BR": Pouso
+        ru: Посадка
+        zh: 着陆
+        "zh-TW": 著陸
+      release:
+        de: Abwurf
+        en: Release
+        es: Suelta
+        fr: Largage
+        it: Rilascio
+        ja: 投下
+        ko: 투하
+        "pt-BR": Liberação
+        ru: Сброс
+        zh: 投放
+        "zh-TW": 投放
+      flooding:
+        de: Flutung
+        en: Flooding
+        es: Inundando
+        fr: Noyage
+        it: Allagamento
+        ja: 注水
+        ko: 주수
+        "pt-BR": Inundando
+        ru: Заполнение
+        zh: 注水
+        "zh-TW": 注水
+      launch:
+        de: Start
+        en: Launch
+        es: Lanzamiento
+        fr: Lancement
+        it: Lancio
+        ja: 発射
+        ko: 발사
+        "pt-BR": Lançamento
+        ru: Запуск
+        zh: 发射
+        "zh-TW": 發射
+      staging:
+        de: Bereitstellung
+        en: Staging
+        es: Preparación
+        fr: Mise en place
+        it: Preparazione
+        ja: 準備
+        ko: 대기
+        "pt-BR": Preparação
+        ru: Подготовка
+        zh: 待命区
+        "zh-TW": 待命區
+      well_deck:
+        de: Dockdeck
+        en: Well Deck
+        es: Cubierta de pozo
+        fr: Radier
+        it: Bacino di carenaggio
+        ja: ウェルデッキ
+        ko: 웰 덱
+        "pt-BR": Convés de poço
+        ru: Доковая палуба
+        zh: 坞舱
+        "zh-TW": 塢艙
+      approach:
+        de: Anflug
+        en: Approach
+        es: Aproximación
+        fr: Approche
+        it: Avvicinamento
+        ja: 進入
+        ko: 접근
+        "pt-BR": Aproximação
+        ru: Заход
+        zh: 进入
+        "zh-TW": 進入
+      arming:
+        de: Scharfstellen
+        en: Arming
+        es: Armando
+        fr: Armement
+        it: Armamento
+        ja: 武装
+        ko: 무장
+        "pt-BR": Armando
+        ru: Подготовка
+        zh: 装填
+        "zh-TW": 裝填
+  sensors:
+    track:
+      de: S
+      en: T
+      es: P
+      fr: P
+      it: T
+      ja: 追
+      ko: 추
+      "pt-BR": R
+      ru: Т
+      zh: 迹
+      "zh-TW": 跡
+    # DC-1135: `sensors.emcon.active`/`sensors.emcon.passive` removed — their
+    # only consumer was the sensor tooltip's Mode row, which misused EMCON
+    # strings for detection modes. Detection modes now use the dedicated
+    # `sensors.tooltip.mode_*` keys; EMCON state strings live under
+    # `doctrine.emcon.*`.
+    enabled_tooltip:
+      de: Sensor ein-/ausschalten
+      en: Toggle sensor on/off
+      es: Activar/desactivar sensor
+      fr: Activer/désactiver le capteur
+      it: Attiva/disattiva sensore
+      ja: センサーのオン/オフ切替
+      ko: 센서 켜기/끄기
+      "pt-BR": Ligar/desligar sensor
+      ru: Включить/выключить датчик
+      zh: 开关传感器
+      "zh-TW": 開關感測器
+    group_active:
+      de: AKTIV
+      en: ACTIVE
+      es: ACTIVO
+      fr: ACTIF
+      it: ATTIVO
+      ja: 能動
+      ko: 능동
+      "pt-BR": ATIVO
+      ru: АКТИВ
+      zh: 主动
+      "zh-TW": 主動
+    group_passive:
+      de: PASSIV
+      en: PASSIVE
+      es: PASIVO
+      fr: PASSIF
+      it: PASSIVO
+      ja: 受動
+      ko: 수동
+      "pt-BR": PASSIVO
+      ru: ПАССИВ
+      zh: 被动
+      "zh-TW": 被動
+    group_signature:
+      de: SIGNATUR
+      en: SIGNATURE
+      es: FIRMA
+      fr: SIGNATURE
+      it: FIRMA
+      ja: シグネチャ
+      ko: 신호 특성
+      "pt-BR": ASSINATURA
+      ru: СИГНАТУРА
+      zh: 信号特征
+      "zh-TW": 訊號特徵
+    sensor_kind:
+      radar:
+        de: Radar
+        en: Radar
+        es: Radar
+        fr: Radar
+        it: Radar
+        ja: レーダー
+        ko: 레이더
+        "pt-BR": Radar
+        ru: Радар
+        zh: 雷达
+        "zh-TW": 雷達
+      # Same in all languages — IR = Infrared, universal technical acronym
+      ir:
+        en: IR
+      visual:
+        de: Optisch
+        en: Visual
+        es: Visual
+        fr: Visuel
+        it: Visivo
+        ja: 目視
+        ko: 광학
+        "pt-BR": Visual
+        ru: Визуальный
+        zh: 目视
+        "zh-TW": 目視
+      # Same in all languages — RWR = Radar Warning Receiver, NATO acronym
+      rwr:
+        en: RWR
+      sonar_passive:
+        de: Sonar (Passiv)
+        en: Sonar (Passive)
+        es: Sonar (Pasivo)
+        fr: Sonar (Passif)
+        it: Sonar (Passivo)
+        ja: ソナー (パッシブ)
+        ko: 소나 (수동)
+        "pt-BR": Sonar (Passivo)
+        ru: Сонар (Пассивный)
+        zh: 声呐 (被动)
+        "zh-TW": 聲納 (被動)
+      sonar_active:
+        de: Sonar (Aktiv)
+        en: Sonar (Active)
+        es: Sonar (Activo)
+        fr: Sonar (Actif)
+        it: Sonar (Attivo)
+        ja: ソナー (アクティブ)
+        ko: 소나 (능동)
+        "pt-BR": Sonar (Ativo)
+        ru: Сонар (Активный)
+        zh: 声呐 (主动)
+        "zh-TW": 聲納 (主動)
+    sensor_kind_short:
+      # Same in all languages — RDR = Radar short-code, universal military
+      # designation used identically across all supported languages
+      radar:
+        en: RDR
+      # Same in all languages — IR acronym (see sensor_kind.ir above)
+      ir:
+        en: IR
+      # Same in all languages — VZ = Visual short-code, game-specific
+      # two-letter designation used unchanged in all languages
+      visual:
+        en: VZ
+      # Same in all languages — RWR acronym (see sensor_kind.rwr above)
+      rwr:
+        en: RWR
+      # Same in all languages — SNP = Sonar Passive short-code
+      sonar_passive:
+        en: SNP
+      # Same in all languages — SNA = Sonar Active short-code
+      sonar_active:
+        en: SNA
+    tooltip:
+      type:
+        de: Typ
+        en: Type
+        es: Tipo
+        fr: Type
+        it: Tipo
+        ja: 種別
+        ko: 유형
+        "pt-BR": Tipo
+        ru: Тип
+        zh: 类型
+        "zh-TW": 類型
+      mode:
+        de: Modus
+        en: Mode
+        es: Modo
+        fr: Mode
+        it: Modalità
+        ja: モード
+        ko: 모드
+        "pt-BR": Modo
+        ru: Режим
+        zh: 模式
+        "zh-TW": 模式
+      # DC-1135: the three detection modes shown in the sensor tooltip's Mode
+      # row, matching the manual's sensors chapter ("Detection Mode"). These
+      # describe HOW a contact was detected, distinct from the EMCON state
+      # strings under `sensors.emcon`.
+      mode_passive:
+        de: Passiv
+        en: Passive
+        es: Pasivo
+        fr: Passif
+        it: Passivo
+        ja: パッシブ
+        ko: 수동
+        "pt-BR": Passivo
+        ru: Пассивный
+        zh: 被动
+        "zh-TW": 被動
+      mode_active_emission:
+        de: Aktive Emission
+        en: Active emission
+        es: Emisión activa
+        fr: Émission active
+        it: Emissione attiva
+        ja: アクティブ放射
+        ko: 능동 방사
+        "pt-BR": Emissão ativa
+        ru: Активное излучение
+        zh: 主动辐射
+        "zh-TW": 主動輻射
+      mode_active_return:
+        de: Aktives Echo
+        en: Active return
+        es: Eco activo
+        fr: Écho actif
+        it: Eco attivo
+        ja: アクティブ反射
+        ko: 능동 반사
+        "pt-BR": Eco ativo
+        ru: Активное эхо
+        zh: 主动回波
+        "zh-TW": 主動回波
+      snr:
+        de: Signalstärke
+        en: Signal strength
+        es: Intensidad de señal
+        fr: Intensité du signal
+        it: Intensità segnale
+        ja: 信号強度
+        ko: 신호 강도
+        "pt-BR": Intensidade do sinal
+        ru: Уровень сигнала
+        zh: 信号强度
+        "zh-TW": 信號強度
+      iff_margin:
+        de: IFF-Marge
+        en: IFF Margin
+        es: Margen IFF
+        fr: Marge IFF
+        it: Margine IFF
+        ja: IFF余裕値
+        ko: IFF 마진
+        "pt-BR": Margem IFF
+        ru: Запас IFF
+        zh: IFF余量
+        "zh-TW": IFF餘量
+      iff_none:
+        de: N/V
+        en: N/A
+        es: N/D
+        fr: N/A
+        it: N/D
+        ja: 該当なし
+        ko: 해당 없음
+        "pt-BR": N/D
+        ru: Н/Д
+        zh: 不适用
+        "zh-TW": 不適用
+      sensitivity:
+        de: Empfindlichkeit
+        en: Sensitivity
+        es: Sensibilidad
+        fr: Sensibilité
+        it: Sensibilità
+        ja: 感度
+        ko: 감도
+        "pt-BR": Sensibilidade
+        ru: Чувствительность
+        zh: 灵敏度
+        "zh-TW": 靈敏度
+      signal:
+        de: Empfangenes Signal
+        en: Received signal
+        es: Señal recibida
+        fr: Signal reçu
+        it: Segnale ricevuto
+        ja: 受信信号
+        ko: 수신 신호
+        "pt-BR": Sinal recebido
+        ru: Принятый сигнал
+        zh: 接收信号
+        "zh-TW": 接收信號
+      notching:
+        de: Notching
+        en: Notching
+        es: Notching
+        fr: Notching
+        it: Notching
+        ja: ノッチング
+        ko: 노칭
+        "pt-BR": Notching
+        ru: Ноучинг
+        zh: 陷波
+        "zh-TW": 陷波
+      reverberation_loss:
+        de: Nachhallverlust
+        en: Reverberation loss
+        es: Pérdida por reverberación
+        fr: Perte par réverbération
+        it: Perdita per riverbero
+        ja: 残響損失
+        ko: 잔향 손실
+        "pt-BR": Perda por reverberação
+        ru: Потери реверберации
+        zh: 混响损失
+        "zh-TW": 混響損失
+      look_down_clutter:
+        de: Clutter
+        en: Clutter
+        es: Clutter
+        fr: Fouillis
+        it: Clutter
+        ja: クラッター
+        ko: 클러터
+        "pt-BR": Clutter
+        ru: Помехи
+        zh: 杂波
+        "zh-TW": 雜波
+      thermocline_loss:
+        de: Thermoklinverlust
+        en: Thermocline loss
+        es: Pérdida por termoclina
+        fr: Perte par thermocline
+        it: Perdita per termoclino
+        ja: 水温躍層損失
+        ko: 수온약층 손실
+        "pt-BR": Perda por termoclina
+        ru: Потери термоклина
+        zh: 温跃层损失
+        "zh-TW": 溫躍層損失
+      shallow_water_loss:
+        de: Flachwasserverlust
+        en: Shallow water loss
+        es: Pérdida en aguas poco profundas
+        fr: Perte en eau peu profonde
+        it: Perdita in acque poco profonde
+        ja: 浅水域損失
+        ko: 얕은 수심 손실
+        "pt-BR": Perda em água rasa
+        ru: Потери на мелководье
+        zh: 浅水损失
+        "zh-TW": 淺水損失
+      cz_boost:
+        de: KZ-Verstärkung
+        en: CZ boost
+        es: Refuerzo CZ
+        fr: Gain CZ
+        it: Boost ZC
+        ja: CZ増幅
+        ko: CZ 부스트
+        "pt-BR": Ganho CZ
+        ru: Усиление КЗ
+        zh: 汇聚区增益
+        "zh-TW": 匯聚區增益
+      cavitation:
+        de: KAVITATION
+        en: CAVITATION
+        es: CAVITACIÓN
+        fr: CAVITATION
+        it: CAVITAZIONE
+        ja: キャビテーション
+        ko: 캐비테이션
+        "pt-BR": CAVITAÇÃO
+        ru: КАВИТАЦИЯ
+        zh: 空化
+        "zh-TW": 空化
+      net_snr:
+        de: Signalstärke (netto)
+        en: Signal strength
+        es: Intensidad de señal
+        fr: Intensité du signal
+        it: Intensità segnale
+        ja: 信号強度
+        ko: 신호 강도
+        "pt-BR": Intensidade do sinal
+        ru: Уровень сигнала
+        zh: 信号强度
+        "zh-TW": 信號強度
+      # DC-504: track-file capacity line in the own-sensor tooltip.
+      max_contacts:
+        de: "Max. Kontakte"
+        en: "Max contacts"
+        es: "Contactos máx."
+        fr: "Contacts max."
+        it: "Contatti max"
+        ja: "最大接触数"
+        ko: "최대 접촉 수"
+        "pt-BR": "Contatos máx."
+        ru: "Макс. контактов"
+        zh: "最大接触数"
+        "zh-TW": "最大接觸數"
+      contacts_saturated:
+        de: "%{held}/%{max} (gesättigt)"
+        en: "%{held}/%{max} (saturated)"
+        es: "%{held}/%{max} (saturado)"
+        fr: "%{held}/%{max} (saturé)"
+        it: "%{held}/%{max} (saturo)"
+        ja: "%{held}/%{max}（飽和）"
+        ko: "%{held}/%{max} (포화)"
+        "pt-BR": "%{held}/%{max} (saturado)"
+        ru: "%{held}/%{max} (насыщен)"
+        zh: "%{held}/%{max}（已饱和）"
+        "zh-TW": "%{held}/%{max}（已飽和）"
+      effective_accuracy:
+        de: ACC
+        en: ACC
+        es: ACC
+        fr: ACC
+        it: ACC
+        ja: ACC
+        ko: ACC
+        "pt-BR": ACC
+        ru: ACC
+        zh: ACC
+        "zh-TW": ACC
+  emissions:
+    rcs:
+      de: RCS
+      en: RCS
+      es: RCS
+      fr: SER
+      it: RCS
+      ja: RCS
+      ko: RCS
+      "pt-BR": RCS
+      ru: ЭПР
+      zh: RCS
+      "zh-TW": RCS
+    sonar_noise:
+      de: Sonar-Rauschen
+      en: Sonar noise
+      es: Ruido sonar
+      fr: Bruit sonar
+      it: Rumore sonar
+      ja: ソナー雑音
+      ko: 소나 소음
+      "pt-BR": Ruído sonar
+      ru: Шум сонара
+      zh: 声呐噪声
+      "zh-TW": 聲納噪音
+    sonar_xs:
+      de: Sonar-QS
+      en: Sonar XS
+      es: Sección sonar
+      fr: Section sonar
+      it: Sezione sonar
+      ja: ソナー断面
+      ko: 소나 단면
+      "pt-BR": Seção sonar
+      ru: Акустическое сечение
+      zh: 声呐截面
+      "zh-TW": 聲納截面
+    ir_signature:
+      de: IR-Signatur
+      en: IR signature
+      es: Firma IR
+      fr: Signature IR
+      it: Firma IR
+      ja: IR特性
+      ko: IR 특성
+      "pt-BR": Assinatura IR
+      ru: ИК-сигнатура
+      zh: 红外特征
+      "zh-TW": 紅外特徵
+    visual_xs:
+      de: Visuelle QS
+      en: Visual XS
+      es: Sección visual
+      fr: Section visuelle
+      it: Sezione visiva
+      ja: 視覚断面
+      ko: 시각 단면
+      "pt-BR": Seção visual
+      ru: Визуальное сечение
+      zh: 视觉截面
+      "zh-TW": 視覺截面
+    radar_emission:
+      de: Radar-Emission
+      en: Radar emission
+      es: Emisión radar
+      fr: Émission radar
+      it: Emissione radar
+      ja: レーダー放射
+      ko: 레이더 방사
+      "pt-BR": Emissão radar
+      ru: Излучение радара
+      zh: 雷达辐射
+      "zh-TW": 雷達輻射
+  contact:
+    # DC-1082: subtitle for a track-code link whose contact has been
+    # dropped from the snapshot (lost track — no class/affiliation claim).
+    lost:
+      de: Kontakt verloren
+      en: Lost contact
+      es: Contacto perdido
+      fr: Contact perdu
+      it: Contatto perso
+      ja: コンタクト喪失
+      ko: 접촉 상실
+      "pt-BR": Contato perdido
+      ru: Контакт потерян
+      zh: 目标丢失
+      "zh-TW": 目標遺失
+    # Contact tooltip TRK readout — fix type, last-fix framing, engager count,
+    # and the passive-sensor qualifier on the DET readout.
+    fix:
+      firm:
+        de: FIRM
+        en: FIRM
+        es: FIRM
+        fr: FIRM
+        it: FIRM
+        ja: FIRM
+        ko: FIRM
+        "pt-BR": FIRM
+        ru: FIRM
+        zh: FIRM
+        "zh-TW": FIRM
+      bearing_only:
+        de: BEARING-ONLY
+        en: BEARING-ONLY
+        es: BEARING-ONLY
+        fr: BEARING-ONLY
+        it: BEARING-ONLY
+        ja: BEARING-ONLY
+        ko: BEARING-ONLY
+        "pt-BR": BEARING-ONLY
+        ru: BEARING-ONLY
+        zh: BEARING-ONLY
+        "zh-TW": BEARING-ONLY
+    passive_qualifier:
+      de: "(passiv)"
+      en: "(passive)"
+      es: "(pasivo)"
+      fr: "(passif)"
+      it: "(passivo)"
+      ja: "(パッシブ)"
+      ko: "(수동)"
+      "pt-BR": "(passivo)"
+      ru: "(пассив.)"
+      zh: "(被动)"
+      "zh-TW": "(被動)"
+    rel_from:
+      de: "VON"
+      en: "FROM"
+      es: "DE"
+      fr: "DE"
+      it: "DA"
+      ja: "←"
+      ko: "←"
+      "pt-BR": "DE"
+      ru: "ОТ"
+      zh: "自"
+      "zh-TW": "自"
+    engagers:
+      de: "%{count} freundlich"
+      en: "%{count} friendly"
+      es: "%{count} amigas"
+      fr: "%{count} amies"
+      it: "%{count} amiche"
+      ja: "%{count} 友軍"
+      ko: "%{count} 아군"
+      "pt-BR": "%{count} amigas"
+      ru: "%{count} союзн."
+      zh: "%{count} 友军"
+      "zh-TW": "%{count} 友軍"
+    position_uncertainty:
+      de: Positionsunsicherheit
+      en: Position uncertainty
+      es: Incertidumbre de posición
+      fr: Incertitude de position
+      it: Incertezza di posizione
+      ja: 位置の不確実性
+      ko: 위치 불확실성
+      "pt-BR": Incerteza de posição
+      ru: Неопределённость позиции
+      zh: 位置不确定性
+      "zh-TW": 位置不確定性
+    # #1694: CSE/SPD datablock-cell tooltip when an inline ±° / ± velocity-σ
+    # suffix is shown — explains both the abbreviation and the ± figure.
+    course_with_uncertainty:
+      de: "KRS: Kurs über Grund; ± zeigt die Kursunsicherheit."
+      en: "CSE: Course over ground; ± shows the heading uncertainty."
+      es: "RBO: Rumbo sobre el fondo; ± indica la incertidumbre de rumbo."
+      fr: "CAP : Cap sur le fond ; ± indique l'incertitude de cap."
+      it: "ROT: Rotta rispetto al fondo; ± indica l'incertezza di rotta."
+      ja: "針路：対地針路。± は針路の不確実性を示す。"
+      ko: "침로：대지 침로. ±는 침로 불확실성을 나타냄."
+      "pt-BR": "RMO: Rumo sobre o fundo; ± indica a incerteza de rumo."
+      ru: "КУРС: курс относительно грунта; ± показывает неопределённость курса."
+      zh: "航向：对地航向；± 表示航向不确定性。"
+      "zh-TW": "航向：對地航向；± 表示航向不確定性。"
+    speed_with_uncertainty:
+      de: "GESCHW: Geschwindigkeit über Grund; ± zeigt die Geschwindigkeitsunsicherheit."
+      en: "SPD: Speed over ground; ± shows the speed uncertainty."
+      es: "VEL: Velocidad sobre el fondo; ± indica la incertidumbre de velocidad."
+      fr: "VIT : Vitesse sur le fond ; ± indique l'incertitude de vitesse."
+      it: "VEL: Velocità rispetto al fondo; ± indica l'incertezza di velocità."
+      ja: "速力：対地速力。± は速力の不確実性を示す。"
+      ko: "속력：대지 속력. ±는 속력 불확실성을 나타냄."
+      "pt-BR": "VEL: Velocidade sobre o fundo; ± indica a incerteza de velocidade."
+      ru: "СКОР: скорость относительно грунта; ± показывает неопределённость скорости."
+      zh: "航速：对地航速；± 表示航速不确定性。"
+      "zh-TW": "航速：對地航速；± 表示航速不確定性。"
+    estimated_count:
+      label:
+        de: Geschätzte Anzahl
+        en: Est. count
+        es: Recuento estimado
+        fr: Nombre estimé
+        it: Conteggio stimato
+        ja: 推定数
+        ko: 추정 수
+        "pt-BR": Contagem estimada
+        ru: Оценка числа
+        zh: 估计数量
+        "zh-TW": 估計數量
+      tooltip:
+        de: "Geschätzte Anzahl der Ziele in dieser zusammengeführten Spur: die Sensoren können sie nicht einzeln auflösen."
+        en: "Estimated number of targets in this merged track: sensors cannot resolve them individually."
+        es: "Número estimado de objetivos en esta traza fusionada: los sensores no pueden distinguirlos individualmente."
+        fr: "Nombre estimé de cibles dans cette piste fusionnée : les capteurs ne peuvent pas les distinguer individuellement."
+        it: "Numero stimato di bersagli in questa traccia unificata: i sensori non possono risolverli singolarmente."
+        ja: 統合された追尾に含まれる目標の推定数：センサーは個別に識別できません。
+        ko: 병합된 추적에 포함된 표적의 추정 수：센서로는 개별 식별할 수 없습니다.
+        "pt-BR": "Número estimado de alvos nesta trilha mesclada: os sensores não conseguem distingui-los individualmente."
+        ru: "Оценочное число целей в этой объединённой трассе: датчики не могут различить их по отдельности."
+        zh: 该合并航迹中目标的估计数量：传感器无法逐个分辨。
+        "zh-TW": 該合併航跡中目標的估計數量：感測器無法逐一分辨。
+    last_seen:
+      de: Zuletzt gesehen
+      en: Last seen
+      es: Visto por última vez
+      fr: Vu pour la dernière fois
+      it: Ultimo avvistamento
+      ja: 最終確認
+      ko: 마지막 탐지
+      "pt-BR": Visto por último
+      ru: Последний контакт
+      zh: 最后发现
+      "zh-TW": 最後發現
+    elapsed_minutes:
+      de: "vor %{mins} Min. %{secs} Sek."
+      en: "%{mins}m %{secs}s ago"
+      es: "hace %{mins} min %{secs} s"
+      fr: "il y a %{mins} min %{secs} s"
+      it: "%{mins} min %{secs} s fa"
+      ja: "%{mins}分%{secs}秒前"
+      ko: "%{mins}분 %{secs}초 전"
+      "pt-BR": "%{mins}min %{secs}s atrás"
+      ru: "%{mins} мин. %{secs} сек. назад"
+      zh: "%{mins}分%{secs}秒前"
+      "zh-TW": "%{mins}分%{secs}秒前"
+    elapsed_seconds:
+      de: "vor %{secs} Sek."
+      en: "%{secs}s ago"
+      es: "hace %{secs} s"
+      fr: "il y a %{secs} s"
+      it: "%{secs} s fa"
+      ja: "%{secs}秒前"
+      ko: "%{secs}초 전"
+      "pt-BR": "%{secs}s atrás"
+      ru: "%{secs} сек. назад"
+      zh: "%{secs}秒前"
+      "zh-TW": "%{secs}秒前"
+    # DC-1133.5: masthead tracking-age readout ("how long has this track
+    # been held"), appended to the class subtitle line.
+    tracking_age_minutes:
+      de: "verfolgt seit %{mins} Min. %{secs} Sek."
+      en: "tracked %{mins}m %{secs}s"
+      es: "seguido %{mins} min %{secs} s"
+      fr: "suivi depuis %{mins} min %{secs} s"
+      it: "tracciato da %{mins} min %{secs} s"
+      ja: "追尾 %{mins}分%{secs}秒"
+      ko: "추적 %{mins}분 %{secs}초"
+      "pt-BR": "rastreado %{mins}min %{secs}s"
+      ru: "сопровождается %{mins} мин. %{secs} сек."
+      zh: "已跟踪%{mins}分%{secs}秒"
+      "zh-TW": "已追蹤%{mins}分%{secs}秒"
+    tracking_age_seconds:
+      de: "verfolgt seit %{secs} Sek."
+      en: "tracked %{secs}s"
+      es: "seguido %{secs} s"
+      fr: "suivi depuis %{secs} s"
+      it: "tracciato da %{secs} s"
+      ja: "追尾 %{secs}秒"
+      ko: "추적 %{secs}초"
+      "pt-BR": "rastreado %{secs}s"
+      ru: "сопровождается %{secs} сек."
+      zh: "已跟踪%{secs}秒"
+      "zh-TW": "已追蹤%{secs}秒"
+    # DC-1133.5: live summary on the DET accordion row header.
+    det_summary:
+      de: "%{units} EINHEITEN · %{sensors} SENSOREN"
+      en: "%{units} UNITS · %{sensors} SENSORS"
+      es: "%{units} UNIDADES · %{sensors} SENSORES"
+      fr: "%{units} UNITÉS · %{sensors} CAPTEURS"
+      it: "%{units} UNITÀ · %{sensors} SENSORI"
+      ja: "%{units}ユニット · %{sensors}センサー"
+      ko: "유닛 %{units} · 센서 %{sensors}"
+      "pt-BR": "%{units} UNIDADES · %{sensors} SENSORES"
+      ru: "%{units} ЕД. · %{sensors} ДАТЧ."
+      zh: "%{units}个单位 · %{sensors}个传感器"
+      "zh-TW": "%{units}個單位 · %{sensors}個感測器"
+    # DC-1133.5: live summary on the EVD accordion row header — the number
+    # of observed classification attributes.
+    evd_summary:
+      de: "%{count} MERKMALE"
+      en: "%{count} ATTRIBUTES"
+      es: "%{count} ATRIBUTOS"
+      fr: "%{count} ATTRIBUTS"
+      it: "%{count} ATTRIBUTI"
+      ja: "%{count}件の属性"
+      ko: "속성 %{count}개"
+      "pt-BR": "%{count} ATRIBUTOS"
+      ru: "%{count} ПРИЗН."
+      zh: "%{count}项特征"
+      "zh-TW": "%{count}項特徵"
+    # DC-1133.5: primary-section header of the contact inspect panel.
+    assessment:
+      de: Bewertung
+      en: Assessment
+      es: Evaluación
+      fr: Évaluation
+      it: Valutazione
+      ja: 評価
+      ko: 평가
+      "pt-BR": Avaliação
+      ru: Оценка
+      zh: 评估
+      "zh-TW": 評估
+    bda:
+      label:
+        de: BDA
+        en: BDA
+        es: BDA
+        fr: BDA
+        it: BDA
+        ja: BDA
+        ko: BDA
+        "pt-BR": BDA
+        ru: БОП
+        zh: BDA
+        "zh-TW": BDA
+      tooltip:
+        de: "Schlachtschadensbewertung: geschätzter Zustand des Kontakts nach dem Gefecht."
+        en: "Battle Damage Assessment: estimated state of the contact after engagement."
+        es: "Evaluación de daños en combate: estado estimado del contacto tras el combate."
+        fr: "Évaluation des dommages de combat : état estimé du contact après engagement."
+        it: "Valutazione dei danni in combattimento: stato stimato del contatto dopo l'ingaggio."
+        ja: 戦闘損害評価：交戦後のコンタクトの推定状態。
+        ko: 전투 피해 평가：교전 후 접촉 대상의 추정 상태.
+        "pt-BR": "Avaliação de danos em combate: estado estimado do contato após o engajamento."
+        ru: "Оценка боевого ущерба: расчётное состояние контакта после боя."
+        zh: 战斗损伤评估：交战后目标的估计状态。
+        "zh-TW": 戰鬥損傷評估：交戰後目標的估計狀態。
+      probably_destroyed:
+        de: Wahrscheinlich vernichtet
+        en: Probably Destroyed
+        es: Probablemente destruido
+        fr: Probablement détruit
+        it: Probabilmente distrutto
+        ja: おそらく撃破
+        ko: 아마도 격파
+        "pt-BR": Provavelmente destruído
+        ru: Вероятно уничтожен
+        zh: 可能已被摧毁
+        "zh-TW": 可能已被摧毀
+      uncertain:
+        de: Ungewiss
+        en: Uncertain
+        es: Incierto
+        fr: Incertain
+        it: Incerto
+        ja: 不確実
+        ko: 불확실
+        "pt-BR": Incerto
+        ru: Неопределённо
+        zh: 不确定
+        "zh-TW": 不確定
+    # DC-36.6: contact identification rows (rendered in the ASSESSMENT
+    # primary section since DC-1133.5)
+    identity:
+      type:
+        de: Typ
+        en: Type
+        es: Tipo
+        fr: Type
+        it: Tipo
+        ja: 種別
+        ko: 유형
+        "pt-BR": Tipo
+        ru: Тип
+        zh: 类型
+        "zh-TW": 類型
+      platform:
+        de: Plattform
+        en: Platform
+        es: Plataforma
+        fr: Plateforme
+        it: Piattaforma
+        ja: プラットフォーム
+        ko: 플랫폼
+        "pt-BR": Plataforma
+        ru: Платформа
+        zh: 平台
+        "zh-TW": 平台
+      basis:
+        de: Basis
+        en: Basis
+        es: Base
+        fr: Base
+        it: Base
+        ja: 根拠
+        ko: 기반
+        "pt-BR": Base
+        ru: Основание
+        zh: 依据
+        "zh-TW": 依據
+      emitters:
+        de: Emitter
+        en: Emitters
+        es: Emisores
+        fr: Émetteurs
+        it: Emettitori
+        ja: 放射器
+        ko: 방사기
+        "pt-BR": Emissores
+        ru: Излучатели
+        zh: 发射器
+        "zh-TW": 發射器
+      platform_unresolved:
+        de: PLATTFORM UNAUFGELÖST
+        en: PLATFORM UNRESOLVED
+        es: PLATAFORMA NO IDENTIFICADA
+        fr: PLATEFORME NON RÉSOLUE
+        it: PIATTAFORMA NON RISOLTA
+        ja: プラットフォーム未確認
+        ko: 플랫폼 미식별
+        "pt-BR": PLATAFORMA NÃO IDENTIFICADA
+        ru: ПЛАТФОРМА НЕ УСТАНОВЛЕНА
+        zh: 平台未识别
+        "zh-TW": 平台未識別
+      platform_cluster:
+        de: "EINES VON %{names}"
+        en: "ONE OF %{names}"
+        es: "UNO DE %{names}"
+        fr: "L'UN DE %{names}"
+        it: "UNO DI %{names}"
+        ja: "%{names} のいずれか"
+        ko: "%{names} 중 하나"
+        "pt-BR": "UM DE %{names}"
+        ru: "ОДИН ИЗ %{names}"
+        zh: "%{names} 之一"
+        "zh-TW": "%{names} 之一"
+      basis_kinematic:
+        de: AUS KINEMATIK
+        en: FROM KINEMATICS
+        es: DE CINEMÁTICA
+        fr: PAR CINÉMATIQUE
+        it: DA CINEMATICA
+        ja: 運動学から
+        ko: 운동학에서
+        "pt-BR": DA CINEMÁTICA
+        ru: ИЗ КИНЕМАТИКИ
+        zh: 来自运动学
+        "zh-TW": 來自運動學
+      outline:
+        confirmed:
+          de: BESTÄTIGT
+          en: CONFIRMED
+          es: CONFIRMADO
+          fr: CONFIRMÉ
+          it: CONFERMATO
+          ja: 確認済み
+          ko: 확인됨
+          "pt-BR": CONFIRMADO
+          ru: ПОДТВЕРЖДЁН
+          zh: 已确认
+          "zh-TW": 已確認
+        tentative:
+          de: VORLÄUFIG
+          en: TENTATIVE
+          es: PROVISIONAL
+          fr: PROVISOIRE
+          it: PROVVISORIO
+          ja: 暫定
+          ko: 잠정적
+          "pt-BR": PROVISÓRIO
+          ru: ПРЕДВАРИТЕЛЬНО
+          zh: 暂定
+          "zh-TW": 暫定
+      propulsion:
+        rotary:
+          de: ROTOR
+          en: rotary
+          es: ROTATIVO
+          fr: ROTATIF
+          it: ROTATIVO
+          ja: ロータリー
+          ko: 회전익
+          "pt-BR": ROTATIVO
+          ru: РОТОР
+          zh: 旋翼
+          "zh-TW": 旋翼
+        turbojet:
+          de: STRAHLTRIEBWERK
+          en: JET
+          es: JET
+          fr: JET
+          it: JET
+          ja: ジェット
+          ko: 제트
+          "pt-BR": JATO
+          ru: РЕАКТИВНЫЙ
+          zh: 喷气
+          "zh-TW": 噴射
+        propeller:
+          de: PROPELLER
+          en: PROPELLER
+          es: HÉLICE
+          fr: HÉLICE
+          it: ELICA
+          ja: プロペラ
+          ko: 프로펠러
+          "pt-BR": HÉLICE
+          ru: ВОЗДУШНЫЙ ВИНТ
+          zh: 螺旋桨
+          "zh-TW": 螺旋槳
+        rocket:
+          de: RAKETE
+          en: ROCKET
+          es: COHETE
+          fr: FUSÉE
+          it: RAZZO
+          ja: ロケット
+          ko: 로켓
+          "pt-BR": FOGUETE
+          ru: РАКЕТНЫЙ
+          zh: 火箭
+          "zh-TW": 火箭
+        screw:
+          de: SCHIFFSSCHRAUBE
+          en: SCREW
+          es: HÉLICE NAVAL
+          fr: HÉLICE MARINE
+          it: ELICA NAVALE
+          ja: スクリュー
+          ko: 스크류
+          "pt-BR": HÉLICE NAVAL
+          ru: ГРЕБНОЙ ВИНТ
+          zh: 螺旋桨（海军）
+          "zh-TW": 螺旋槳（海軍）
+        pumpjet:
+          de: PUMPJET
+          en: PUMP-JET
+          es: PROPULSOR DE AGUA
+          fr: POMPE-JET
+          it: POMPA-JET
+          ja: ポンプジェット
+          ko: 펌프제트
+          "pt-BR": JATO D'ÁGUA
+          ru: ВОДОМЁТНЫЙ ДВИЖИТЕЛЬ
+          zh: 泵喷
+          "zh-TW": 泵噴
+      modality:
+        micro_doppler:
+          de: MIKRO-DOPPLER
+          en: MICRO-DOPPLER
+          es: MICRO-DOPPLER
+          fr: MICRO-DOPPLER
+          it: MICRO-DOPPLER
+          ja: マイクロドップラー
+          ko: 마이크로-도플러
+          "pt-BR": MICRO-DOPPLER
+          ru: МИКРО-ДОПЛЕР
+          zh: 微多普勒
+          "zh-TW": 微多普勒
+        demon:
+          de: DEMON
+          en: DEMON
+          es: DEMON
+          fr: DEMON
+          it: DEMON
+          ja: DEMON
+          ko: DEMON
+          "pt-BR": DEMON
+          ru: DEMON
+          zh: DEMON
+          "zh-TW": DEMON
+      node:
+        unknown:
+          de: UNBEKANNT
+          en: UNKNOWN
+          es: DESCONOCIDO
+          fr: INCONNU
+          it: SCONOSCIUTO
+          ja: 不明
+          ko: 미식별
+          "pt-BR": DESCONHECIDO
+          ru: НЕИЗВЕСТНО
+          zh: 未知
+          "zh-TW": 未知
+        air_generic:
+          de: LUFT (GENERISCH)
+          en: "AIR (GENERIC)"
+          es: "AIRE (GENÉRICO)"
+          fr: "AÉRIEN (GÉNÉRIQUE)"
+          it: "AEREO (GENERICO)"
+          ja: 航空（一般）
+          ko: "항공 (일반)"
+          "pt-BR": "AÉREO (GENÉRICO)"
+          ru: "ВОЗДУШНЫЙ (ОБЩИЙ)"
+          zh: 航空（通用）
+          "zh-TW": 航空（通用）
+        surface_generic:
+          de: OBERFLÄCHE (GENERISCH)
+          en: "SURFACE (GENERIC)"
+          es: "SUPERFICIE (GENÉRICO)"
+          fr: "SURFACE (GÉNÉRIQUE)"
+          it: "SUPERFICIE (GENERICO)"
+          ja: 水上（一般）
+          ko: "수상 (일반)"
+          "pt-BR": "SUPERFÍCIE (GENÉRICO)"
+          ru: "НАДВОДНЫЙ (ОБЩИЙ)"
+          zh: 水面（通用）
+          "zh-TW": 水面（通用）
+        subsurface_generic:
+          de: UNTERWASSER (GENERISCH)
+          en: "SUBSURFACE (GENERIC)"
+          es: "SUBSUPERFICIE (GENÉRICO)"
+          fr: "SOUS-SURFACE (GÉNÉRIQUE)"
+          it: "SOTTOSUPERFICIE (GENERICO)"
+          ja: 水中（一般）
+          ko: "수중 (일반)"
+          "pt-BR": "SUBSUPERFÍCIE (GENÉRICO)"
+          ru: "ПОДВОДНЫЙ (ОБЩИЙ)"
+          zh: 水下（通用）
+          "zh-TW": 水下（通用）
+    track_solution:
+      solution:
+        de: Lösung
+        en: Solution
+        es: Solución
+        fr: Solution
+        it: Soluzione
+        ja: 解
+        ko: 해
+        "pt-BR": Solução
+        ru: Решение
+        zh: 解算
+        "zh-TW": 解算
+      resolved:
+        de: AUFGELÖST
+        en: RESOLVED
+        es: RESUELTO
+        fr: RÉSOLU
+        it: RISOLTO
+        ja: 確定
+        ko: 확정
+        "pt-BR": RESOLVIDO
+        ru: ОПРЕДЕЛЁН
+        zh: 已确定
+        "zh-TW": 已確定
+      bearing_only:
+        de: NUR PEILUNG
+        en: BEARING-ONLY
+        es: SOLO DEMORA
+        fr: RELÈVEMENT SEUL
+        it: SOLO RILEVAMENTO
+        ja: 方位のみ
+        ko: 방위만
+        "pt-BR": APENAS MARCAÇÃO
+        ru: ТОЛЬКО ПЕЛЕНГ
+        zh: 仅方位
+        "zh-TW": 僅方位
+      # Vertical-axis qualifier appended to the TRK header (after the ALT/DPTH
+      # label) when the altitude axis is unresolved on an otherwise horizontally-
+      # resolved track (#2623) — so a high horizontal quality % is never presented
+      # as an unqualified track verdict while altitude is hidden.
+      alt_unresolved:
+        de: UNAUFGELÖST
+        en: UNRESOLVED
+        es: SIN RESOLVER
+        fr: NON RÉSOLU
+        it: NON RISOLTO
+        ja: 未確定
+        ko: 미확정
+        "pt-BR": NÃO RESOLVIDO
+        ru: НЕ ОПРЕДЕЛЁН
+        zh: 未确定
+        "zh-TW": 未確定
+      # X-axis "now" tick label (x = 0, right edge); older ticks read "<n>S" (#1670).
+      plot_now:
+        de: JETZT
+        en: NOW
+        es: AHORA
+        fr: MAINT
+        it: ORA
+        ja: 現在
+        ko: 현재
+        "pt-BR": AGORA
+        ru: СЕЙЧАС
+        zh: 现在
+        "zh-TW": 現在
+      # Hover tooltip for a plotted point: which line (BRG/POS), time-ago, and the
+      # track quality % at that observation, with a one-line gloss (#1670).
+      plot_point:
+        de: "%{series} · vor %{secs}S · %{quality}%\nSpurqualität bei dieser Beobachtung"
+        en: "%{series} · %{secs}S AGO · %{quality}%\nTrack quality at this observation"
+        es: "%{series} · hace %{secs}S · %{quality}%\nCalidad de rastreo en esta observación"
+        fr: "%{series} · il y a %{secs}S · %{quality}%\nQualité de piste à cette observation"
+        it: "%{series} · %{secs}S fa · %{quality}%\nQualità traccia in questa osservazione"
+        ja: "%{series} · %{secs}秒前 · %{quality}%\nこの観測時の航跡品質"
+        ko: "%{series} · %{secs}초 전 · %{quality}%\n이 관측 시점의 트랙 품질"
+        "pt-BR": "%{series} · há %{secs}S · %{quality}%\nQualidade do rastreio nesta observação"
+        ru: "%{series} · %{secs}С назад · %{quality}%\nКачество трека в этом наблюдении"
+        zh: "%{series} · %{secs}秒前 · %{quality}%\n该观测时刻的航迹质量"
+        "zh-TW": "%{series} · %{secs}秒前 · %{quality}%\n該觀測時刻的航跡品質"
+    classification:
+      size:
+        de: Größe (Radar)
+        en: Size (radar)
+        es: Tamaño (radar)
+        fr: Taille (radar)
+        it: Dimensione (radar)
+        ja: サイズ (レーダー)
+        ko: 크기 (레이더)
+        "pt-BR": Tamanho (radar)
+        ru: Размер (радар)
+        zh: 尺寸 (雷达)
+        "zh-TW": 尺寸 (雷達)
+      kinematics:
+        de: Kinematik
+        en: Kinematics
+        es: Cinemática
+        fr: Cinématique
+        it: Cinematica
+        ja: 運動
+        ko: 운동학
+        "pt-BR": Cinemática
+        ru: Кинематика
+        zh: 运动
+        "zh-TW": 運動
+      environment:
+        de: Umgebung
+        en: Environment
+        es: Entorno
+        fr: Environnement
+        it: Ambiente
+        ja: 環境
+        ko: 환경
+        "pt-BR": Ambiente
+        ru: Среда
+        zh: 环境
+        "zh-TW": 環境
+      acoustic:
+        de: Akustik
+        en: Acoustic
+        es: Acústica
+        fr: Acoustique
+        it: Acustica
+        ja: 音響
+        ko: 음향
+        "pt-BR": Acústica
+        ru: Акустика
+        zh: 声学
+        "zh-TW": 聲學
+      signature:
+        de: Signatur
+        en: Signature
+        es: Firma
+        fr: Signature
+        it: Firma
+        ja: シグネチャ
+        ko: 시그니처
+        "pt-BR": Assinatura
+        ru: Сигнатура
+        zh: 特征
+        "zh-TW": 特徵
+      acoustic_na_airborne:
+        de: n. v. (Luftziel)
+        en: n/a (airborne)
+        es: n/d (aéreo)
+        fr: s.o. (aérien)
+        it: n/d (aereo)
+        ja: 対象外 (空中)
+        ko: 해당 없음 (공중)
+        "pt-BR": n/d (aéreo)
+        ru: н/д (воздушная)
+        zh: 不适用 (空中)
+        "zh-TW": 不適用 (空中)
+      signature_none:
+        de: Noch keine Signatur
+        en: no signature yet
+        es: sin firma aún
+        fr: pas encore de signature
+        it: nessuna firma ancora
+        ja: シグネチャ未取得
+        ko: 시그니처 없음
+        "pt-BR": sem assinatura ainda
+        ru: сигнатуры пока нет
+        zh: 暂无特征
+        "zh-TW": 暫無特徵
+  follow:
+    de: Folgen
+    en: Follow
+    es: Seguir
+    fr: Suivre
+    it: Segui
+    ja: 追従
+    ko: 추종
+    "pt-BR": Seguir
+    ru: Следовать
+    zh: 跟随
+    "zh-TW": 跟隨
+  carrier_drones:
+    idle:
+      de: Bereit
+      en: Idle
+      es: Inactivo
+      fr: Inactif
+      it: Inattivo
+      ja: 待機
+      ko: 대기
+      "pt-BR": Inativo
+      ru: Простой
+      zh: 空闲
+      "zh-TW": 閒置
+    launching:
+      de: Start
+      en: Launching
+      es: Lanzando
+      fr: Lancement
+      it: Lancio
+      ja: 発艦中
+      ko: 발진 중
+      "pt-BR": Lançando
+      ru: Запуск
+      zh: 起飞中
+      "zh-TW": 起飛中
+    recovering:
+      de: Aufnahme
+      en: Recovering
+      es: Recuperando
+      fr: Récupération
+      it: Recupero
+      ja: 収容中
+      ko: 회수 중
+      "pt-BR": Recuperando
+      ru: Прием
+      zh: 回收中
+      "zh-TW": 回收中
+    servicing_lower:
+      de: "wartung"
+      en: "servicing"
+      es: "en servicio"
+      fr: "entretien"
+      it: "manutenzione"
+      ja: "整備中"
+      ko: "정비 중"
+      "pt-BR": "em manutenção"
+      ru: "обслуживание"
+      zh: "维护中"
+      "zh-TW": "維護中"
+    queued:
+      de: Warteschlange
+      en: Queued
+      es: En cola
+      fr: En attente
+      it: In coda
+      ja: 待機中
+      ko: 대기 중
+      "pt-BR": Na fila
+      ru: В очереди
+      zh: 排队中
+      "zh-TW": 排隊中
+    launch:
+      de: Starten
+      en: Launch
+      es: Lanzar
+      fr: Lancer
+      it: Lancio
+      ja: 発射
+      ko: 발사
+      "pt-BR": Lançar
+      ru: Запуск
+      zh: 发射
+      "zh-TW": 發射
+    collapse:
+      de: Zuklappen
+      en: Collapse
+      es: Colapsar
+      fr: Réduire
+      it: Comprimi
+      ja: 折り畳む
+      ko: 접기
+      "pt-BR": Recolher
+      ru: Свернуть
+      zh: 折叠
+      "zh-TW": 摺疊
+    expand:
+      de: Aufklappen
+      en: Expand
+      es: Expandir
+      fr: Développer
+      it: Espandi
+      ja: 展開
+      ko: 펼치기
+      "pt-BR": Expandir
+      ru: Развернуть
+      zh: 展开
+      "zh-TW": 展開
+    filter_show:
+      de: "%{class} anzeigen"
+      en: "Show %{class}"
+      es: "Mostrar %{class}"
+      fr: "Afficher %{class}"
+      it: "Mostra %{class}"
+      ja: "%{class}を表示"
+      ko: "%{class} 표시"
+      "pt-BR": "Mostrar %{class}"
+      ru: "Показать %{class}"
+      zh: "显示%{class}"
+      "zh-TW": "顯示%{class}"
+    filter_hide:
+      de: "%{class} ausblenden"
+      en: "Hide %{class}"
+      es: "Ocultar %{class}"
+      fr: "Masquer %{class}"
+      it: "Nascondi %{class}"
+      ja: "%{class}を非表示"
+      ko: "%{class} 숨기기"
+      "pt-BR": "Ocultar %{class}"
+      ru: "Скрыть %{class}"
+      zh: "隐藏%{class}"
+      "zh-TW": "隱藏%{class}"
+    filter_hidden_count:
+      de: "%{count} durch Filter ausgeblendet"
+      en: "%{count} hidden by filter"
+      es: "%{count} ocultos por filtro"
+      fr: "%{count} masqués par le filtre"
+      it: "%{count} nascosti dal filtro"
+      ja: "フィルターにより%{count}件非表示"
+      ko: "필터로 %{count}개 숨김"
+      "pt-BR": "%{count} ocultos pelo filtro"
+      ru: "%{count} скрыто фильтром"
+      zh: "筛选隐藏了%{count}个"
+      "zh-TW": "篩選隱藏了%{count}個"
+    deploy_inventory_hint:
+      de: "Rechtsklick auf Karte oder Kontakt, um %{count} auszubringen"
+      en: "Right-click the map or a contact to deploy %{count} selected"
+      es: "Clic derecho en el mapa o un contacto para desplegar %{count} seleccionados"
+      fr: "Clic droit sur la carte ou un contact pour déployer %{count} sélectionnés"
+      it: "Clic destro sulla mappa o su un contatto per schierare %{count} selezionati"
+      ja: "マップまたは接触を右クリックで選択中の%{count}機を発進"
+      ko: "지도나 접촉을 우클릭하여 선택한 %{count}기 전개"
+      "pt-BR": "Clique direito no mapa ou contato para implantar %{count} selecionados"
+      ru: "ПКМ по карте или контакту для развёртывания выбранных: %{count}"
+      zh: "右键点击地图或接触以部署所选 %{count} 个"
+      "zh-TW": "右鍵點擊地圖或接觸以部署所選 %{count} 個"
+    deploy_hint:
+      de: "Rechtsklick auf Karte oder Kontakt zum Ausbringen"
+      en: "Right-click the map or a contact to deploy"
+      es: "Clic derecho en el mapa o un contacto para desplegar"
+      fr: "Clic droit sur la carte ou un contact pour déployer"
+      it: "Clic destro sulla mappa o su un contatto per schierare"
+      ja: "マップまたは接触を右クリックで発進"
+      ko: "지도나 접촉을 우클릭하여 전개"
+      "pt-BR": "Clique direito no mapa ou contato para implantar"
+      ru: "ПКМ по карте или контакту для развёртывания"
+      zh: "右键点击地图或接触以部署"
+      "zh-TW": "右鍵點擊地圖或接觸以部署"
+    incompatible:
+      domain:
+        de: "Domänenkonflikt: diese Fahrzeuge können keine Gruppe bilden"
+        en: "Domain mismatch: these vehicles can't form a group"
+        es: "Conflicto de dominio: estos vehículos no pueden formar un grupo"
+        fr: "Incompatibilité de domaine : ces véhicules ne peuvent pas former un groupe"
+        it: "Conflitto di dominio: questi veicoli non possono formare un gruppo"
+        ja: "ドメイン不一致：これらの機体はグループを編成できません"
+        ko: "도메인 불일치：이 유닛들은 그룹을 구성할 수 없습니다"
+        "pt-BR": "Incompatibilidade de domínio: esses veículos não podem formar um grupo"
+        ru: "Несовместимость типов: эти единицы не могут образовать группу"
+        zh: "领域不匹配：这些载具无法组成编队"
+        "zh-TW": "領域不相符：這些載具無法組成編隊"
+      speed:
+        de: "Geschwindigkeitsbereiche überlappen sich nicht"
+        en: "Speed envelopes don't overlap"
+        es: "Los rangos de velocidad no se solapan"
+        fr: "Les plages de vitesse ne se chevauchent pas"
+        it: "Gli inviluppi di velocità non si sovrappongono"
+        ja: "速度範囲が重なりません"
+        ko: "속도 범위가 겹치지 않습니다"
+        "pt-BR": "Os envelopes de velocidade não se sobrepõem"
+        ru: "Диапазоны скоростей не пересекаются"
+        zh: "速度包线不重叠"
+        "zh-TW": "速度包線不重疊"
+      altitude:
+        de: "Höhenbereiche überlappen sich nicht"
+        en: "Altitude envelopes don't overlap"
+        es: "Los rangos de altitud no se solapan"
+        fr: "Les plages d'altitude ne se chevauchent pas"
+        it: "Gli inviluppi di altitudine non si sovrappongono"
+        ja: "高度範囲が重なりません"
+        ko: "고도 범위가 겹치지 않습니다"
+        "pt-BR": "Os envelopes de altitude não se sobrepõem"
+        ru: "Диапазоны высот не пересекаются"
+        zh: "高度包线不重叠"
+        "zh-TW": "高度包線不重疊"
+  weight:
+    de: Gewicht
+    en: Weight
+    es: Peso
+    fr: Poids
+    it: Peso
+    ja: 重量
+    ko: 중량
+    "pt-BR": Peso
+    ru: Вес
+    zh: 重量
+    "zh-TW": 重量
+  max_speed:
+    de: Höchstgeschw.
+    en: Max Speed
+    es: Vel. máxima
+    fr: Vitesse max
+    it: Vel. massima
+    ja: 最高速度
+    ko: 최대 속도
+    "pt-BR": Vel. máxima
+    ru: Макс. скорость
+    zh: 最大速度
+    "zh-TW": 最大速度
+  turn_rate:
+    de: Wenderate
+    en: Turn Rate
+    es: Vel. de giro
+    fr: Vitesse virage
+    it: Vel. virata
+    ja: 旋回速度
+    ko: 선회율
+    "pt-BR": Taxa de curva
+    ru: Скор. поворота
+    zh: 转弯速率
+    "zh-TW": 轉彎速率
+  altitude_range:
+    de: Höhenbereich
+    en: Altitude Range
+    es: Rango altitud
+    fr: Plage altitude
+    it: Quota min–max
+    ja: 高度範囲
+    ko: 고도 범위
+    "pt-BR": Faixa altitude
+    ru: Диап. высоты
+    zh: 高度范围
+    "zh-TW": 高度範圍
+  max_depth:
+    de: Max. Tiefe
+    en: Max Depth
+    es: Prof. máxima
+    fr: Prof. max
+    it: Prof. massima
+    ja: 最大深度
+    ko: 최대 심도
+    "pt-BR": Prof. máxima
+    ru: Макс. глубина
+    zh: 最大深度
+    "zh-TW": 最大深度
+  thrust:
+    de: Schub
+    en: Thrust
+    es: Empuje
+    fr: Poussée
+    it: Spinta
+    ja: 推力
+    ko: 추력
+    "pt-BR": Empuxo
+    ru: Тяга
+    zh: 推力
+    "zh-TW": 推力
+  twr:
+    de: TWR
+    en: TWR
+    es: TWR
+    fr: TWR
+    it: TWR
+    ja: 推力重量比
+    ko: 추력중량비
+    "pt-BR": TWR
+    ru: TWR
+    zh: 推重比
+    "zh-TW": 推重比
+  battery:
+    de: Batterie
+    en: Battery
+    es: Batería
+    fr: Batterie
+    it: Batteria
+    ja: バッテリー
+    ko: 배터리
+    "pt-BR": Bateria
+    ru: Батарея
+    zh: 电池
+    "zh-TW": 電池
+  condition:
+    de: Zustand
+    en: Condition
+    es: Estado
+    fr: État
+    it: Stato
+    ja: 状態
+    ko: 상태
+    "pt-BR": Estado
+    ru: Состояние
+    zh: 状态
+    "zh-TW": 狀態
+  patrol_placement_hint:
+    de: "Rechtsklick zum Setzen des Patrouillenzentrums · Esc zum Abbrechen"
+    en: "Right click to set patrol centre · Esc to cancel"
+    es: "Haz clic derecho para establecer el centro de patrulla · Esc para cancelar"
+    fr: "Clic droit pour définir le centre de patrouille · Esc pour annuler"
+    it: "Clic destro per impostare il centro pattuglia · Esc per annullare"
+    ja: "右クリックで哨戒中心を設定 · Esc でキャンセル"
+    ko: "우클릭으로 초계 중심 설정 · Esc로 취소"
+    "pt-BR": "Clique direito para definir o centro de patrulha · Esc para cancelar"
+    ru: "Правый клик задаёт центр патрулирования · Esc для отмены"
+    zh: "右键设置巡逻中心 · Esc 取消"
+    "zh-TW": "右鍵設定巡邏中心 · Esc 取消"
+  patrol_radius_placement_hint:
+    de: "Rechtsklick zum Setzen des Patrouillenradius · Esc zum Abbrechen"
+    en: "Right click to set patrol radius · Esc to cancel"
+    es: "Haz clic derecho para establecer el radio de patrulla · Esc para cancelar"
+    fr: "Clic droit pour définir le rayon de patrouille · Esc pour annuler"
+    it: "Clic destro per impostare il raggio di pattuglia · Esc per annullare"
+    ja: "右クリックで哨戒半径を設定 · Esc でキャンセル"
+    ko: "우클릭으로 초계 반경 설정 · Esc로 취소"
+    "pt-BR": "Clique direito para definir o raio de patrulha · Esc para cancelar"
+    ru: "Правый клик задаёт радиус патрулирования · Esc для отмены"
+    zh: "右键设置巡逻半径 · Esc 取消"
+    "zh-TW": "右鍵設定巡邏半徑 · Esc 取消"
+  # #2696 declarative loadout / ordnance editor.
+  loadout:
+    loading_from_stores:
+      de: "WIRD AUS LAGER GELADEN"
+      en: "LOADING FROM STORES"
+      es: "CARGANDO DESDE PAÑOL"
+      fr: "CHARGEMENT DEPUIS SOUTE"
+      it: "CARICAMENTO DAL DEPOSITO"
+      ja: "在庫から搭載中"
+      ko: "저장고에서 탑재 중"
+      "pt-BR": "CARREGANDO DO PAIOL"
+      ru: "ЗАГРУЗКА СО СКЛАДА"
+      zh: "从库存装填中"
+      "zh-TW": "從庫存裝填中"
+    unloading_to_stores:
+      de: "WIRD INS LAGER ENTLADEN"
+      en: "UNLOADING TO STORES"
+      es: "DESCARGANDO AL PAÑOL"
+      fr: "DÉCHARGEMENT VERS SOUTE"
+      it: "SCARICAMENTO AL DEPOSITO"
+      ja: "在庫へ取卸中"
+      ko: "저장고로 하역 중"
+      "pt-BR": "DESCARREGANDO AO PAIOL"
+      ru: "ВЫГРУЗКА НА СКЛАД"
+      zh: "卸载至库存中"
+      "zh-TW": "卸載至庫存中"
+    return_to_stores:
+      de: "Runde ins Lager zurückgeben. Freigegebene Runden stehen für das automatische Nachladen der Drohnen bereit."
+      en: "Return round to stores. Freed rounds are used for automatic drone rearming."
+      es: "Devolver ronda al pañol. Las rondas liberadas se usan para el rearme automático de drones."
+      fr: "Renvoyer la munition en soute. Les munitions libérées servent au réarmement automatique des drones."
+      it: "Restituisci il colpo al deposito. I colpi liberati servono al riarmo automatico dei droni."
+      ja: "弾を在庫に戻す。空いた弾はドローンの自動再武装に使われる。"
+      ko: "탄을 저장고로 반환. 반환된 탄은 드론 자동 재무장에 사용된다."
+      "pt-BR": "Devolver projétil ao paiol. Os projéteis liberados são usados no rearmamento automático de drones."
+      ru: "Вернуть снаряд на склад. Освобождённые снаряды идут на автоматическое перевооружение дронов."
+      zh: "将弹药退回库存。退回的弹药用于无人机自动补给。"
+      "zh-TW": "將彈藥退回庫存。退回的彈藥用於無人機自動補給。"
+    # A stowed drone's round returns to its hosting carrier's stores; %{carrier}
+    # names that carrier.
+    return_to_carrier_stores:
+      de: "Runde ins Lager von %{carrier} zurückgeben. Freigegebene Runden stehen für das automatische Nachladen bereit."
+      en: "Return round to %{carrier} stores. Freed rounds are used for automatic rearming."
+      es: "Devolver ronda al pañol de %{carrier}. Las rondas liberadas se usan para el rearme automático."
+      fr: "Renvoyer la munition en soute de %{carrier}. Les munitions libérées servent au réarmement automatique."
+      it: "Restituisci il colpo al deposito di %{carrier}. I colpi liberati servono al riarmo automatico."
+      ja: "弾を %{carrier} の在庫に戻す。空いた弾は自動再武装に使われる。"
+      ko: "탄을 %{carrier} 저장고로 반환. 반환된 탄은 자동 재무장에 사용된다."
+      "pt-BR": "Devolver projétil ao paiol de %{carrier}. Os projéteis liberados são usados no rearmamento automático."
+      ru: "Вернуть снаряд на склад %{carrier}. Освобождённые снаряды идут на автоматическое перевооружение."
+      zh: "将弹药退回 %{carrier} 库存。退回的弹药用于自动补给。"
+      "zh-TW": "將彈藥退回 %{carrier} 庫存。退回的彈藥用於自動補給。"
+    load_to_facility:
+      de: "LADEN AUF %{facility}"
+      en: "LOAD TO %{facility}"
+      es: "CARGAR EN %{facility}"
+      fr: "CHARGER VERS %{facility}"
+      it: "CARICA IN %{facility}"
+      ja: "%{facility} へ搭載"
+      ko: "%{facility}에 적재"
+      "pt-BR": "CARREGAR EM %{facility}"
+      ru: "ЗАГРУЗИТЬ В %{facility}"
+      zh: "装填至 %{facility}"
+      "zh-TW": "裝填至 %{facility}"
+    load_to_facility_tooltip:
+      de: "Eine Runde aus dem Lager in diesen Werfer befördern; die Decksmannschaft lädt sie."
+      en: "Promote one round from stores into this launcher; the deck crew loads it."
+      es: "Promover una ronda del pañol a este lanzador; la dotación de cubierta la carga."
+      fr: "Promouvoir une munition de la soute dans ce lanceur ; l'équipage de pont la charge."
+      it: "Promuovi un colpo dal deposito in questo lanciatore; la squadra di coperta lo carica."
+      ja: "在庫から1発をこの発射機に昇格させる。搭載は甲板班が行う。"
+      ko: "저장고에서 1발을 이 발사기로 승격; 갑판 요원이 적재한다."
+      "pt-BR": "Promover um projétil do paiol para este lançador; a equipe de convés o carrega."
+      ru: "Перевести один снаряд со склада в эту пусковую установку; загрузит палубная команда."
+      zh: "将一发弹药从库存提升到此发射器;由甲板人员装填。"
+      "zh-TW": "將一發彈藥從庫存提升到此發射器;由甲板人員裝填。"
+    # Drone re-arm-from-stores LOAD tooltip; %{carrier} names the hosting carrier.
+    load_from_carrier_stores:
+      de: "Eine Runde aus dem Lager von %{carrier} auf diese Drohne laden; die Decksmannschaft bewegt sie."
+      en: "Load one round from %{carrier}'s stores onto this drone; the deck crew moves it."
+      es: "Cargar una ronda del pañol de %{carrier} en este dron; la dotación de cubierta la traslada."
+      fr: "Charger une munition depuis la soute de %{carrier} sur ce drone ; l'équipage de pont la déplace."
+      it: "Carica un colpo dal deposito di %{carrier} su questo drone; la squadra di coperta lo sposta."
+      ja: "%{carrier} の在庫から1発をこのドローンに搭載する。搭載は甲板班が行う。"
+      ko: "%{carrier} 저장고에서 1발을 이 드론에 적재; 갑판 요원이 옮긴다."
+      "pt-BR": "Carregar um projétil do paiol de %{carrier} neste drone; a equipe de convés o transporta."
+      ru: "Загрузить один снаряд со склада %{carrier} на этот дрон; переместит палубная команда."
+      zh: "从 %{carrier} 的库存装填一发到此无人机;由甲板人员搬运。"
+      "zh-TW": "從 %{carrier} 的庫存裝填一發到此無人機;由甲板人員搬運。"
+    # %{used}/%{capacity}/%{need} are glued-caps measures (e.g. "329.0KG"), so the
+    # unit is not repeated here (#1709 / ADR-0005). Sentence-case prose, colon gloss
+    # (#1787). Applies to any platform (carrier or stowed drone), not just carriers.
+    load_over_capacity:
+      de: "Kein Platz: %{used}/%{capacity} belegt (benötigt %{need} frei)."
+      en: "No room: %{used}/%{capacity} used (need %{need} free)."
+      es: "Sin espacio: %{used}/%{capacity} usados (se necesitan %{need} libres)."
+      fr: "Plus de place : %{used}/%{capacity} utilisés (%{need} libres requis)."
+      it: "Nessuno spazio: %{used}/%{capacity} usati (servono %{need} liberi)."
+      ja: "空きなし：%{capacity}中%{used}使用（%{need}の空きが必要）。"
+      ko: "공간 없음: %{capacity} 중 %{used} 사용 (%{need} 여유 필요)."
+      "pt-BR": "Sem espaço: %{used}/%{capacity} usados (precisa de %{need} livres)."
+      ru: "Нет места: занято %{used}/%{capacity} (нужно %{need} свободно)."
+      zh: "无空间：%{capacity} 中已用 %{used}（需 %{need} 空闲）。"
+      "zh-TW": "無空間：%{capacity} 中已用 %{used}（需 %{need} 空閒）。"
+    # Trailing marker on a round waiting for the busy deck crew (one transfer per
+    # carrier); flips to a live percentage when it becomes the active transfer.
+    queued:
+      de: "IN WARTESCHLANGE"
+      en: "QUEUED"
+      es: "EN COLA"
+      fr: "EN FILE"
+      it: "IN CODA"
+      ja: "待機中"
+      ko: "대기 중"
+      "pt-BR": "NA FILA"
+      ru: "В ОЧЕРЕДИ"
+      zh: "排队中"
+      "zh-TW": "排隊中"
+    # Status word on one per-round shortfall row (#2696 round 5): the manifest
+    # wants this round but no compatible stock is aboard to fill it.
+    awaiting_stock:
+      de: "WARTET AUF NACHSCHUB"
+      en: "AWAITING STOCK"
+      es: "ESPERANDO EXISTENCIAS"
+      fr: "EN ATTENTE DE STOCK"
+      it: "IN ATTESA DI SCORTE"
+      ja: "補給待ち"
+      ko: "재고 대기"
+      "pt-BR": "AGUARDANDO ESTOQUE"
+      ru: "ОЖИДАНИЕ ЗАПАСОВ"
+      zh: "等待补给"
+      "zh-TW": "等待補給"
+    # CANCEL button on a stockless shortfall row (#2696 round 5): drops the
+    # manifest target by one round (there is no round to return — pure intent).
+    cancel_shortfall:
+      de: "ABBRECHEN"
+      en: "CANCEL"
+      es: "CANCELAR"
+      fr: "ANNULER"
+      it: "ANNULLA"
+      ja: "取消"
+      ko: "취소"
+      "pt-BR": "CANCELAR"
+      ru: "ОТМЕНА"
+      zh: "取消"
+      "zh-TW": "取消"
+    cancel_shortfall_tooltip:
+      de: "Diese Fehlmenge streichen. Das Sollziel sinkt um eine Runde."
+      en: "Cancel this shortfall. The manifest target drops by one round."
+      es: "Cancelar esta falta. El objetivo del manifiesto baja en una ronda."
+      fr: "Annuler ce manque. La cible du manifeste baisse d'une munition."
+      it: "Annulla questa carenza. L'obiettivo del manifesto cala di un colpo."
+      ja: "この不足を取り消す。定数目標が1発下がる。"
+      ko: "이 부족을 취소. 편제 목표가 1발 낮아진다."
+      "pt-BR": "Cancelar esta falta. A meta do manifesto cai em um projétil."
+      ru: "Отменить нехватку. Целевой норматив снижается на один снаряд."
+      zh: "取消此缺额。定额目标降低一发。"
+      "zh-TW": "取消此缺額。定額目標降低一發。"
+    # Missing-armament badge tooltip (#2697): one entry per stockless-shortfall
+    # munition type on a stowed unit's OWN manifest, e.g. "M-100: 2 SHORT". %{name}
+    # is the blueprint's own designator (as-typed, never case-coerced); multiple
+    # entries join with the field separator in code, not here.
+    shortfall_entry:
+      de: "%{name}: %{count} FEHLEND"
+      en: "%{name}: %{count} SHORT"
+      es: "%{name}: %{count} FALTAN"
+      fr: "%{name} : %{count} MANQUANT"
+      it: "%{name}: %{count} MANCANTI"
+      ja: "%{name}：%{count}発不足"
+      ko: "%{name}: %{count}발 부족"
+      "pt-BR": "%{name}: %{count} EM FALTA"
+      ru: "%{name}: %{count} НЕДОСТАЁТ"
+      zh: "%{name}：缺%{count}发"
+      "zh-TW": "%{name}：缺%{count}發"
+  # %{weight} is a glued-caps measure (e.g. "1234.5KG"), so the unit is not
+  # repeated here (#1709 / ADR-0005).
+  stores_weight:
+    de: "%{weight} gesamt"
+    en: "%{weight} total"
+    es: "%{weight} en total"
+    fr: "%{weight} au total"
+    it: "%{weight} totali"
+    ja: "合計 %{weight}"
+    ko: "총 %{weight}"
+    "pt-BR": "%{weight} no total"
+    ru: "%{weight} всего"
+    zh: "共 %{weight}"
+    "zh-TW": "共 %{weight}"
+  stores:
+    # Glossary tooltip for the STORES section on a stowed drone's panel: the
+    # rounds come from the hosting carrier, not the drone itself.
+    drone_section_tooltip:
+      de: "Das Lager des Trägers — kompatible Runden auf diese Drohne laden."
+      en: "The hosting carrier's stores — load compatible rounds onto this drone."
+      es: "El pañol del portaaeronaves anfitrión — carga rondas compatibles en este dron."
+      fr: "La soute du porteur hôte — charger des munitions compatibles sur ce drone."
+      it: "Il deposito della portaerei ospitante — carica colpi compatibili su questo drone."
+      ja: "母艦の在庫 — 対応する弾をこのドローンに搭載する。"
+      ko: "모함의 저장고 — 호환 탄을 이 드론에 적재한다."
+      "pt-BR": "O paiol do porta-aeronaves anfitrião — carregue projéteis compatíveis neste drone."
+      ru: "Склад несущего носителя — загрузите совместимые снаряды на этот дрон."
+      zh: "母舰的库存 — 将兼容弹药装填到此无人机。"
+      "zh-TW": "母艦的庫存 — 將相容彈藥裝填到此無人機。"
+  # DC-996: Form Group button on the multi-select inspect panel.
+  multi_select:
+    form_group:
+      label:
+        de: Gruppe bilden
+        en: Form Group
+        es: Formar grupo
+        fr: Former un groupe
+        it: Forma gruppo
+        ja: グループ編成
+        ko: 그룹 편성
+        "pt-BR": Formar grupo
+        ru: Создать группу
+        zh: 组建编队
+        "zh-TW": 組建編隊
+      need_two:
+        de: "Wähle 2+ Fahrzeuge aus, um eine Gruppe zu bilden"
+        en: "Select 2+ vehicles to form a group"
+        es: "Selecciona 2 o más vehículos para formar un grupo"
+        fr: "Sélectionnez 2 véhicules ou plus pour former un groupe"
+        it: "Seleziona 2 o più veicoli per formare un gruppo"
+        ja: "グループを編成するには2機以上選択してください"
+        ko: "그룹을 편성하려면 2대 이상 선택하세요"
+        "pt-BR": "Selecione 2 ou mais veículos para formar um grupo"
+        ru: "Выберите 2 или более единиц, чтобы создать группу"
+        zh: "选择2个或更多载具以组建编队"
+        "zh-TW": "選擇2個或更多載具以組建編隊"
+  # DC-1032: platform-link row (stowed-in / launched-from) in the per-vehicle
+  # inspect panel. Used by `render_platform_link` in `entity_view.rs`.
+  stowed_in:
+    de: "Eingestaut in"
+    en: "Stowed in"
+    es: "Embarcado en"
+    fr: "Embarqué dans"
+    it: "Imbarcato in"
+    ja: "搭載先"
+    ko: "탑재된 모함"
+    "pt-BR": "Embarcado em"
+    ru: "На борту"
+    zh: "搭载于"
+    "zh-TW": "搭載於"
+  launched_from:
+    de: "Gestartet von"
+    en: "Launched from"
+    es: "Lanzado desde"
+    fr: "Lancé depuis"
+    it: "Lanciato da"
+    ja: "発進元"
+    ko: "발진 모함"
+    "pt-BR": "Lançado de"
+    ru: "Запущен с"
+    zh: "从…发射"
+    "zh-TW": "從…發射"
+  platform_lost:
+    de: "(Plattform verloren)"
+    en: "(platform lost)"
+    es: "(plataforma perdida)"
+    fr: "(plateforme perdue)"
+    it: "(piattaforma persa)"
+    ja: "(プラットフォーム消失)"
+    ko: "(플랫폼 소실)"
+    "pt-BR": "(plataforma perdida)"
+    ru: "(платформа потеряна)"
+    zh: "(平台丢失)"
+    "zh-TW": "(平台丟失)"
+  # #2560: rows of the lost-unit inspect panel (the map tombstone's detail).
+  # The LOST row's *value* is the terse en-only map code (symbol_label.lost.*),
+  # so the panel and the map symbol always read identically.
+  lost_unit:
+    lost:
+      de: Verloren
+      en: Lost
+      es: Perdida
+      fr: Perdue
+      it: Persa
+      ja: 喪失
+      ko: 손실
+      "pt-BR": Perdida
+      ru: Потеряна
+      zh: 损失
+      "zh-TW": 損失
+    when:
+      de: Wann
+      en: When
+      es: Cuándo
+      fr: Quand
+      it: Quando
+      ja: 時刻
+      ko: 시각
+      "pt-BR": Quando
+      ru: Когда
+      zh: 时间
+      "zh-TW": 時間
+    # The count of units that went down with this platform (the `+N` on the map).
+    also_lost:
+      de: Mit Plattform verloren
+      en: Lost with platform
+      es: Perdidas con la plataforma
+      fr: Perdues avec la plateforme
+      it: Perse con la piattaforma
+      ja: 機体と共に喪失
+      ko: 기체와 함께 손실
+      "pt-BR": Perdidas com a plataforma
+      ru: Потеряны с платформой
+      zh: 随平台损失
+      "zh-TW": 隨平台損失
+  # DC-1090: neutral lost-unit tooltip subtitle for vehicle links whose unit
+  # has dropped out of the snapshot (e.g. destroyed between snapshot and render).
+  unit:
+    lost:
+      de: "Einheit verloren"
+      en: "Unit lost"
+      es: "Unidad perdida"
+      fr: "Unité perdue"
+      it: "Unità persa"
+      ja: "ユニット喪失"
+      ko: "유닛 상실"
+      "pt-BR": "Unidade perdida"
+      ru: "Юнит потерян"
+      zh: "单位丢失"
+      "zh-TW": "單位遺失"
+  # DC-1031: stowed-drone launch button in the per-vehicle inspect panel.
+  launch:
+    de: "STARTEN"
+    en: "LAUNCH"
+    es: "LANZAR"
+    fr: "LANCER"
+    it: "LANCIA"
+    ja: "発艦"
+    ko: "발진"
+    "pt-BR": "LANÇAR"
+    ru: "ЗАПУСК"
+    zh: "发射"
+    "zh-TW": "發射"
+  launch_disabled_parent_stowed:
+    de: "Startplattform ist eingestaut"
+    en: "Launch platform is stowed"
+    es: "La plataforma de lanzamiento está embarcada"
+    fr: "La plateforme de lancement est embarquée"
+    it: "La piattaforma di lancio è imbarcata"
+    ja: "発艦プラットフォームが格納されています"
+    ko: "발진 플랫폼이 격납되어 있음"
+    "pt-BR": "Plataforma de lançamento está embarcada"
+    ru: "Пусковая платформа убрана"
+    zh: "发射平台已收纳"
+    "zh-TW": "發射平台已收納"
+  launch_disabled_no_parent:
+    de: "Startplattform nicht verfügbar"
+    en: "Launch platform not available"
+    es: "Plataforma de lanzamiento no disponible"
+    fr: "Plateforme de lancement non disponible"
+    it: "Piattaforma di lancio non disponibile"
+    ja: "発艦プラットフォームが利用できません"
+    ko: "발진 플랫폼을 사용할 수 없음"
+    "pt-BR": "Plataforma de lançamento não disponível"
+    ru: "Пусковая платформа недоступна"
+    zh: "发射平台不可用"
+    "zh-TW": "發射平台不可用"
+  trajectory:
+    active:
+      direct:
+        de: "Direct"
+        en: "Direct"
+        es: "Direct"
+        fr: "Direct"
+        it: "Direct"
+        ja: "Direct"
+        ko: "Direct"
+        "pt-BR": "Direct"
+        ru: "Direct"
+        zh: "Direct"
+        "zh-TW": "Direct"
+      terrain_follow:
+        de: "Terrain-Follow"
+        en: "Terrain-Follow"
+        es: "Terrain-Follow"
+        fr: "Terrain-Follow"
+        it: "Terrain-Follow"
+        ja: "Terrain-Follow"
+        ko: "Terrain-Follow"
+        "pt-BR": "Terrain-Follow"
+        ru: "Terrain-Follow"
+        zh: "Terrain-Follow"
+        "zh-TW": "Terrain-Follow"
+      lofted:
+        de: "Lofted"
+        en: "Lofted"
+        es: "Lofted"
+        fr: "Lofted"
+        it: "Lofted"
+        ja: "Lofted"
+        ko: "Lofted"
+        "pt-BR": "Lofted"
+        ru: "Lofted"
+        zh: "Lofted"
+        "zh-TW": "Lofted"
+  # DC-1133.4: live summaries on the vehicle panel's NAV / SNR / CON / INV
+  # accordion rows. Terse caps console style in Latin scripts; %{alt} /
+  # %{depth} / %{spd} / %{range} are pre-formatted with locale units.
+  summary:
+    # #1538: MNV summary row (active units). `%{spd}` is the resolved KTS + bell;
+    # the "ordered speed" label distinguishes it from the masthead's live SPD.
+    mnv_alt:
+      de: "ZIELHÖHE %{alt} · BEF GESCHW %{spd}"
+      en: "TGT ALT %{alt} · ORD SPD %{spd}"
+      es: "ALT OBJ %{alt} · VEL ORD %{spd}"
+      fr: "ALT CIBLE %{alt} · VIT ORD %{spd}"
+      it: "QUOTA OBJ %{alt} · VEL ORD %{spd}"
+      ja: "目標高度 %{alt} · 指令速力 %{spd}"
+      ko: "목표 고도 %{alt} · 지정 속력 %{spd}"
+      "pt-BR": "ALT ALVO %{alt} · VEL ORD %{spd}"
+      ru: "ЗАД ВЫС %{alt} · ЗАД СКОР %{spd}"
+      zh: "目标高度 %{alt} · 指令航速 %{spd}"
+      "zh-TW": "目標高度 %{alt} · 指令航速 %{spd}"
+    mnv_depth:
+      de: "ZIELTIEFE %{depth} · BEF GESCHW %{spd}"
+      en: "TGT DPTH %{depth} · ORD SPD %{spd}"
+      es: "PROF OBJ %{depth} · VEL ORD %{spd}"
+      fr: "PROF CIBLE %{depth} · VIT ORD %{spd}"
+      it: "PROF OBJ %{depth} · VEL ORD %{spd}"
+      ja: "目標深度 %{depth} · 指令速力 %{spd}"
+      ko: "목표 심도 %{depth} · 지정 속력 %{spd}"
+      "pt-BR": "PROF ALVO %{depth} · VEL ORD %{spd}"
+      ru: "ЗАД ГЛУБ %{depth} · ЗАД СКОР %{spd}"
+      zh: "目标深度 %{depth} · 指令航速 %{spd}"
+      "zh-TW": "目標深度 %{depth} · 指令航速 %{spd}"
+    mnv_speed:
+      de: "BEF GESCHW %{spd}"
+      en: "ORD SPD %{spd}"
+      es: "VEL ORD %{spd}"
+      fr: "VIT ORD %{spd}"
+      it: "VEL ORD %{spd}"
+      ja: "指令速力 %{spd}"
+      ko: "지정 속력 %{spd}"
+      "pt-BR": "VEL ORD %{spd}"
+      ru: "ЗАД СКОР %{spd}"
+      zh: "指令航速 %{spd}"
+      "zh-TW": "指令航速 %{spd}"
+    # DC-1178: MNV summary row when terrain-follow mode is active.
+    mnv_terrain_follow:
+      de: "GELÄNDEFOLGE · BEF GESCHW %{spd}"
+      en: "TERRAIN FOLLOW · ORD SPD %{spd}"
+      es: "SEGUIM TERRENO · VEL ORD %{spd}"
+      fr: "SUIVI TERRAIN · VIT ORD %{spd}"
+      it: "SEG TERRENO · VEL ORD %{spd}"
+      ja: "地形追従 · 指令速力 %{spd}"
+      ko: "지형 추종 · 지정 속력 %{spd}"
+      "pt-BR": "TERRENO · VEL ORD %{spd}"
+      ru: "РЕЛЬЕФ · ЗАД СКОР %{spd}"
+      zh: "地形跟随 · 指令航速 %{spd}"
+      "zh-TW": "地形跟隨 · 指令航速 %{spd}"
+    # #1538: LCH summary row (stowed units). The LCH header conveys "launch
+    # config", so the labels stay plain; `%{spd}` is the ordered bell / AUTO
+    # intent (the stowed unit's resolved KTS is stale, so no number is shown).
+    lch_alt:
+      de: "HÖHE %{alt} · GESCHW %{spd}"
+      en: "ALT %{alt} · SPD %{spd}"
+      es: "ALT %{alt} · VEL %{spd}"
+      fr: "ALT %{alt} · VIT %{spd}"
+      it: "QUOTA %{alt} · VEL %{spd}"
+      ja: "高度 %{alt} · 速力 %{spd}"
+      ko: "고도 %{alt} · 속력 %{spd}"
+      "pt-BR": "ALT %{alt} · VEL %{spd}"
+      ru: "ВЫС %{alt} · СКОР %{spd}"
+      zh: "高度 %{alt} · 航速 %{spd}"
+      "zh-TW": "高度 %{alt} · 航速 %{spd}"
+    lch_depth:
+      de: "TIEFE %{depth} · GESCHW %{spd}"
+      en: "DPTH %{depth} · SPD %{spd}"
+      es: "PROF %{depth} · VEL %{spd}"
+      fr: "PROF %{depth} · VIT %{spd}"
+      it: "PROF %{depth} · VEL %{spd}"
+      ja: "深度 %{depth} · 速力 %{spd}"
+      ko: "심도 %{depth} · 속력 %{spd}"
+      "pt-BR": "PROF %{depth} · VEL %{spd}"
+      ru: "ГЛУБ %{depth} · СКОР %{spd}"
+      zh: "深度 %{depth} · 航速 %{spd}"
+      "zh-TW": "深度 %{depth} · 航速 %{spd}"
+    lch_speed:
+      de: "GESCHW %{spd}"
+      en: "SPD %{spd}"
+      es: "VEL %{spd}"
+      fr: "VIT %{spd}"
+      it: "VEL %{spd}"
+      ja: "速力 %{spd}"
+      ko: "속력 %{spd}"
+      "pt-BR": "VEL %{spd}"
+      ru: "СКОР %{spd}"
+      zh: "航速 %{spd}"
+      "zh-TW": "航速 %{spd}"
+    lch_terrain_follow:
+      de: "GELÄNDEFOLGE · GESCHW %{spd}"
+      en: "TERRAIN FOLLOW · SPD %{spd}"
+      es: "SEGUIM TERRENO · VEL %{spd}"
+      fr: "SUIVI TERRAIN · VIT %{spd}"
+      it: "SEG TERRENO · VEL %{spd}"
+      ja: "地形追従 · 速力 %{spd}"
+      ko: "지형 추종 · 속력 %{spd}"
+      "pt-BR": "TERRENO · VEL %{spd}"
+      ru: "РЕЛЬЕФ · СКОР %{spd}"
+      zh: "地形跟随 · 航速 %{spd}"
+      "zh-TW": "地形跟隨 · 航速 %{spd}"
+    # #1538: caption inside the expanded LCH body, stowed units only.
+    lch_caption:
+      de: "Beim Start übernommen."
+      en: "Applied on launch."
+      es: "Se aplica al lanzar."
+      fr: "Appliqué au lancement."
+      it: "Applicato al lancio."
+      ja: "発艦時に適用。"
+      ko: "발진 시 적용."
+      "pt-BR": "Aplicado no lançamento."
+      ru: "Применяется при запуске."
+      zh: "起飞时应用。"
+      "zh-TW": "起飛時套用。"
+    con:
+      de: "%{count} TRACKS · NÄCHSTER %{track} %{range}"
+      en: "%{count} TRK · NEAREST %{track} %{range}"
+      es: "%{count} TRZ · MÁS CERCANA %{track} %{range}"
+      fr: "%{count} PISTES · PLUS PROCHE %{track} %{range}"
+      it: "%{count} TRC · PIÙ VICINA %{track} %{range}"
+      ja: "%{count} 航跡 · 最近接 %{track} %{range}"
+      ko: "%{count} 트랙 · 최근접 %{track} %{range}"
+      "pt-BR": "%{count} TRL · MAIS PRÓXIMA %{track} %{range}"
+      ru: "%{count} ЦЕЛЕЙ · БЛИЖАЙШАЯ %{track} %{range}"
+      zh: "%{count} 航迹 · 最近 %{track} %{range}"
+      "zh-TW": "%{count} 航跡 · 最近 %{track} %{range}"
+    con_empty:
+      de: "KEINE TRACKS"
+      en: "NO TRACKS"
+      es: "SIN TRAZAS"
+      fr: "AUCUNE PISTE"
+      it: "NESSUNA TRACCIA"
+      ja: "航跡なし"
+      ko: "트랙 없음"
+      "pt-BR": "SEM TRILHAS"
+      ru: "НЕТ ЦЕЛЕЙ"
+      zh: "无航迹"
+      "zh-TW": "無航跡"
+    inv:
+      de: "%{count} VERSTAUT"
+      en: "%{count} STOWED"
+      es: "%{count} ESTIBADOS"
+      fr: "%{count} ARRIMÉS"
+      it: "%{count} STIVATI"
+      ja: "%{count} 機格納"
+      ko: "%{count}기 수납"
+      "pt-BR": "%{count} ESTIVADOS"
+      ru: "%{count} НА БОРТУ"
+      zh: "%{count} 已搭载"
+      "zh-TW": "%{count} 已搭載"
+    # INV summary when drones are mid-launch (#1408): stowed count plus the
+    # number of drones currently in a launch pipeline.
+    inv_launching:
+      de: "%{count} VERSTAUT · %{launching} STARTEND"
+      en: "%{count} STOWED · %{launching} LAUNCHING"
+      es: "%{count} ESTIBADOS · %{launching} LANZANDO"
+      fr: "%{count} ARRIMÉS · %{launching} LANCEMENT"
+      it: "%{count} STIVATI · %{launching} IN LANCIO"
+      ja: "%{count} 機格納 · %{launching} 機発射中"
+      ko: "%{count}기 수납 · %{launching}기 발진 중"
+      "pt-BR": "%{count} ESTIVADOS · %{launching} LANÇANDO"
+      ru: "%{count} НА БОРТУ · %{launching} ЗАПУСК"
+      zh: "%{count} 已搭载 · %{launching} 发射中"
+      "zh-TW": "%{count} 已搭載 · %{launching} 發射中"
+    # #2696 LOADOUT / ORDNANCE row summary: manifest type count, with the
+    # standing shortfall appended when any type is under-filled.
+    # #2696 round count — the drone INVENTORY summary (loaded rounds) and the
+    # STORES summary (stored rounds).
+    rounds:
+      de: "%{count} SCHUSS"
+      en: "%{count} ROUNDS"
+      es: "%{count} PROYECTILES"
+      fr: "%{count} MUNITIONS"
+      it: "%{count} COLPI"
+      ja: "%{count} 発"
+      ko: "%{count}발"
+      "pt-BR": "%{count} PROJÉTEIS"
+      ru: "%{count} ЕД."
+      zh: "%{count} 发"
+      "zh-TW": "%{count} 發"
+    # #2696 round 5 — a stowed drone's STR heading names the carrier its stores
+    # come from, e.g. "2 ROUNDS (FROM CV-3000-1)".
+    rounds_from_carrier:
+      de: "%{count} SCHUSS (VON %{carrier})"
+      en: "%{count} ROUNDS (FROM %{carrier})"
+      es: "%{count} PROYECTILES (DE %{carrier})"
+      fr: "%{count} MUNITIONS (DE %{carrier})"
+      it: "%{count} COLPI (DA %{carrier})"
+      ja: "%{count} 発(%{carrier} より)"
+      ko: "%{count}발 (%{carrier}에서)"
+      "pt-BR": "%{count} PROJÉTEIS (DE %{carrier})"
+      ru: "%{count} ЕД. (С %{carrier})"
+      zh: "%{count} 发(来自 %{carrier})"
+      "zh-TW": "%{count} 發(來自 %{carrier})"
+  # DC-1167: bearing-time waterfall (BTR) panel controls and labels.
+  # title/now/window/ref_true/ref_rel are NTDS/mil-console abbreviations —
+  # whitelisted as English-only universal keys in tests/locale_parity.rs.
+  # Prose tooltip keys carry full 11-language translations.
+  scope:
+    title:
+      en: "SCOPE"
+    mode_btr:
+      en: "BTR"
+    mode_bscope:
+      en: "BSCOPE"
+    rng_unk:
+      en: "RNG UNK"
+    mode_btr_tip:
+      de: "Peilung-Zeit-Wasserfall (Verlauf)"
+      en: "Bearing–time waterfall (history)"
+      es: "Cascada marcación-tiempo (histórico)"
+      fr: "Cascade relèvement-temps (historique)"
+      it: "Cascata rilevamento-tempo (storico)"
+      ja: "方位-時間ウォーターフォール（履歴）"
+      ko: "방위-시간 워터폴 (이력)"
+      "pt-BR": "Cascata marcação-tempo (histórico)"
+      ru: "Водопад пеленг–время (история)"
+      zh: "方位-时间瀑布图（历史）"
+      "zh-TW": "方位-時間瀑布圖（歷史）"
+    mode_bscope_tip:
+      de: "Peilung-Entfernung B-Scope (aktuell)"
+      en: "Bearing–range B-scope (current)"
+      es: "B-scope marcación-distancia (actual)"
+      fr: "B-scope relèvement-distance (actuel)"
+      it: "B-scope rilevamento-distanza (attuale)"
+      ja: "方位-距離Bスコープ（現在）"
+      ko: "방위-거리 B-스코프 (현재)"
+      "pt-BR": "B-scope marcação-distância (atual)"
+      ru: "B-scope пеленг–дальность (текущий)"
+      zh: "方位-距离 B 显示器（当前）"
+      "zh-TW": "方位-距離 B 顯示器（當前）"
+  btr:
+    now:
+      en: "NOW"
+    window:
+      en: "-6M"
+    ref_true:
+      en: "TRUE"
+    ref_true_tip:
+      de: "Peilung bezogen auf den wahren Norden"
+      en: "Bearing referenced to true north"
+      es: "Rumbo referenciado al norte verdadero"
+      fr: "Relèvement par rapport au nord vrai"
+      it: "Rilevamento riferito al nord vero"
+      ja: "真北を基準とした方位"
+      ko: "진북 기준 방위"
+      "pt-BR": "Rumo referenciado ao norte verdadeiro"
+      ru: "Пеленг относительно истинного севера"
+      zh: "以真北为基准的方位"
+      "zh-TW": "以真北為基準的方位"
+    ref_rel:
+      en: "REL"
+    ref_rel_tip:
+      de: "Peilung relativ zum eigenen Kurs (Buglinie)"
+      en: "Bearing relative to own heading (bow centre)"
+      es: "Rumbo relativo al rumbo propio (proa)"
+      fr: "Relèvement relatif au cap propre (axe de proue)"
+      it: "Rilevamento relativo alla prua (asse di prua)"
+      ja: "自艦針路基準の方位（船首中心線）"
+      ko: "자함 침로 기준 방위 (함수 중심선)"
+      "pt-BR": "Rumo relativo ao próprio rumo (proa)"
+      ru: "Пеленг относительно собственного курса (нос)"
+      zh: "相对于自身航向的方位（艏向中轴）"
+      "zh-TW": "相對於自身航向的方位（艦首中線）"
+    filter_hostile:
+      de: "Feindliche Kontakte anzeigen"
+      en: "Show hostile contacts"
+      es: "Mostrar contactos hostiles"
+      fr: "Afficher les contacts hostiles"
+      it: "Mostra contatti ostili"
+      ja: "敵性コンタクトを表示"
+      ko: "적 접촉 표시"
+      "pt-BR": "Exibir contatos hostis"
+      ru: "Показать враждебные контакты"
+      zh: "显示敌方接触"
+      "zh-TW": "顯示敵方接觸"
+    filter_unknown:
+      de: "Unbekannte Kontakte anzeigen"
+      en: "Show unknown contacts"
+      es: "Mostrar contactos desconocidos"
+      fr: "Afficher les contacts inconnus"
+      it: "Mostra contatti sconosciuti"
+      ja: "不明コンタクトを表示"
+      ko: "미상 접촉 표시"
+      "pt-BR": "Exibir contatos desconhecidos"
+      ru: "Показать неизвестные контакты"
+      zh: "显示未知接触"
+      "zh-TW": "顯示未知接觸"
+  # #1998: fire-control lock verb — shown in the contact/vehicle inspect panels
+  # to indicate a lock relationship. `locking` = subject is the locker;
+  # `locked_by` = subject is being locked. Colour (red/green) is set at the
+  # call site via `is_threat`; the verb itself is affiliation-neutral here.
+  lock:
+    locking:
+      de: "ERFASST"
+      en: "LOCKING"
+      es: "FIJANDO"
+      fr: "VERROUILLAGE"
+      it: "AGGANCIO"
+      ja: "ロックオン中"
+      ko: "조준 중"
+      "pt-BR": "FIXANDO"
+      ru: "ЗАХВАТ"
+      zh: "锁定中"
+      "zh-TW": "鎖定中"
+    locked_by:
+      de: "ERFASST VON"
+      en: "LOCKED BY"
+      es: "FIJADO POR"
+      fr: "VERROUILLÉ PAR"
+      it: "AGGANCIATO DA"
+      ja: "被ロックオン"
+      ko: "피조준"
+      "pt-BR": "FIXADO POR"
+      ru: "ЗАХВАЧЕН"
+      zh: "被锁定"
+      "zh-TW": "被鎖定"
+    locking_tooltip:
+      de: "Eine eigene Feuerleitsensor hat dieses Kontakt erfasst."
+      en: "One of our fire-control sensors is locking this contact."
+      es: "Uno de nuestros sensores de control de tiro está fijando este contacto."
+      fr: "Un de nos capteurs de conduite de tir verrouille ce contact."
+      it: "Un nostro sensore di controllo del tiro sta agganciando questo contatto."
+      ja: "味方の射撃管制センサーがこの接触をロックオンしています。"
+      ko: "아군 사격 통제 센서가 이 접촉을 조준하고 있습니다."
+      "pt-BR": "Um de nossos sensores de controle de tiro está fixando este contato."
+      ru: "Наш датчик управления огнём захватил этот контакт."
+      zh: "我方火控传感器正在锁定该接触。"
+      "zh-TW": "我方火控感測器正在鎖定該接觸。"
+    locked_by_tooltip:
+      de: "Ein feindlicher Feuerleitsensor hat diese Einheit erfasst — ein Waffenstart ist möglich."
+      en: "An enemy fire-control sensor is locking this unit — a weapon launch may follow."
+      es: "Un sensor de control de tiro enemigo está fijando esta unidad; puede seguir un lanzamiento."
+      fr: "Un capteur de conduite de tir ennemi verrouille cette unité ; un tir peut suivre."
+      it: "Un sensore di controllo del tiro nemico sta agganciando questa unità; può seguire un lancio."
+      ja: "敵の射撃管制センサーがこのユニットをロックオンしています。攻撃の可能性があります。"
+      ko: "적 사격 통제 센서가 이 유닛을 조준하고 있습니다. 무기 발사가 뒤따를 수 있습니다."
+      "pt-BR": "Um sensor de controle de tiro inimigo está fixando esta unidade; um disparo pode ocorrer."
+      ru: "Вражеский датчик управления огнём захватил эту единицу — возможен пуск."
+      zh: "敌方火控传感器正在锁定该单位，可能随即开火。"
+      "zh-TW": "敵方火控感測器正在鎖定該單位，可能隨即開火。"

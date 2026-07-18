@@ -1,0 +1,18 @@
+(
+    quadtree_depth: 4,
+    update_interval_secs: 3.0,
+    coverage_half_life_secs: 30.0,
+    threat_weight_surface: 1.0,
+    threat_weight_air: 0.6,
+    threat_weight_helicopter: 0.6,
+    threat_weight_subsurface: 0.8,
+    threat_weight_land: 0.3,
+    threat_weight_command_ship: 1.2,
+    threat_weight_missile: 1.5,
+    threat_weight_torpedo: 1.5,
+    threat_weight_unknown: 1.0,
+    scouting_coverage_threshold: 0.1,
+    scouting_land_fraction_max: 0.9,
+    prior_threat_max: 0.5,
+    overlay_render_distance: 150000.0,
+)

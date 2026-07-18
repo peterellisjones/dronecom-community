@@ -1,0 +1,24 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-00000000000e"),
+    codename: "Standard Heavy Submarine",
+    designator: "SS-800",
+    chassis_id: "ss_800",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Passive sonar
+        (kind: Component(component_id: "an_sqr_70")),
+        // Active sonar
+        (kind: Component(component_id: "an_sqs_85")),
+        // Heavy Torpedo 1 (MK-55)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+        // Heavy Torpedo 2 (MK-55)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+        // Heavy Torpedo 3 (MK-55)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+        // Heavy Torpedo 4 (MK-55)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

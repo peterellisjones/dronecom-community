@@ -1,0 +1,82 @@
+(
+    envelope: (
+        map_radius_m: 50000.0,
+        reference_target: (
+            rcs: 0.1,
+            sonar_cross_section: 1.0,
+            passive_noise: 1.0,
+            ir: 3.0,
+            visual: 0.3,
+            // Emission strength of an AN/SPS-90-class surface-search radar —
+            // the typical emitter an RWR hunts (#2634 calibration: the 1.0
+            // placeholder made every RWR footprint R≈0, pricing them at
+            // riders only). 6e7 vs the 0.1 RWR thresholds → R≈24.5km.
+            emitter_strength: 60000000.0,
+            hp: 20.0,
+            altitude_m: 10.0,
+        ),
+        raid_size: 6,
+        reference_miss_distance_m: 30.0,
+        engagement_timescale_secs: 60.0,
+        station_distance_m: 30000.0,
+        reference_layer_depth_m: 75.0,
+        deck_turnaround_secs: 1800.0,
+        max_hp_pool: 1500.0,
+        reference_payload_kg: 100.0,
+        reference_speed_mps: 100.0,
+    ),
+    rates: (
+        em_footprint: 5000000.0,
+        acoustic_footprint: 9000000.0,
+        optical_footprint: 30000000.0,
+        lethality: 5000.0,
+        delivery: 15000.0,
+        persistence: 500000.0,
+        hp: 20000.0,
+        battery_per_kwh: 1000.0,
+        hull_per_kg: 20.0,
+        facility: (
+            flight_deck: 58000000.0,
+            heli_pad: 12000000.0,
+            well_deck: 25000000.0,
+            air_launch: 700000.0,
+            vls: 400000.0,
+            torpedo_tube: 1500000.0,
+        ),
+        riders: (
+            logistics_receiver: 5000000.0,
+            guidance_uplink: 10000.0,
+            elevation: 50000.0,
+            signature_capability: 150000.0,
+            lock_detection: 50000.0,
+        ),
+    ),
+    sensor: (
+        // Sub-linear exponent on normalized footprint area. Also reused by
+        // `pricing::chassis::stealth_fraction` to shape the chassis EM/acoustic
+        // stealth premium fractions (#2634 calibration) — it is not
+        // sensor-only despite living in this block.
+        area_exponent: 0.8,
+        lock_premium: 2.0,
+        scan_or_track_penalty: 0.7,
+        refresh_exponent: 0.25,
+        refresh_clamp: (0.5, 2.0),
+        bearing_only_quality: 0.6,
+        fdoa_quality: 0.9,
+        emitter_tax: 0.85,
+    ),
+    warhead: (
+        damage_exponent: 0.9,
+        fuze_credit_max: 0.5,
+        blast_credit_max: 0.5,
+    ),
+    chassis: (
+        speed_exponent: 1.0,
+        munition_speed_exponent: 1.5,
+        em_stealth_premium_max: 0.5,
+        acoustic_stealth_premium_max: 0.8,
+        vantage_utilization: 0.3,
+        depth_premium_max: 0.3,
+        depth_half_point_m: 300.0,
+    ),
+)

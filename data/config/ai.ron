@@ -1,0 +1,5 @@
+(
+    evaluation_interval: 10.0,
+    launch_timeout: 120.0,
+    procurement_interval_secs: 5.0,
+)

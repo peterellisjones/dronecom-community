@@ -1,0 +1,109 @@
+_version: 2
+
+# Discord Rich Presence — text shown on the player's Discord profile.
+#
+# This is its own text zone (like the MCP report and blueprint-stats zones), so
+# it does NOT follow the in-game ALL-CAPS tactical convention: presence is prose
+# on a social surface, and caps would read as shouting. Sentence case throughout.
+#
+# The state lines bundle mode + separator + format into one key per mode rather
+# than a shared template, so each language owns its own separator. `·` is a name
+# separator in Chinese and must not be used there (see ui-design-language.md);
+# zh / zh-TW space the tokens instead, and ja uses the katakana middle dot.
+discord:
+  menu:
+    de: "Im Hauptmenü"
+    en: "In the main menu"
+    es: "En el menú principal"
+    fr: "Dans le menu principal"
+    it: "Nel menu principale"
+    ja: "メインメニュー"
+    ko: "메인 메뉴"
+    "pt-BR": "No menu principal"
+    ru: "В главном меню"
+    zh: "主菜单"
+    "zh-TW": "主選單"
+  loading:
+    de: "Lädt …"
+    en: "Loading…"
+    es: "Cargando…"
+    fr: "Chargement…"
+    it: "Caricamento…"
+    ja: "読み込み中…"
+    ko: "불러오는 중…"
+    "pt-BR": "Carregando…"
+    ru: "Загрузка…"
+    zh: "加载中…"
+    "zh-TW": "載入中…"
+  game_over:
+    de: "Gefecht beendet"
+    en: "Match complete"
+    es: "Combate finalizado"
+    fr: "Partie terminée"
+    it: "Partita conclusa"
+    ja: "戦闘終了"
+    ko: "전투 종료"
+    "pt-BR": "Partida concluída"
+    ru: "Бой завершён"
+    zh: "对战结束"
+    "zh-TW": "對戰結束"
+  commanding:
+    de: "Kommandiert %{team}"
+    en: "Commanding %{team}"
+    es: "Al mando de %{team}"
+    fr: "Commande %{team}"
+    it: "Al comando di %{team}"
+    ja: "%{team} を指揮中"
+    ko: "%{team} 지휘 중"
+    "pt-BR": "Comandando %{team}"
+    ru: "Командует %{team}"
+    zh: "指挥 %{team}"
+    "zh-TW": "指揮 %{team}"
+  spectating:
+    de: "Zuschauer"
+    en: "Spectating"
+    es: "Espectando"
+    fr: "Spectateur"
+    it: "In osservazione"
+    ja: "観戦中"
+    ko: "관전 중"
+    "pt-BR": "Assistindo"
+    ru: "Наблюдает"
+    zh: "观战中"
+    "zh-TW": "觀戰中"
+  state_solo:
+    de: "Gefecht · %{format}"
+    en: "Skirmish · %{format}"
+    es: "Escaramuza · %{format}"
+    fr: "Escarmouche · %{format}"
+    it: "Scaramuccia · %{format}"
+    ja: "スカーミッシュ・%{format}"
+    ko: "교전 · %{format}"
+    "pt-BR": "Escaramuça · %{format}"
+    ru: "Схватка · %{format}"
+    zh: "遭遇战 %{format}"
+    "zh-TW": "遭遇戰 %{format}"
+  state_multiplayer:
+    de: "Mehrspieler · %{format}"
+    en: "Multiplayer · %{format}"
+    es: "Multijugador · %{format}"
+    fr: "Multijoueur · %{format}"
+    it: "Multigiocatore · %{format}"
+    ja: "マルチプレイ・%{format}"
+    ko: "멀티플레이 · %{format}"
+    "pt-BR": "Multijogador · %{format}"
+    ru: "Мультиплеер · %{format}"
+    zh: "多人对战 %{format}"
+    "zh-TW": "多人對戰 %{format}"
+  format_players:
+    de: "%{count} Spieler"
+    en: "%{count} players"
+    es: "%{count} jugadores"
+    fr: "%{count} joueurs"
+    it: "%{count} giocatori"
+    ja: "%{count}人"
+    ko: "%{count}명"
+    "pt-BR": "%{count} jogadores"
+    ru: "Игроков: %{count}"
+    zh: "%{count} 名玩家"
+    "zh-TW": "%{count} 名玩家"

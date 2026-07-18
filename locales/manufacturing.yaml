@@ -1,0 +1,15 @@
+_version: 2
+
+manufacturing:
+  fuel_order:
+    de: "Treibstoffauftrag"
+    en: "Fuel Order"
+    es: "Pedido de combustible"
+    fr: "Commande de carburant"
+    it: "Ordine di carburante"
+    ja: "燃料注文"
+    ko: "연료 주문"
+    "pt-BR": "Pedido de combustível"
+    ru: "Заказ топлива"
+    zh: "燃料订单"
+    "zh-TW": "燃料訂單"

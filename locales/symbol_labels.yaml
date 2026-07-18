@@ -1,0 +1,125 @@
+_version: 2
+
+symbol_label:
+  # Genuine status / overlay codes — fuel, damage, and inbound-lock states.
+  # NTDS-style 2–6 letter military abbreviations, en-only like the rest of
+  # this namespace.
+  status:
+    fuel:
+      en: FUEL
+    dmgd:
+      en: DMGD
+    lkp:
+      en: LKP
+    locked:
+      en: LOCKED
+    lk:
+      en: LK
+  # #2560: why an own unit was lost, shown under the tombstone's name.
+  #
+  # Unlike `status` and `mission_code` above, these are NOT en-only: they are
+  # ordinary words, not 2–6 letter NATO abbreviations, so a non-English player
+  # must read them in their own language. ALL CAPS per the tactical-data
+  # convention (CJK has no case).
+  #
+  # SPENT vs BATTERY OUT is the platform/munition split: a missile that coasts
+  # to a stop is a spent round, not a drone with a flat battery. CRASHED covers
+  # both a terrain impact and a sea impact, which the sim does not distinguish.
+  lost:
+    destroyed:
+      de: ZERSTÖRT
+      en: DESTROYED
+      es: DESTRUIDA
+      fr: DÉTRUITE
+      it: DISTRUTTA
+      ja: 撃破
+      ko: 파괴됨
+      "pt-BR": DESTRUÍDA
+      ru: УНИЧТОЖЕНА
+      zh: 被击毁
+      "zh-TW": 遭摧毀
+    battery_out:
+      de: AKKU LEER
+      en: BATTERY OUT
+      es: SIN BATERÍA
+      fr: BATTERIE VIDE
+      it: BATTERIA SCARICA
+      ja: バッテリー切れ
+      ko: 배터리 소진
+      "pt-BR": SEM BATERIA
+      ru: НЕТ ЗАРЯДА
+      zh: 电量耗尽
+      "zh-TW": 電量耗盡
+    spent:
+      de: VERBRAUCHT
+      en: SPENT
+      es: GASTADA
+      fr: ÉPUISÉE
+      it: ESAURITA
+      ja: 消耗
+      ko: 소진
+      "pt-BR": GASTA
+      ru: ИЗРАСХОДОВАНА
+      zh: 耗尽
+      "zh-TW": 耗盡
+    crashed:
+      de: ABGESTÜRZT
+      en: CRASHED
+      es: ESTRELLADA
+      fr: ÉCRASÉE
+      it: PRECIPITATA
+      ja: 墜落
+      ko: 추락
+      "pt-BR": ACIDENTADA
+      ru: РАЗБИЛАСЬ
+      zh: 坠毁
+      "zh-TW": 墜毀
+    scuttled:
+      de: VERSENKT
+      en: SCUTTLED
+      es: AUTODESTRUIDA
+      fr: SABORDÉE
+      it: AUTOAFFONDATA
+      ja: 自沈
+      ko: 자침
+      "pt-BR": AUTODESTRUÍDA
+      ru: ЗАТОПЛЕНА
+      zh: 自毁
+      "zh-TW": 自毀
+  # Mission / mission-state map-symbol codes. Abbreviated map-symbol forms of
+  # the computed mission verbs (`MissionAnchor::symbol_code`, the short form of
+  # mission.verb.*) plus the runtime mission-state codes (RTB / EVD / FORM).
+  # NATO-style, en-only like the rest of this namespace.
+  mission_code:
+    rtb:
+      en: RTB
+    pat:
+      en: PAT
+    scn:
+      en: SCN
+    atk:
+      en: ATK
+    rcn:
+      en: RCN
+    evd:
+      en: EVD
+    nav:
+      en: NAV
+    flw:
+      en: FLW
+    form:
+      en: FORM
+    hold:
+      en: HOLD
+    grd:
+      en: GRD
+    obs:
+      en: OBS
+    swp:
+      en: SWP
+    esc:
+      en: ESC
+    sto:
+      en: STO
+    shd:
+      en: SHD

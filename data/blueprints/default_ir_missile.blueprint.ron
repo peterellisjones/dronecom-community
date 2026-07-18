@@ -1,0 +1,16 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-000000000008"),
+    codename: "IR Missile",
+    designator: "M-100",
+    chassis_id: "m_100",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // IR seeker
+        (kind: Component(component_id: "an_aas_20")),
+        // Warhead
+        (kind: Component(component_id: "mk_40")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

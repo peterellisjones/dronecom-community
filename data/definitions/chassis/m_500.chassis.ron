@@ -1,0 +1,47 @@
+(
+    id: "m_500",
+    designator: "M-500",
+    codename: "Cutlass",
+    domain: Air,
+    launch_requires: [VLS, AirLaunch],
+    recovery_requires: [],
+    provides: [],
+    length: 6.0,
+    weight: 550.0,
+    max_weight: 1100.0,
+    max_fuel: 338.0,
+    hit_points: 8.0,
+    drag: 0.080,
+    mast_height: 0.0,
+    em_signatures: Some((rcs: 0.05, ir_base: 20.0, visual_cross_section: 0.2)),
+    acoustic_signatures: None,
+    physics: FixedWing(
+        min_altitude: 20.0,
+        max_altitude: 8000.0,
+        default_altitude: 50.0,
+        min_attack_altitude: Some(0.0),
+        max_attack_altitude: None,
+        launch_speed: Some(150.0),
+        max_pitch_rate: 0.50,
+        max_yaw_rate: 0.30,
+        stall_speed: 60.0,
+        max_lateral_g: 25.0,
+        // No Lofted: a sea-skimming anti-ship/land cruise missile is a low-altitude
+        // penetrator — lofting climbs it into radar visibility and defeats the point.
+        // It also gains nothing kinematically: thrust fades in thin air (air-breather)
+        // and, post-#2126, the induced-drag glide makes a lofted shot reach *less* far
+        // than Direct. (Was self-limiting per DC-1040; now removed outright, #2126.)
+        supported_trajectories: [Direct, TerrainFollow],
+        terrain_clearance: 15.0,
+    ),
+    propulsion: Turbojet,
+    engine: Powered((thrust_n: 5400.0, fuel_burn_rate: 4.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    carrier: false,
+    ntds_classification: Explicit(Missile),
+    target_domains: [SeaSurface, Land],
+    guidance_uplink: FromLauncher,
+    battery_capacity_kwh: 0.05,
+    base_power_draw_kw: 0.5,
+    engine_bells: (loiter: None, cruise: None, full: None),
+)

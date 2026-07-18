@@ -1,0 +1,42 @@
+(
+    id: "an_apg_15",
+    designator: "AN/APG-15",
+    codename: "Setter",
+    category: Sensors,
+    mount_rule: Single,
+    weight: 12.0,
+    power_draw: 8.0,
+    allowed: [Domain(Air)],
+    payload: Sensor([(
+        kind: Radar,
+        // Fire-control seeker: locks the cued target, does not search. Being an
+        // active radar, the lock is audible to RWR — the detectable-lock content
+        // #1999 adds. (Passive IR seekers, an_aas_20, are likewise pure Track.)
+        capability: Track( locks: (1) ),
+        threshold: 0.00000000000000001,
+        scan_interval: 0.5,
+        acquire_dwell_secs: 1.0,
+        bearing_rate_tau_secs: 2.0,
+        is_active: true,
+        emits: Some(Rwr),
+        emission_strength: 50000000.0,
+        fov_h: 60.0,
+        fov_v: 60.0,
+        mounting: MastBoth,
+        iff_threshold: 0.0,
+        spreading_exponent: 2.0,
+        characteristics: Radar(
+            v_notch: 20.0,
+            notch_fraction: 0.1,
+            look_down_clutter_max_db: 20.0,
+            look_down_clutter_max_angle: 10.0,
+            low_altitude_clutter_max_db: 15.0,
+            low_altitude_clutter_ceiling: 200.0,
+        ),
+        physics: ActiveRadar(bandwidth_hz: 1000000.0, carrier_freq_hz: 35000000000.0, aperture_m: 0.20),
+        authored_noise: (velocity_sigma_mps: 3.0, altitude_sigma_m: 60.0, fdoa_sigma_mps: 30.0),
+        signature_capability: Capable(min_snr_db: 12.0),
+        elevation: Resolves,
+        fdoa: None,
+    )]),
+)
