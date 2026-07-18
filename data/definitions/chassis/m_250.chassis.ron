@@ -1,3 +1,4 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
 (
     id: "m_250",
     designator: "M-250",

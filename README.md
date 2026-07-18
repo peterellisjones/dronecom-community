@@ -19,21 +19,23 @@ A read-only mirror of the game's data files, updated automatically on every rele
 
 Use it to ground balance discussion: link the exact file and line in an issue. Please don't open pull requests against `data/` — it is overwritten by the next release's mirror. Balance proposals go in an [issue](../../issues/new/choose) with the `balance` label instead.
 
+Every file's schema is documented in [`data/docs/`](data/docs/) — the meaning, units, and consuming simulation system of each field, and the valid variants of each enum. These pages are generated straight from the game's source, so they always match the shipped data (each `.ron` also opens with a comment linking to its reference page).
+
 ### File index
 
-| Path | What it is |
-|---|---|
-| `data/blueprints/` | The stock vehicles: each `*.blueprint.ron` is a chassis plus its component loadout (carrier, drones, missiles, torpedoes, submarines, USVs). |
-| `data/definitions/chassis/` | Chassis definitions (`*.chassis.ron`): airframes and hulls with their physics, handling, and capacity parameters. |
-| `data/definitions/components/sensors/` | Sensor component definitions: radars, IR/optical sensors, ESM/warning receivers, and sonars. |
-| `data/definitions/components/warheads/` | Warhead component definitions. |
-| `data/config/ai.ron` | AI opponent pacing: evaluation, launch, and procurement intervals. |
-| `data/config/ai-strategy.ron` | AI strategy-layer tuning: objective commitment windows and posture weighting. |
-| `data/config/pricing.ron` | The capability-pricing model — every part's cost is derived from these parameters. |
-| `data/config/simulation.ron` | Core simulation tuning: autopilot, deck operations, sensors, tasking. |
-| `data/config/spatial_awareness.ron` | AI spatial threat weighting and coverage decay. |
-| `data/config/trajectory.ron` | Munition trajectory shaping parameters. |
-| `locales/` | All UI text — see Translations below. |
+| Path | What it is | Field reference |
+|---|---|---|
+| `data/blueprints/` | The stock vehicles: each `*.blueprint.ron` is a chassis plus its component loadout (carrier, drones, missiles, torpedoes, submarines, USVs). | [blueprints.md](data/docs/blueprints.md) |
+| `data/definitions/chassis/` | Chassis definitions (`*.chassis.ron`): airframes and hulls with their physics, handling, and capacity parameters. | [chassis.md](data/docs/chassis.md) |
+| `data/definitions/components/sensors/` | Sensor component definitions: radars, IR/optical sensors, ESM/warning receivers, and sonars. | [components.md](data/docs/components.md) |
+| `data/definitions/components/warheads/` | Warhead component definitions. | [components.md](data/docs/components.md) |
+| `data/config/ai.ron` | AI opponent pacing: evaluation, launch, and procurement intervals. | [ai.md](data/docs/ai.md) |
+| `data/config/ai-strategy.ron` | AI strategy-layer tuning: objective commitment windows and posture weighting. | [ai-strategy.md](data/docs/ai-strategy.md) |
+| `data/config/pricing.ron` | The capability-pricing model — every part's cost is derived from these parameters. | [pricing.md](data/docs/pricing.md) |
+| `data/config/simulation.ron` | Core simulation tuning: autopilot, deck operations, sensors, tasking. | [simulation.md](data/docs/simulation.md) |
+| `data/config/spatial_awareness.ron` | AI spatial threat weighting and coverage decay. | [spatial-awareness.md](data/docs/spatial-awareness.md) |
+| `data/config/trajectory.ron` | Munition trajectory shaping parameters. | [trajectory.md](data/docs/trajectory.md) |
+| `locales/` | All UI text — see Translations below. | — |
 
 ## Translations (`locales/`)
 

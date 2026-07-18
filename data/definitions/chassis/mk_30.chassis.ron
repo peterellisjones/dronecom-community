@@ -1,3 +1,4 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
 (
     id: "mk_30",
     designator: "MK-30",

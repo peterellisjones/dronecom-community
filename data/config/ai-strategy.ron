@@ -1,3 +1,4 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/ai-strategy.md
 // N5 strategy-layer tuning (#1626). System-level, not per-personality.
 // Every field explicit — no serde defaults (missing field fails to load).
 (
