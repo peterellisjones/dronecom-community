@@ -1,4 +1,3 @@
-// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
 (
     id: "ss_400",
     designator: "SS-400",

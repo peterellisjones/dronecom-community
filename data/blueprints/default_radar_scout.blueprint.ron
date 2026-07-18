@@ -1,4 +1,3 @@
-// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("153dd637-e1d9-4e7e-89a7-5658df0aae19"),
     codename: "Radar Scout",

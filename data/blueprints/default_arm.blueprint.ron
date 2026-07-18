@@ -1,4 +1,3 @@
-// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("875c8dac-fd38-445e-92db-fc8332e6cc81"),
     codename: "Anti-Radiation Missile",

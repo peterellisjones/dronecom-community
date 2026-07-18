@@ -1,4 +1,3 @@
-// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/spatial-awareness.md
 (
     quadtree_depth: 4,
     update_interval_secs: 3.0,

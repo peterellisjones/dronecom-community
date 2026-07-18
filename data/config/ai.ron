@@ -1,4 +1,3 @@
-// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/ai.md
 (
     evaluation_interval: 10.0,
     launch_timeout: 120.0,

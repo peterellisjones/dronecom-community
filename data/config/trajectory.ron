@@ -1,4 +1,3 @@
-// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/trajectory.md
 // Missile trajectory controller tuning — lofted cruise, post-burnout glide,
 // terrain-follow hold, terminal handoff. Consumed by dc_autopilot::trajectory.
 TrajectoryConfig(

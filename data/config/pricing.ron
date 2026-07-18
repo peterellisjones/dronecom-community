@@ -1,4 +1,3 @@
-// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/pricing.md
 (
     envelope: (
         map_radius_m: 50000.0,
