@@ -1,0 +1,55 @@
+(
+    id: "m_250",
+    designator: "M-250",
+    codename: "Claymore",
+    domain: Air,
+    launch_requires: [VLS, AirLaunch],
+    recovery_requires: [],
+    provides: [],
+    length: 3.5,
+    weight: 140.0,
+    max_weight: 240.0,
+    max_fuel: 3.0,
+    hit_points: 10.0,
+    drag: 0.025,
+    mast_height: 0.0,
+    em_signatures: Some((rcs: 0.05, ir_base: 15.0, visual_cross_section: 0.15)),
+    acoustic_signatures: None,
+    physics: FixedWing(
+        min_altitude: 50.0,
+        max_altitude: 15000.0,
+        default_altitude: 100.0,
+        min_attack_altitude: Some(0.0),
+        max_attack_altitude: None,
+        launch_speed: Some(300.0),
+        max_pitch_rate: 1.05,
+        max_yaw_rate: 0.52,
+        stall_speed: 60.0,
+        max_lateral_g: 50.0,
+        supported_trajectories: [Direct, Lofted],
+        terrain_clearance: 20.0,
+    ),
+    propulsion: Rocket,
+    // Boost-sustain (#2185): a real-AMRAAM energy-management motor. A ~4 s boost
+    // accelerates the missile, then a reduced-thrust sustain holds energy through
+    // the engagement so a medium-range shot flies powered-direct (clean PN, no
+    // forced loft-and-dive) and only lofts for genuine BVR. boost_fuel 1.0 / burn
+    // 15 → ~4 s boost; sustain 2.0 / 7 → ~17 s at 45% thrust.
+    engine: Powered((thrust_n: 12000.0, fuel_burn_rate: 15.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostSustain(boost_fuel_kg: 1.0, sustain_thrust_fraction: 0.45, sustain_burn_rate: 7.0))),
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    carrier: false,
+    ntds_classification: Explicit(Missile),
+    target_domains: [Air, SeaSurface, Land],
+    guidance_uplink: FromLauncher,
+    // Coast reserve sized to outlast a full BVR loft (#2247): after the ~21 s
+    // boost+sustain the missile glides on the battery (seeker + electronics), and
+    // running it dry mid-coast despawns the missile (BatteryDepleted) before it
+    // reaches its target. The worst case is the longest committed shot — the
+    // operational max-reach loft (~33 km) from the MQ-450 air-launch ceiling
+    // (8 km) — which coasts ~83 s. At the 8.5 kW seeker+base draw, 0.32 kWh gives
+    // ~135 s of coast endurance (~1.6× the coast, over the 1.5× floor). Guarded by
+    // `dc_autopilot` `radar_missile_battery_outlasts_best_range_loft`.
+    battery_capacity_kwh: 0.32,
+    base_power_draw_kw: 0.5,
+    engine_bells: (loiter: None, cruise: None, full: None),
+)

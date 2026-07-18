@@ -1,0 +1,17 @@
+// Missile trajectory controller tuning — lofted cruise, post-burnout glide,
+// terrain-follow hold, terminal handoff. Consumed by dc_autopilot::trajectory.
+TrajectoryConfig(
+    // Proportional loft (#2183): loft above the target's altitude scales with
+    // ground range (0 + 0.08·d) instead of a 2 km absolute floor, so a lofted
+    // munition stays near a co-altitude air target at medium range (shallow PN
+    // handoff) yet still climbs to the apex a long shot needs. Currently DORMANT —
+    // no shipped blueprint flies Lofted (the M-250 boost-coast conversion that
+    // motivated this is deferred to the boost-sustain thrust model, #2185); the
+    // values will be re-validated against live content there. Pinned to
+    // LoftGeometry::STANDARD by default_matches_shipped_ron.
+    cruise_base: 0.0,
+    cruise_k: 0.08,
+    cruise_reached_tolerance: 150.0,
+    terminal_handoff_range: 4000.0,
+    glide_descent_rad: 0.105, // ≈ 6° below horizon
+)

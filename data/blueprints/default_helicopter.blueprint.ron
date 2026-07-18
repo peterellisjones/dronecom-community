@@ -1,0 +1,20 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-000000000004"),
+    codename: "Standard Helicopter",
+    designator: "MH-180",
+    chassis_id: "mh_180",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // EO/IR turret
+        (kind: Component(component_id: "an_aaq_55")),
+        // RWR
+        (kind: Component(component_id: "an_alr_90")),
+        // Radar Missile 1 (M-250 anti-ship)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // Radar Missile 2 (M-250 anti-ship)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

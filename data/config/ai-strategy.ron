@@ -1,0 +1,58 @@
+// N5 strategy-layer tuning (#1626). System-level, not per-personality.
+// Every field explicit — no serde defaults (missing field fails to load).
+(
+    // Commitment window (seconds) for a chosen objective before a scheduled
+    // re-assessment. Hysteresis: stops per-tick posture flapping. An emergency
+    // (a threatened carrier) preempts this immediately.
+    horizon_secs: 30.0,
+    // A carrier is "threatened" when its nearest fresh enemy contact is within
+    // this planar range (metres) and closing. Matches carrier_danger_radius.
+    threat_range_m: 14000.0,
+    // Minimum own armed units to adopt a Press posture; below this the
+    // main-effort carrier probes (scouts) instead of committing.
+    press_force_floor: 2,
+
+    // ── Phase 3: executor modulation ──────────────────────────────────────
+    // Forward step (m) a Press carrier advances toward the objective focus per
+    // MoveCarrier task. Capped so a hop never overshoots the focus.
+    press_advance_step_m: 12000.0,
+    // Forward step (m) a Probe carrier advances — shorter, cautious scouting.
+    probe_advance_step_m: 6000.0,
+    // Multiplier on engagement reach (max_engage_distance) under a Press
+    // carrier. Hold/Probe keep the unscaled reach. Lifts the offense cage.
+    press_engage_reach_mult: 2.0,
+    // Standoff an advancing carrier holds from the objective focus, as a
+    // fraction of max_engage_distance. < 1.0 closes the carrier INSIDE the
+    // strike envelope (with margin) so a launched strike reliably reaches.
+    advance_standoff_mult: 0.6,
+    // Extra weight on the forward (toward-objective) geometric bias when the
+    // patrol advisor orders stale cells under Probe/ControlMap, so scouting
+    // pushes toward the enemy axis rather than only home sectors.
+    probe_scout_forward_bias: 1.0,
+
+    // ── Phase 3.5: (objective, posture) task-value category multipliers ────
+    // Raise offensive task value under Press, defensive under Hold, scouting
+    // under Probe. Ordinal — N5 greedy sorts/dedups by these; magnitude is
+    // co-validated with the N6 auction (#1627), so kept conservative.
+    press_offense_mult: 1.5,
+    hold_defense_mult: 1.5,
+    probe_scout_mult: 1.3,
+
+    // ── N6: absolute per-category base worth (#1627 / #1361) ──────────────
+    // The auction multiplies base_worth[category] × situational_score ×
+    // posture_mult to get a value comparable ACROSS task categories.
+    base_worth_offense: 1.2,
+    base_worth_defense: 1.5,
+    base_worth_scout: 0.6,
+    base_worth_neutral: 0.4,
+
+    // ── N7 opponent belief (Phase 1, #1735) ───────────────────────────────
+    // Reachable-disk radius (m) at which an unobserved enemy belief's confidence
+    // fades to zero: reachable = max_speed · elapsed; confidence = 1 − reachable
+    // / useful_radius. A ~300 m/s air contact crosses 50 km in ~150 s (forgotten
+    // ~2.5 min after going dark); a ~15 m/s surface contact takes ~50 min — slow
+    // movers stay believed far longer than the wire's flat ~60 s staleness.
+    belief_useful_radius_m: 50000.0,
+    // Confidence floor (0..1): a decaying belief below this is evicted.
+    belief_confidence_floor: 0.1,
+)

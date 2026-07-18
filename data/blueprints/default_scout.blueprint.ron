@@ -1,0 +1,16 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-00000000000c"),
+    codename: "Standard Scout",
+    designator: "RQ-10",
+    chassis_id: "rq_10",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // EO/IR turret (cheap eyes / decoy / picket)
+        (kind: Component(component_id: "an_aaq_55")),
+        // RWR
+        (kind: Component(component_id: "an_alr_90")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

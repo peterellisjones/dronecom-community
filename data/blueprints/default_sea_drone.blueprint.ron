@@ -1,0 +1,20 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-000000000005"),
+    codename: "Standard Sea Drone",
+    designator: "USV-80",
+    chassis_id: "usv_80",
+    fuel_tank_percent: 0.7,
+    inventory: [
+        // Light surface-search radar
+        (kind: Component(component_id: "an_sps_90")),
+        // Ship RWR
+        (kind: Component(component_id: "an_slr_40")),
+        // Radar Missile 1 (M-250)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // Radar Missile 2 (M-250)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

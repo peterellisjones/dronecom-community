@@ -1,0 +1,48 @@
+(
+    id: "an_alr_60",
+    designator: "AN/ALR-60",
+    codename: "Bloodhound",
+    category: Sensors,
+    mount_rule: Single,
+    weight: 12.0,
+    power_draw: 4.0,
+    allowed: [Domain(Air)],
+    payload: Sensor([(
+        kind: Rwr,
+        // Passive anti-radiation SEEKER: locks the cued emitter and homes on its
+        // radiation bearing (#2524). Unlike the search RWR (an_alr_90) it is
+        // `Track` (a fire-control head, one lock), and like the passive IR seeker
+        // (an_aas_20) it stays a pure passive Track — it emits nothing, so it works
+        // regardless of the launcher's own EMCON. The refinement builder's passive
+        // branch is generic over kind, so this produces a bearing-only 3-D LOS
+        // refinement the angle-domain PN law homes on (#1696). It acquires only
+        // while the emitter radiates: an emitter that goes dark drops out of the
+        // passive picture and the round coasts to its last-known-position then
+        // spends / scuttles (#2520) — the go-dark counterplay.
+        capability: Track( locks: (1) ),
+        threshold: 0.1,
+        scan_interval: 0.5,
+        acquire_dwell_secs: 1.0,
+        bearing_rate_tau_secs: 2.0,
+        is_active: false,
+        emits: None,
+        emission_strength: 0.0,
+        // Forward-hemisphere acquisition cone. The launch gate withholds the
+        // commit-on-bearing shot until the launcher points within `fov_h / 2` of
+        // the emitter bearing (#2194), so a wide-but-not-omni cone keeps the ARM
+        // roughly nose-on to its target at release.
+        fov_h: 120.0,
+        fov_v: 90.0,
+        mounting: MastDetector,
+        iff_threshold: 0.0,
+        spreading_exponent: 2.0,
+        characteristics: Simple,
+        physics: PassiveEm(carrier_freq_hz: 9500000000.0, aperture_m: 0.15),
+        authored_noise: (velocity_sigma_mps: 40.0, altitude_sigma_m: 500.0, fdoa_sigma_mps: 30.0),
+        signature_capability: None,
+        // 2-axis seeker: resolves elevation as well as azimuth (not range), so the
+        // refinement carries a 3-D LOS and PN can climb/dive onto the emitter.
+        elevation: Resolves,
+        fdoa: Capable,
+    )]),
+)

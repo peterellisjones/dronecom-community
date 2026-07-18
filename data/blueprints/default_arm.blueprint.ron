@@ -1,0 +1,21 @@
+(
+    id: BlueprintId("875c8dac-fd38-445e-92db-fc8332e6cc81"),
+    codename: "Anti-Radiation Missile",
+    designator: "M-300",
+    chassis_id: "m_300",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Passive anti-radiation (RWR-homing) seeker — homes on a live emitter's
+        // radiation bearing; the emitter going dark starves it (#2524).
+        (kind: Component(component_id: "an_alr_60")),
+        // Warhead
+        (kind: Component(component_id: "mk_120")),
+    ],
+    doctrine_setting: Suggested,
+    // Direct SEAD profile: fly a powered-direct energy course onto the emitter.
+    // The boost-sustain motor buys the long reach; a Direct shot keeps the passive
+    // seeker's forward cone on the emitter for the whole engagement (a loft-and-dive
+    // swings the geometry) — reach still overflies the M-250 SAM envelope.
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

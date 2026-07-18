@@ -1,0 +1,16 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-000000000007"),
+    codename: "Standard Torpedo",
+    designator: "MK-55",
+    chassis_id: "mk_55",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Active-sonar homing seeker (forms an audible fire-control lock)
+        (kind: Component(component_id: "an_sqs_30")),
+        // Torpedo warhead
+        (kind: Component(component_id: "mk_60t")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

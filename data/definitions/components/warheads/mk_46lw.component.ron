@@ -1,0 +1,15 @@
+(
+    id: "mk_46lw",
+    designator: "MK-46LW",
+    codename: "Needle",
+    category: Warheads,
+    mount_rule: SoleInCategory,
+    weight: 25.0,
+    power_draw: 0.0,
+    allowed: [Domain(Submarine)],
+    payload: Warhead((
+        damage: 120.0,
+        blast_radius: 90.0,
+        proximity_fuze_radius_m: 30.0,
+    )),
+)

@@ -1,0 +1,27 @@
+_version: 2
+
+blueprint_viewer:
+  title:
+    de: "Bauplan: %{name}"
+    en: "Blueprint: %{name}"
+    es: "Plano: %{name}"
+    fr: "Plan : %{name}"
+    it: "Progetto: %{name}"
+    ja: "設計図: %{name}"
+    ko: "설계도: %{name}"
+    "pt-BR": "Projeto: %{name}"
+    ru: "Чертёж: %{name}"
+    zh: "蓝图: %{name}"
+    "zh-TW": "藍圖: %{name}"
+  edit:
+    de: "Bauplan bearbeiten"
+    en: "Edit Blueprint"
+    es: "Editar plano"
+    fr: "Modifier le plan"
+    it: "Modifica progetto"
+    ja: "設計図を編集"
+    ko: "설계도 편집"
+    "pt-BR": "Editar projeto"
+    ru: "Редактировать чертёж"
+    zh: "编辑蓝图"
+    "zh-TW": "編輯藍圖"

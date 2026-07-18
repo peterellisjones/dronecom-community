@@ -1,0 +1,32 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-00000000000d"),
+    codename: "Standard Arsenal USV",
+    designator: "USV-200",
+    chassis_id: "usv_200",
+    fuel_tank_percent: 0.9,
+    inventory: [
+        // Light surface-search radar
+        (kind: Component(component_id: "an_sps_90")),
+        // Ship RWR
+        (kind: Component(component_id: "an_slr_40")),
+        // Cruise Missile 1 (M-500 anti-ship, VLS)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000009"))),
+        // Cruise Missile 2 (M-500 anti-ship, VLS)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000009"))),
+        // Cruise Missile 3 (M-500 anti-ship, VLS)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000009"))),
+        // Area SAM 1 (M-250, VLS)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // Area SAM 2 (M-250, VLS)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // Area SAM 3 (M-250, VLS)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // Heavy Torpedo 1 (MK-55)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+        // Heavy Torpedo 2 (MK-55)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

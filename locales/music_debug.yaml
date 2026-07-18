@@ -1,0 +1,27 @@
+_version: 2
+
+music_debug:
+  title:
+    de: "Musik-Debug"
+    en: "Music Debug"
+    es: "Depuración de música"
+    fr: "Débogage musical"
+    it: "Debug musica"
+    ja: "音楽デバッグ"
+    ko: "음악 디버그"
+    "pt-BR": "Depuração de música"
+    ru: "Отладка музыки"
+    zh: "音乐调试"
+    "zh-TW": "音樂除錯"
+  tooltip:
+    de: "Musik-Debug-Panel umschalten"
+    en: "Toggle music debug panel"
+    es: "Alternar panel de depuración de música"
+    fr: "Basculer le panneau de débogage musical"
+    it: "Attiva/disattiva pannello debug musica"
+    ja: "音楽デバッグパネルを切り替え"
+    ko: "음악 디버그 패널 전환"
+    "pt-BR": "Alternar painel de depuração de música"
+    ru: "Переключить панель отладки музыки"
+    zh: "切换音乐调试面板"
+    "zh-TW": "切換音樂除錯面板"

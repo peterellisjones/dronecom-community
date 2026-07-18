@@ -1,0 +1,20 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-00000000000b"),
+    codename: "Standard AEW",
+    designator: "MQ-450",
+    chassis_id: "mq_450",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Heavy AEW search radar (the fleet's sensor picket)
+        (kind: Component(component_id: "an_aps_660")),
+        // RWR
+        (kind: Component(component_id: "an_alr_90")),
+        // IR Missile 1 (M-100 self-defence)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // IR Missile 2 (M-100 self-defence)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Ceiling,
+)

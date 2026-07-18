@@ -1,0 +1,19 @@
+_version: 2
+
+credits:
+  title:
+    de: "Mitwirkende & Lizenzen"
+    en: "Credits & Licenses"
+    es: "Créditos y licencias"
+    fr: "Crédits et licences"
+    it: "Riconoscimenti e licenze"
+    ja: "クレジットとライセンス"
+    ko: "크레딧 및 라이선스"
+    "pt-BR": "Créditos e licenças"
+    ru: "Авторы и лицензии"
+    zh: "鸣谢与许可"
+    "zh-TW": "鳴謝與授權"
+  # Legal/source-availability line followed by the MPL-2.0 source URL — English in
+  # every locale (allowlisted in tests/locale_parity.rs, like the other legal text).
+  source_intro:
+    en: "Source for the terrain erosion filter (MPL-2.0):"

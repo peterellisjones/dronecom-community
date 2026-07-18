@@ -1,0 +1,64 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-000000000001"),
+    codename: "Standard Carrier",
+    designator: "CV-3000",
+    chassis_id: "cv_3000",
+    fuel_tank_percent: 0.4,
+    inventory: [
+        // Ship radar
+        (kind: Component(component_id: "an_spy_310")),
+        // Ship RWR
+        (kind: Component(component_id: "an_slr_40")),
+        // --- Point-defence VLS (SAMs) ---
+        // Point-defence SAM 1 (M-100)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // Point-defence SAM 2 (M-100)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // Point-defence SAM 3 (M-100)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // Point-defence SAM 4 (M-100)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // Area SAM 1 (M-250)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // Area SAM 2 (M-250)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // --- Torpedo tubes ---
+        // Torpedo 1 (MK-55)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+        // Torpedo 2 (MK-55)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+        // --- Air wing (stowed) ---
+        // AEW picket 1 (MQ-450)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-00000000000b"))),
+        // AEW picket 2 (MQ-450)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-00000000000b"))),
+        // Strike drone 1 (MQ-220)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000002"))),
+        // Strike drone 2 (MQ-220)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000002"))),
+        // Strike drone 3 (MQ-220)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000002"))),
+        // Strike drone 4 (MQ-220)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000002"))),
+        // Interceptor 1 (MQ-160)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-00000000000a"))),
+        // Interceptor 2 (MQ-160)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-00000000000a"))),
+        // Helicopter (MH-180)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000004"))),
+        // --- Subsurface & surface escorts (stowed in WellDeck) ---
+        // Attack submarine 1 (SS-400)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000006"))),
+        // Attack submarine 2 (SS-400)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000006"))),
+        // Picket USV 1 (USV-80)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000005"))),
+        // Picket USV 2 (USV-80)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000005"))),
+        // Arsenal USV (USV-200 — the fleet's missile escort)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-00000000000d"))),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

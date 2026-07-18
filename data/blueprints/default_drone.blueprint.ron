@@ -1,0 +1,20 @@
+(
+    id: BlueprintId("00000000-0000-0000-0000-000000000002"),
+    codename: "Standard Drone",
+    designator: "MQ-220",
+    chassis_id: "mq_220",
+    fuel_tank_percent: 0.85,
+    inventory: [
+        // EO/IR turret (passive — rides the team picture)
+        (kind: Component(component_id: "an_aaq_55")),
+        // RWR
+        (kind: Component(component_id: "an_alr_90")),
+        // Radar Missile 1 (M-250)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // Radar Missile 2 (M-250)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

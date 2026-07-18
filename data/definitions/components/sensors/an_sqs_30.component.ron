@@ -1,0 +1,47 @@
+(
+    id: "an_sqs_30",
+    designator: "AN/SQS-30",
+    codename: "Barracuda",
+    category: Sensors,
+    mount_rule: Single,
+    weight: 25.0,
+    power_draw: 6.0,
+    allowed: [Domain(Submarine)],
+    payload: Sensor([(
+        kind: SonarActive,
+        // Fire-control homing seeker: locks the cued target, does not search.
+        // Being active, the ping is audible to passive sonar — the detectable-lock
+        // content #1999 adds.
+        capability: Track( locks: (1) ),
+        threshold: 0.00000000000000131,
+        // Terminal homing pings fast, not a slow hull-sonar search sweep.
+        scan_interval: 1.0,
+        acquire_dwell_secs: 1.0,
+        bearing_rate_tau_secs: 2.0,
+        is_active: true,
+        // The ping radiates on the passive-sonar channel — the lock is audible
+        // (the deliberate loud-active contrast to the silent IR seeker).
+        emits: Some(SonarPassive),
+        // Compact transducer — far quieter than the SQS-85 "Orca" hull array.
+        emission_strength: 188000000000000000000.0,
+        // Forward homing cone (the seeker snakes in azimuth), NOT a 360 search field.
+        fov_h: 90.0,
+        fov_v: 60.0,
+        mounting: MastBoth,
+        iff_threshold: 0.000000000000197,
+        spreading_exponent: 1.2,
+        characteristics: SonarActive(
+            v_notch: 3.0,
+            notch_fraction: 0.3,
+        ),
+        // Torpedo-scale acoustics: high homing frequency + short array -> a ~9.5deg
+        // beam; wide bandwidth -> a ~10 m range cell for terminal precision.
+        physics: ActiveSonar(bandwidth_hz: 75.0, frequency_hz: 30000.0, array_length_m: 0.3, sound_speed_mps: 1500.0),
+        authored_noise: (velocity_sigma_mps: 5.0, altitude_sigma_m: 80.0, fdoa_sigma_mps: 30.0),
+        // A homing seeker tracks; it does not run classification (the launching
+        // submarine already classified the target).
+        signature_capability: None,
+        elevation: Resolves,
+        fdoa: None,
+    )]),
+)

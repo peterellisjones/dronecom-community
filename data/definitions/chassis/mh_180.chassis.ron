@@ -1,0 +1,44 @@
+(
+    id: "mh_180",
+    designator: "MH-180",
+    codename: "Hornet",
+    domain: Air,
+    launch_requires: [FlightDeck, HeliPad],
+    recovery_requires: [FlightDeck, HeliPad],
+    provides: [(facility: AirLaunch, parallelism: 4)],
+    length: 8.0,
+    weight: 550.0,
+    max_weight: 1300.0,
+    max_fuel: 200.0,
+    hit_points: 40.0,
+    drag: 5.70,
+    mast_height: 0.0,
+    em_signatures: Some((rcs: 0.5, ir_base: 6.0, visual_cross_section: 0.6)),
+    acoustic_signatures: None,
+    physics: RotaryWing(
+        min_altitude: 0.0,
+        max_altitude: 4000.0,
+        default_altitude: 200.0,
+        max_pitch_rate: 0.44,
+        max_yaw_rate: 0.35,
+        // Vertical (rotor-axis) drag area, ~9x the horizontal `drag: 5.70`. A
+        // helicopter climbing/descending fights its rotor disc + downwash, not
+        // its fuselage cross-section, so vertical motion is far more drag-limited
+        // than forward flight. Tuned to a realistic ~14 m/s climb at loaded
+        // weight (the single horizontal drag_area gave ~42.5; #2087).
+        vertical_drag_area: 52.0,
+    ),
+    propulsion: Rotary,
+    // AirDensity (#2103): rotor thrust lapses with air density (T ∝ ρ), so climb
+    // degrades with altitude toward an emergent hover ceiling (the fixed-collective
+    // rotor model, ADR-0011). Identical to Constant at/near sea level.
+    engine: Powered((thrust_n: 18800.0, fuel_burn_rate: 7.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    carrier: false,
+    ntds_classification: DeriveFromDomain,
+    target_domains: [],
+    guidance_uplink: None,
+    battery_capacity_kwh: 1.0,
+    base_power_draw_kw: 1.0,
+    engine_bells: (loiter: Some(0.195), cruise: Some(0.65), full: Some(0.86)),
+)

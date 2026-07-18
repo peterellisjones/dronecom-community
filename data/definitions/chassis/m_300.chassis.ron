@@ -1,0 +1,55 @@
+(
+    id: "m_300",
+    designator: "M-300",
+    codename: "Sabre",
+    domain: Air,
+    launch_requires: [VLS, AirLaunch],
+    recovery_requires: [],
+    provides: [],
+    length: 4.5,
+    weight: 175.0,
+    max_weight: 320.0,
+    max_fuel: 7.5,
+    hit_points: 10.0,
+    drag: 0.025,
+    mast_height: 0.0,
+    em_signatures: Some((rcs: 0.05, ir_base: 15.0, visual_cross_section: 0.15)),
+    acoustic_signatures: None,
+    physics: FixedWing(
+        min_altitude: 50.0,
+        max_altitude: 15000.0,
+        default_altitude: 100.0,
+        min_attack_altitude: Some(0.0),
+        max_attack_altitude: None,
+        launch_speed: Some(300.0),
+        max_pitch_rate: 1.05,
+        max_yaw_rate: 0.52,
+        stall_speed: 60.0,
+        max_lateral_g: 50.0,
+        supported_trajectories: [Direct, Lofted],
+        terrain_clearance: 20.0,
+    ),
+    propulsion: Rocket,
+    // Boost-sustain SEAD motor (#2524): the M-300 out-ranges the M-250 SAM so an
+    // anti-radiation shot is fired from beyond the defended emitter's own SAM
+    // envelope. A ~4 s boost accelerates the round, then an extended reduced-thrust
+    // sustain (a bigger tank + longer sustain than the M-250) holds energy far
+    // enough to overfly the ~24.5 km M-250 reach — the credited sea-level reach is
+    // ~34 km (1.4× the M-250), measured through `fit_reach` in the
+    // `munition_battery_reserve` guard. boost_fuel 1.0 / burn 15 → ~4 s boost;
+    // sustain 6.5 / 6 → ~65 s at 45% thrust.
+    engine: Powered((thrust_n: 12000.0, fuel_burn_rate: 15.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostSustain(boost_fuel_kg: 1.0, sustain_thrust_fraction: 0.45, sustain_burn_rate: 6.0))),
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    carrier: false,
+    ntds_classification: Explicit(Missile),
+    target_domains: [Air, SeaSurface, Land],
+    guidance_uplink: FromLauncher,
+    // Coast reserve sized to outlast the best-possible-range flight (#2524, same
+    // rule as the M-250 #2247 / M-100 #2251 guards). Verified by the per-codename
+    // `munition_battery_reserve` guard (`arm_battery_outlasts_best_range_flight`),
+    // which re-derives the requirement from the live flight model — a reach retune
+    // that lengthens the coast re-fails it until this is resized.
+    battery_capacity_kwh: 0.5,
+    base_power_draw_kw: 0.5,
+    engine_bells: (loiter: None, cruise: None, full: None),
+)

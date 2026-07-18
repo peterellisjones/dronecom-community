@@ -1,0 +1,55 @@
+(
+    id: "m_100",
+    designator: "M-100",
+    codename: "Stiletto",
+    domain: Air,
+    launch_requires: [VLS, AirLaunch],
+    recovery_requires: [],
+    provides: [],
+    length: 2.5,
+    weight: 70.0,
+    max_weight: 100.0,
+    // Boost-then-coast (#2127): ~4.8 s boost (1.2 / 15.0 × 60), then unpowered
+    // terminal — a short-range WVR IR shot is a single high-thrust pulse, not a
+    // sustained burn. Range recovered via thrust_n (impulse), not burn duration.
+    max_fuel: 1.2,
+    hit_points: 5.0,
+    drag: 0.020,
+    mast_height: 0.0,
+    em_signatures: Some((rcs: 0.01, ir_base: 10.0, visual_cross_section: 0.1)),
+    acoustic_signatures: None,
+    physics: FixedWing(
+        min_altitude: 50.0,
+        max_altitude: 10000.0,
+        default_altitude: 100.0,
+        min_attack_altitude: Some(0.0),
+        max_attack_altitude: None,
+        launch_speed: Some(250.0),
+        max_pitch_rate: 1.40,
+        max_yaw_rate: 1.00,
+        stall_speed: 80.0,
+        max_lateral_g: 60.0,
+        supported_trajectories: [Direct, TerrainFollow, Lofted],
+        terrain_clearance: 15.0,
+    ),
+    propulsion: Rocket,
+    engine: Powered((thrust_n: 16000.0, fuel_burn_rate: 15.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostCoast)),
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    carrier: false,
+    ntds_classification: Explicit(Missile),
+    target_domains: [Air, SeaSurface, Land],
+    guidance_uplink: FromLauncher,
+    // Coast reserve sized to outlast the M-100's best-possible-range flight (#2251).
+    // After the ~5 s boost the missile glides on the battery (seeker + electronics),
+    // and running it dry mid-coast despawns it (BatteryDepleted) before it reaches
+    // the target. Since the #2276 PN-descent re-fit a Direct M-100 air-launched from
+    // the MQ-450 ceiling (8 km) glides to its ~30.5 km credited max reach — coasting
+    // ~76 s. At 0.01 kWh the ~3.5 kW seeker+base draw gave only ~10 s of coast, so
+    // the AEW's self-defence M-100 fired at distant surface contacts and despawned
+    // mid-glide, throwing the shot away. 0.13 kWh gives ~134 s (~1.8× the coast, over
+    // the maintainer's 1.5× floor). Guarded by `dc_autopilot`
+    // `ir_missile_battery_outlasts_best_range_direct`.
+    battery_capacity_kwh: 0.13,
+    base_power_draw_kw: 0.5,
+    engine_bells: (loiter: None, cruise: None, full: None),
+)
