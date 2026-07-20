@@ -12,7 +12,7 @@
         kind: Ir,
         capability: Track( locks: (1) ),
         threshold: 0.0000003,
-        scan_interval: 0.1,
+        scan_interval: 0.03, // #2512: real IR trackers run well above 10 Hz; also the LOS scan-cadence substep resolution — the mk_40 one-shot-kill envelope (CPA ≤ 21.5 m) needs ≤ ~0.03 s at coarse frames
         acquire_dwell_secs: 0.2,
         bearing_rate_tau_secs: 2.0,
         is_active: false,

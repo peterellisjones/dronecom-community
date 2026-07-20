@@ -9,6 +9,20 @@ _version: 2
 # native terse terms (no Latin abbreviation) except where the NATO term (TN)
 # is standard interop vocabulary.
 glossary:
+  # #2896: shared "hold Shift for details" footer inviting the player to reveal
+  # per-row explanations in the rich vehicle/contact/group/sensor tooltips.
+  shift_hint:
+    de: "Umschalttaste für Erläuterungen halten."
+    en: "Hold Shift for details."
+    es: "Mantén Mayús para ver detalles."
+    fr: "Maintenez Maj pour les détails."
+    it: "Tieni premuto Maiusc per i dettagli."
+    ja: "Shiftキーを押し続けると詳細を表示。"
+    ko: "Shift 키를 누르고 있으면 상세 설명이 표시됩니다."
+    "pt-BR": "Segure Shift para ver detalhes."
+    ru: "Удерживайте Shift для подробностей."
+    zh: "按住 Shift 键查看详情。"
+    "zh-TW": "按住 Shift 鍵查看詳情。"
   pos:
     label:
       de: "POS"
@@ -150,6 +164,20 @@ glossary:
       ru: "Высота над средним уровнем моря."
       zh: "平均海平面以上高度。"
       "zh-TW": "平均海平面以上高度。"
+    # #2884: value hover on the clickable masthead ALT cell — meaning plus the
+    # MSL/AGL toggle click explanation.
+    value_tooltip:
+      de: "Höhe über dem mittleren Meeresspiegel. Klicken, um zwischen Höhe über dem Meeresspiegel und über Grund zu wechseln."
+      en: "Altitude above mean sea level. Click to switch between mean-sea-level and above-ground-level altitude."
+      es: "Altitud sobre el nivel medio del mar. Haz clic para alternar entre altitud sobre el nivel del mar y sobre el terreno."
+      fr: "Altitude au-dessus du niveau moyen de la mer. Cliquez pour basculer entre l'altitude au-dessus du niveau de la mer et au-dessus du sol."
+      it: "Altitudine sul livello medio del mare. Fai clic per alternare tra altitudine sul livello del mare e sul suolo."
+      ja: "平均海面からの高度。クリックで平均海面高度と対地高度を切り替えます。"
+      ko: "평균 해수면 기준 고도. 클릭하여 평균 해수면 고도와 지면 고도를 전환합니다."
+      "pt-BR": "Altitude acima do nível médio do mar. Clique para alternar entre altitude sobre o nível do mar e sobre o solo."
+      ru: "Высота над средним уровнем моря. Нажмите, чтобы переключаться между высотой над уровнем моря и над землёй."
+      zh: "平均海平面以上高度。单击可在平均海平面高度与对地高度之间切换。"
+      "zh-TW": "平均海平面以上高度。點擊可在平均海平面高度與對地高度之間切換。"
   agl:
     label:
       de: "ÜGND"
@@ -175,6 +203,20 @@ glossary:
       ru: "Высота над уровнем земли."
       zh: "地面以上高度。"
       "zh-TW": "地面以上高度。"
+    # #2884: value hover on the clickable masthead ALT cell (AGL mode) — meaning
+    # plus the MSL/AGL toggle click explanation.
+    value_tooltip:
+      de: "Höhe über Grund. Klicken, um zwischen Höhe über dem Meeresspiegel und über Grund zu wechseln."
+      en: "Altitude above ground level. Click to switch between mean-sea-level and above-ground-level altitude."
+      es: "Altitud sobre el nivel del terreno. Haz clic para alternar entre altitud sobre el nivel del mar y sobre el terreno."
+      fr: "Altitude au-dessus du sol. Cliquez pour basculer entre l'altitude au-dessus du niveau de la mer et au-dessus du sol."
+      it: "Altitudine sul livello del suolo. Fai clic per alternare tra altitudine sul livello del mare e sul suolo."
+      ja: "地表からの高度。クリックで平均海面高度と対地高度を切り替えます。"
+      ko: "지면 기준 고도. 클릭하여 평균 해수면 고도와 지면 고도를 전환합니다."
+      "pt-BR": "Altitude acima do nível do solo. Clique para alternar entre altitude sobre o nível do mar e sobre o solo."
+      ru: "Высота над уровнем земли. Нажмите, чтобы переключаться между высотой над уровнем моря и над землёй."
+      zh: "地面以上高度。单击可在平均海平面高度与对地高度之间切换。"
+      "zh-TW": "地面以上高度。點擊可在平均海平面高度與對地高度之間切換。"
   dpth:
     label:
       de: "TIEFE"
@@ -528,6 +570,8 @@ glossary:
       ru: "Характеристики: лётно-технические данные этой машины."
       zh: "该载具的性能参数。"
       "zh-TW": "該載具的性能參數。"
+    # #2896: Shift-held gloss — the SPC value combines weight, top speed, and the
+    # vertical envelope (ceiling or max depth).
   inv:
     label:
       de: "INV"
@@ -805,6 +849,8 @@ glossary:
       ru: "Топливо: остаток топлива и дальность."
       zh: "剩余燃料与航程。"
       "zh-TW": "剩餘燃料與航程。"
+    # #2896: Shift-held gloss — the FUEL value is a composite (%· range ·
+    # endurance · BINGO tag) the terse label glossary alone doesn't cover.
   cond:
     label:
       de: "ZUST"

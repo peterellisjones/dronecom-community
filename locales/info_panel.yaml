@@ -1,11 +1,100 @@
 _version: 2
 
 info_panel:
+  alt_mode_tooltip:
+    de: "Wie die Plattform die Höhe hält: ALT hält eine feste Höhe über dem Meeresspiegel; TERR folgt dem Gelände in einem festen Abstand."
+    en: "How the platform holds altitude: ALT keeps a fixed height above sea level; TERR follows the terrain at a set clearance."
+    es: "Cómo mantiene la altitud la plataforma: ALT conserva una altura fija sobre el nivel del mar; TERR sigue el terreno a una separación fija."
+    fr: "Comment la plateforme tient l'altitude : ALT maintient une hauteur fixe au-dessus du niveau de la mer ; TERR suit le relief à une garde fixe."
+    it: "Come la piattaforma mantiene la quota: ALT tiene un'altezza fissa sul livello del mare; TERR segue il terreno a una distanza fissa."
+    ja: "高度の保持方法。ALTは海面からの一定高度を保ち、TERRは一定のクリアランスで地形に追従する。"
+    ko: "플랫폼이 고도를 유지하는 방식: ALT는 해수면 기준 고정 고도를 유지하고, TERR는 일정 간격으로 지형을 따라갑니다."
+    "pt-BR": "Como a plataforma mantém a altitude: ALT conserva uma altura fixa acima do nível do mar; TERR acompanha o terreno a uma folga fixa."
+    ru: "Как платформа удерживает высоту: ALT держит постоянную высоту над уровнем моря; TERR следует рельефу с заданным зазором."
+    zh: "平台保持高度的方式：ALT 保持相对海平面的固定高度；TERR 以设定的离地间隙贴地飞行。"
+    "zh-TW": "平台保持高度的方式：ALT 保持相對海平面的固定高度；TERR 以設定的離地間隙貼地飛行。"
+  battery_reserve_tooltip:
+    de: "Der Treibstoff ist aufgebraucht; die Plattform läuft auf ihrer Notbatteriereserve und geht nieder, wenn diese leer ist."
+    en: "Fuel is exhausted; the platform is running on its emergency battery reserve and will ditch when it runs out."
+    es: "El combustible se ha agotado; la plataforma funciona con su reserva de batería de emergencia y caerá cuando se agote."
+    fr: "Le carburant est épuisé ; la plateforme fonctionne sur sa réserve de batterie de secours et s'abîmera une fois celle-ci vide."
+    it: "Il carburante è esaurito; la piattaforma sta usando la riserva di batteria d'emergenza e ammarerà quando si scaricherà."
+    ja: "燃料が尽き、機体は非常用バッテリーで運転している。尽きれば不時着（着水）する。"
+    ko: "연료가 소진되어 플랫폼이 비상 배터리 예비 전력으로 작동 중이며, 이마저 떨어지면 추락(불시착)합니다."
+    "pt-BR": "O combustível acabou; a plataforma opera com sua reserva de bateria de emergência e cairá quando ela se esgotar."
+    ru: "Топливо кончилось; платформа работает на аварийном резерве батареи и рухнет, когда он иссякнет."
+    zh: "燃料已耗尽；平台正依靠应急电池储备运行，耗尽后将坠毁（迫降）。"
+    "zh-TW": "燃料已耗盡；平台正依靠應急電池儲備運行，耗盡後將墜毀（迫降）。"
+  cavitating_tooltip:
+    de: "Dieses U-Boot kavitiert: Es fährt so schnell, dass der Propeller kollabierende Blasen erzeugt, was den abgestrahlten Lärm stark erhöht."
+    en: "This submarine is cavitating: moving fast enough that its propeller throws off collapsing bubbles, sharply raising the noise it radiates."
+    es: "Este submarino está cavitando: navega tan rápido que su hélice genera burbujas que colapsan, elevando bruscamente el ruido que irradia."
+    fr: "Ce sous-marin cavite : il avance assez vite pour que son hélice produise des bulles qui implosent, augmentant fortement le bruit qu'il émet."
+    it: "Questo sottomarino sta cavitando: procede così veloce che l'elica genera bolle che collassano, aumentando bruscamente il rumore irradiato."
+    ja: "この潜水艦はキャビテーションを起こしている。速力が高くプロペラが崩壊する気泡を発生させ、放射雑音が急増している。"
+    ko: "이 잠수함은 캐비테이션을 일으키고 있습니다: 속도가 빨라 프로펠러가 붕괴하는 기포를 만들어 방사 소음이 급격히 커집니다."
+    "pt-BR": "Este submarino está cavitando: navega rápido o bastante para que a hélice gere bolhas que implodem, elevando bruscamente o ruído irradiado."
+    ru: "Эта подводная лодка кавитирует: идёт так быстро, что винт создаёт схлопывающиеся пузыри, резко повышая излучаемый шум."
+    zh: "该潜艇正在发生空泡：航速过快使螺旋桨产生溃灭的气泡，辐射噪声急剧上升。"
+    "zh-TW": "該潛艇正在發生空泡：航速過快使螺旋槳產生潰滅的氣泡，輻射噪聲急劇上升。"
+  # #2879/#2884: summary-row (accordion) hover hints. The footer swaps its line
+  # to the shift-click bulk action while a header is hovered (open-all vs
+  # close-all, matching what a shift-click would do); the clickable header band
+  # itself carries the interaction hint on hover.
+  accordion:
+    shift_open_all_hint:
+      de: "Shift-Klick, um alle zu öffnen"
+      en: "Shift-click to open all"
+      es: "Mayús+clic para abrir todo"
+      fr: "Maj+clic pour tout ouvrir"
+      it: "Maiusc+clic per aprire tutto"
+      ja: "Shift+クリックですべて開く"
+      ko: "Shift+클릭으로 모두 열기"
+      "pt-BR": "Shift+clique para abrir tudo"
+      ru: "Shift+клик, чтобы открыть все"
+      zh: "Shift+单击展开全部"
+      "zh-TW": "Shift+點擊展開全部"
+    shift_close_all_hint:
+      de: "Shift-Klick, um alle zu schließen"
+      en: "Shift-click to close all"
+      es: "Mayús+clic para cerrar todo"
+      fr: "Maj+clic pour tout fermer"
+      it: "Maiusc+clic per chiudere tutto"
+      ja: "Shift+クリックですべて閉じる"
+      ko: "Shift+클릭으로 모두 닫기"
+      "pt-BR": "Shift+clique para fechar tudo"
+      ru: "Shift+клик, чтобы закрыть все"
+      zh: "Shift+单击收起全部"
+      "zh-TW": "Shift+點擊收起全部"
+    interaction_hint:
+      de: "Klicken zum Auf- oder Zuklappen. Shift-Klick, um alle zu öffnen oder zu schließen."
+      en: "Click to expand or collapse. Shift-click to open or close all."
+      es: "Haz clic para expandir o contraer. Mayús+clic para abrir o cerrar todo."
+      fr: "Cliquez pour développer ou réduire. Maj+clic pour tout ouvrir ou fermer."
+      it: "Fai clic per espandere o comprimere. Maiusc+clic per aprire o chiudere tutto."
+      ja: "クリックで開閉します。Shift+クリックですべて開閉します。"
+      ko: "클릭하여 펼치거나 접습니다. Shift+클릭으로 모두 열거나 닫습니다."
+      "pt-BR": "Clique para expandir ou recolher. Shift+clique para abrir ou fechar tudo."
+      ru: "Нажмите, чтобы развернуть или свернуть. Shift+клик, чтобы открыть или закрыть все."
+      zh: "单击展开或收起。Shift+单击展开或收起全部。"
+      "zh-TW": "點擊展開或收起。Shift+點擊展開或收起全部。"
   # #1527/#1701: vehicle inspect panel GROUP row (entity_view.rs) — the row
   # label, plus the per-member Detach action (every member, leader included —
   # leadership is derived) and its glossary tooltip. Disband now lives only in
   # the group panel. Button strings mirror group_panel.members.detach.
   group:
+    label_tooltip:
+      de: "Die Gruppe, zu der diese Einheit gehört. Klicken, um das Gruppenfenster zu öffnen."
+      en: "The group this unit belongs to. Click to open the group panel."
+      es: "El grupo al que pertenece esta unidad. Haz clic para abrir el panel de grupo."
+      fr: "Le groupe auquel appartient cette unité. Cliquez pour ouvrir le panneau de groupe."
+      it: "Il gruppo a cui appartiene questa unità. Clicca per aprire il pannello del gruppo."
+      ja: "このユニットが所属するグループ。クリックでグループパネルを開く。"
+      ko: "이 유닛이 속한 그룹. 클릭하면 그룹 패널이 열립니다."
+      "pt-BR": "O grupo ao qual esta unidade pertence. Clique para abrir o painel do grupo."
+      ru: "Группа, к которой принадлежит этот юнит. Нажмите, чтобы открыть панель группы."
+      zh: "该单位所属的编组。点击可打开编组面板。"
+      "zh-TW": "該單位所屬的編組。點擊可開啟編組面板。"
     label:
       de: "Gruppe"
       en: "Group"
@@ -292,6 +381,84 @@ info_panel:
       ru: "НЕТ ДАЛЬН"
       zh: "距离未知"
       "zh-TW": "距離未知"
+    # #2811: an on-station armed unit (Patrol / Hold / Screen) is holding fire on a
+    # would-be-permitted hostile in its reaction envelope — the STATUS override
+    # names why, pointing at the declined contact. A sibling of the aspect-withhold
+    # family (NO ROUTE / DEAD ZONE / NO RANGE), so the values are ALL CAPS in that
+    # style for the casing-bearing scripts (Latin + Cyrillic); CJK follows its own
+    # conventions (no casing axis, fullwidth colon).
+    hold_fire_roe:
+      de: "FEUERPAUSE: EINSATZREGELN"
+      en: "HOLD FIRE: ROE"
+      es: "FUEGO CONTENIDO: ROE"
+      fr: "TIR SUSPENDU : RÈGLES D'ENGAGEMENT"
+      it: "FUOCO SOSPESO: ROE"
+      ja: "射撃保留：交戦規則"
+      ko: "사격 보류: 교전 규칙"
+      "pt-BR": "FOGO CONTIDO: REGRAS DE ENGAJAMENTO"
+      ru: "ОГОНЬ СДЕРЖАН: ПРАВИЛА"
+      zh: "暂缓开火：交战规则"
+      "zh-TW": "暫緩開火：交戰規則"
+    hold_fire_no_weapon:
+      de: "FEUERPAUSE: KEINE WAFFE"
+      en: "HOLD FIRE: NO WEAPON"
+      es: "FUEGO CONTENIDO: SIN ARMA"
+      fr: "TIR SUSPENDU : SANS ARME"
+      it: "FUOCO SOSPESO: NESSUN'ARMA"
+      ja: "射撃保留：武器なし"
+      ko: "사격 보류: 무장 없음"
+      "pt-BR": "FOGO CONTIDO: SEM ARMA"
+      ru: "ОГОНЬ СДЕРЖАН: НЕТ ОРУЖИЯ"
+      zh: "暂缓开火：无武器"
+      "zh-TW": "暫緩開火：無武器"
+    hold_fire_unclassified:
+      de: "FEUERPAUSE: NICHT KLASSIFIZIERT"
+      en: "HOLD FIRE: UNCLASSIFIED"
+      es: "FUEGO CONTENIDO: SIN CLASIFICAR"
+      fr: "TIR SUSPENDU : NON CLASSIFIÉ"
+      it: "FUOCO SOSPESO: NON CLASSIFICATO"
+      ja: "射撃保留：未識別"
+      ko: "사격 보류: 미식별"
+      "pt-BR": "FOGO CONTIDO: NÃO CLASSIFICADO"
+      ru: "ОГОНЬ СДЕРЖАН: НЕ ОПОЗНАН"
+      zh: "暂缓开火：未识别"
+      "zh-TW": "暫緩開火：未識別"
+    hold_fire_saturated:
+      de: "FEUERPAUSE: GESÄTTIGT"
+      en: "HOLD FIRE: SATURATED"
+      es: "FUEGO CONTENIDO: SATURADO"
+      fr: "TIR SUSPENDU : SATURÉ"
+      it: "FUOCO SOSPESO: SATURO"
+      ja: "射撃保留：射手充足"
+      ko: "사격 보류: 사수 충분"
+      "pt-BR": "FOGO CONTIDO: SATURADO"
+      ru: "ОГОНЬ СДЕРЖАН: НАСЫЩЕН"
+      zh: "暂缓开火：射手已足"
+      "zh-TW": "暫緩開火：射手已足"
+    hold_fire_ineffective:
+      de: "FEUERPAUSE: WIRKUNGSLOS"
+      en: "HOLD FIRE: INEFFECTIVE"
+      es: "FUEGO CONTENIDO: INEFICAZ"
+      fr: "TIR SUSPENDU : INEFFICACE"
+      it: "FUOCO SOSPESO: INEFFICACE"
+      ja: "射撃保留：効果なし"
+      ko: "사격 보류: 효과 없음"
+      "pt-BR": "FOGO CONTIDO: INEFICAZ"
+      ru: "ОГОНЬ СДЕРЖАН: НЕЭФФЕКТИВНО"
+      zh: "暂缓开火：无效"
+      "zh-TW": "暫緩開火：無效"
+    hold_fire_out_of_reach:
+      de: "FEUERPAUSE: AUSSER REICHWEITE"
+      en: "HOLD FIRE: OUT OF REACH"
+      es: "FUEGO CONTENIDO: FUERA DE ALCANCE"
+      fr: "TIR SUSPENDU : HORS DE PORTÉE"
+      it: "FUOCO SOSPESO: FUORI PORTATA"
+      ja: "射撃保留：射程外"
+      ko: "사격 보류: 사거리 밖"
+      "pt-BR": "FOGO CONTIDO: FORA DE ALCANCE"
+      ru: "ОГОНЬ СДЕРЖАН: ВНЕ ДОСЯГАЕМОСТИ"
+      zh: "暂缓开火：超出射程"
+      "zh-TW": "暫緩開火：超出射程"
     error:
       no_compatible_carrier:
         de: Kein kompatibler Träger
@@ -551,6 +718,19 @@ info_panel:
     ru: АВТО
     zh: 自动
     "zh-TW": 自動
+  # #2886: hover on the AUTO speed badge (mnv row, DC-1164).
+  speed_auto_tooltip:
+    de: "Geschwindigkeit wird automatisch für die aktuelle Missionsphase gewählt."
+    en: "Speed chosen automatically for the current mission phase."
+    es: "Velocidad elegida automáticamente para la fase actual de la misión."
+    fr: "Vitesse choisie automatiquement pour la phase de mission actuelle."
+    it: "Velocità scelta automaticamente per la fase di missione corrente."
+    ja: "現在のミッションフェーズに応じて速度が自動的に選択される。"
+    ko: "현재 임무 단계에 맞춰 속도가 자동으로 선택됩니다."
+    "pt-BR": "Velocidade escolhida automaticamente para a fase atual da missão."
+    ru: "Скорость выбирается автоматически для текущей фазы задачи."
+    zh: "根据当前任务阶段自动选择速度。"
+    "zh-TW": "根據目前任務階段自動選擇速度。"
   # DC-1155: each bell carries both its caps mode-name (`label`) and a glossary
   # hover tooltip explaining its speed regime, following the glossary
   # "CAPS — explanation." convention. Bell semantics are the single source of
@@ -1007,6 +1187,18 @@ info_panel:
         zh: 辐射中
         "zh-TW": 輻射中
     firing_discipline:
+      label_tooltip:
+        de: "Die Reichweiten-Regel für den Waffeneinsatz — auf welche Entfernung die Einheit das Feuer eröffnet."
+        en: "The weapon-release range policy — how far out the unit will open fire."
+        es: "La política de alcance para disparar: a qué distancia la unidad abrirá fuego."
+        fr: "La règle de portée de tir — à quelle distance l'unité ouvre le feu."
+        it: "La regola di gittata per l'apertura del fuoco: a che distanza l'unità apre il fuoco."
+        ja: "武器発射の射程方針。ユニットがどの距離で射撃を開始するか。"
+        ko: "무기 발사 사거리 정책 — 유닛이 얼마나 먼 거리에서 사격을 개시하는지."
+        "pt-BR": "A política de alcance para disparo — a que distância a unidade abrirá fogo."
+        ru: "Правило дальности открытия огня — на какой дистанции юнит применяет оружие."
+        zh: "武器发射的射程策略——单位在多远处开火。"
+        "zh-TW": "武器發射的射程策略——單位在多遠處開火。"
       label:
         de: Feuerdisziplin
         en: Fire Discipline
@@ -1046,59 +1238,60 @@ info_panel:
         ru: "У этой единицы нет активных датчиков: всегда в тишине"
         zh: "此载具没有主动传感器：始终静默"
         "zh-TW": "此載具沒有主動感測器：始終靜默"
-    # DC-992/DC-1054: engagement-range sliders in the shared doctrine editor.
-    # `inner` (engage_within) = acquisition radius — engage contacts within it.
-    # `outer` (break_off_at) = Defensive break-off leash from patrol origin.
-    # Hysteresis requires `outer >= inner`; the widget clamps before dispatch.
-    engagement_range:
-      engage_within:
-        de: BEKÄMPFEN INNERHALB
-        en: ENGAGE WITHIN
-        es: ATACAR DENTRO DE
-        fr: ENGAGER À MOINS DE
-        it: INGAGGIA ENTRO
-        ja: 交戦範囲
-        ko: 교전 범위
-        "pt-BR": ENGAJAR DENTRO DE
-        ru: АТАКОВАТЬ В ПРЕДЕЛАХ
-        zh: 交战范围内
-        "zh-TW": 交戰範圍內
-      engage_within_tooltip:
-        de: "Das Feuer auf feindliche Kontakte eröffnen, die in diese Reichweite kommen"
-        en: "Open fire on hostile contacts that come within this range"
-        es: "Abrir fuego sobre contactos hostiles que entren en este alcance"
-        fr: "Ouvrir le feu sur les contacts hostiles qui entrent dans cette portée"
-        it: "Aprire il fuoco sui contatti ostili che entrano in questo raggio"
-        ja: "この範囲内に入った敵コンタクトに発砲する"
-        ko: "이 범위 내로 들어온 적 접촉에 발포"
-        "pt-BR": "Abrir fogo sobre contatos hostis que entrem neste alcance"
-        ru: "Открывать огонь по враждебным контактам в пределах этой дальности"
-        zh: "对进入此范围的敌方目标开火"
-        "zh-TW": "對進入此範圍的敵方目標開火"
-      break_off_at:
-        de: ABBRECHEN BEI
-        en: BREAK OFF AT
-        es: ROMPER A
-        fr: ROMPRE À
-        it: DISIMPEGNA A
-        ja: 離脱距離
-        ko: 이탈 거리
-        "pt-BR": DESENGAJAR EM
-        ru: ПРЕКРАЩАТЬ НА
-        zh: 脱离距离
-        "zh-TW": 脫離距離
-      break_off_at_tooltip:
-        de: "Nur defensiv: eine Verfolgung abbrechen, wenn sich das Ziel über diese Reichweite vom Patrouillenpunkt hinaus bewegt"
-        en: "Defensive only: break off a chase when the target moves beyond this range from the patrol point"
-        es: "Solo defensivo: abandonar la persecución cuando el objetivo se aleje más de este alcance del punto de patrulla"
-        fr: "Défensif uniquement : abandonner la poursuite lorsque la cible dépasse cette portée par rapport au point de patrouille"
-        it: "Solo difensivo: interrompere l'inseguimento quando il bersaglio supera questo raggio dal punto di pattuglia"
-        ja: "防御時のみ: 目標が哨戒地点からこの距離を超えたら追跡を中止する"
-        ko: "방어 시에만: 목표가 초계 지점에서 이 거리를 벗어나면 추격 중단"
-        "pt-BR": "Apenas defensivo: abandonar a perseguição quando o alvo ultrapassar este alcance do ponto de patrulha"
-        ru: "Только в обороне: прекращать преследование, когда цель выходит за эту дальность от точки патрулирования"
-        zh: "仅防御：当目标超出巡逻点的此范围时停止追击"
-        "zh-TW": "僅防禦：當目標超出巡邏點的此範圍時停止追擊"
+    # #2817: read-only reaction readout in the shared doctrine editor (replaces the
+    # removed ENGAGE WITHIN / BREAK OFF AT sliders). A launcher's reaction envelope
+    # is weapon-derived (the standoff-fire cap, ADR-0013); a warhead's is the fixed
+    # committal zone. `label` is the row label; `standoff`/`committal` is the
+    # per-envelope value; `tooltip` explains the derivation.
+    reaction:
+      label:
+        de: REAKTION
+        en: REACTION
+        es: REACCIÓN
+        fr: RÉACTION
+        it: REAZIONE
+        ja: 反応
+        ko: 대응
+        "pt-BR": REAÇÃO
+        ru: РЕАКЦИЯ
+        zh: 反应
+        "zh-TW": 反應
+      standoff:
+        de: ABSTANDSREICHWEITE
+        en: STANDOFF RANGE
+        es: ALCANCE DE TIRO
+        fr: PORTÉE DE TIR
+        it: DISTANZA DI TIRO
+        ja: 兵器射程
+        ko: 무기 사거리
+        "pt-BR": ALCANCE DE TIRO
+        ru: ДАЛЬНОСТЬ ПУСКА
+        zh: 武器射程
+        "zh-TW": 武器射程
+      committal:
+        de: NAHANNÄHERUNG
+        en: CLOSE APPROACH
+        es: APROXIMACIÓN CERCANA
+        fr: APPROCHE RAPPROCHÉE
+        it: AVVICINAMENTO
+        ja: 近接
+        ko: 근접
+        "pt-BR": APROXIMAÇÃO PRÓXIMA
+        ru: БЛИЖНИЙ ПОДХОД
+        zh: 抵近
+        "zh-TW": 抵近
+      tooltip:
+        de: "Die Reaktionsreichweite dieser Einheit wird aus ihrer Bewaffnung abgeleitet und ist nicht mehr manuell einstellbar. Ein Werfer reagiert innerhalb seiner Waffen-Abstandsreichweite; ein Sprengkopf reagiert bei Nahannäherung."
+        en: "This unit's reaction range is derived from its weapons and can no longer be set by hand. A launcher reacts within its weapon standoff range; a warhead reacts on close approach."
+        es: "El alcance de reacción de esta unidad se deriva de su armamento y ya no puede ajustarse manualmente. Un lanzador reacciona dentro del alcance de tiro de su arma; una ojiva reacciona en la aproximación cercana."
+        fr: "La portée de réaction de cette unité est dérivée de son armement et ne peut plus être réglée à la main. Un lanceur réagit dans la portée de tir de son arme ; une ogive réagit à l'approche rapprochée."
+        it: "Il raggio di reazione di questa unità è derivato dal suo armamento e non è più impostabile a mano. Un lanciatore reagisce entro la distanza di tiro della sua arma; una testata reagisce all'avvicinamento."
+        ja: "このユニットの反応範囲は兵装から導出され、手動では設定できません。発射機は兵器の射程内で反応し、弾頭は近接時に反応します。"
+        ko: "이 유닛의 대응 범위는 무장에서 도출되며 더 이상 수동으로 설정할 수 없습니다. 발사기는 무기 사거리 내에서 대응하고, 탄두는 근접 시 대응합니다."
+        "pt-BR": "O alcance de reação desta unidade é derivado de seu armamento e não pode mais ser ajustado manualmente. Um lançador reage dentro do alcance de tiro de sua arma; uma ogiva reage na aproximação próxima."
+        ru: "Дальность реакции этой единицы определяется её вооружением и больше не задаётся вручную. Пусковая установка реагирует в пределах дальности пуска своего оружия, а боевая часть — при ближнем подходе."
+        zh: "此单位的反应范围由其武器决定，不再可手动设置。发射器在其武器射程内反应，战斗部在抵近时反应。"
+        "zh-TW": "此單位的反應範圍由其武器決定，不再可手動設定。發射器在其武器射程內反應，戰鬥部在抵近時反應。"
     safety_range:
       evade_within:
         de: Ausweichen innerhalb
@@ -1152,6 +1345,18 @@ info_panel:
     # the standalone Row 9 checkbox in entity_view. Keys re-homed from
     # `info_panel.auto_rtb.*` to keep the doctrine subtree self-contained.
     auto_rtb:
+      label_tooltip:
+        de: "Wenn aktiviert, kehrt die Einheit bei niedrigem Treibstoff selbstständig zur Basis zurück."
+        en: "When enabled, the unit returns to base on its own once fuel runs low."
+        es: "Si está activado, la unidad regresa a la base por sí sola cuando queda poco combustible."
+        fr: "Si activé, l'unité rentre à la base d'elle-même dès que le carburant est bas."
+        it: "Se attivato, l'unità rientra alla base da sola quando il carburante è basso."
+        ja: "有効にすると、燃料が少なくなった時点でユニットが自動的に帰投する。"
+        ko: "활성화하면 연료가 부족해질 때 유닛이 스스로 기지로 복귀합니다."
+        "pt-BR": "Quando ativado, a unidade retorna à base sozinha assim que o combustível fica baixo."
+        ru: "Если включено, юнит сам возвращается на базу при низком уровне топлива."
+        zh: "启用后，单位在燃料不足时会自动返回基地。"
+        "zh-TW": "啟用後，單位在燃料不足時會自動返回基地。"
       label:
         de: Auto-RTB
         en: Auto RTB
@@ -1240,6 +1445,18 @@ info_panel:
     zh: 目标高度
     "zh-TW": 目標高度
   autopilot:
+    label_tooltip:
+      de: "Was der Autopilot gerade tut — die aktuelle Missionsphase oder der Start-/Bergungsschritt."
+      en: "What the autopilot is doing right now — the current mission phase or launch/recovery step."
+      es: "Lo que hace el piloto automático en este momento: la fase de misión actual o el paso de lanzamiento/recuperación."
+      fr: "Ce que fait le pilote automatique en ce moment — la phase de mission actuelle ou l'étape de lancement/récupération."
+      it: "Cosa sta facendo il pilota automatico in questo momento: la fase di missione attuale o il passo di lancio/recupero."
+      ja: "オートパイロットが今行っていること。現在のミッション段階、または発進・回収の工程。"
+      ko: "자동조종이 지금 수행 중인 작업 — 현재 임무 단계 또는 발진/회수 절차."
+      "pt-BR": "O que o piloto automático está fazendo agora — a fase de missão atual ou a etapa de lançamento/recuperação."
+      ru: "Что делает автопилот сейчас — текущая фаза задачи или этап запуска/приёма."
+      zh: "自动驾驶当前正在执行的操作——当前任务阶段或发射/回收步骤。"
+      "zh-TW": "自動駕駛當前正在執行的操作——當前任務階段或發射/回收步驟。"
     label:
       de: Status
       en: Status
@@ -1779,6 +1996,20 @@ info_panel:
         ru: Катапульта
         zh: 弹射器
         "zh-TW": 彈射器
+      # Rotary-wing substitute for `catapult` — the same terminal launch slot,
+      # named for what a helicopter actually does there (#2972).
+      liftoff:
+        de: Abheben
+        en: Liftoff
+        es: Despegue
+        fr: Décollage
+        it: Decollo
+        ja: 離陸
+        ko: 이륙
+        "pt-BR": Decolagem
+        ru: Взлёт
+        zh: 起飞
+        "zh-TW": 起飛
       landing:
         de: Landung
         en: Landing
@@ -1917,6 +2148,18 @@ info_panel:
       ru: АКТИВ
       zh: 主动
       "zh-TW": 主動
+    group_active_tooltip:
+      de: "Emittierende Sensoren — sie senden Energie aus, um Ziele zu erkennen, und können selbst entdeckt werden."
+      en: "Emitting sensors — they radiate energy to detect targets, and can themselves be detected."
+      es: "Sensores emisores: irradian energía para detectar objetivos y ellos mismos pueden ser detectados."
+      fr: "Capteurs émetteurs : ils émettent de l'énergie pour détecter des cibles et peuvent eux-mêmes être détectés."
+      it: "Sensori emettitori: irradiano energia per rilevare bersagli e possono a loro volta essere rilevati."
+      ja: "放射型センサー。目標を探知するためにエネルギーを放射し、自らも探知され得る。"
+      ko: "방사형 센서 — 표적을 탐지하기 위해 에너지를 방사하며, 자신도 탐지될 수 있습니다."
+      "pt-BR": "Sensores emissores: irradiam energia para detectar alvos e podem eles próprios ser detectados."
+      ru: "Излучающие датчики — они испускают энергию для обнаружения целей и сами могут быть обнаружены."
+      zh: "主动辐射式传感器——通过发射能量探测目标，同时自身也可能被探测到。"
+      "zh-TW": "主動輻射式感測器——透過發射能量探測目標，同時自身也可能被探測到。"
     group_passive:
       de: PASSIV
       en: PASSIVE
@@ -1929,6 +2172,18 @@ info_panel:
       ru: ПАССИВ
       zh: 被动
       "zh-TW": 被動
+    group_passive_tooltip:
+      de: "Horchende Sensoren — sie empfangen nur, senden nichts aus und bleiben daher selbst schwer entdeckbar."
+      en: "Listening sensors — they only receive, emitting nothing, so they stay hard to detect themselves."
+      es: "Sensores de escucha: solo reciben, no emiten nada, por lo que resultan difíciles de detectar ellos mismos."
+      fr: "Capteurs à l'écoute : ils ne font que recevoir, sans rien émettre, ce qui les rend eux-mêmes difficiles à détecter."
+      it: "Sensori in ascolto: ricevono soltanto, senza emettere nulla, restando quindi difficili da rilevare a loro volta."
+      ja: "受信型センサー。受信のみで何も放射しないため、それ自体が探知されにくい。"
+      ko: "수신형 센서 — 수신만 하고 아무것도 방사하지 않으므로 자신은 탐지되기 어렵습니다."
+      "pt-BR": "Sensores de escuta: apenas recebem, sem emitir nada, o que os torna difíceis de detectar."
+      ru: "Пассивные датчики — только принимают, ничего не излучая, поэтому сами остаются малозаметными."
+      zh: "被动接收式传感器——仅接收不发射，因而自身难以被探测到。"
+      "zh-TW": "被動接收式感測器——僅接收不發射，因而自身難以被探測到。"
     group_signature:
       de: SIGNATUR
       en: SIGNATURE
@@ -1941,6 +2196,18 @@ info_panel:
       ru: СИГНАТУРА
       zh: 信号特征
       "zh-TW": 訊號特徵
+    group_signature_tooltip:
+      de: "Die inhärente passive Signatur dieser Plattform — wie leicht andere Sensoren sie ohne aktives Radar erkennen können."
+      en: "This platform's inherent passive signature — how easily other sensors can detect it without an active radar."
+      es: "La firma pasiva inherente de esta plataforma: cuán fácilmente pueden detectarla otros sensores sin un radar activo."
+      fr: "La signature passive inhérente de cette plateforme : la facilité avec laquelle d'autres capteurs peuvent la détecter sans radar actif."
+      it: "La firma passiva intrinseca di questa piattaforma: quanto facilmente altri sensori possono rilevarla senza un radar attivo."
+      ja: "このプラットフォームが本来持つ受動シグネチャ。アクティブレーダーなしで他のセンサーがどれだけ容易に探知できるかを示す。"
+      ko: "이 플랫폼이 본래 지닌 수동 신호 특성 — 능동 레이더 없이 다른 센서가 이를 얼마나 쉽게 탐지할 수 있는지를 나타냅니다."
+      "pt-BR": "A assinatura passiva inerente desta plataforma: com que facilidade outros sensores podem detectá-la sem um radar ativo."
+      ru: "Собственная пассивная сигнатура этой платформы — насколько легко её могут обнаружить другие датчики без активного радара."
+      zh: "该平台固有的被动信号特征——在没有主动雷达的情况下，其他传感器探测到它的难易程度。"
+      "zh-TW": "該平台固有的被動信號特徵——在沒有主動雷達的情況下，其他感測器探測到它的難易程度。"
     sensor_kind:
       radar:
         de: Radar
@@ -2275,6 +2542,177 @@ info_panel:
         ru: ACC
         zh: ACC
         "zh-TW": ACC
+      # #2896: Shift-held per-row explanations for the sensor tooltip. Each
+      # `*_gloss` pairs with the label of the same name; revealed while Shift is
+      # held (rich tooltips can't host a nested hover). Sentence-case prose.
+      mode_gloss:
+        de: "Wie diese Ortung zustande kommt: passiv über ihre Emissionen, durch Mithören ihres aktiven Sensors oder über das Echo unseres eigenen Sensors."
+        en: "How this detection is made: passively from their emissions, from hearing their active sensor, or from our own sensor's return."
+        es: "Cómo se logra esta detección: pasivamente por sus emisiones, oyendo su sensor activo o por el eco de nuestro propio sensor."
+        fr: "Comment cette détection est obtenue : passivement via leurs émissions, en écoutant leur capteur actif, ou via l'écho de notre propre capteur."
+        it: "Come avviene il rilevamento: passivamente dalle loro emissioni, ascoltando il loro sensore attivo o dall'eco del nostro sensore."
+        ja: "この探知の方法：相手の放射を受動的に捉える、相手の能動センサーを傍受する、または自機の能動センサーの反射による。"
+        ko: "이 탐지가 이루어지는 방식: 상대의 방사를 수동으로 포착, 상대의 능동 센서를 청취, 또는 아군 센서의 반사파."
+        "pt-BR": "Como esta detecção é feita: passivamente pelas emissões deles, ouvindo o sensor ativo deles ou pelo eco do nosso próprio sensor."
+        ru: "Как получена эта отметка: пассивно по их излучению, за счёт прослушивания их активного датчика или по эху нашего собственного."
+        zh: "此次探测的方式：被动接收对方辐射、监听对方主动传感器，或来自我方传感器的回波。"
+        "zh-TW": "此次偵測的方式：被動接收對方輻射、監聽對方主動感測器，或來自我方感測器的回波。"
+      sensitivity_gloss:
+        de: "Das schwächste Signal, das dieser Sensor erfassen kann, in dB; alles darunter bleibt unentdeckt."
+        en: "The weakest signal this sensor can register, in dB; anything below this goes undetected."
+        es: "La señal más débil que este sensor puede registrar, en dB; por debajo de eso no hay detección."
+        fr: "Le signal le plus faible que ce capteur peut enregistrer, en dB ; en dessous, rien n'est détecté."
+        it: "Il segnale più debole che questo sensore può registrare, in dB; sotto questa soglia non c'è rilevamento."
+        ja: "このセンサーが捉えられる最も弱い信号（dB）。これを下回ると探知できない。"
+        ko: "이 센서가 감지할 수 있는 가장 약한 신호(dB); 이보다 약하면 탐지되지 않는다."
+        "pt-BR": "O sinal mais fraco que este sensor consegue registrar, em dB; abaixo disso não há detecção."
+        ru: "Самый слабый сигнал, который может зарегистрировать датчик, в дБ; всё, что ниже, не обнаруживается."
+        zh: "该传感器能够记录的最弱信号（dB）；低于此值即无法探测。"
+        "zh-TW": "該感測器能夠記錄的最弱信號（dB）；低於此值即無法偵測。"
+      signal_gloss:
+        de: "Die rohe Stärke des Echos über der Sensorschwelle, in dB, vor den unten aufgeführten Umgebungsverlusten und -gewinnen."
+        en: "The raw strength of the return above the sensor's threshold, in dB, before the environmental losses and gains below."
+        es: "La intensidad bruta del eco por encima del umbral del sensor, en dB, antes de las pérdidas y ganancias ambientales de abajo."
+        fr: "L'intensité brute de l'écho au-dessus du seuil du capteur, en dB, avant les pertes et gains ambiants ci-dessous."
+        it: "L'intensità grezza dell'eco sopra la soglia del sensore, in dB, prima delle perdite e dei guadagni ambientali sottostanti."
+        ja: "センサー閾値を上回る反射の生の強度（dB）。以下の環境による損失・利得を適用する前の値。"
+        ko: "센서 임계값을 넘는 반사파의 원시 강도(dB); 아래의 환경 손실·이득을 적용하기 전 값."
+        "pt-BR": "A intensidade bruta do eco acima do limiar do sensor, em dB, antes das perdas e ganhos ambientais abaixo."
+        ru: "Исходная сила отражённого сигнала над порогом датчика, в дБ, до перечисленных ниже потерь и усилений среды."
+        zh: "回波高于传感器阈值的原始强度（dB），尚未计入下方的环境损失与增益。"
+        "zh-TW": "回波高於感測器閾值的原始強度（dB），尚未計入下方的環境損失與增益。"
+      notching_gloss:
+        de: "Signalverlust, weil die Zielbewegung es in die dopplerblinde Notch des Radars legt."
+        en: "Signal lost because the target's motion places it in the radar's Doppler-blind notch."
+        es: "Señal perdida porque el movimiento del blanco lo sitúa en la muesca ciega Doppler del radar."
+        fr: "Signal perdu car le mouvement de la cible la place dans l'encoche aveugle Doppler du radar."
+        it: "Segnale perso perché il moto del bersaglio lo colloca nella tacca cieca Doppler del radar."
+        ja: "目標の運動によってレーダーのドップラー盲域（ノッチ）に入り、失われた信号。"
+        ko: "표적의 움직임이 레이더의 도플러 맹점(노치)에 들어가 손실된 신호."
+        "pt-BR": "Sinal perdido porque o movimento do alvo o coloca no entalhe cego Doppler do radar."
+        ru: "Потеря сигнала из-за того, что движение цели попадает в доплеровскую слепую зону РЛС."
+        zh: "因目标运动落入雷达的多普勒盲区（陷波）而损失的信号。"
+        "zh-TW": "因目標運動落入雷達的都卜勒盲區（陷波）而損失的信號。"
+      reverberation_loss_gloss:
+        de: "Sonarsignalverlust durch Echos, die an Oberfläche, Meeresboden und Wasservolumen streuen."
+        en: "Sonar signal lost to echoes scattering off the surface, seabed, and water volume."
+        es: "Señal de sonar perdida por ecos que se dispersan en la superficie, el fondo y el volumen de agua."
+        fr: "Signal sonar perdu à cause des échos diffusés par la surface, le fond et le volume d'eau."
+        it: "Segnale sonar perso a causa degli echi diffusi da superficie, fondale e volume d'acqua."
+        ja: "海面・海底・水中で散乱する反響によって失われるソナー信号。"
+        ko: "수면·해저·수중에서 산란되는 반향으로 손실되는 소나 신호."
+        "pt-BR": "Sinal de sonar perdido por ecos que se dispersam na superfície, no fundo e no volume de água."
+        ru: "Потеря сигнала сонара из-за эха, рассеиваемого поверхностью, дном и толщей воды."
+        zh: "因声呐信号在海面、海底和水体中散射的回响而损失。"
+        "zh-TW": "因聲納信號在海面、海底與水體中散射的回響而損失。"
+      look_down_clutter_gloss:
+        de: "Signalverlust durch Boden- oder Seeclutter, wenn der Sensor auf ein tiefes Ziel herabblickt."
+        en: "Signal lost to ground or sea clutter when the sensor looks down on a low target."
+        es: "Señal perdida por retorno del terreno o del mar cuando el sensor mira hacia abajo a un blanco bajo."
+        fr: "Signal perdu à cause du fouillis de sol ou de mer lorsque le capteur regarde vers le bas un objectif bas."
+        it: "Segnale perso a causa del clutter di terra o mare quando il sensore guarda in basso verso un bersaglio basso."
+        ja: "低空目標を見下ろす際、地表や海面のクラッターで失われる信号。"
+        ko: "저고도 표적을 내려다볼 때 지면·해면 클러터로 손실되는 신호."
+        "pt-BR": "Sinal perdido para o retorno de solo ou mar quando o sensor olha para baixo em um alvo baixo."
+        ru: "Потеря сигнала из-за отражений от земли или моря при взгляде датчика вниз на низкую цель."
+        zh: "传感器俯视低空目标时，被地面或海面杂波掩盖而损失的信号。"
+        "zh-TW": "感測器俯視低空目標時，被地面或海面雜波掩蓋而損失的信號。"
+      thermocline_loss_gloss:
+        de: "Sonarsignalverlust beim Durchqueren der Sprungschicht — der Temperaturgrenze, die Schall beugt und blockiert."
+        en: "Sonar signal lost crossing the thermocline — the temperature boundary that bends and blocks sound."
+        es: "Señal de sonar perdida al cruzar la termoclina, la frontera térmica que desvía y bloquea el sonido."
+        fr: "Signal sonar perdu en traversant la thermocline — la frontière thermique qui courbe et bloque le son."
+        it: "Segnale sonar perso attraversando il termoclino, il confine termico che devia e blocca il suono."
+        ja: "水温躍層（サーモクライン）を越える際に失われるソナー信号。音を屈折させ遮る温度境界。"
+        ko: "수온약층(서모클라인)을 통과하며 손실되는 소나 신호. 소리를 굴절·차단하는 온도 경계."
+        "pt-BR": "Sinal de sonar perdido ao cruzar a termoclina — a fronteira térmica que curva e bloqueia o som."
+        ru: "Потеря сигнала сонара при прохождении термоклина — температурного слоя, преломляющего и глушащего звук."
+        zh: "声呐信号穿越温跃层时的损失——这一温度界面会弯折并阻挡声波。"
+        "zh-TW": "聲納信號穿越溫躍層時的損失——這一溫度界面會彎折並阻擋聲波。"
+      shallow_water_loss_gloss:
+        de: "Sonarsignalverlust durch wiederholte Reflexionen an Oberfläche und Grund in flachem Wasser."
+        en: "Sonar signal lost to repeated surface and bottom bounces in shallow water."
+        es: "Señal de sonar perdida por rebotes repetidos en la superficie y el fondo en aguas someras."
+        fr: "Signal sonar perdu à cause des rebonds répétés sur la surface et le fond en eaux peu profondes."
+        it: "Segnale sonar perso per i rimbalzi ripetuti su superficie e fondale in acque basse."
+        ja: "浅海で海面と海底に繰り返し反射して失われるソナー信号。"
+        ko: "천해에서 수면과 해저에 반복 반사되어 손실되는 소나 신호."
+        "pt-BR": "Sinal de sonar perdido por ricochetes repetidos na superfície e no fundo em águas rasas."
+        ru: "Потеря сигнала сонара из-за многократных отражений от поверхности и дна на мелководье."
+        zh: "浅水中信号在海面与海底间反复反射而损失的声呐信号。"
+        "zh-TW": "淺水中信號在海面與海底間反覆反射而損失的聲納信號。"
+      cz_boost_gloss:
+        de: "Signalgewinn dort, wo eine Konvergenzzone Schall wieder bündelt und die Sonarortung auf große Entfernung ausweitet."
+        en: "Signal gained where a convergence zone refocuses sound, extending sonar detection at long range."
+        es: "Ganancia de señal donde una zona de convergencia reenfoca el sonido, ampliando la detección de sonar a larga distancia."
+        fr: "Gain de signal là où une zone de convergence refocalise le son, étendant la détection sonar à longue portée."
+        it: "Guadagno di segnale dove una zona di convergenza rifocalizza il suono, estendendo il rilevamento sonar a lungo raggio."
+        ja: "収束帯（コンバージェンスゾーン）が音を再収束させ、遠距離でのソナー探知を延ばす利得。"
+        ko: "수렴대(컨버전스 존)가 소리를 다시 모아 원거리 소나 탐지를 확장하는 이득."
+        "pt-BR": "Ganho de sinal onde uma zona de convergência refocaliza o som, ampliando a detecção de sonar a longa distância."
+        ru: "Усиление сигнала там, где зона конвергенции вновь фокусирует звук, увеличивая дальность обнаружения сонара."
+        zh: "汇聚区将声波重新聚焦，延伸远距离声呐探测所带来的增益。"
+        "zh-TW": "匯聚區將聲波重新聚焦，延伸遠距離聲納偵測所帶來的增益。"
+      cavitation_gloss:
+        de: "Zusätzliches Signal durch das Kavitationsgeräusch der Zielschraube, das einen schnellen, tief laufenden Läufer verrät."
+        en: "Extra signal from the target's own propeller cavitation noise, which betrays a fast, deep runner."
+        es: "Señal extra del ruido de cavitación de la hélice del blanco, que delata a un objetivo rápido y profundo."
+        fr: "Signal supplémentaire dû au bruit de cavitation de l'hélice de la cible, qui trahit une cible rapide et profonde."
+        it: "Segnale aggiuntivo dal rumore di cavitazione dell'elica del bersaglio, che tradisce un bersaglio veloce e profondo."
+        ja: "目標のスクリューによるキャビテーション音がもたらす追加信号。高速で深く走る目標を暴く。"
+        ko: "표적 스크루의 캐비테이션 소음에서 나오는 추가 신호; 빠르고 깊이 달리는 표적을 드러낸다."
+        "pt-BR": "Sinal extra do ruído de cavitação da hélice do alvo, que denuncia um alvo rápido e profundo."
+        ru: "Дополнительный сигнал от шума кавитации винта цели, выдающий быструю глубоко идущую цель."
+        zh: "来自目标螺旋桨空化噪声的额外信号，会暴露高速深潜的目标。"
+        "zh-TW": "來自目標螺旋槳空化噪聲的額外信號，會暴露高速深潛的目標。"
+      net_snr_gloss:
+        de: "Das endgültige Signal-Rausch-Verhältnis nach allen Verlusten und Gewinnen; die Ortung hält, solange es positiv bleibt."
+        en: "The final signal-to-noise ratio after every loss and gain; the detection holds while this stays positive."
+        es: "La relación señal-ruido final tras todas las pérdidas y ganancias; la detección se mantiene mientras siga siendo positiva."
+        fr: "Le rapport signal/bruit final après toutes les pertes et gains ; la détection tient tant qu'il reste positif."
+        it: "Il rapporto segnale-rumore finale dopo tutte le perdite e i guadagni; il rilevamento regge finché resta positivo."
+        ja: "すべての損失・利得を経た最終的な信号対雑音比。これが正である限り探知は維持される。"
+        ko: "모든 손실과 이득을 반영한 최종 신호 대 잡음비; 이 값이 양수인 동안 탐지가 유지된다."
+        "pt-BR": "A relação sinal-ruído final após todas as perdas e ganhos; a detecção se mantém enquanto ela for positiva."
+        ru: "Итоговое отношение сигнал/шум после всех потерь и усилений; отметка держится, пока оно положительно."
+        zh: "计入所有损失与增益后的最终信噪比；只要为正，探测即可维持。"
+        "zh-TW": "計入所有損失與增益後的最終訊雜比；只要為正，偵測即可維持。"
+      iff_margin_gloss:
+        de: "Um wie viele dB die IFF-Abfrage die Ortungsschwelle überschreitet; höher bedeutet eine zuverlässigere Freund-Feind-Antwort."
+        en: "How many dB of margin the IFF interrogation clears the detection threshold by; higher means a more reliable friend-or-foe reply."
+        es: "Cuántos dB de margen supera la interrogación IFF el umbral de detección; más alto significa una respuesta amigo-enemigo más fiable."
+        fr: "De combien de dB l'interrogation IFF dépasse le seuil de détection ; plus c'est élevé, plus la réponse ami-ennemi est fiable."
+        it: "Di quanti dB l'interrogazione IFF supera la soglia di rilevamento; più alto significa una risposta amico-nemico più affidabile."
+        ja: "IFF照会が探知閾値をどれだけのdBで上回るか。値が大きいほど敵味方応答が信頼できる。"
+        ko: "IFF 질문 신호가 탐지 임계값을 넘는 여유(dB); 클수록 피아 응답이 더 신뢰할 만하다."
+        "pt-BR": "Quantos dB de margem a interrogação IFF supera o limiar de detecção; mais alto significa uma resposta amigo-inimigo mais confiável."
+        ru: "На сколько дБ запрос IFF превышает порог обнаружения; чем больше, тем надёжнее ответ «свой-чужой»."
+        zh: "敌我识别（IFF）询问超出探测阈值的余量（dB）；数值越高，敌我应答越可靠。"
+        "zh-TW": "敵我識別（IFF）詢問超出偵測閾值的餘量（dB）；數值越高，敵我應答越可靠。"
+      max_contacts_gloss:
+        de: "Wie viele einzelne Spuren die Spurdatei dieses Sensors halten kann; ist sie voll, sättigt sie und verliert Kontakte."
+        en: "How many separate tracks this sensor's track file can hold; once full it saturates and starts dropping contacts."
+        es: "Cuántas trazas distintas puede mantener el archivo de trazas de este sensor; al llenarse se satura y empieza a perder contactos."
+        fr: "Combien de pistes distinctes le fichier de pistes de ce capteur peut contenir ; une fois plein, il sature et perd des contacts."
+        it: "Quante tracce distinte può contenere l'archivio tracce di questo sensore; una volta pieno si satura e inizia a perdere contatti."
+        ja: "このセンサーの航跡ファイルが同時に保持できる航跡の数。満杯になると飽和し、接触を取りこぼし始める。"
+        ko: "이 센서의 항적 파일이 동시에 보유할 수 있는 항적 수; 가득 차면 포화되어 접촉을 놓치기 시작한다."
+        "pt-BR": "Quantas trilhas distintas o arquivo de trilhas deste sensor pode manter; quando cheio, ele satura e começa a perder contatos."
+        ru: "Сколько отдельных треков может хранить трековый файл датчика; при заполнении он насыщается и теряет контакты."
+        zh: "该传感器的航迹文件可同时保持的航迹数量；一旦占满即饱和并开始丢失接触。"
+        "zh-TW": "該感測器的航跡檔案可同時保持的航跡數量；一旦占滿即飽和並開始丟失接觸。"
+      effective_accuracy_gloss:
+        de: "Die aktuelle 1 SD-Unsicherheit von Position und Peilung dieser Ortung; sie wird bei stärkerem Signal enger und mit der Entfernung größer."
+        en: "The current 1 SD position and bearing uncertainty of this fix; it tightens with a stronger signal and widens with range."
+        es: "La incertidumbre actual de 1 SD en posición y marcación de esta fijación; se estrecha con una señal más fuerte y se amplía con la distancia."
+        fr: "L'incertitude actuelle à 1 SD en position et relèvement de ce point ; elle se resserre avec un signal plus fort et s'élargit avec la distance."
+        it: "L'incertezza attuale a 1 SD di posizione e rilevamento di questo fix; si restringe con un segnale più forte e si allarga con la distanza."
+        ja: "この測位の現在の1 SD位置・方位誤差。信号が強いほど小さく、距離が伸びるほど大きくなる。"
+        ko: "이 측위의 현재 1 SD 위치·방위 불확실성; 신호가 강할수록 좁아지고 거리가 멀수록 넓어진다."
+        "pt-BR": "A incerteza atual de 1 SD em posição e marcação desta fixação; ela diminui com um sinal mais forte e aumenta com a distância."
+        ru: "Текущая неопределённость этого измерения (1 SD) по позиции и пеленгу; уменьшается при сильном сигнале и растёт с дальностью."
+        zh: "该定位当前的 1 SD 位置与方位不确定度；信号越强越收窄，距离越远越扩大。"
+        "zh-TW": "該定位當前的 1 SD 位置與方位不確定度；信號越強越收窄，距離越遠越擴大。"
   emissions:
     rcs:
       de: RCS
@@ -2288,6 +2726,18 @@ info_panel:
       ru: ЭПР
       zh: RCS
       "zh-TW": RCS
+    rcs_tooltip:
+      de: "Radarquerschnitt — wie groß diese Plattform für Radar erscheint."
+      en: "Radar cross-section — how large this platform appears to radar."
+      es: "Sección transversal de radar: qué tan grande parece esta plataforma para el radar."
+      fr: "Surface équivalente radar : la taille apparente de cette plateforme pour un radar."
+      it: "Sezione radar equivalente: quanto grande appare questa piattaforma al radar."
+      ja: "レーダー反射断面積。レーダーに対してこのプラットフォームがどれだけ大きく見えるかを示す。"
+      ko: "레이더 반사 단면적 — 레이더에 이 플랫폼이 얼마나 크게 보이는지를 나타냅니다."
+      "pt-BR": "Seção transversal de radar: o quão grande esta plataforma parece para o radar."
+      ru: "Эффективная площадь рассеяния — насколько крупной эта платформа выглядит для радара."
+      zh: "雷达反射截面——该平台在雷达上显得多大。"
+      "zh-TW": "雷達反射截面——該平台在雷達上顯得多大。"
     sonar_noise:
       de: Sonar-Rauschen
       en: Sonar noise
@@ -2300,6 +2750,18 @@ info_panel:
       ru: Шум сонара
       zh: 声呐噪声
       "zh-TW": 聲納噪音
+    sonar_noise_tooltip:
+      de: "Passiver akustischer Lärm, den diese Plattform unter Wasser abstrahlt — wie leicht passives Sonar sie hören kann."
+      en: "Passive acoustic noise this platform radiates underwater — how easily passive sonar can hear it."
+      es: "Ruido acústico pasivo que esta plataforma irradia bajo el agua: qué tan fácilmente el sonar pasivo puede escucharla."
+      fr: "Bruit acoustique passif que cette plateforme rayonne sous l'eau : la facilité avec laquelle un sonar passif peut l'entendre."
+      it: "Rumore acustico passivo irradiato da questa piattaforma sott'acqua: quanto facilmente un sonar passivo può udirla."
+      ja: "このプラットフォームが水中で発する受動的な音響雑音。パッシブソナーがどれだけ容易に聴知できるかを示す。"
+      ko: "이 플랫폼이 수중에서 방출하는 수동 음향 소음 — 수동 소나가 이를 얼마나 쉽게 청취할 수 있는지를 나타냅니다."
+      "pt-BR": "Ruído acústico passivo que esta plataforma irradia debaixo d'água: com que facilidade um sonar passivo pode ouvi-la."
+      ru: "Пассивный акустический шум, излучаемый этой платформой под водой — насколько легко его услышит пассивный сонар."
+      zh: "该平台在水下发出的被动声学噪声——被动声呐探测到它的难易程度。"
+      "zh-TW": "該平台在水下發出的被動聲學噪音——被動聲納探測到它的難易程度。"
     sonar_xs:
       de: Sonar-QS
       en: Sonar XS
@@ -2312,6 +2774,18 @@ info_panel:
       ru: Акустическое сечение
       zh: 声呐截面
       "zh-TW": 聲納截面
+    sonar_xs_tooltip:
+      de: "Sonarquerschnitt — wie groß diese Plattform für aktives Sonar erscheint."
+      en: "Sonar cross-section — how large this platform appears to active sonar."
+      es: "Sección transversal de sonar: qué tan grande parece esta plataforma para el sonar activo."
+      fr: "Section sonar équivalente : la taille apparente de cette plateforme pour un sonar actif."
+      it: "Sezione sonar equivalente: quanto grande appare questa piattaforma al sonar attivo."
+      ja: "ソナー反射断面積。アクティブソナーに対してこのプラットフォームがどれだけ大きく見えるかを示す。"
+      ko: "소나 반사 단면적 — 능동 소나에 이 플랫폼이 얼마나 크게 보이는지를 나타냅니다."
+      "pt-BR": "Seção transversal de sonar: o quão grande esta plataforma parece para o sonar ativo."
+      ru: "Акустическое сечение — насколько крупной эта платформа выглядит для активного сонара."
+      zh: "声呐反射截面——该平台在主动声呐上显得多大。"
+      "zh-TW": "聲納反射截面——該平台在主動聲納上顯得多大。"
     ir_signature:
       de: IR-Signatur
       en: IR signature
@@ -2324,6 +2798,18 @@ info_panel:
       ru: ИК-сигнатура
       zh: 红外特征
       "zh-TW": 紅外特徵
+    ir_signature_tooltip:
+      de: "Infrarotsignatur — wie leicht diese Plattform von IR-Sensoren erkannt werden kann."
+      en: "Infrared signature — how easily this platform can be detected by IR sensors."
+      es: "Firma infrarroja: qué tan fácilmente puede detectarse esta plataforma con sensores IR."
+      fr: "Signature infrarouge : la facilité avec laquelle cette plateforme peut être détectée par des capteurs IR."
+      it: "Firma infrarossa: quanto facilmente questa piattaforma può essere rilevata dai sensori IR."
+      ja: "赤外線シグネチャ。IRセンサーによってこのプラットフォームがどれだけ容易に探知され得るかを示す。"
+      ko: "적외선 신호 특성 — IR 센서로 이 플랫폼을 얼마나 쉽게 탐지할 수 있는지를 나타냅니다."
+      "pt-BR": "Assinatura infravermelha: com que facilidade esta plataforma pode ser detectada por sensores IR."
+      ru: "Инфракрасная сигнатура — насколько легко эту платформу могут обнаружить ИК-датчики."
+      zh: "红外特征——IR 传感器探测到该平台的难易程度。"
+      "zh-TW": "紅外特徵——IR 感測器探測到該平台的難易程度。"
     visual_xs:
       de: Visuelle QS
       en: Visual XS
@@ -2336,6 +2822,18 @@ info_panel:
       ru: Визуальное сечение
       zh: 视觉截面
       "zh-TW": 視覺截面
+    visual_xs_tooltip:
+      de: "Visueller Querschnitt — wie leicht diese Plattform mit bloßem Auge erkannt werden kann."
+      en: "Visual cross-section — how easily this platform can be spotted visually."
+      es: "Sección transversal visual: qué tan fácilmente puede detectarse esta plataforma a simple vista."
+      fr: "Section visuelle équivalente : la facilité avec laquelle cette plateforme peut être repérée à l'œil."
+      it: "Sezione visiva equivalente: quanto facilmente questa piattaforma può essere avvistata a vista."
+      ja: "視覚断面積。目視でこのプラットフォームがどれだけ容易に発見され得るかを示す。"
+      ko: "시각 반사 단면적 — 이 플랫폼을 육안으로 얼마나 쉽게 발견할 수 있는지를 나타냅니다."
+      "pt-BR": "Seção transversal visual: com que facilidade esta plataforma pode ser avistada visualmente."
+      ru: "Визуальное сечение — насколько легко эту платформу можно заметить визуально."
+      zh: "视觉反射截面——目视发现该平台的难易程度。"
+      "zh-TW": "視覺反射截面——目視發現該平台的難易程度。"
     radar_emission:
       de: Radar-Emission
       en: Radar emission
@@ -2348,7 +2846,31 @@ info_panel:
       ru: Излучение радара
       zh: 雷达辐射
       "zh-TW": 雷達輻射
+    radar_emission_tooltip:
+      de: "Stärke der Radarenergie, mit der diese Plattform beleuchtet wird."
+      en: "The strength of radar energy this platform is being illuminated by."
+      es: "La intensidad de la energía de radar que ilumina a esta plataforma."
+      fr: "L'intensité de l'énergie radar qui illumine cette plateforme."
+      it: "L'intensità dell'energia radar che illumina questa piattaforma."
+      ja: "このプラットフォームに照射されているレーダーエネルギーの強度。"
+      ko: "이 플랫폼에 조사되고 있는 레이더 에너지의 세기."
+      "pt-BR": "A intensidade da energia de radar que está iluminando esta plataforma."
+      ru: "Интенсивность радарного излучения, которым облучается эта платформа."
+      zh: "照射到该平台的雷达能量强度。"
+      "zh-TW": "照射到該平台的雷達能量強度。"
   contact:
+    assessment_tooltip:
+      de: "Ihre Bewertung dieses Kontakts: Identität, Zugehörigkeit und Klassifizierungssicherheit."
+      en: "Your assessment of this contact: its identity, affiliation, and classification confidence."
+      es: "Tu evaluación de este contacto: su identidad, afiliación y confianza de clasificación."
+      fr: "Votre évaluation de ce contact : son identité, son affiliation et la confiance de classification."
+      it: "La tua valutazione di questo contatto: identità, affiliazione e affidabilità della classificazione."
+      ja: "この接触への評価。正体、所属、識別の確度。"
+      ko: "이 접촉에 대한 평가: 정체, 소속, 분류 신뢰도."
+      "pt-BR": "Sua avaliação deste contato: identidade, afiliação e confiança da classificação."
+      ru: "Ваша оценка этого контакта: его опознание, принадлежность и достоверность классификации."
+      zh: "你对该接触目标的评估：身份、归属与分类置信度。"
+      "zh-TW": "你對該接觸目標的評估：身分、歸屬與分類置信度。"
     # DC-1082: subtitle for a track-code link whose contact has been
     # dropped from the snapshot (lost track — no class/affiliation claim).
     lost:
@@ -2501,6 +3023,18 @@ info_panel:
       ru: Последний контакт
       zh: 最后发现
       "zh-TW": 最後發現
+    last_seen_tooltip:
+      de: "Wie lange her die letzte Beobachtung dieses Kontakts durch einen Sensor war."
+      en: "How long ago this contact was last observed by a sensor."
+      es: "Hace cuánto tiempo un sensor observó por última vez este contacto."
+      fr: "Depuis combien de temps ce contact a été observé pour la dernière fois par un capteur."
+      it: "Da quanto tempo un sensore ha osservato per l'ultima volta questo contatto."
+      ja: "この接触対象が最後にセンサーで観測されてから経過した時間。"
+      ko: "이 접촉 대상이 센서에 마지막으로 관측된 지 얼마나 지났는지."
+      "pt-BR": "Há quanto tempo um sensor observou este contato pela última vez."
+      ru: "Сколько времени прошло с последнего наблюдения этого контакта датчиком."
+      zh: "该目标上一次被传感器观测到至今的时间。"
+      "zh-TW": "該目標上一次被感測器觀測到至今的時間。"
     elapsed_minutes:
       de: "vor %{mins} Min. %{secs} Sek."
       en: "%{mins}m %{secs}s ago"
@@ -2655,6 +3189,18 @@ info_panel:
         ru: Тип
         zh: 类型
         "zh-TW": 類型
+      type_tooltip:
+        de: "Die grobe NTDS-Kategorie des Kontakts (Luft, Oberfläche, Unterwasser, …) und ob sie bestätigt oder vorläufig ist."
+        en: "The contact's broad NTDS category (air, surface, subsurface, …) and whether it's confirmed or tentative."
+        es: "La categoría NTDS general del contacto (aéreo, de superficie, submarino…) y si es confirmada o provisional."
+        fr: "La catégorie NTDS générale du contact (aérien, surface, sous-marin, …) et si elle est confirmée ou provisoire."
+        it: "La categoria NTDS generale del contatto (aereo, di superficie, subacqueo, …) e se è confermata o provvisoria."
+        ja: "接触対象の大まかなNTDS区分（空中・水上・水中など）と、それが確定か暫定かを示す。"
+        ko: "접촉 대상의 대략적인 NTDS 분류(공중, 수상, 수중 등)와 이것이 확정인지 잠정인지를 나타냅니다."
+        "pt-BR": "A categoria NTDS geral do contato (aéreo, de superfície, subaquático…) e se ela é confirmada ou provisória."
+        ru: "Общая категория NTDS контакта (воздушный, надводный, подводный и т.д.) и подтверждена она или предварительна."
+        zh: "该目标的大类 NTDS 分类（空中、水面、水下等），以及该分类是确认的还是暂定的。"
+        "zh-TW": "該目標的大類 NTDS 分類（空中、水面、水下等），以及該分類是確認的還是暫定的。"
       platform:
         de: Plattform
         en: Platform
@@ -2667,6 +3213,18 @@ info_panel:
         ru: Платформа
         zh: 平台
         "zh-TW": 平台
+      platform_tooltip:
+        de: "Der wahrscheinlichste identifizierte Fahrzeugtyp anhand der gesammelten Sensordaten, mit Konfidenz."
+        en: "The most likely specific platform identified from the sensor evidence gathered so far, with confidence."
+        es: "La plataforma específica más probable identificada a partir de la evidencia sensorial recopilada hasta ahora, con nivel de confianza."
+        fr: "La plateforme spécifique la plus probable identifiée à partir des données capteur recueillies jusqu'ici, avec le niveau de confiance."
+        it: "La piattaforma specifica più probabile identificata dai dati sensore raccolti finora, con il livello di confidenza."
+        ja: "これまでに収集されたセンサー証拠から識別された、最も可能性の高い具体的なプラットフォームと、その確信度。"
+        ko: "지금까지 수집된 센서 증거로 식별된 가장 유력한 구체적 플랫폼과 그 신뢰도."
+        "pt-BR": "A plataforma específica mais provável identificada a partir das evidências de sensor coletadas até agora, com o nível de confiança."
+        ru: "Наиболее вероятная конкретная платформа, установленная по накопленным данным датчиков, с уровнем достоверности."
+        zh: "根据目前收集到的传感器证据识别出的最可能具体平台，及其置信度。"
+        "zh-TW": "根據目前收集到的感測器證據識別出的最可能具體平台，及其信賴度。"
       basis:
         de: Basis
         en: Basis
@@ -2679,6 +3237,18 @@ info_panel:
         ru: Основание
         zh: 依据
         "zh-TW": 依據
+      basis_tooltip:
+        de: "Wie das NTDS-Blatt bestimmt wurde — z. B. aus dem Emittertyp oder der Klassifizierungsauswertung."
+        en: "How the NTDS leaf was determined — e.g. from the emitter type, or from the classification evaluation."
+        es: "Cómo se determinó la hoja NTDS: por ejemplo, a partir del tipo de emisor o de la evaluación de clasificación."
+        fr: "Comment la feuille NTDS a été déterminée — par exemple à partir du type d'émetteur ou de l'évaluation de classification."
+        it: "Come è stata determinata la foglia NTDS, ad esempio dal tipo di emettitore o dalla valutazione di classificazione."
+        ja: "NTDSリーフがどのように決定されたか。例えば発信源の種別、または識別評価に基づく。"
+        ko: "NTDS 리프가 어떻게 결정되었는지 — 예를 들어 방사원 종류나 분류 평가로부터."
+        "pt-BR": "Como a folha NTDS foi determinada — por exemplo, a partir do tipo de emissor ou da avaliação de classificação."
+        ru: "Как был определён лист NTDS — например, по типу излучателя или по результатам классификации."
+        zh: "NTDS 分类叶节点的判定依据——例如来自发射源类型，或来自分类评估。"
+        "zh-TW": "NTDS 分類葉節點的判定依據——例如來自發射源類型，或來自分類評估。"
       emitters:
         de: Emitter
         en: Emitters
@@ -2912,6 +3482,18 @@ info_panel:
         ru: Решение
         zh: 解算
         "zh-TW": 解算
+      solution_tooltip:
+        de: "Ob die Position dieses Kontakts vollständig aufgelöst ist oder nur eine Peilung ohne Entfernung vorliegt."
+        en: "Whether this contact's position is fully resolved, or only a bearing with no range yet."
+        es: "Si la posición de este contacto está completamente resuelta, o solo se tiene una marcación sin distancia."
+        fr: "Si la position de ce contact est entièrement résolue, ou s'il n'y a encore qu'un relèvement sans distance."
+        it: "Se la posizione di questo contatto è completamente risolta, oppure si ha solo un rilevamento senza distanza."
+        ja: "この接触対象の位置が完全に解決されているか、それとも方位のみで距離が未解決かを示す。"
+        ko: "이 접촉 대상의 위치가 완전히 해석되었는지, 아니면 아직 방위만 있고 거리는 없는지를 나타냅니다."
+        "pt-BR": "Se a posição deste contato está totalmente resolvida, ou se há apenas uma marcação sem distância ainda."
+        ru: "Определена ли позиция этого контакта полностью, или пока известен только пеленг без дальности."
+        zh: "该目标的位置是否已完全解算，或仅有方位而尚无距离。"
+        "zh-TW": "該目標的位置是否已完全解算，或僅有方位而尚無距離。"
       resolved:
         de: AUFGELÖST
         en: RESOLVED
@@ -2992,6 +3574,18 @@ info_panel:
         ru: Размер (радар)
         zh: 尺寸 (雷达)
         "zh-TW": 尺寸 (雷達)
+      size_tooltip:
+        de: "Vom Radar beobachtete Größe, als Beweis für den führenden Plattform-Treffer gewichtet."
+        en: "Radar-observed size, weighed as evidence toward the leading platform match."
+        es: "Tamaño observado por radar, ponderado como evidencia para la plataforma más probable."
+        fr: "Taille observée au radar, pondérée comme preuve pour la plateforme la plus probable."
+        it: "Dimensione osservata dal radar, ponderata come prova a favore della piattaforma più probabile."
+        ja: "レーダーで観測されたサイズ。最有力プラットフォーム候補への証拠として重み付けされる。"
+        ko: "레이더로 관측된 크기 — 유력한 플랫폼 후보에 대한 증거로 가중됩니다."
+        "pt-BR": "Tamanho observado pelo radar, ponderado como evidência para a plataforma mais provável."
+        ru: "Размер, наблюдаемый радаром, учитываемый как признак в пользу наиболее вероятной платформы."
+        zh: "雷达观测到的尺寸，作为判定最可能平台的证据权重之一。"
+        "zh-TW": "雷達觀測到的尺寸，作為判定最可能平台的證據權重之一。"
       kinematics:
         de: Kinematik
         en: Kinematics
@@ -3004,6 +3598,18 @@ info_panel:
         ru: Кинематика
         zh: 运动
         "zh-TW": 運動
+      kinematics_tooltip:
+        de: "Beobachtete Geschwindigkeit, als Beweis für den führenden Plattform-Treffer gewichtet."
+        en: "Observed speed, weighed as evidence toward the leading platform match."
+        es: "Velocidad observada, ponderada como evidencia para la plataforma más probable."
+        fr: "Vitesse observée, pondérée comme preuve pour la plateforme la plus probable."
+        it: "Velocità osservata, ponderata come prova a favore della piattaforma più probabile."
+        ja: "観測された速度。最有力プラットフォーム候補への証拠として重み付けされる。"
+        ko: "관측된 속도 — 유력한 플랫폼 후보에 대한 증거로 가중됩니다."
+        "pt-BR": "Velocidade observada, ponderada como evidência para a plataforma mais provável."
+        ru: "Наблюдаемая скорость, учитываемая как признак в пользу наиболее вероятной платформы."
+        zh: "观测到的速度，作为判定最可能平台的证据权重之一。"
+        "zh-TW": "觀測到的速度，作為判定最可能平台的證據權重之一。"
       environment:
         de: Umgebung
         en: Environment
@@ -3016,6 +3622,18 @@ info_panel:
         ru: Среда
         zh: 环境
         "zh-TW": 環境
+      environment_tooltip:
+        de: "Beobachtete Höhe, als Beweis für den führenden Plattform-Treffer gewichtet."
+        en: "Observed altitude, weighed as evidence toward the leading platform match."
+        es: "Altitud observada, ponderada como evidencia para la plataforma más probable."
+        fr: "Altitude observée, pondérée comme preuve pour la plateforme la plus probable."
+        it: "Altitudine osservata, ponderata come prova a favore della piattaforma più probabile."
+        ja: "観測された高度。最有力プラットフォーム候補への証拠として重み付けされる。"
+        ko: "관측된 고도 — 유력한 플랫폼 후보에 대한 증거로 가중됩니다."
+        "pt-BR": "Altitude observada, ponderada como evidência para a plataforma mais provável."
+        ru: "Наблюдаемая высота, учитываемая как признак в пользу наиболее вероятной платформы."
+        zh: "观测到的高度，作为判定最可能平台的证据权重之一。"
+        "zh-TW": "觀測到的高度，作為判定最可能平台的證據權重之一。"
       acoustic:
         de: Akustik
         en: Acoustic
@@ -3028,6 +3646,18 @@ info_panel:
         ru: Акустика
         zh: 声学
         "zh-TW": 聲學
+      acoustic_tooltip:
+        de: "Beobachtete akustische Signatur, als Beweis für den führenden Plattform-Treffer gewichtet."
+        en: "Observed acoustic signature, weighed as evidence toward the leading platform match."
+        es: "Firma acústica observada, ponderada como evidencia para la plataforma más probable."
+        fr: "Signature acoustique observée, pondérée comme preuve pour la plateforme la plus probable."
+        it: "Firma acustica osservata, ponderata come prova a favore della piattaforma più probabile."
+        ja: "観測された音響シグネチャ。最有力プラットフォーム候補への証拠として重み付けされる。"
+        ko: "관측된 음향 신호 특성 — 유력한 플랫폼 후보에 대한 증거로 가중됩니다."
+        "pt-BR": "Assinatura acústica observada, ponderada como evidência para a plataforma mais provável."
+        ru: "Наблюдаемая акустическая сигнатура, учитываемая как признак в пользу наиболее вероятной платформы."
+        zh: "观测到的声学特征，作为判定最可能平台的证据权重之一。"
+        "zh-TW": "觀測到的聲學特徵，作為判定最可能平台的證據權重之一。"
       signature:
         de: Signatur
         en: Signature
@@ -3040,6 +3670,18 @@ info_panel:
         ru: Сигнатура
         zh: 特征
         "zh-TW": 特徵
+      signature_tooltip:
+        de: "Beobachtete EM-/IR-/visuelle Signatur, als Beweis für den führenden Plattform-Treffer gewichtet."
+        en: "Observed EM, IR, or visual signature, weighed as evidence toward the leading platform match."
+        es: "Firma EM, IR o visual observada, ponderada como evidencia para la plataforma más probable."
+        fr: "Signature EM, IR ou visuelle observée, pondérée comme preuve pour la plateforme la plus probable."
+        it: "Firma EM, IR o visiva osservata, ponderata come prova a favore della piattaforma più probabile."
+        ja: "観測された電磁・赤外線・視覚シグネチャ。最有力プラットフォーム候補への証拠として重み付けされる。"
+        ko: "관측된 전자기・적외선・시각 신호 특성 — 유력한 플랫폼 후보에 대한 증거로 가중됩니다."
+        "pt-BR": "Assinatura EM, IR ou visual observada, ponderada como evidência para a plataforma mais provável."
+        ru: "Наблюдаемая электромагнитная, инфракрасная или визуальная сигнатура, учитываемая как признак в пользу наиболее вероятной платформы."
+        zh: "观测到的电磁、红外或视觉特征，作为判定最可能平台的证据权重之一。"
+        "zh-TW": "觀測到的電磁、紅外或視覺特徵，作為判定最可能平台的證據權重之一。"
       acoustic_na_airborne:
         de: n. v. (Luftziel)
         en: n/a (airborne)
@@ -3077,6 +3719,30 @@ info_panel:
     zh: 跟随
     "zh-TW": 跟隨
   carrier_drones:
+    clear_picks:
+      de: "AUSWAHL LÖSCHEN"
+      en: "CLEAR PICKS"
+      es: "BORRAR SELECCIÓN"
+      fr: "EFFACER LA SÉLECTION"
+      it: "CANCELLA SELEZIONE"
+      ja: "選択をクリア"
+      ko: "선택 지우기"
+      "pt-BR": "LIMPAR SELEÇÃO"
+      ru: "ОЧИСТИТЬ ВЫБОР"
+      zh: "清除所选"
+      "zh-TW": "清除所選"
+    clear_picks_tooltip:
+      de: "Auswahl in diesem Inventar aufheben"
+      en: "Clear this inventory's selection"
+      es: "Borrar la selección de este inventario"
+      fr: "Effacer la sélection de cet inventaire"
+      it: "Annulla la selezione di questo inventario"
+      ja: "この格納庫の選択を解除します"
+      ko: "이 격납고의 선택을 해제합니다"
+      "pt-BR": "Limpar a seleção deste inventário"
+      ru: "Снять выделение в этом инвентаре"
+      zh: "清除此库存的选择"
+      "zh-TW": "清除此庫存的選擇"
     idle:
       de: Bereit
       en: Idle
@@ -3282,6 +3948,19 @@ info_panel:
     ru: Вес
     zh: 重量
     "zh-TW": 重量
+  # #2886: SPC specs grid glossary tooltips.
+  weight_tooltip:
+    de: "Kombinierte Masse der Zelle und aller verbauten Komponenten. Schwerere Plattformen beschleunigen, steigen und wenden träger."
+    en: "Combined mass of the airframe and every fitted component. Heavier platforms accelerate, climb, and turn more sluggishly."
+    es: "Masa combinada del fuselaje y todos los componentes instalados. Las plataformas más pesadas aceleran, ascienden y giran con más lentitud."
+    fr: "Masse totale de la cellule et de tous les composants installés. Les plateformes plus lourdes accélèrent, montent et virent plus lentement."
+    it: "Massa complessiva della cellula e di tutti i componenti installati. Le piattaforme più pesanti accelerano, salgono e virano più lentamente."
+    ja: "機体と搭載する全コンポーネントの合計質量。重い機体ほど加速・上昇・旋回が鈍くなる。"
+    ko: "기체와 장착된 모든 구성품의 총 질량. 무거운 플랫폼일수록 가속, 상승, 선회가 둔해집니다."
+    "pt-BR": "Massa combinada da fuselagem e de todos os componentes instalados. Plataformas mais pesadas aceleram, sobem e viram mais lentamente."
+    ru: "Суммарная масса планера и всех установленных компонентов. Более тяжёлые платформы медленнее разгоняются, набирают высоту и разворачиваются."
+    zh: "机身与所有已装组件的总质量。越重的平台加速、爬升和转向越迟缓。"
+    "zh-TW": "機身與所有已裝組件的總質量。越重的平台加速、爬升與轉向越遲緩。"
   max_speed:
     de: Höchstgeschw.
     en: Max Speed
@@ -3294,6 +3973,18 @@ info_panel:
     ru: Макс. скорость
     zh: 最大速度
     "zh-TW": 最大速度
+  max_speed_tooltip:
+    de: "Die höchste Geschwindigkeit, die diese Plattform dauerhaft halten kann."
+    en: "The fastest speed this platform can sustain."
+    es: "La velocidad máxima que esta plataforma puede mantener."
+    fr: "La vitesse maximale que cette plateforme peut soutenir."
+    it: "La velocità massima che questa piattaforma può sostenere."
+    ja: "このプラットフォームが維持できる最高速度。"
+    ko: "이 플랫폼이 유지할 수 있는 최고 속도."
+    "pt-BR": "A velocidade máxima que esta plataforma consegue manter."
+    ru: "Максимальная скорость, которую эта платформа способна поддерживать."
+    zh: "该平台能够持续保持的最高速度。"
+    "zh-TW": "該平台能夠持續保持的最高速度。"
   turn_rate:
     de: Wenderate
     en: Turn Rate
@@ -3306,6 +3997,18 @@ info_panel:
     ru: Скор. поворота
     zh: 转弯速率
     "zh-TW": 轉彎速率
+  turn_rate_tooltip:
+    de: "Wie schnell die Plattform den Kurs ändern kann. Ein höherer Wert bedeutet engere Wendungen."
+    en: "How fast the platform can change heading. A higher rate means a tighter turn."
+    es: "Con qué rapidez la plataforma puede cambiar de rumbo. Un valor mayor significa un giro más cerrado."
+    fr: "La rapidité avec laquelle la plateforme peut changer de cap. Une valeur plus élevée signifie un virage plus serré."
+    it: "Quanto rapidamente la piattaforma può cambiare rotta. Un valore più alto significa una virata più stretta."
+    ja: "このプラットフォームが針路を変える速さ。値が大きいほど旋回が鋭くなる。"
+    ko: "플랫폼이 침로를 바꾸는 빠르기. 값이 클수록 선회가 급해집니다."
+    "pt-BR": "A rapidez com que a plataforma pode mudar de rumo. Um valor maior significa uma curva mais fechada."
+    ru: "Как быстро платформа может менять курс. Чем выше значение, тем круче разворот."
+    zh: "平台改变航向的快慢。数值越高，转弯越急。"
+    "zh-TW": "平台改變航向的快慢。數值越高，轉彎越急。"
   altitude_range:
     de: Höhenbereich
     en: Altitude Range
@@ -3318,6 +4021,18 @@ info_panel:
     ru: Диап. высоты
     zh: 高度范围
     "zh-TW": 高度範圍
+  altitude_range_tooltip:
+    de: "Der Höhenbereich, in dem diese Plattform betrieben werden kann — von der niedrigsten bis zur höchsten Höhe."
+    en: "The altitude band this platform can operate in — floor to ceiling."
+    es: "La banda de altitud en la que puede operar esta plataforma: del suelo al techo."
+    fr: "La plage d'altitude dans laquelle cette plateforme peut opérer, du plancher au plafond."
+    it: "La fascia di quota in cui questa piattaforma può operare, dal minimo al massimo."
+    ja: "このプラットフォームが運用できる高度帯。下限から上限まで。"
+    ko: "이 플랫폼이 운용될 수 있는 고도대. 하한부터 상한까지입니다."
+    "pt-BR": "A faixa de altitude em que esta plataforma pode operar — do piso ao teto."
+    ru: "Диапазон высот, в котором может действовать эта платформа — от нижнего до верхнего предела."
+    zh: "该平台可运作的高度区间——从下限到上限。"
+    "zh-TW": "該平台可運作的高度區間——從下限到上限。"
   max_depth:
     de: Max. Tiefe
     en: Max Depth
@@ -3330,6 +4045,18 @@ info_panel:
     ru: Макс. глубина
     zh: 最大深度
     "zh-TW": 最大深度
+  max_depth_stat_tooltip:
+    de: "Die größte Tiefe, die diese Plattform sicher erreichen kann, bevor der Rumpf Druckschäden erleidet."
+    en: "The deepest this platform can safely go before the hull takes crush damage."
+    es: "La mayor profundidad a la que esta plataforma puede descender con seguridad antes de que el casco sufra daños por presión."
+    fr: "La profondeur maximale que cette plateforme peut atteindre en sécurité avant que la coque ne subisse des dommages d'écrasement."
+    it: "La profondità massima a cui questa piattaforma può scendere in sicurezza prima che lo scafo subisca danni da schiacciamento."
+    ja: "船体が圧壊損傷を受ける前に、このプラットフォームが安全に潜れる最大深度。"
+    ko: "선체가 압괴 피해를 입기 전에 이 플랫폼이 안전하게 잠수할 수 있는 최대 심도."
+    "pt-BR": "A maior profundidade a que esta plataforma pode descer com segurança antes de o casco sofrer dano por esmagamento."
+    ru: "Максимальная глубина, на которую эта платформа может безопасно погружаться, прежде чем корпус получит повреждения от давления."
+    zh: "该平台在船体受到压毁损伤前可安全下潜的最大深度。"
+    "zh-TW": "該平台在船體受到壓毀損傷前可安全下潛的最大深度。"
   thrust:
     de: Schub
     en: Thrust
@@ -3342,6 +4069,18 @@ info_panel:
     ru: Тяга
     zh: 推力
     "zh-TW": 推力
+  thrust_tooltip:
+    de: "Der maximale Schub, den das Antriebssystem erzeugen kann."
+    en: "The maximum thrust the propulsion system can produce."
+    es: "El empuje máximo que puede producir el sistema de propulsión."
+    fr: "La poussée maximale que le système de propulsion peut produire."
+    it: "La spinta massima che il sistema propulsivo può produrre."
+    ja: "推進システムが生成できる最大推力。"
+    ko: "추진 시스템이 낼 수 있는 최대 추력."
+    "pt-BR": "O empuxo máximo que o sistema de propulsão pode produzir."
+    ru: "Максимальная тяга, которую может развить двигательная установка."
+    zh: "推进系统能够产生的最大推力。"
+    "zh-TW": "推進系統能夠產生的最大推力。"
   twr:
     de: TWR
     en: TWR
@@ -3354,6 +4093,18 @@ info_panel:
     ru: TWR
     zh: 推重比
     "zh-TW": 推重比
+  twr_tooltip:
+    de: "Schub-Gewichts-Verhältnis — über 1.0 kann die Zelle senkrecht steigen."
+    en: "Thrust-to-weight ratio — above 1.0 the airframe can climb vertically."
+    es: "Relación empuje-peso: por encima de 1.0, el fuselaje puede ascender verticalmente."
+    fr: "Rapport poussée/poids : au-dessus de 1.0, la cellule peut grimper à la verticale."
+    it: "Rapporto spinta/peso: sopra 1.0 la cellula può salire in verticale."
+    ja: "推力重量比。1.0を超えると機体は垂直上昇できる。"
+    ko: "추력중량비 — 1.0을 초과하면 기체가 수직으로 상승할 수 있습니다."
+    "pt-BR": "Relação empuxo-peso: acima de 1.0 a fuselagem consegue subir na vertical."
+    ru: "Отношение тяги к весу — при значении выше 1.0 планер способен набирать высоту вертикально."
+    zh: "推重比——大于 1.0 时机体可垂直爬升。"
+    "zh-TW": "推重比——大於 1.0 時機體可垂直爬升。"
   battery:
     de: Batterie
     en: Battery
@@ -3366,6 +4117,18 @@ info_panel:
     ru: Батарея
     zh: 电池
     "zh-TW": 電池
+  battery_tooltip:
+    de: "Dauer, die Sensoren und Elektronik nach dem Kraftstoffverbrauch mit Strom versorgt bleiben."
+    en: "Time sensors and electronics stay powered after fuel depletion."
+    es: "Tiempo que los sensores y la electrónica permanecen encendidos tras agotar el combustible."
+    fr: "Durée pendant laquelle les capteurs et l'électronique restent alimentés après épuisement du carburant."
+    it: "Tempo in cui sensori ed elettronica rimangono alimentati dopo l'esaurimento del carburante."
+    ja: "燃料消費後もセンサーと電子機器に電力が供給される時間。"
+    ko: "연료 소진 후 센서와 전자 장비에 전원이 공급되는 시간."
+    "pt-BR": "Tempo em que os sensores e a eletrônica permanecem energizados após o esgotamento do combustível."
+    ru: "Время работы датчиков и электроники после расхода топлива."
+    zh: "燃料耗尽后传感器和电子设备保持供电的时间。"
+    "zh-TW": "燃料耗盡後感測器和電子設備保持供電的時間。"
   condition:
     de: Zustand
     en: Condition
@@ -3686,6 +4449,18 @@ info_panel:
       ru: Потеряна
       zh: 损失
       "zh-TW": 損失
+    lost_tooltip:
+      de: "Wie diese Einheit verloren ging — dieselbe Terminologie wie das Kartensymbol."
+      en: "How this unit was lost — the same terminology as the map symbol."
+      es: "Cómo se perdió esta unidad, con la misma terminología que el símbolo del mapa."
+      fr: "Comment cette unité a été perdue — la même terminologie que le symbole sur la carte."
+      it: "Come è stata persa questa unità, con la stessa terminologia del simbolo sulla mappa."
+      ja: "このユニットがどのように失われたか。地図記号と同じ用語で示される。"
+      ko: "이 유닛이 어떻게 손실되었는지 — 지도 기호와 동일한 용어입니다."
+      "pt-BR": "Como esta unidade foi perdida — a mesma terminologia do símbolo no mapa."
+      ru: "Как была потеряна эта единица — та же терминология, что и на символе карты."
+      zh: "该单位是如何损失的——与地图符号使用相同的术语。"
+      "zh-TW": "該單位是如何損失的——與地圖符號使用相同的術語。"
     when:
       de: Wann
       en: When
@@ -3698,6 +4473,18 @@ info_panel:
       ru: Когда
       zh: 时间
       "zh-TW": 時間
+    when_tooltip:
+      de: "Wie lange her der Verlust dieser Einheit war."
+      en: "How long ago this unit was lost."
+      es: "Hace cuánto tiempo se perdió esta unidad."
+      fr: "Depuis combien de temps cette unité a été perdue."
+      it: "Da quanto tempo è stata persa questa unità."
+      ja: "このユニットが失われてから経過した時間。"
+      ko: "이 유닛이 손실된 지 얼마나 지났는지."
+      "pt-BR": "Há quanto tempo esta unidade foi perdida."
+      ru: "Сколько времени прошло с потери этой единицы."
+      zh: "该单位损失至今经过的时间。"
+      "zh-TW": "該單位損失至今經過的時間。"
     # The count of units that went down with this platform (the `+N` on the map).
     also_lost:
       de: Mit Plattform verloren
@@ -3711,6 +4498,18 @@ info_panel:
       ru: Потеряны с платформой
       zh: 随平台损失
       "zh-TW": 隨平台損失
+    also_lost_tooltip:
+      de: "Weitere Einheiten (z. B. gestaute Drohnen), die mit dieser Plattform verloren gingen, statt sich überlappende Symbole auf einem Punkt zu stapeln."
+      en: "Other units (e.g. stowed drones) that went down with this platform, rather than stacking overlapping symbols on one point."
+      es: "Otras unidades (p. ej., drones estibados) que se perdieron junto con esta plataforma, en lugar de apilar símbolos superpuestos en un punto."
+      fr: "Autres unités (p. ex. drones arrimés) perdues avec cette plateforme, plutôt que d'empiler des symboles superposés sur un même point."
+      it: "Altre unità (ad es. droni stivati) perse insieme a questa piattaforma, invece di sovrapporre simboli nello stesso punto."
+      ja: "このプラットフォームと共に失われた他のユニット（格納中のドローンなど）。1点に記号を重ねて表示する代わりにここに示す。"
+      ko: "이 플랫폼과 함께 손실된 다른 유닛(격납된 드론 등) — 한 지점에 기호를 겹쳐 쌓는 대신 여기에 표시됩니다."
+      "pt-BR": "Outras unidades (por exemplo, drones estivados) perdidas junto com esta plataforma, em vez de empilhar símbolos sobrepostos em um ponto."
+      ru: "Другие единицы (например, убранные дроны), потерянные вместе с этой платформой, вместо наложения перекрывающихся символов в одной точке."
+      zh: "随该平台一同损失的其他单位（例如已收纳的无人机），而非在同一点堆叠重叠的符号。"
+      "zh-TW": "隨該平台一同損失的其他單位（例如已收納的無人機），而非在同一點堆疊重疊的符號。"
   # DC-1090: neutral lost-unit tooltip subtitle for vehicle links whose unit
   # has dropped out of the snapshot (e.g. destroyed between snapshot and render).
   unit:
@@ -4007,6 +4806,18 @@ info_panel:
   scope:
     title:
       en: "SCOPE"
+    title_tooltip:
+      de: "Die Sensorspur dieser Plattform als Wasserfall (Peilung-Zeit) oder B-Scope (Peilung-Entfernung)."
+      en: "This platform's sensor track, plotted as a bearing–time waterfall or a bearing–range B-scope."
+      es: "La traza de sensor de esta plataforma, representada como cascada marcación-tiempo o B-scope marcación-distancia."
+      fr: "La piste capteur de cette plateforme, tracée en cascade relèvement-temps ou en B-scope relèvement-distance."
+      it: "La traccia sensore di questa piattaforma, tracciata come cascata rilevamento-tempo o B-scope rilevamento-distanza."
+      ja: "このプラットフォームのセンサー航跡を、方位-時間ウォーターフォールまたは方位-距離Bスコープとして表示する。"
+      ko: "이 플랫폼의 센서 항적을 방위-시간 워터폴 또는 방위-거리 B-스코프로 표시합니다."
+      "pt-BR": "A trilha de sensor desta plataforma, plotada como cascata marcação-tempo ou B-scope marcação-distância."
+      ru: "Сенсорная трасса этой платформы, отображаемая в виде водопада пеленг–время или B-scope пеленг–дальность."
+      zh: "该平台的传感器航迹，以方位-时间瀑布图或方位-距离 B 显示器形式呈现。"
+      "zh-TW": "該平台的感測器航跡，以方位-時間瀑布圖或方位-距離 B 顯示器形式呈現。"
     mode_btr:
       en: "BTR"
     mode_bscope:

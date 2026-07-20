@@ -25,6 +25,18 @@ client_lobby:
     ru: "Хост"
     zh: "主机"
     "zh-TW": "主機"
+  seat_host_tooltip:
+    de: "Von Ihnen gehostet. Klicken zum Weiterschalten: als Nächstes kommt KI-gesteuert."
+    en: "Hosted by you. Click to cycle: next is AI-controlled."
+    es: "Anfitrión: usted. Haga clic para avanzar: lo siguiente es Controlado por IA."
+    fr: "Hébergé par vous. Cliquez pour faire défiler : le suivant est Contrôlé par l'IA."
+    it: "Ospitato da te. Clicca per scorrere: il successivo è Controllato dall'IA."
+    ja: "あなたがホストしています。クリックで切り替え：次は「AI操作」です。"
+    ko: "당신이 호스트입니다. 클릭하여 순환: 다음은 AI 제어입니다."
+    "pt-BR": "Hospedado por você. Clique para alternar: o próximo é Controlado por IA."
+    ru: "Хостится вами. Нажмите для переключения: далее — управляется ИИ."
+    zh: "由你担任主机。点击循环切换：下一个是 AI 控制。"
+    "zh-TW": "由你擔任主機。點擊循環切換：下一個是 AI 控制。"
   seat_closed:
     de: "Geschlossen"
     en: "Closed"

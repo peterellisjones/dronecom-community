@@ -1,0 +1,33 @@
+_version: 2
+
+# Map-overlay discoverability hints (#2895): guidance copy for the tactical
+# map's drawn affordances that were previously unexplained. `waypoint_hint` is
+# the pointer tooltip shown when hovering a route waypoint marker (naming the
+# two edit gestures); `drag_select_count` is the live tally painted on the
+# marquee while box-selecting. Sentence-case prose (guidance), but the count is
+# rendered ALL CAPS at the call site as tactical data.
+map_overlays:
+  waypoint_hint:
+    de: "Wegpunkt %{index} von %{total}. Rechtsklick beendet die Route hier; Umschalt+Rechtsklick schließt sie zu einem Patrouillenkreis."
+    en: "Waypoint %{index} of %{total}. Right-click ends the route here; shift-right-click loops it into a patrol circuit."
+    es: "Punto de ruta %{index} de %{total}. Clic derecho para terminar la ruta aquí; Mayús+clic derecho para cerrarla en un circuito de patrulla."
+    fr: "Point de route %{index} sur %{total}. Clic droit pour terminer la route ici ; Maj+clic droit pour la boucler en circuit de patrouille."
+    it: "Waypoint %{index} di %{total}. Clic destro per terminare la rotta qui; Maiusc+clic destro per chiuderla in un circuito di pattuglia."
+    ja: "ウェイポイント %{index}/%{total}。右クリックでここでルートを終了。Shift+右クリックで哨戒巡回に閉じる。"
+    ko: "경유지 %{index}/%{total}. 우클릭하면 여기서 경로가 끝나고, Shift+우클릭하면 순찰 순환로로 닫힙니다."
+    "pt-BR": "Ponto de rota %{index} de %{total}. Clique com o botão direito para terminar a rota aqui; Shift+clique direito para fechá-la em um circuito de patrulha."
+    ru: "Точка маршрута %{index} из %{total}. Правый клик завершает маршрут здесь; Shift+правый клик замыкает его в патрульный круг."
+    zh: "航点 %{index}/%{total}。右键单击在此结束航线；Shift+右键单击将其闭合为巡逻回路。"
+    "zh-TW": "航點 %{index}/%{total}。右鍵點擊在此結束航線；Shift+右鍵點擊將其閉合為巡邏迴路。"
+  drag_select_count:
+    de: "%{count} ausgewählt"
+    en: "%{count} selected"
+    es: "%{count} seleccionados"
+    fr: "%{count} sélectionnés"
+    it: "%{count} selezionati"
+    ja: "%{count} 選択"
+    ko: "%{count}개 선택"
+    "pt-BR": "%{count} selecionados"
+    ru: "Выбрано: %{count}"
+    zh: "已选择 %{count}"
+    "zh-TW": "已選擇 %{count}"

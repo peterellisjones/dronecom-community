@@ -25,6 +25,18 @@ event_log:
     ru: "Нет записанных событий"
     zh: "没有记录的事件"
     "zh-TW": "沒有記錄的事件"
+  zulu_tooltip:
+    de: "Missionszeit (Zulu), zu der dieses Ereignis eintrat."
+    en: "Mission time (Zulu) this event occurred."
+    es: "Hora de misión (Zulú) en que ocurrió este evento."
+    fr: "Heure de mission (Zoulou) à laquelle cet événement s'est produit."
+    it: "Ora di missione (Zulu) in cui si è verificato questo evento."
+    ja: "このイベントが発生したミッション時間（ズールー時間）。"
+    ko: "이 이벤트가 발생한 임무 시간(줄루 시간)."
+    "pt-BR": "Hora de missão (Zulu) em que este evento ocorreu."
+    ru: "Время миссии (Зулу), когда произошло это событие."
+    zh: "此事件发生时的任务时间（祖鲁时间）。"
+    "zh-TW": "此事件發生時的任務時間（祖魯時間）。"
   category:
     order:
       de: "Befehl"
@@ -595,18 +607,6 @@ event:
       ru: "атака отклонена · оружие слишком слабое для цели"
       zh: "攻击被拒 — 武器威力不足以对付目标"
       "zh-TW": "攻擊被拒 — 武器威力不足以對付目標"
-    engagement_rejected_win_condition_asset:
-      en: "attack rejected · unit is the win-condition asset (re-issue with confirmation to commit it)"
-      de: "Angriff abgelehnt · Einheit ist das Siegbedingungs-Schiff (zum Festlegen mit Bestätigung erneut befehlen)"
-      es: "ataque rechazado · la unidad es el activo de condición de victoria (reemitir con confirmación para comprometerla)"
-      fr: "attaque refusée · l'unité est l'atout de condition de victoire (réémettre avec confirmation pour l'engager)"
-      it: "attacco rifiutato · l'unità è la risorsa della condizione di vittoria (riemettere con conferma per impegnarla)"
-      ja: "攻撃却下 — 勝利条件艦です（確認付きで再指令してください）"
-      ko: "공격 거부 — 승리 조건 함선입니다 (확정하려면 확인과 함께 재명령)"
-      "pt-BR": "ataque rejeitado · a unidade é o ativo da condição de vitória (reemitir com confirmação para comprometê-la)"
-      ru: "атака отклонена · корабль является условием победы (повторите команду с подтверждением)"
-      zh: "攻击被拒 — 该单位是胜利条件资产（需确认后重新下令）"
-      "zh-TW": "攻擊被拒 — 該單位是勝利條件資產（需確認後重新下令）"
     recovery_blocked_no_capacity:
       en: "holding · deck full"
       de: "Warteschleife · Deck voll"

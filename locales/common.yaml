@@ -1,6 +1,21 @@
 _version: 2
 
 common:
+  # #2717: the click / shift-click interaction hint appended to every vehicle
+  # entity link's hover tooltip. Guidance prose, so sentence case — the tooltip
+  # body above it is the ALL-CAPS tactical readout.
+  link_interaction_hint:
+    de: "Klicken zum Auswählen. Shift-Klick, um zur Auswahl hinzuzufügen."
+    en: "Click to select. Shift-click to add to the selection."
+    es: "Haz clic para seleccionar. Mayús+clic para añadir a la selección."
+    fr: "Cliquez pour sélectionner. Maj+clic pour ajouter à la sélection."
+    it: "Fai clic per selezionare. Maiusc+clic per aggiungere alla selezione."
+    ja: "クリックで選択します。Shift+クリックで選択に追加します。"
+    ko: "클릭하여 선택합니다. Shift+클릭으로 선택에 추가합니다."
+    "pt-BR": "Clique para selecionar. Shift+clique para adicionar à seleção."
+    ru: "Нажмите, чтобы выбрать. Shift+клик, чтобы добавить к выделению."
+    zh: "单击选择。Shift+单击添加到选择。"
+    "zh-TW": "點擊選取。Shift+點擊加入選取。"
   remove:
     de: "Entfernen"
     en: "Remove"

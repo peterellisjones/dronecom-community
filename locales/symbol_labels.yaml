@@ -104,13 +104,13 @@ symbol_label:
     evd:
       en: EVD
     nav:
-      en: NAV
+      en: GOTO
     flw:
       en: FLW
     form:
       en: FORM
     hold:
-      en: HOLD
+      en: GOTO
     grd:
       en: GRD
     obs:
