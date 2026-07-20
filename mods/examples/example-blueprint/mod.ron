@@ -1,0 +1,6 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/mod-manifest.md
+(
+    name: "Example Blueprint",
+    author: "big_beard_games",
+    description: "A drone design mounting the example chassis, sensor, and warhead from the other example mods — demonstrates a blueprint mod referencing parts across sibling mods.",
+)

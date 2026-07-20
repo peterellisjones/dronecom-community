@@ -1,0 +1,19 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+//
+// Built entirely from the base game's shipped chassis and components — no
+// modded part anywhere in the recipe, so `mod_eligibility` classifies it as
+// `Vanilla` even while other mods are loaded (it stays multiplayer-legal).
+(
+    id: BlueprintId("10000000-0000-0000-0000-000000000002"),
+    codename: "Vanilla Example",
+    designator: "MQ-160",
+    chassis_id: "mq_160",
+    fuel_tank_percent: 0.85,
+    inventory: [
+        (kind: Component(component_id: "an_aps_440")),
+        (kind: Component(component_id: "an_alr_90")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)

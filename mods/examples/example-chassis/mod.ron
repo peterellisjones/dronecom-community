@@ -1,0 +1,6 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/mod-manifest.md
+(
+    name: "Example Chassis Pack",
+    author: "big_beard_games",
+    description: "A lighter, faster MQ-160 derivative tuned to carry a warhead directly on the airframe — a worked example for the modding guide.",
+)

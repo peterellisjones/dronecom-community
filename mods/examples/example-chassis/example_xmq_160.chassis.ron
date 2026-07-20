@@ -1,0 +1,49 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
+//
+// Derived from assets/definitions/chassis/mq_160.chassis.ron (the "MQ-160
+// Falcon") for the modding guide's worked example: a mod-unique id, a
+// lighter/faster tune (less weight, more thrust, less drag), and a non-empty
+// `target_domains` so it can carry a warhead directly in its inventory
+// instead of only via a nested missile blueprint like the shipped drone.
+(
+    id: "example_xmq_160",
+    designator: "XMQ-160",
+    codename: "Falcon II",
+    domain: Air,
+    launch_requires: [FlightDeck],
+    recovery_requires: [FlightDeck],
+    provides: [(facility: AirLaunch, parallelism: 4)],
+    length: 8.5,
+    weight: 620.0,
+    max_weight: 1250.0,
+    max_fuel: 200.0,
+    hit_points: 38.0,
+    drag: 0.40,
+    mast_height: 0.0,
+    em_signatures: Some((rcs: 1.0, ir_base: 6.0, visual_cross_section: 0.5)),
+    acoustic_signatures: None,
+    physics: FixedWing(
+        min_altitude: 100.0,
+        max_altitude: 6000.0,
+        default_altitude: 500.0,
+        min_attack_altitude: None,
+        max_attack_altitude: None,
+        launch_speed: None,
+        max_pitch_rate: 0.48,
+        max_yaw_rate: 0.32,
+        stall_speed: 48.0,
+        max_lateral_g: 9.0,
+        supported_trajectories: [Direct],
+        terrain_clearance: 100.0,
+    ),
+    propulsion: Turbojet,
+    engine: Powered((thrust_n: 7600.0, fuel_burn_rate: 5.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    carrier: false,
+    ntds_classification: DeriveFromDomain,
+    target_domains: [SeaSurface],
+    guidance_uplink: None,
+    battery_capacity_kwh: 1.0,
+    base_power_draw_kw: 1.0,
+    engine_bells: (loiter: Some(0.165), cruise: Some(0.55), full: Some(0.82)),
+)

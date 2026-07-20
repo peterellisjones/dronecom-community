@@ -1,0 +1,20 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+//
+// Derived from assets/definitions/components/warheads/mk_40.component.ron
+// (the "MK-40 Splinter") with a mod-unique id and a slightly smaller
+// warhead for the modding guide's worked example.
+(
+    id: "example_mk_40x",
+    designator: "MK-40X",
+    codename: "Splinter II",
+    category: Warheads,
+    mount_rule: SoleInCategory,
+    weight: 13.0,
+    power_draw: 0.0,
+    allowed: [],
+    payload: Warhead((
+        damage: 60.0,
+        blast_radius: 65.0,
+        proximity_fuze_radius_m: 18.0,
+    )),
+)

@@ -1,0 +1,6 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/mod-manifest.md
+(
+    name: "Example Vanilla Blueprint",
+    author: "big_beard_games",
+    description: "A drone design built entirely from shipped chassis and components — a worked example showing a blueprint-only mod stays multiplayer-legal (ModEligibility::Vanilla).",
+)

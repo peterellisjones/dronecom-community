@@ -1,0 +1,22 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+//
+// Mounts this mod set's own chassis (example_xmq_160), sensor (example_xr_9),
+// and warhead (example_mk_40x) — all three come from sibling mods, so this
+// resolves only because the loader unions every loading mod's definitions
+// before validating blueprints (see `dc_workshop::load`'s module docs).
+// Mounting, not nesting: the warhead is a top-level inventory component, not
+// a carried child blueprint.
+(
+    id: BlueprintId("10000000-0000-0000-0000-000000000001"),
+    codename: "Modding Example",
+    designator: "XMQ-160",
+    chassis_id: "example_xmq_160",
+    fuel_tank_percent: 0.9,
+    inventory: [
+        (kind: Component(component_id: "example_xr_9")),
+        (kind: Component(component_id: "example_mk_40x")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+)
