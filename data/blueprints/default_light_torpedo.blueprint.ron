@@ -1,17 +1,21 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-00000000000f"),
-    codename: "Standard Light Torpedo",
-    designator: "MK-30",
+    codename: "Light Torpedo",
+    designator: "MK-30A",
     chassis_id: "mk_30",
     fuel_tank_percent: 1.0,
     inventory: [
-        // Active-sonar homing seeker (forms an audible fire-control lock)
-        (kind: Component(component_id: "an_sqs_30")),
+        // Passive-homing seeker (#3081): silent end-to-end — no ping, no
+        // lock-detection warning for the target. Homes on radiated noise;
+        // a target that goes quiet/slow starves it. This is the MK-30's
+        // niche vs the MK-55: the cheap, covert fish.
+        (kind: Component(component_id: "an_sqr_45")),
         // Light ASW warhead
         (kind: Component(component_id: "mk_46lw")),
     ],
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

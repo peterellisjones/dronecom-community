@@ -1,8 +1,8 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-000000000005"),
-    codename: "Standard Sea Drone",
-    designator: "USV-80",
+    codename: "Picket USV",
+    designator: "USV-80A",
     chassis_id: "usv_80",
     fuel_tank_percent: 0.7,
     inventory: [
@@ -10,6 +10,9 @@
         (kind: Component(component_id: "an_sps_90")),
         // Ship RWR
         (kind: Component(component_id: "an_slr_40")),
+        // EO/IR mast (#3081): passive layer so the picket still sees with
+        // the radar silent (and gets a passive channel on sea-skimmers)
+        (kind: Component(component_id: "an_say_25")),
         // Radar Missile 1 (M-250)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
         // Radar Missile 2 (M-250)
@@ -18,4 +21,5 @@
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

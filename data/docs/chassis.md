@@ -205,23 +205,30 @@ Variants:
 
 ## `FacilityProvision`
 
-A launch/recovery facility provided by a platform, paired with its
-parallel capacity.
+A launch/recovery facility provided by a platform.
 
-`parallelism` is the facility's count of independent cells/tubes/rails —
-VLS cell count, torpedo tube count, air-launch rail count. It caps how many
-weapons a `Parallel` deck-pipeline phase can hold concurrently.
-FlightDeck/HeliPad/WellDeck pipelines are serial conveyors and ignore the
-value (set it to `1`).
+`cells` is the physical magazine — independent cells (VLS), tubes
+(`Facility::TorpedoTube`), or rails (`Facility::AirLaunch`) — and caps
+how many rounds requiring this facility may be loaded (the finite-magazine
+limit, #3017). Deck facilities (`Facility::FlightDeck`/`Facility::HeliPad`/
+`Facility::WellDeck`) are weight-bounded conveyors and set `cells` to 1
+(ignored).
+
+`max_simultaneous_launches` is the launch-pipeline concurrency: how many
+rounds this facility holds in a `Parallel` deck-pipeline phase at once
+(was `parallelism`). Serial decks set it to 1 (ignored).
 
 ### `facility` : [`Facility`](#facility)
 
 The `Facility` type this platform provides.
 
-### `parallelism` : u8
+### `cells` : u8
 
-Number of independent cells/tubes/rails of this facility (see the struct
-docs for how it caps a `Parallel` deck-pipeline phase).
+Physical magazine depth (cells/tubes/rails) — the storage cap.
+
+### `max_simultaneous_launches` : u8
+
+Launch-pipeline concurrency cap.
 
 ## `EmSignatures`
 

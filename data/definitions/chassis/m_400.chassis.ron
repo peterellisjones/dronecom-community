@@ -1,0 +1,60 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
+(
+    id: "m_400",
+    designator: "M-400",
+    codename: "Pike",
+    domain: Air,
+    // VLS-only (#3082): a ship-magazine area-defence round, not a drone
+    // hardpoint weapon — no AirLaunch, unlike every other missile.
+    launch_requires: [VLS],
+    recovery_requires: [],
+    provides: [],
+    length: 6.5,
+    weight: 300.0,
+    max_weight: 480.0,
+    max_fuel: 6.0,
+    hit_points: 12.0,
+    drag: 0.030,
+    mast_height: 0.0,
+    em_signatures: Some((rcs: 0.08, ir_base: 16.0, visual_cross_section: 0.18)),
+    acoustic_signatures: None,
+    physics: FixedWing(
+        min_altitude: 50.0,
+        // High-altitude area defence: the M-400 exists to deny the AEW/scout
+        // layer that loiters above the M-250's envelope.
+        max_altitude: 20000.0,
+        default_altitude: 100.0,
+        min_attack_altitude: Some(0.0),
+        max_attack_altitude: None,
+        launch_speed: Some(250.0),
+        max_pitch_rate: 0.90,
+        max_yaw_rate: 0.45,
+        stall_speed: 70.0,
+        max_lateral_g: 40.0,
+        supported_trajectories: [Direct, Lofted],
+        terrain_clearance: 20.0,
+    ),
+    propulsion: Rocket,
+    // Boost-sustain area-SAM motor (#3082): a ~4.8 s boost (2.0 / 25.0 × 60)
+    // accelerates the heavy round off the VLS cold-launch, then a
+    // reduced-thrust sustain (4.0 kg / 8.0 → ~30 s at 45%) holds energy
+    // through the lofted flyout. Credited sea-level reach ≈ 53 km — ~2.2×
+    // the M-250, the long-range tier of the AA ladder (M-100 WVR → M-250
+    // BVR → M-400 area), measured through `fit_reach` in the
+    // `munition_battery_reserve` guard (sea-level VLS geometry).
+    engine: Powered((thrust_n: 20000.0, fuel_burn_rate: 25.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostSustain(boost_fuel_kg: 2.0, sustain_thrust_fraction: 0.45, sustain_burn_rate: 8.0))),
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    carrier: false,
+    ntds_classification: Explicit(Missile),
+    // Dedicated anti-air: unlike the multi-role M-250 this round only ever
+    // commits on air tracks — the ladder's specialist tier.
+    target_domains: [Air],
+    guidance_uplink: FromLauncher,
+    // Coast reserve sized to outlast the best-possible-range flight (same
+    // rule as the M-100/M-250/M-300 guards, #2247/#2251/#2524) — verified by
+    // the per-codename `munition_battery_reserve` guard from the VLS
+    // (sea-level) launch geometry.
+    battery_capacity_kwh: 0.6,
+    base_power_draw_kw: 0.5,
+    engine_bells: (loiter: None, cruise: None, full: None),
+)

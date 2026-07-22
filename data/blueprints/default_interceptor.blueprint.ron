@@ -1,8 +1,8 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-00000000000a"),
-    codename: "Standard Interceptor",
-    designator: "MQ-160",
+    codename: "Interceptor",
+    designator: "MQ-160A",
     chassis_id: "mq_160",
     fuel_tank_percent: 0.9,
     inventory: [
@@ -22,4 +22,5 @@
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

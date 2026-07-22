@@ -1,17 +1,18 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-00000000000c"),
-    codename: "Standard Scout",
-    designator: "RQ-10",
+    codename: "Recon Drone",
+    designator: "RQ-10A",
     chassis_id: "rq_10",
     fuel_tank_percent: 1.0,
     inventory: [
         // EO/IR turret (cheap eyes / decoy / picket)
         (kind: Component(component_id: "an_aaq_55")),
         // RWR
-        (kind: Component(component_id: "an_alr_90")),
+        (kind: Component(component_id: "an_alr_20")),
     ],
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

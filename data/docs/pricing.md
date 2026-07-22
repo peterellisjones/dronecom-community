@@ -128,7 +128,8 @@ Manufacturing floor: $ per kg of hull weight (nothing prices to ~$0).
 
 ### `facility` : [`FacilityRates`](#facilityrates)
 
-Nested per-slot facility rates for launch/recovery parallelism.
+Nested per-slot facility rates for launch/recovery capacity (priced
+per `FacilityProvision::cells`).
 
 ### `riders` : [`RiderRates`](#riderrates)
 
@@ -280,7 +281,7 @@ Reference target operating altitude (m) for horizon-based terms — a sea-skimme
 
 ## `FacilityRates`
 
-$ per parallelism slot, per facility kind.
+$ per cell, per facility kind.
 
 ### `flight_deck` : f32
 

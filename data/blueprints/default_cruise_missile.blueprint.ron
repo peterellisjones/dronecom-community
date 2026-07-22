@@ -2,7 +2,7 @@
 (
     id: BlueprintId("00000000-0000-0000-0000-000000000009"),
     codename: "Cruise Missile",
-    designator: "M-500",
+    designator: "M-500A",
     chassis_id: "m_500",
     fuel_tank_percent: 1.0,
     inventory: [
@@ -14,4 +14,5 @@
     doctrine_setting: Suggested,
     trajectory: TerrainFollow,
     default_altitude: Chassis,
+    stores: [],
 )

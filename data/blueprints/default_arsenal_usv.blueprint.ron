@@ -1,10 +1,15 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-00000000000d"),
-    codename: "Standard Arsenal USV",
-    designator: "USV-200",
+    codename: "Arsenal USV",
+    designator: "USV-200A",
     chassis_id: "usv_200",
     fuel_tank_percent: 0.9,
+    // The fleet's long-range magazine (#3082): strike (M-500) + area air
+    // defence (M-400) — a 53 km SAM umbrella the drones can't carry (the
+    // M-400 is VLS-only). The M-250s moved off (they live on the air wing
+    // and the USV-80A picket) and the torpedoes went with #3081's roster
+    // split: ASW belongs to the escorts and submarines, not the magazine.
     inventory: [
         // Light surface-search radar
         (kind: Component(component_id: "an_sps_90")),
@@ -16,18 +21,15 @@
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000009"))),
         // Cruise Missile 3 (M-500 anti-ship, VLS)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000009"))),
-        // Area SAM 1 (M-250, VLS)
-        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
-        // Area SAM 2 (M-250, VLS)
-        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
-        // Area SAM 3 (M-250, VLS)
-        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
-        // Heavy Torpedo 1 (MK-55)
-        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
-        // Heavy Torpedo 2 (MK-55)
-        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+        // Area SAM 1 (M-400, VLS)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000011"))),
+        // Area SAM 2 (M-400, VLS)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000011"))),
+        // Area SAM 3 (M-400, VLS)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000011"))),
     ],
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

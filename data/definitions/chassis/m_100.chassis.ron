@@ -35,7 +35,7 @@
     ),
     propulsion: Rocket,
     engine: Powered((thrust_n: 16000.0, fuel_burn_rate: 15.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostCoast)),
-    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility)],
     carrier: false,
     ntds_classification: Explicit(Missile),
     target_domains: [Air, SeaSurface, Land],

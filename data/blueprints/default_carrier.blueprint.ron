@@ -1,8 +1,8 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-000000000001"),
-    codename: "Standard Carrier",
-    designator: "CV-3000",
+    codename: "Fleet Carrier",
+    designator: "CV-3000A",
     chassis_id: "cv_3000",
     fuel_tank_percent: 0.4,
     inventory: [
@@ -10,6 +10,9 @@
         (kind: Component(component_id: "an_spy_310")),
         // Ship RWR
         (kind: Component(component_id: "an_slr_40")),
+        // Hull sonar (#3081): torpedo warning (hears homing-seeker pings) +
+        // last-ditch subsurface picture; the escorts are the real ASW screen
+        (kind: Component(component_id: "an_sqs_40")),
         // --- Point-defence VLS (SAMs) ---
         // Point-defence SAM 1 (M-100)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
@@ -47,19 +50,45 @@
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-00000000000a"))),
         // Helicopter (MH-180)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000004"))),
+        // Loitering munition 1 (AQ-10A — armed RQ-10, #3090)
+        (kind: Blueprint(id: BlueprintId("5b1a6d5e-93a0-4c5e-9f5e-3090aa10c001"))),
+        // Loitering munition 2 (AQ-10A)
+        (kind: Blueprint(id: BlueprintId("5b1a6d5e-93a0-4c5e-9f5e-3090aa10c001"))),
+        // Loitering munition 3 (AQ-10A)
+        (kind: Blueprint(id: BlueprintId("5b1a6d5e-93a0-4c5e-9f5e-3090aa10c001"))),
+        // Loitering munition 4 (AQ-10A)
+        (kind: Blueprint(id: BlueprintId("5b1a6d5e-93a0-4c5e-9f5e-3090aa10c001"))),
         // --- Subsurface & surface escorts (stowed in WellDeck) ---
         // Attack submarine 1 (SS-400)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000006"))),
         // Attack submarine 2 (SS-400)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000006"))),
-        // Picket USV 1 (USV-80)
+        // Radar AA picket (USV-80A)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000005"))),
-        // Picket USV 2 (USV-80)
-        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000005"))),
+        // Sonar ASW picket (USV-80B)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000010"))),
         // Arsenal USV (USV-200 — the fleet's missile escort)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-00000000000d"))),
     ],
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    // Spare munitions for the air wing + VLS/tube reloads (#2995). Weight
+    // budget (see `cargo run --bin blueprint-stats`): CV-3000 designed
+    // loadout (`Cargo wt`) is 42872 kg against a 237645 kg `Cargo cap` —
+    // 194773 kg of headroom. This stores list totals 16*94.2 (M-100) +
+    // 8*235.0 (M-250) + 6*842.0 (M-500) + 8*260.0 (MK-55) + 4*200.0 (MK-30)
+    // + 4*398.0 (M-400) = 12911.2 kg, comfortably inside budget (~7% of
+    // headroom).
+    stores: [
+        // Spare point-defence / area SAMs for VLS reloads + interceptor & AEW rearm
+        (blueprint: BlueprintId("00000000-0000-0000-0000-000000000008"), count: 16), // M-100
+        (blueprint: BlueprintId("00000000-0000-0000-0000-000000000003"), count: 8), // M-250
+        // Spare cruise missiles + area SAMs (arsenal USV VLS) + heavy torpedoes (subs / tubes)
+        (blueprint: BlueprintId("00000000-0000-0000-0000-000000000009"), count: 6), // M-500
+        (blueprint: BlueprintId("00000000-0000-0000-0000-000000000011"), count: 4), // M-400
+        (blueprint: BlueprintId("00000000-0000-0000-0000-000000000007"), count: 8), // MK-55
+        // Spare silent light torpedoes (ASW picket tubes)
+        (blueprint: BlueprintId("00000000-0000-0000-0000-00000000000f"), count: 4), // MK-30
+    ],
 )

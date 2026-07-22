@@ -37,7 +37,7 @@
     // forced loft-and-dive) and only lofts for genuine BVR. boost_fuel 1.0 / burn
     // 15 → ~4 s boost; sustain 2.0 / 7 → ~17 s at 45% thrust.
     engine: Powered((thrust_n: 12000.0, fuel_burn_rate: 15.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostSustain(boost_fuel_kg: 1.0, sustain_thrust_fraction: 0.45, sustain_burn_rate: 7.0))),
-    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility)],
     carrier: false,
     ntds_classification: Explicit(Missile),
     target_domains: [Air, SeaSurface, Land],

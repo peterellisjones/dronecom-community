@@ -2,7 +2,7 @@
 (
     id: BlueprintId("00000000-0000-0000-0000-000000000003"),
     codename: "Radar Missile",
-    designator: "M-250",
+    designator: "M-250A",
     chassis_id: "m_250",
     fuel_tank_percent: 1.0,
     inventory: [
@@ -18,4 +18,5 @@
     // flat onto the target; only a genuine BVR shot lofts high.
     trajectory: Lofted,
     default_altitude: Chassis,
+    stores: [],
 )

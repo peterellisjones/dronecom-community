@@ -6,7 +6,7 @@
     domain: Air,
     launch_requires: [FlightDeck],
     recovery_requires: [FlightDeck],
-    provides: [(facility: AirLaunch, parallelism: 4)],
+    provides: [(facility: AirLaunch, cells: 4, max_simultaneous_launches: 4)],
     length: 10.0,
     weight: 650.0,
     max_weight: 1400.0,

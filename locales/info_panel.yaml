@@ -327,6 +327,21 @@ info_panel:
       ru: Уклонение
       zh: 规避中
       "zh-TW": 規避中
+    # #2863: the beam-weave Order::EvadeMissile — distinct from `evading`
+    # (the straight-flee Order::Evade) so STATUS names the weave execution
+    # phase without doubling the "Evading" mission overlay.
+    jinking:
+      de: Ausweichmanöver
+      en: Jinking
+      es: Maniobra evasiva
+      fr: Manœuvre évasive
+      it: Manovra evasiva
+      ja: 回避機動中
+      ko: 회피 기동 중
+      "pt-BR": Manobra evasiva
+      ru: Противоракетный манёвр
+      zh: 机动规避中
+      "zh-TW": 機動規避中
     # #2206: unit is stuck with no valid route — holds position and retries.
     no_route:
       de: "KEINE ROUTE"
@@ -460,18 +475,6 @@ info_panel:
       zh: "暂缓开火：超出射程"
       "zh-TW": "暫緩開火：超出射程"
     error:
-      no_compatible_carrier:
-        de: Kein kompatibler Träger
-        en: No Compatible Carrier
-        es: Sin portador compatible
-        fr: Pas de porteur compatible
-        it: Nessun vettore compatibile
-        ja: 互換キャリアなし
-        ko: 호환 모함 없음
-        "pt-BR": Sem portador compatível
-        ru: Нет совместимого носителя
-        zh: 无兼容母舰
-        "zh-TW": 無相容母艦
       not_recoverable:
         de: Nicht rückholbar
         en: Not Recoverable
@@ -1170,22 +1173,6 @@ info_panel:
           ru: "Вооружение отсутствует; ROE на поражение никогда не откроет огонь."
           zh: "未装备武器；交战规则永不开火。"
           "zh-TW": "未裝備武器；交戰規則永不開火。"
-    emission:
-      # #1863: the count of members actually emitting vs. those that could, shown
-      # as a warning on the doctrine line when it contradicts the EMCON order
-      # (e.g. "RADIATE · ! 1/4 EMITTING"). Mirrors the MCP game://groups tally.
-      emitting:
-        de: Strahlend
-        en: Emitting
-        es: Emitiendo
-        fr: Émission
-        it: In emissione
-        ja: 放射中
-        ko: 방사 중
-        "pt-BR": Emitindo
-        ru: Излучают
-        zh: 辐射中
-        "zh-TW": 輻射中
     firing_discipline:
       label_tooltip:
         de: "Die Reichweiten-Regel für den Waffeneinsatz — auf welche Entfernung die Einheit das Feuer eröffnet."
@@ -4254,6 +4241,24 @@ info_panel:
       ru: "Загрузить один снаряд со склада %{carrier} на этот дрон; переместит палубная команда."
       zh: "从 %{carrier} 的库存装填一发到此无人机;由甲板人员搬运。"
       "zh-TW": "從 %{carrier} 的庫存裝填一發到此無人機;由甲板人員搬運。"
+    # Facility cell cap (#3017): checked BEFORE the weight branch below — a full
+    # magazine blocks LOAD even with weight headroom to spare. %{facility} is
+    # the launcher tag (already caps via `FacilityUi::facility_tag`, e.g. "VLS");
+    # %{used}/%{capacity} are bare cell counts, not weight measures. Sentence-
+    # case prose, colon gloss (#1787). Applies to any platform (carrier or
+    # stowed drone), not just carriers.
+    load_facility_full:
+      de: "%{facility} voll: %{used}/%{capacity} Zellen belegt."
+      en: "%{facility} full: %{used}/%{capacity} cells used."
+      es: "%{facility} lleno: %{used}/%{capacity} celdas usadas."
+      fr: "%{facility} plein : %{used}/%{capacity} cellules utilisées."
+      it: "%{facility} pieno: %{used}/%{capacity} celle usate."
+      ja: "%{facility} 満杯：%{capacity}中%{used}セル使用。"
+      ko: "%{facility} 가득 참: %{capacity} 중 %{used} 사용."
+      "pt-BR": "%{facility} cheio: %{used}/%{capacity} células usadas."
+      ru: "%{facility} заполнен: занято %{used}/%{capacity} ячеек."
+      zh: "%{facility} 已满：%{capacity} 中已用 %{used} 格。"
+      "zh-TW": "%{facility} 已滿：%{capacity} 中已用 %{used} 格。"
     # %{used}/%{capacity}/%{need} are glued-caps measures (e.g. "329.0KG"), so the
     # unit is not repeated here (#1709 / ADR-0005). Sentence-case prose, colon gloss
     # (#1787). Applies to any platform (carrier or stowed drone), not just carriers.
@@ -4339,6 +4344,22 @@ info_panel:
       ru: "%{name}: %{count} НЕДОСТАЁТ"
       zh: "%{name}：缺%{count}发"
       "zh-TW": "%{name}：缺%{count}發"
+    # Glossary tooltip for the per-facility cell-occupancy stat row (#3017,
+    # `VLS 6/12`): %{facility} is the launcher tag (already caps), %{used} /
+    # %{capacity} are bare cell counts. Sentence-case prose (the row's own
+    # label/value are the caps readout; this explains what it means).
+    cells_readout:
+      de: "%{used} von %{capacity} %{facility}-Zellen durch das Soll dieser Plattform belegt."
+      en: "%{used} of %{capacity} %{facility} cells claimed by this platform's manifest."
+      es: "%{used} de %{capacity} celdas de %{facility} reclamadas por el manifiesto de esta plataforma."
+      fr: "%{used} des %{capacity} cellules %{facility} réclamées par le manifeste de cette plateforme."
+      it: "%{used} di %{capacity} celle %{facility} richieste dal manifesto di questa piattaforma."
+      ja: "%{facility} セル %{capacity} 中 %{used} がこのプラットフォームの編制で使用中。"
+      ko: "%{facility} 셀 %{capacity} 중 %{used}이(가) 이 플랫폼의 편제로 사용 중."
+      "pt-BR": "%{used} de %{capacity} células de %{facility} reivindicadas pelo manifesto desta plataforma."
+      ru: "%{used} из %{capacity} ячеек %{facility} заняты по нормативу этой платформы."
+      zh: "%{facility} 单元 %{capacity} 中 %{used} 被该平台编制占用。"
+      "zh-TW": "%{facility} 單元 %{capacity} 中 %{used} 被該平台編制佔用。"
   # %{weight} is a glued-caps measure (e.g. "1234.5KG"), so the unit is not
   # repeated here (#1709 / ADR-0005).
   stores_weight:

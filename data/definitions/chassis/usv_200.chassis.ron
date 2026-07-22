@@ -6,7 +6,7 @@
     domain: Sea,
     launch_requires: [WellDeck],
     recovery_requires: [WellDeck],
-    provides: [(facility: VLS, parallelism: 16), (facility: TorpedoTube, parallelism: 4)],
+    provides: [(facility: VLS, cells: 16, max_simultaneous_launches: 16), (facility: TorpedoTube, cells: 4, max_simultaneous_launches: 4)],
     length: 14.0,
     weight: 6000.0,
     max_weight: 12000.0,

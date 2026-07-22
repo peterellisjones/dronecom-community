@@ -1,0 +1,22 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+(
+    id: BlueprintId("00000000-0000-0000-0000-000000000011"),
+    codename: "Area SAM",
+    designator: "M-400A",
+    chassis_id: "m_400",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Active radar seeker (same head as the M-250 — the airframe and
+        // motor, not the seeker, buy the extra reach)
+        (kind: Component(component_id: "an_apg_15")),
+        // Warhead
+        (kind: Component(component_id: "mk_120")),
+    ],
+    doctrine_setting: Suggested,
+    // Boost-sustain area-defence loft (#3082): the long sustain only pays at
+    // range if the round climbs out of the thick air — the same energy
+    // management as the M-250's BVR loft, scaled up.
+    trajectory: Lofted,
+    default_altitude: Chassis,
+    stores: [],
+)

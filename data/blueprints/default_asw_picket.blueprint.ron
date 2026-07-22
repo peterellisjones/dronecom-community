@@ -1,0 +1,29 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+(
+    id: BlueprintId("00000000-0000-0000-0000-000000000010"),
+    codename: "ASW Picket",
+    designator: "USV-80B",
+    chassis_id: "usv_80",
+    fuel_tank_percent: 0.7,
+    // The fleet's sonar screen escort (#3081): hull sonar + passive EO/IR +
+    // RWR, torpedo tubes loaded with silent MK-30s. Carries NO missiles —
+    // the weight budget doesn't fit both, and the dependency is deliberate:
+    // an ASW picket needs the fleet's AA umbrella over it (layered defence).
+    // Its sister fit USV-80A "Picket USV" is the radar AA picket.
+    inventory: [
+        // Hull sonar (passive listen + active localizer)
+        (kind: Component(component_id: "an_sqs_40")),
+        // EO/IR mast
+        (kind: Component(component_id: "an_say_25")),
+        // Ship RWR
+        (kind: Component(component_id: "an_slr_40")),
+        // Light Torpedo 1 (MK-30, tube)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-00000000000f"))),
+        // Light Torpedo 2 (MK-30, tube)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-00000000000f"))),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+    stores: [],
+)

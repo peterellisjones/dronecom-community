@@ -2,7 +2,7 @@
 (
     id: BlueprintId("875c8dac-fd38-445e-92db-fc8332e6cc81"),
     codename: "Anti-Radiation Missile",
-    designator: "M-300",
+    designator: "M-300A",
     chassis_id: "m_300",
     fuel_tank_percent: 1.0,
     inventory: [
@@ -19,4 +19,5 @@
     // swings the geometry) — reach still overflies the M-250 SAM envelope.
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

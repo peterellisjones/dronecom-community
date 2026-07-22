@@ -6,7 +6,7 @@
     domain: Air,
     launch_requires: [FlightDeck],
     recovery_requires: [FlightDeck],
-    provides: [(facility: AirLaunch, parallelism: 4)],
+    provides: [(facility: AirLaunch, cells: 4, max_simultaneous_launches: 4)],
     length: 5.0,
     weight: 260.0,
     max_weight: 560.0,
@@ -20,14 +20,21 @@
         min_altitude: 100.0,
         max_altitude: 5000.0,
         default_altitude: 500.0,
-        min_attack_altitude: None,
+        // #3090: the terminal ram may dive all the way to the surface (the
+        // same authorization every missile chassis carries). Ordinary flight
+        // keeps the 100 m floor — this clamp applies to Attack navigation
+        // only, and unarmed RQ-10 builds can never fly an Attack order.
+        min_attack_altitude: Some(0.0),
         max_attack_altitude: None,
         launch_speed: None,
         max_pitch_rate: 0.44,
         max_yaw_rate: 0.26,
         stall_speed: 35.0,
         max_lateral_g: 4.0,
-        supported_trajectories: [Direct, TerrainFollow],
+        // #3090: Lofted supports the loitering-munition dive attack — within
+        // terminal-handoff range the profile hands the dive to terminal guidance
+        // straight from launch (#2175), the Switchblade-style top attack.
+        supported_trajectories: [Direct, TerrainFollow, Lofted],
         terrain_clearance: 100.0,
     ),
     propulsion: Propeller,
@@ -35,7 +42,11 @@
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
     carrier: false,
     ntds_classification: DeriveFromDomain,
-    target_domains: [],
+    // #3090: what an ARMED (warhead-carrying) RQ-10 can ram — a loitering
+    // munition can dive on helicopters/drones, boats, and land targets.
+    // Unarmed RQ-10 designs (scouts) claim none of these (warhead-conditional
+    // seeding in blueprint stats).
+    target_domains: [Air, SeaSurface, Land],
     guidance_uplink: None,
     battery_capacity_kwh: 0.5,
     base_power_draw_kw: 0.5,

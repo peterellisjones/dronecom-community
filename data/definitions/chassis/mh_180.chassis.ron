@@ -6,7 +6,7 @@
     domain: Air,
     launch_requires: [FlightDeck, HeliPad],
     recovery_requires: [FlightDeck, HeliPad],
-    provides: [(facility: AirLaunch, parallelism: 4)],
+    provides: [(facility: AirLaunch, cells: 4, max_simultaneous_launches: 4)],
     length: 8.0,
     weight: 550.0,
     max_weight: 1300.0,

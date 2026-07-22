@@ -6,7 +6,7 @@
     domain: Submarine,
     launch_requires: [WellDeck],
     recovery_requires: [WellDeck],
-    provides: [(facility: TorpedoTube, parallelism: 6)],
+    provides: [(facility: TorpedoTube, cells: 6, max_simultaneous_launches: 6)],
     length: 16.0,
     weight: 6300.0,
     max_weight: 10300.0,

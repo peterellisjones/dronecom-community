@@ -1,8 +1,8 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-00000000000b"),
-    codename: "Standard AEW",
-    designator: "MQ-450",
+    codename: "AEW",
+    designator: "MQ-450A",
     chassis_id: "mq_450",
     fuel_tank_percent: 1.0,
     inventory: [
@@ -18,4 +18,5 @@
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Ceiling,
+    stores: [],
 )

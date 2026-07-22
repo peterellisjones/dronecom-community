@@ -1,8 +1,8 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-000000000007"),
-    codename: "Standard Torpedo",
-    designator: "MK-55",
+    codename: "Torpedo",
+    designator: "MK-55A",
     chassis_id: "mk_55",
     fuel_tank_percent: 1.0,
     inventory: [
@@ -14,4 +14,5 @@
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

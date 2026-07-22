@@ -71,6 +71,13 @@ Imminent match-end warning tuning — the seconds-remaining thresholds at
 which the host broadcasts a `MatchEndingSoon` warning. Consumed by the host
 match timer.
 
+### `threat_reaction` : [`ThreatReactionSection`](#threatreactionsection)
+
+Threat-reaction ladder tuning (#2863): the missile-inbound CPA radius
+and lock-clear hysteresis feeding the automatic-evasion reflex.
+Consumed by the `ThreatAlerts<TEAM>` rollup (`dc_sensors`) and the
+tasking evade-clear checks (`dc_tasking`).
+
 ## `AutopilotSection`
 
 Autopilot tuning parameters.
@@ -239,6 +246,26 @@ launcher standing off from a near-rim target — keeps the headroom it needs;
 only genuinely unroutable strays past `half_extent + margin` are cut.
 Scuttled as `LostReason::StrayedOutOfBounds` → LOGISTICS. Only projectiles
 are bounded; platforms are recalled by their commander, not scuttled.
+
+### `evade_weave_amplitude_rad` : f32
+
+Radians of peak heading offset either side of the beam heading during
+the missile-evade weave — the serpentine maneuver flown against an
+inbound missile (`EvadeReason::MissileInbound`, #2863). Consumed by
+the autopilot weave maneuver (`evade_weave`).
+
+### `evade_weave_period_secs` : f32
+
+Sim-time period (seconds) of one full weave oscillation. The weave is
+sim-time-parameterized — never frame-based — so it stays dt-invariant
+by construction. Consumed by the autopilot weave maneuver
+(`evade_weave`, #2863).
+
+### `evade_weave_look_ahead_m` : f32
+
+Forward look-ahead distance (m) used to project the weave's target
+point ahead of the unit along the current beam heading. Consumed by
+the autopilot weave maneuver (`evade_weave`, #2863).
 
 ## `LaunchSection`
 
@@ -490,6 +517,25 @@ margin pulls the orbit inside the envelope so the gate can release. It
 applies only when the weapon range is the binding cap, never to
 `max_standoff_range`.
 
+### `cruise_maneuver_allowance` : f32
+
+Fraction of a **cruise** weapon's reach (torpedoes; every non-boost-coast
+munition) withheld as maneuver allowance before the fire gate will call a
+shot `InsideNoEscape`, and equally withheld from the standoff ceiling that
+orbit holds at (#2984). See `crate::ManeuverAllowance` for the full
+rationale and the lockstep invariant that keeps the two from deadlocking.
+
+The no-escape solve is a *constant-velocity* lead intercept, so without
+this the verdict over-promises against any target that turns after launch:
+#2863's submarine torpedo-evasion made **every** torpedo run dry
+mid-flight rather than intercept.
+
+Applies only to `ReachModel::Cruise`. Boost-coast (fixed-wing) munitions
+pass `crate::ManeuverAllowance::NONE`, so air weapon employment ranges
+are unchanged — their reach margin at typical employment ranges already
+absorbs a weaving target (#2863 measured the air weave as a 1.5–1.7x
+delay, not an escape).
+
 ### `standoff_adjust_rate` : f32
 
 Rate at which the standoff range adjusts (metres per second).
@@ -698,6 +744,43 @@ Imminent-end warning thresholds, in seconds remaining, strictly
 descending (e.g. `[300, 60]` for T-5min and T-1min). The host emits a
 `MatchEndingSoon` broadcast as the match timer crosses each threshold.
 May be empty to disable warnings entirely.
+
+## `ThreatReactionSection`
+
+Threat-reaction ladder tuning (#2863): the CPA radius that raises a unit's
+`ThreatAlert` to `MissileInbound`, and the clear hysteresis for a
+lock-triggered evade. Distinct from `ClassificationSection`'s
+`inbound_hostile_radius_m` — that flags a track provisionally hostile so it
+*can* be engaged; this drives the survival reflex (evade/weave) once a
+track is already known hostile.
+
+### `missile_cpa_radius_m` : f32
+
+Radius (m) around this unit within which a hostile fast/munition
+track's closest point of approach — while still closing — raises the
+unit's `ThreatAlert` to `MissileInbound`. Consumed by the per-unit
+`ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+
+### `lock_clear_hysteresis_secs` : f32
+
+Seconds the unit's `ThreatAlert` must stay below `Targeted` before a
+lock-triggered evade (`EvadeReason::Locked`) clears and the unit
+resumes its previous assignment. Consumed by the tasking evade-clear
+check (`evading::tick`).
+
+### `engagement_commitment_max_secs` : f32
+
+Seconds a launcher will hold an engagement open against a break-off
+while it still owes a weapon something (#3078) — either a player-ordered
+attack that has not yet released a round, or a munition of its own still
+in `GuidancePhase::Midcourse` on its datalink. Measured from the start of
+the continuous commitment episode, so chained shots share one window. The
+hold normally ends earlier — the weapon's own seeker locks (`Terminal`),
+the weapon is spent, or the launcher's lock drops — and never applies to
+the `HoldFire` firing safety or to an inbound missile the unit cannot
+fight. Consumed by the intercept supervisor's doctrine gate
+(`threat_response::engaged_track`) and the engaging-unit survival reflex
+(`engagement::tick_if_engaging`).
 
 ## `TerrainAvoidanceConfig`
 

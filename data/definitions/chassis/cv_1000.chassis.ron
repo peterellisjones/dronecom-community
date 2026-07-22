@@ -6,7 +6,7 @@
     domain: Sea,
     launch_requires: [],
     recovery_requires: [],
-    provides: [(facility: FlightDeck, parallelism: 1), (facility: WellDeck, parallelism: 1), (facility: VLS, parallelism: 8), (facility: TorpedoTube, parallelism: 2)],
+    provides: [(facility: FlightDeck, cells: 1, max_simultaneous_launches: 1), (facility: WellDeck, cells: 1, max_simultaneous_launches: 1), (facility: VLS, cells: 8, max_simultaneous_launches: 8), (facility: TorpedoTube, cells: 2, max_simultaneous_launches: 2)],
     length: 90.0,
     weight: 220000.0,
     max_weight: 300000.0,

@@ -88,6 +88,18 @@ main_menu:
     ru: "Конструктор дронов"
     zh: "无人机设计器"
     "zh-TW": "無人機設計器"
+  mods:
+    de: "Mods"
+    en: "Mods"
+    es: "Mods"
+    fr: "Mods"
+    it: "Mods"
+    ja: "MOD"
+    ko: "모드"
+    "pt-BR": "Mods"
+    ru: "Моды"
+    zh: "模组"
+    "zh-TW": "模組"
   settings:
     de: "Einstellungen"
     en: "Settings"

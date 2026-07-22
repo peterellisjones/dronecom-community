@@ -1,10 +1,14 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-00000000000e"),
-    codename: "Standard Heavy Submarine",
-    designator: "SS-800",
+    codename: "Heavy Submarine",
+    designator: "SS-800A",
     chassis_id: "ss_800",
     fuel_tank_percent: 1.0,
+    // The ASW prosecutor (#3081): full active+passive suite and a deep
+    // magazine. Its hull is ~35 dB louder than the SS-400's — it was never
+    // going to hide, so it hunts loud and hits hard; the SS-400A is the
+    // silent-stalker counterpart.
     inventory: [
         // Passive sonar
         (kind: Component(component_id: "an_sqr_70")),
@@ -18,8 +22,11 @@
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
         // Heavy Torpedo 4 (MK-55)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
+        // Heavy Torpedo 5 (MK-55)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
     ],
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

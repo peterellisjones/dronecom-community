@@ -2,7 +2,7 @@
 (
     id: BlueprintId("00000000-0000-0000-0000-000000000008"),
     codename: "IR Missile",
-    designator: "M-100",
+    designator: "M-100A",
     chassis_id: "m_100",
     fuel_tank_percent: 1.0,
     inventory: [
@@ -14,4 +14,5 @@
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

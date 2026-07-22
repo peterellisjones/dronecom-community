@@ -1,8 +1,11 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-000000000004"),
-    codename: "Standard Helicopter",
-    designator: "MH-180",
+    // Renamed from "ASW Helicopter" (#3081): the default kit is EO/IR + RWR
+    // + anti-ship missiles — a VTOL strike escort. It becomes a real ASW
+    // platform when dipping sonar / air-droppable torpedoes land (#212).
+    codename: "Strike Helicopter",
+    designator: "MH-180A",
     chassis_id: "mh_180",
     fuel_tank_percent: 1.0,
     inventory: [
@@ -18,4 +21,5 @@
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )

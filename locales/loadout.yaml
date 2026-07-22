@@ -61,6 +61,36 @@ loadout:
     ru: "Флот превышает бюджет"
     zh: "舰队超出预算"
     "zh-TW": "艦隊超出預算"
+  # #3076: shown when a previously selected carrier design was edited (or a
+  # nested design was edited) to fail spawn validation after selection —
+  # `%{names}` is a comma-joined list of the offending designs' full names.
+  start_invalid_carrier:
+    de: "Flotte enthält ein ungültiges Design: %{names}"
+    en: "Fleet includes an invalid design: %{names}"
+    es: "La flota incluye un diseño no válido: %{names}"
+    fr: "La flotte inclut un modèle invalide : %{names}"
+    it: "La flotta include un progetto non valido: %{names}"
+    ja: "艦隊に無効な設計が含まれています: %{names}"
+    ko: "함대에 유효하지 않은 설계가 포함되어 있습니다: %{names}"
+    "pt-BR": "A frota inclui um projeto inválido: %{names}"
+    ru: "Флот включает недействительный проект: %{names}"
+    zh: "舰队包含无效设计：%{names}"
+    "zh-TW": "艦隊包含無效設計：%{names}"
+  # #3076: placeholder name for a selected carrier whose library entry was
+  # deleted outright (rather than edited invalid) — shown in place of a
+  # codename `start_invalid_carrier` would otherwise list.
+  deleted_design_label:
+    de: "(gelöschtes Design)"
+    en: "(deleted design)"
+    es: "(diseño eliminado)"
+    fr: "(modèle supprimé)"
+    it: "(progetto eliminato)"
+    ja: "（削除された設計）"
+    ko: "(삭제된 설계)"
+    "pt-BR": "(projeto excluído)"
+    ru: "(проект удалён)"
+    zh: "（已删除的设计）"
+    "zh-TW": "（已刪除的設計）"
   fleet_hint:
     de: "Stellen Sie Ihre Trägerflotte innerhalb des Budgets zusammen."
     en: "Build your carrier fleet within budget."

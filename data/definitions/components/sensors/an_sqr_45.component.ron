@@ -1,0 +1,48 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+(
+    id: "an_sqr_45",
+    designator: "AN/SQR-45",
+    codename: "Lamprey",
+    category: Sensors,
+    mount_rule: Single,
+    weight: 20.0,
+    power_draw: 3.0,
+    allowed: [Domain(Submarine)],
+    payload: Sensor([(
+        kind: SonarPassive,
+        // Passive-homing torpedo SEEKER (#3081): the underwater analog of the
+        // AN/ALR-60 passive ARM head. Like the SQS-30 it is a fire-control
+        // `Track` (one lock, forward cone), but it emits nothing — the shot is
+        // silent end-to-end, so the target gets no lock-detection warning.
+        // It homes on the target's radiated noise: a loud, cavitating runner
+        // is meat; a target that goes quiet and slow starves the seeker and
+        // the round coasts to last-known-position then spends/scuttles
+        // (#2520) — the go-quiet counterplay, mirroring the ARM's go-dark.
+        capability: Track( locks: (1) ),
+        threshold: 0.000036,
+        scan_interval: 0.5,
+        acquire_dwell_secs: 1.0,
+        bearing_rate_tau_secs: 2.0,
+        is_active: false,
+        emits: None,
+        emission_strength: 0.0,
+        // Forward acquisition cone (matches the SQS-30 homing geometry); the
+        // launch gate keeps the shot roughly nose-on at release (#2194).
+        fov_h: 90.0,
+        fov_v: 60.0,
+        mounting: MastBoth,
+        iff_threshold: 0.0,
+        spreading_exponent: 1.2,
+        characteristics: Simple,
+        // Short flank array listening high: coarse bearing (budget seeker),
+        // good enough for passive-PN onto a noisy hull.
+        physics: PassiveSonar(frequency_hz: 12000.0, array_length_m: 0.25, sound_speed_mps: 1500.0),
+        authored_noise: (velocity_sigma_mps: 5.0, altitude_sigma_m: 80.0, fdoa_sigma_mps: 30.0),
+        // A homing seeker tracks; it does not run classification (the
+        // launching platform already classified the target).
+        signature_capability: None,
+        // 2-axis: resolves elevation so the fish can dive/climb onto the hull.
+        elevation: Resolves,
+        fdoa: None,
+    )]),
+)

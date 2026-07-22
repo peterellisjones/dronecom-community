@@ -13,8 +13,8 @@ materialized spawn-time form is `dc_types::BlueprintRecipe`.
 ### `id` : [`BlueprintId`](#blueprintid)
 
 Stable unique identifier (a UUID) for this design in the library. Not
-included in `content_hash`, so two designs with identical content still
-carry distinct ids.
+part of the design's materialized identity, so two designs with
+identical content still carry distinct ids.
 
 ### `codename` : [`Codename`](#codename)
 
@@ -39,8 +39,8 @@ Fraction of available space allocated to the fuel tank (0.0–1.0).
 
 Ordered list of mounted components and carried nested blueprints.
 Private: read via `Blueprint::inventory` and mutate through the
-dedicated methods (`add_component`, `set_inventory`, …) so
-`content_hash` stays consistent.
+dedicated methods (`add_component`, `set_inventory`, …) so every
+entry's materialized recipe stays consistent.
 
 ### `doctrine_setting` : [`BlueprintDoctrineSetting`](#blueprintdoctrinesetting)
 
@@ -59,6 +59,12 @@ for `FixedWing` chassis). Persisted in the RON; threaded onto the spawn
 
 Role-level default altitude posture the vehicle launches with. Persisted
 in the RON; threaded onto the spawn `BlueprintRecipe` via `materialize_recipe`.
+
+### `stores` : `Vec`<[`BlueprintStore`](#blueprintstore)>
+
+Spare munitions seeded into cargo at spawn — distinct from `inventory`
+(the mounted loadout + stowed drones). Persisted in the RON; threaded
+onto the spawn `BlueprintRecipe` via `materialize_recipe`.
 
 ## `BlueprintId`
 
@@ -143,6 +149,19 @@ Variants:
 - **`Ceiling`** — `Hold` at the chassis `max_altitude` (the operating ceiling). Air only.
 - **`Hold`**(f32) — `Hold` at a specific MSL. Validated against the chassis envelope.
 - **`TerrainFollow`** — Nap-of-the-earth masking (`AltMode::TerrainFollow`); retained MSL = chassis default. Air only.
+
+## `BlueprintStore`
+
+One loose-stores entry in a library blueprint — `count` spare rounds of a
+referenced blueprint seeded into cargo at spawn (not the loadout).
+
+### `blueprint` : [`BlueprintId`](#blueprintid)
+
+Library `BlueprintId` of the spare munition stocked in cargo.
+
+### `count` : u32
+
+How many spare rounds to seed.
 
 ## `InventoryItemKind`
 

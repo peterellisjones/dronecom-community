@@ -1,0 +1,22 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+(
+    id: BlueprintId("5b1a6d5e-93a0-4c5e-9f5e-3090aa10c001"),
+    codename: "Loitering Munition",
+    designator: "AQ-10A",
+    chassis_id: "rq_10",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // EO/IR turret — the loitering search sensor ("a recon drone that can kill")
+        (kind: Component(component_id: "an_aaq_55")),
+        // RWR
+        (kind: Component(component_id: "an_alr_90")),
+        // The drone IS the weapon: light warhead, effective vs air/boats/land,
+        // not vs capital ships. Recoverable if unspent (#3090).
+        (kind: Component(component_id: "mk_40")),
+    ],
+    doctrine_setting: Suggested,
+    // Lofted = the dive attack: cruise high, terminal-dive on the target (#3090).
+    trajectory: Lofted,
+    default_altitude: Chassis,
+    stores: [],
+)

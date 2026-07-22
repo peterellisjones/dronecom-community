@@ -1,15 +1,17 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
 (
     id: BlueprintId("00000000-0000-0000-0000-000000000006"),
-    codename: "Standard Submarine",
-    designator: "SS-400",
+    codename: "Attack Submarine",
+    designator: "SS-400A",
     chassis_id: "ss_400",
     fuel_tank_percent: 0.75,
     inventory: [
-        // Passive sonar
+        // Passive sonar ONLY (#3081): the SS-400A is the silent stalker —
+        // it never radiates, hunting entirely on the passive picture. Its
+        // counterpart SS-800A carries the full active+passive suite and is
+        // the prosecution boat. (The player can always refit an SQS-85 in
+        // the designer; the default keeps the quiet-hunter identity.)
         (kind: Component(component_id: "an_sqr_70")),
-        // Active sonar
-        (kind: Component(component_id: "an_sqs_85")),
         // Heavy Torpedo 1 (MK-55)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
         // Heavy Torpedo 2 (MK-55)
@@ -20,4 +22,5 @@
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    stores: [],
 )
