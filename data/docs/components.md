@@ -39,10 +39,11 @@ How many of this component may be mounted on one vehicle (#1644).
 
 Component weight in kg — counts against the chassis's `max_weight` budget.
 
-### `power_draw` : f32
+### `power_draw` : [`PowerDraw`](#powerdraw)
 
-Steady-state electrical power draw in kW, summed with the chassis base
-draw and other components into the vehicle's total power demand.
+How the steady-state electrical draw is determined: `Derived` for
+sensor components (computed from capability at load, like `cost`),
+`Fixed(kw)` for everything else. Resolves into `Self::power_draw_kw`.
 
 ### `allowed` : `Vec`<[`ChassisFilter`](#chassisfilter)>
 
@@ -102,6 +103,15 @@ Variants:
 - **`Many`** — Unlimited copies allowed (e.g. generic hardpoints / utility items).
 - **`Single`** — At most one of *this* component (matched by `ComponentId`). Blocks identical duplicates; two *different* components of the same kind are still allowed.
 - **`SoleInCategory`** — At most one, and it may not share its vehicle with any other component of the same `ComponentCategory` (e.g. only one warhead, of any type).
+
+## `PowerDraw`
+
+How this component's electrical draw is determined (design §2).
+
+Variants:
+
+- **`Derived`** — Sensor components: draw is derived from capability at load time — never authored, so capability and draw cannot diverge.
+- **`Fixed`**(f32) — Non-sensor components: authored steady-state draw in kW.
 
 ## `ChassisFilter`
 
@@ -330,6 +340,7 @@ Variants:
   - `look_down_clutter_max_angle` : f32 — Depression angle (degrees below horizon) at which max look-down clutter is reached.
   - `low_altitude_clutter_max_db` : f32 — Max low-altitude clutter attenuation in dB for low-altitude targets.
   - `low_altitude_clutter_ceiling` : f32 — Altitude (metres) above which low-altitude clutter has no effect.
+  - `low_altitude_clutter_gate_angle` : f32 — Depression below the radar horizon (degrees) at which low-altitude clutter reaches full strength.  Low-altitude clutter needs a sea patch illuminated in the same resolution cell as the target, so it only applies when the radar is looking *down* — a mast-height surface-search radar level with a surface ship sees none. This ramps that gate in rather than switching it on at the horizon: for a sea-level target the horizon is crossed at exactly half the radar horizon, so a hard edge would make a closing contact drop out and reacquire much later.
 - **`SonarActive`** — Active sonar: doppler notching only.
   - `v_notch` : f32 — Max radial speed (m/s) below which target enters the notch.
   - `notch_fraction` : f32 — Effective RCS fraction at zero radial velocity (0.0-1.0).

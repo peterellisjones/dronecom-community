@@ -1213,6 +1213,23 @@ info_panel:
         "zh-TW": 輻射管制
       # Value labels (active=Radiate / passive=Silent) are the canonical
       # `doctrine.emcon.*` keys (display.yaml), shared with the designer (#1935).
+      # #3256: the emissions row's own tooltip advertises the keybinding. The
+      # glossary meaning is repeated here rather than referenced so the row has
+      # one tooltip, not two stacked ones; %{binding} is the player's current
+      # binding as the Controls tab renders it (an egui tooltip cannot host
+      # another tooltip, so this is the only place the shortcut can surface).
+      label_tooltip_with_shortcut:
+        de: "Emissionskontrolle: ob Sensoren strahlen (aktiv) oder still bleiben (passiv). Kurzbefehl: %{binding}"
+        en: "Emission control: whether sensors radiate (active) or stay silent (passive). Shortcut: %{binding}"
+        es: "Control de emisiones: si los sensores radian (activo) o permanecen en silencio (pasivo). Atajo: %{binding}"
+        fr: "Contrôle des émissions : si les capteurs émettent (actif) ou restent silencieux (passif). Raccourci : %{binding}"
+        it: "Controllo delle emissioni: se i sensori irradiano (attivo) o restano silenti (passivo). Scorciatoia: %{binding}"
+        ja: "センサーが放射するか（能動）静かに保つか（受動）。ショートカット：%{binding}"
+        ko: "센서가 방사하는지(능동) 침묵을 유지하는지(수동)。단축키：%{binding}"
+        "pt-BR": "Controle de emissões: se os sensores irradiam (ativo) ou permanecem em silêncio (passivo). Atalho: %{binding}"
+        ru: "Контроль излучения: излучают ли датчики (активный) или хранят молчание (пассивный). Сочетание клавиш: %{binding}"
+        zh: "传感器是辐射（主动）还是保持静默（被动）。快捷键：%{binding}"
+        "zh-TW": "感測器是輻射（主動）還是保持靜默（被動）。快捷鍵：%{binding}"
       silent_locked_tooltip:
         de: "Dieses Fahrzeug hat keine aktiven Sensoren: immer lautlos"
         en: "This vehicle has no active sensors: always silent"
@@ -1230,104 +1247,14 @@ info_panel:
     # is weapon-derived (the standoff-fire cap, ADR-0013); a warhead's is the fixed
     # committal zone. `label` is the row label; `standoff`/`committal` is the
     # per-envelope value; `tooltip` explains the derivation.
-    reaction:
-      label:
-        de: REAKTION
-        en: REACTION
-        es: REACCIÓN
-        fr: RÉACTION
-        it: REAZIONE
-        ja: 反応
-        ko: 대응
-        "pt-BR": REAÇÃO
-        ru: РЕАКЦИЯ
-        zh: 反应
-        "zh-TW": 反應
-      standoff:
-        de: ABSTANDSREICHWEITE
-        en: STANDOFF RANGE
-        es: ALCANCE DE TIRO
-        fr: PORTÉE DE TIR
-        it: DISTANZA DI TIRO
-        ja: 兵器射程
-        ko: 무기 사거리
-        "pt-BR": ALCANCE DE TIRO
-        ru: ДАЛЬНОСТЬ ПУСКА
-        zh: 武器射程
-        "zh-TW": 武器射程
-      committal:
-        de: NAHANNÄHERUNG
-        en: CLOSE APPROACH
-        es: APROXIMACIÓN CERCANA
-        fr: APPROCHE RAPPROCHÉE
-        it: AVVICINAMENTO
-        ja: 近接
-        ko: 근접
-        "pt-BR": APROXIMAÇÃO PRÓXIMA
-        ru: БЛИЖНИЙ ПОДХОД
-        zh: 抵近
-        "zh-TW": 抵近
-      tooltip:
-        de: "Die Reaktionsreichweite dieser Einheit wird aus ihrer Bewaffnung abgeleitet und ist nicht mehr manuell einstellbar. Ein Werfer reagiert innerhalb seiner Waffen-Abstandsreichweite; ein Sprengkopf reagiert bei Nahannäherung."
-        en: "This unit's reaction range is derived from its weapons and can no longer be set by hand. A launcher reacts within its weapon standoff range; a warhead reacts on close approach."
-        es: "El alcance de reacción de esta unidad se deriva de su armamento y ya no puede ajustarse manualmente. Un lanzador reacciona dentro del alcance de tiro de su arma; una ojiva reacciona en la aproximación cercana."
-        fr: "La portée de réaction de cette unité est dérivée de son armement et ne peut plus être réglée à la main. Un lanceur réagit dans la portée de tir de son arme ; une ogive réagit à l'approche rapprochée."
-        it: "Il raggio di reazione di questa unità è derivato dal suo armamento e non è più impostabile a mano. Un lanciatore reagisce entro la distanza di tiro della sua arma; una testata reagisce all'avvicinamento."
-        ja: "このユニットの反応範囲は兵装から導出され、手動では設定できません。発射機は兵器の射程内で反応し、弾頭は近接時に反応します。"
-        ko: "이 유닛의 대응 범위는 무장에서 도출되며 더 이상 수동으로 설정할 수 없습니다. 발사기는 무기 사거리 내에서 대응하고, 탄두는 근접 시 대응합니다."
-        "pt-BR": "O alcance de reação desta unidade é derivado de seu armamento e não pode mais ser ajustado manualmente. Um lançador reage dentro do alcance de tiro de sua arma; uma ogiva reage na aproximação próxima."
-        ru: "Дальность реакции этой единицы определяется её вооружением и больше не задаётся вручную. Пусковая установка реагирует в пределах дальности пуска своего оружия, а боевая часть — при ближнем подходе."
-        zh: "此单位的反应范围由其武器决定，不再可手动设置。发射器在其武器射程内反应，战斗部在抵近时反应。"
-        "zh-TW": "此單位的反應範圍由其武器決定，不再可手動設定。發射器在其武器射程內反應，戰鬥部在抵近時反應。"
-    safety_range:
-      evade_within:
-        de: Ausweichen innerhalb
-        en: Evade within
-        es: Evadir dentro de
-        fr: Esquiver à moins de
-        it: Evadi entro
-        ja: 回避範囲
-        ko: 회피 범위
-        "pt-BR": Evadir dentro de
-        ru: Уклоняться в пределах
-        zh: 规避范围内
-        "zh-TW": 規避範圍內
-      evade_within_tooltip:
-        de: "Fliehen, wenn eine Bedrohung in diese Reichweite kommt"
-        en: "Flee when a threat comes within this range"
-        es: "Huir cuando una amenaza entre en este alcance"
-        fr: "Fuir lorsqu'une menace entre dans cette portée"
-        it: "Fuggire quando una minaccia entra in questo raggio"
-        ja: "脅威がこの範囲内に入ったら逃避する"
-        ko: "위협이 이 범위 내로 들어오면 도주"
-        "pt-BR": "Fugir quando uma ameaça entrar neste alcance"
-        ru: "Бежать, когда угроза входит в эту дальность"
-        zh: "当威胁进入此范围时逃离"
-        "zh-TW": "當威脅進入此範圍時逃離"
-      resume_beyond:
-        de: Fortsetzen jenseits
-        en: Resume beyond
-        es: Reanudar más allá de
-        fr: Reprendre au-delà de
-        it: Riprendi oltre
-        ja: 再開距離
-        ko: 재개 거리
-        "pt-BR": Retomar além de
-        ru: Возобновлять за
-        zh: 恢复距离
-        "zh-TW": 恢復距離
-      resume_beyond_tooltip:
-        de: "Die Flucht beenden und die Aufgabe wieder aufnehmen, sobald die Bedrohung über diese Reichweite hinaus ist"
-        en: "Stop fleeing and resume the task once the threat is beyond this range"
-        es: "Dejar de huir y reanudar la tarea cuando la amenaza esté más allá de este alcance"
-        fr: "Cesser de fuir et reprendre la tâche une fois que la menace dépasse cette portée"
-        it: "Smettere di fuggire e riprendere il compito quando la minaccia supera questo raggio"
-        ja: "脅威がこの距離を超えたら逃避をやめて任務を再開する"
-        ko: "위협이 이 거리를 벗어나면 도주를 멈추고 임무 재개"
-        "pt-BR": "Parar de fugir e retomar a tarefa quando a ameaça ultrapassar este alcance"
-        ru: "Прекращать бегство и возобновлять задание, когда угроза выходит за эту дальность"
-        zh: "当威胁超出此范围时停止逃离并恢复任务"
-        "zh-TW": "當威脅超出此範圍時停止逃離並恢復任務"
+    # #3192 Task 5: the Evade "Evade within" / "Resume beyond" sliders and
+    # `DoctrineCommand::SetSafetyRange` are removed — the flee/resume band is
+    # now the unit's own physics-derived `Vehicle::safety_band` (#3098), not
+    # stored doctrine intent. A single read-only line replaces both sliders,
+    # mirroring the `reaction.*` readout above. Sentence-case prose (this is
+    # guidance explaining why the row is no longer editable, not a tactical
+    # data value) — there is no per-unit numeric wire field yet to show a
+    # real distance.
     # DC-992: Auto-RTB toggle moved into the shared doctrine editor from
     # the standalone Row 9 checkbox in entity_view. Keys re-homed from
     # `info_panel.auto_rtb.*` to keep the doctrine subtree self-contained.
@@ -1648,18 +1575,33 @@ info_panel:
     ru: Цел. глубина
     zh: 目标深度
     "zh-TW": 目標深度
+  # The capacity bar's caps tag, ahead of the used/capacity pair — the
+  # info-panel sibling of designer.bar_weight / designer.bar_power (#3263).
+  # Tactical data, so ALL CAPS; the tooltip below carries the prose.
   inventory_capacity:
-    de: Platz belegt
-    en: Space used
-    es: espacio usado
-    fr: espace utilisé
-    it: spazio usato
-    ja: 使用容量
-    ko: 사용 공간
-    "pt-BR": espaço usado
-    ru: занято места
-    zh: 已用空间
-    "zh-TW": 已用空間
+    de: "FRACHT"
+    en: "CARGO"
+    es: "CARGA"
+    fr: "FRET"
+    it: "CARICO"
+    ja: "貨物"
+    ko: "화물"
+    "pt-BR": "CARGA"
+    ru: "ГРУЗ"
+    zh: "货物"
+    "zh-TW": "貨物"
+  inventory_capacity_tooltip:
+    de: "Verstautes Gewicht gegenüber der Kapazität des Frachtraums. Umfasst alles an Bord — geladene Drohnen, Munition und Ersatzteile."
+    en: "Stowed weight against the cargo hold's capacity. Covers everything aboard — loaded drones, rounds and spares."
+    es: "Peso estibado frente a la capacidad de la bodega. Incluye todo lo que va a bordo: drones cargados, municiones y repuestos."
+    fr: "Poids arrimé par rapport à la capacité de la soute. Inclut tout ce qui est à bord : drones chargés, munitions et pièces de rechange."
+    it: "Peso stivato rispetto alla capacità della stiva. Comprende tutto ciò che è a bordo: droni caricati, munizioni e ricambi."
+    ja: "貨物庫の容量に対する搭載重量。搭載中のドローン、弾体、予備品など艦内のすべてを含む。"
+    ko: "화물칸 용량 대비 적재 중량입니다. 탑재된 드론, 탄체, 예비 부품 등 함내의 모든 것을 포함합니다."
+    "pt-BR": "Peso estivado em relação à capacidade do porão. Abrange tudo a bordo — drones carregados, munições e sobressalentes."
+    ru: "Уложенный вес относительно вместимости трюма. Учитывается всё на борту — загруженные дроны, боеприпасы и запасные части."
+    zh: "已装载重量与货舱容量的对比。涵盖舰上所有物资——已装载的无人机、弹体与备件。"
+    "zh-TW": "已裝載重量與貨艙容量的對比。涵蓋艦上所有物資——已裝載的無人機、彈體與備件。"
   inventory_empty:
     de: Inventar leer
     en: Inventory empty
@@ -2492,6 +2434,57 @@ info_panel:
         ru: Уровень сигнала
         zh: 信号强度
         "zh-TW": 信號強度
+      # #3281: sensor role + live capacity block (own-sensor context only). The
+      # ROLE value is ALL CAPS (tactical zone) — separate from the designer's
+      # sentence-case `glossary.sensor_role.*` prose.
+      role:
+        de: "ROLLE"
+        en: "ROLE"
+        es: "ROL"
+        fr: "RÔLE"
+        it: "RUOLO"
+        ja: "役割"
+        ko: "역할"
+        "pt-BR": "FUNÇÃO"
+        ru: "РОЛЬ"
+        zh: "角色"
+        "zh-TW": "角色"
+      role_search:
+        de: "SUCHE"
+        en: "SEARCH"
+        es: "BÚSQUEDA"
+        fr: "RECHERCHE"
+        it: "RICERCA"
+        ja: "捜索"
+        ko: "탐색"
+        "pt-BR": "BUSCA"
+        ru: "ПОИСК"
+        zh: "搜索"
+        "zh-TW": "搜索"
+      role_fire_control:
+        de: "FEUERLEITUNG"
+        en: "FIRE CONTROL"
+        es: "CONTROL DE FUEGO"
+        fr: "CONTRÔLE DE TIR"
+        it: "CONTROLLO DEL FUOCO"
+        ja: "射撃管制"
+        ko: "사격 통제"
+        "pt-BR": "CONTROLE DE FOGO"
+        ru: "УПРАВЛЕНИЕ ОГНЁМ"
+        zh: "火力控制"
+        "zh-TW": "火力控制"
+      role_search_and_fire_control:
+        de: "SUCHE UND FEUERLEITUNG"
+        en: "SEARCH AND FIRE CONTROL"
+        es: "BÚSQUEDA Y CONTROL DE FUEGO"
+        fr: "RECHERCHE ET CONTRÔLE DE TIR"
+        it: "RICERCA E CONTROLLO DEL FUOCO"
+        ja: "捜索と射撃管制"
+        ko: "탐색 및 사격 통제"
+        "pt-BR": "BUSCA E CONTROLE DE FOGO"
+        ru: "ПОИСК И УПРАВЛЕНИЕ ОГНЁМ"
+        zh: "搜索与火力控制"
+        "zh-TW": "搜索與火力控制"
       # DC-504: track-file capacity line in the own-sensor tooltip.
       max_contacts:
         de: "Max. Kontakte"
@@ -2517,6 +2510,42 @@ info_panel:
         ru: "%{held}/%{max} (насыщен)"
         zh: "%{held}/%{max}（已饱和）"
         "zh-TW": "%{held}/%{max}（已飽和）"
+      locks:
+        de: "AUFSCHALTUNGEN"
+        en: "LOCKS"
+        es: "ENGANCHES"
+        fr: "VERROUILLAGES"
+        it: "AGGANCI"
+        ja: "ロック"
+        ko: "잠금"
+        "pt-BR": "TRAVAS"
+        ru: "ЗАХВАТЫ"
+        zh: "锁定"
+        "zh-TW": "鎖定"
+      lock_warning:
+        de: "AUFSCHALTWARNUNG"
+        en: "LOCK WARNING"
+        es: "ADVERTENCIA DE ENGANCHE"
+        fr: "AVERTISSEMENT DE VERROUILLAGE"
+        it: "AVVISO DI AGGANCIO"
+        ja: "ロック警告"
+        ko: "잠금 경고"
+        "pt-BR": "AVISO DE TRAVA"
+        ru: "ПРЕДУПРЕЖДЕНИЕ О ЗАХВАТЕ"
+        zh: "锁定警告"
+        "zh-TW": "鎖定警告"
+      concurrency:
+        de: "GLEICHZEITIGKEIT"
+        en: "CONCURRENCY"
+        es: "CONCURRENCIA"
+        fr: "SIMULTANÉITÉ"
+        it: "SIMULTANEITÀ"
+        ja: "同時動作"
+        ko: "동시성"
+        "pt-BR": "SIMULTANEIDADE"
+        ru: "ОДНОВРЕМЕННОСТЬ"
+        zh: "并发"
+        "zh-TW": "併發"
       effective_accuracy:
         de: ACC
         en: ACC
@@ -2676,6 +2705,18 @@ info_panel:
         ru: "На сколько дБ запрос IFF превышает порог обнаружения; чем больше, тем надёжнее ответ «свой-чужой»."
         zh: "敌我识别（IFF）询问超出探测阈值的余量（dB）；数值越高，敌我应答越可靠。"
         "zh-TW": "敵我識別（IFF）詢問超出偵測閾值的餘量（dB）；數值越高，敵我應答越可靠。"
+      role_gloss:
+        de: "Was dieser Sensor leistet. Ein Such-Sensor baut das Lagebild auf; ein Feuerleit-Sensor kann nicht suchen — er schaltet sich auf eine ihm zugewiesene Spur auf, um eine Waffe zu leiten."
+        en: "What this set does. A search set builds the tactical picture; a fire-control set cannot search — it locks onto a track it has been cued onto, to guide a weapon."
+        es: "Qué hace este conjunto. Un conjunto de búsqueda construye el cuadro táctico; un conjunto de control de fuego no puede buscar: se engancha a una traza que se le ha designado, para guiar un arma."
+        fr: "Ce que fait ce capteur. Un capteur de recherche construit le tableau tactique ; un capteur de contrôle de tir ne peut pas rechercher — il se verrouille sur une piste qui lui a été désignée, pour guider une arme."
+        it: "Cosa fa questo set. Un set di ricerca costruisce il quadro tattico; un set di controllo del fuoco non può cercare — si aggancia a una traccia che gli è stata designata, per guidare un'arma."
+        ja: "このセットが何を行うか。捜索セットは戦術状況図を構築する。射撃管制セットは捜索できない——指示された航跡にロックオンし、兵器を誘導するだけだ。"
+        ko: "이 세트가 무엇을 하는지. 탐색 세트는 전술 상황도를 구축한다. 사격 통제 세트는 탐색할 수 없다 — 지정된 항적에 잠금을 걸어 무기를 유도할 뿐이다."
+        "pt-BR": "O que este conjunto faz. Um conjunto de busca constrói o quadro tático; um conjunto de controle de fogo não pode buscar — ele trava em uma trilha que lhe foi designada, para guiar uma arma."
+        ru: "Что делает этот комплект. Поисковый комплект строит тактическую картину; комплект управления огнём не может вести поиск — он захватывает трек, на который был наведён, чтобы наводить оружие."
+        zh: "该传感器能做什么。搜索型传感器构建战术态势图；火控型传感器无法搜索——它只能锁定被指示给它的航迹，以引导武器。"
+        "zh-TW": "該感測器能做什麼。搜索型感測器建構戰術態勢圖；火控型感測器無法搜索——它只能鎖定被指示給它的航跡，以引導武器。"
       max_contacts_gloss:
         de: "Wie viele einzelne Spuren die Spurdatei dieses Sensors halten kann; ist sie voll, sättigt sie und verliert Kontakte."
         en: "How many separate tracks this sensor's track file can hold; once full it saturates and starts dropping contacts."
@@ -2688,6 +2729,42 @@ info_panel:
         ru: "Сколько отдельных треков может хранить трековый файл датчика; при заполнении он насыщается и теряет контакты."
         zh: "该传感器的航迹文件可同时保持的航迹数量；一旦占满即饱和并开始丢失接触。"
         "zh-TW": "該感測器的航跡檔案可同時保持的航跡數量；一旦占滿即飽和並開始丟失接觸。"
+      locks_gloss:
+        de: "Gehaltene Feuerleit-Aufschaltungen gegenüber der Höchstzahl, die dieser Sensor gleichzeitig halten kann."
+        en: "Fire-control locks held, against the most this set can hold at once."
+        es: "Enganches de control de fuego mantenidos, frente al máximo que este conjunto puede mantener a la vez."
+        fr: "Verrouillages de contrôle de tir maintenus, sur le maximum que ce capteur peut maintenir à la fois."
+        it: "Agganci di controllo del fuoco mantenuti, rispetto al massimo che questo set può mantenere alla volta."
+        ja: "現在保持している射撃管制ロックの数と、このセットが同時に保持できる上限。"
+        ko: "현재 유지 중인 사격 통제 잠금 수와, 이 세트가 한 번에 유지할 수 있는 최대치."
+        "pt-BR": "Travas de controle de fogo mantidas, em relação ao máximo que este conjunto pode manter de uma vez."
+        ru: "Удерживаемые захваты управления огнём относительно максимума, который этот комплект может удерживать одновременно."
+        zh: "当前保持的火控锁定数，相对于该传感器一次最多能保持的数量。"
+        "zh-TW": "目前保持的火控鎖定數，相對於該感測器一次最多能保持的數量。"
+      lock_warning_gloss:
+        de: "Ob dieser Sensor dich warnt, wenn sich etwas anderes auf dich aufschaltet."
+        en: "Whether this set warns you when something else locks onto you."
+        es: "Si este conjunto te avisa cuando algo se engancha a ti."
+        fr: "Si ce capteur vous avertit lorsque quelque chose d'autre se verrouille sur vous."
+        it: "Se questo set ti avvisa quando qualcos'altro si aggancia a te."
+        ja: "何か他のものが自分にロックオンしてきたとき、このセットが警告するかどうか。"
+        ko: "다른 무언가가 잠금을 걸어올 때 이 세트가 경고하는지 여부."
+        "pt-BR": "Se este conjunto avisa você quando algo trava em você."
+        ru: "Предупреждает ли этот комплект вас, когда что-то захватывает вас."
+        zh: "该传感器是否会在被其他目标锁定时警告你。"
+        "zh-TW": "該感測器是否會在被其他目標鎖定時警告你。"
+      concurrency_gloss:
+        de: "Ob dieser Sensor weitersucht, während er eine Aufschaltung hält, oder die Suche unterbrechen muss, um eine zu halten."
+        en: "Whether this set keeps searching while it holds a lock, or must stop searching to hold one."
+        es: "Si este conjunto sigue buscando mientras mantiene un enganche, o debe dejar de buscar para mantener uno."
+        fr: "Si ce capteur continue à rechercher tout en maintenant un verrouillage, ou doit arrêter de rechercher pour en maintenir un."
+        it: "Se questo set continua a cercare mentre mantiene un aggancio, o deve interrompere la ricerca per mantenerne uno."
+        ja: "このセットがロックを保持しながら捜索を続けるか、それとも保持するために捜索を止めなければならないか。"
+        ko: "이 세트가 잠금을 유지하면서 계속 탐색하는지, 아니면 유지하려면 탐색을 멈춰야 하는지."
+        "pt-BR": "Se este conjunto continua buscando enquanto mantém uma trava, ou precisa parar de buscar para mantê-la."
+        ru: "Продолжает ли этот комплект поиск, удерживая захват, или должен прекратить поиск, чтобы его удерживать."
+        zh: "该传感器是否在保持锁定的同时继续搜索，还是必须停止搜索才能保持锁定。"
+        "zh-TW": "該感測器是否在保持鎖定的同時繼續搜索，還是必須停止搜索才能保持鎖定。"
       effective_accuracy_gloss:
         de: "Die aktuelle 1 SD-Unsicherheit von Position und Peilung dieser Ortung; sie wird bei stärkerem Signal enger und mit der Entfernung größer."
         en: "The current 1 SD position and bearing uncertainty of this fix; it tightens with a stronger signal and widens with range."
@@ -4344,22 +4421,24 @@ info_panel:
       ru: "%{name}: %{count} НЕДОСТАЁТ"
       zh: "%{name}：缺%{count}发"
       "zh-TW": "%{name}：缺%{count}發"
-    # Glossary tooltip for the per-facility cell-occupancy stat row (#3017,
-    # `VLS 6/12`): %{facility} is the launcher tag (already caps), %{used} /
-    # %{capacity} are bare cell counts. Sentence-case prose (the row's own
-    # label/value are the caps readout; this explains what it means).
+    # Glossary tooltip for the per-facility cell-occupancy stat row (#3017 cap,
+    # #3147 physical readout, `VLS 1/12`): %{facility} is the launcher tag
+    # (already caps), %{used} / %{capacity} are bare cell counts — %{used} is
+    # rounds currently LOADED (physical), not manifest intent, so a fired cell
+    # reads empty. Sentence-case prose (the row's own label/value are the caps
+    # readout; this explains what it means).
     cells_readout:
-      de: "%{used} von %{capacity} %{facility}-Zellen durch das Soll dieser Plattform belegt."
-      en: "%{used} of %{capacity} %{facility} cells claimed by this platform's manifest."
-      es: "%{used} de %{capacity} celdas de %{facility} reclamadas por el manifiesto de esta plataforma."
-      fr: "%{used} des %{capacity} cellules %{facility} réclamées par le manifeste de cette plateforme."
-      it: "%{used} di %{capacity} celle %{facility} richieste dal manifesto di questa piattaforma."
-      ja: "%{facility} セル %{capacity} 中 %{used} がこのプラットフォームの編制で使用中。"
-      ko: "%{facility} 셀 %{capacity} 중 %{used}이(가) 이 플랫폼의 편제로 사용 중."
-      "pt-BR": "%{used} de %{capacity} células de %{facility} reivindicadas pelo manifesto desta plataforma."
-      ru: "%{used} из %{capacity} ячеек %{facility} заняты по нормативу этой платформы."
-      zh: "%{facility} 单元 %{capacity} 中 %{used} 被该平台编制占用。"
-      "zh-TW": "%{facility} 單元 %{capacity} 中 %{used} 被該平台編制佔用。"
+      de: "%{used} von %{capacity} %{facility}-Zellen aktuell geladen."
+      en: "%{used} of %{capacity} %{facility} cells currently loaded."
+      es: "%{used} de %{capacity} celdas de %{facility} cargadas actualmente."
+      fr: "%{used} des %{capacity} cellules %{facility} actuellement chargées."
+      it: "%{used} di %{capacity} celle %{facility} attualmente caricate."
+      ja: "%{facility} セル %{capacity} 中 %{used} が現在装填済み。"
+      ko: "%{facility} 셀 %{capacity} 중 %{used}이(가) 현재 장전됨."
+      "pt-BR": "%{used} de %{capacity} células de %{facility} carregadas no momento."
+      ru: "%{used} из %{capacity} ячеек %{facility} сейчас заряжено."
+      zh: "%{facility} 单元 %{capacity} 中当前已装填 %{used} 个。"
+      "zh-TW": "%{facility} 單元 %{capacity} 中目前已裝填 %{used} 個。"
   # %{weight} is a glued-caps measure (e.g. "1234.5KG"), so the unit is not
   # repeated here (#1709 / ADR-0005).
   stores_weight:
@@ -4390,32 +4469,6 @@ info_panel:
       zh: "母舰的库存 — 将兼容弹药装填到此无人机。"
       "zh-TW": "母艦的庫存 — 將相容彈藥裝填到此無人機。"
   # DC-996: Form Group button on the multi-select inspect panel.
-  multi_select:
-    form_group:
-      label:
-        de: Gruppe bilden
-        en: Form Group
-        es: Formar grupo
-        fr: Former un groupe
-        it: Forma gruppo
-        ja: グループ編成
-        ko: 그룹 편성
-        "pt-BR": Formar grupo
-        ru: Создать группу
-        zh: 组建编队
-        "zh-TW": 組建編隊
-      need_two:
-        de: "Wähle 2+ Fahrzeuge aus, um eine Gruppe zu bilden"
-        en: "Select 2+ vehicles to form a group"
-        es: "Selecciona 2 o más vehículos para formar un grupo"
-        fr: "Sélectionnez 2 véhicules ou plus pour former un groupe"
-        it: "Seleziona 2 o più veicoli per formare un gruppo"
-        ja: "グループを編成するには2機以上選択してください"
-        ko: "그룹을 편성하려면 2대 이상 선택하세요"
-        "pt-BR": "Selecione 2 ou mais veículos para formar um grupo"
-        ru: "Выберите 2 или более единиц, чтобы создать группу"
-        zh: "选择2个或更多载具以组建编队"
-        "zh-TW": "選擇2個或更多載具以組建編隊"
   # DC-1032: platform-link row (stowed-in / launched-from) in the per-vehicle
   # inspect panel. Used by `render_platform_link` in `entity_view.rs`.
   stowed_in:

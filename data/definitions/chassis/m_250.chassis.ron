@@ -52,5 +52,6 @@
     // `dc_autopilot` `radar_missile_battery_outlasts_best_range_loft`.
     battery_capacity_kwh: 0.32,
     base_power_draw_kw: 0.5,
+    power_supply_kw: 1.1,
     engine_bells: (loiter: None, cruise: None, full: None),
 )

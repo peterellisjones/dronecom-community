@@ -257,6 +257,18 @@ event:
       ru: "боекомплект %{facility} из %{requested} снарядов превышает %{cells} ячеек шасси"
       zh: "%{facility} 装载 %{requested} 发超过机体 %{cells} 个发射单元"
       "zh-TW": "%{facility} 裝載 %{requested} 發超過機體 %{cells} 個發射單元"
+    unlaunchable_carried_round:
+      de: "Chassis %{chassis} bietet keine Startvorrichtung für %{round}"
+      en: "chassis %{chassis} provides no launch facility for %{round}"
+      es: "el chasis %{chassis} no ofrece ninguna instalación de lanzamiento para %{round}"
+      fr: "le châssis %{chassis} n'offre aucun dispositif de lancement pour %{round}"
+      it: "il telaio %{chassis} non offre alcun impianto di lancio per %{round}"
+      ja: "シャーシ %{chassis} に %{round} 用の発射設備がありません"
+      ko: "섀시 %{chassis}에 %{round}용 발사 설비가 없습니다"
+      "pt-BR": "o chassi %{chassis} não oferece nenhuma instalação de lançamento para %{round}"
+      ru: "шасси %{chassis} не имеет пусковой установки для %{round}"
+      zh: "机体 %{chassis} 没有可发射 %{round} 的发射设备"
+      "zh-TW": "機體 %{chassis} 沒有可發射 %{round} 的發射設備"
     stores_over_capacity:
       de: "Beladung + Vorräte %{requested} kg überschreiten die Frachtkapazität %{capacity} kg"
       en: "loadout + stores weight %{requested} kg exceeds cargo capacity %{capacity} kg"
@@ -269,6 +281,30 @@ event:
       ru: "вес боекомплекта + запасов %{requested} кг превышает грузовместимость %{capacity} кг"
       zh: "装载物+备用物资重量 %{requested} kg 超过货舱容量 %{capacity} kg"
       "zh-TW": "裝載物+備用物資重量 %{requested} kg 超過貨艙容量 %{capacity} kg"
+    over_power_budget:
+      de: "Stromverbrauch %{draw} kW überschreitet die Stromversorgung %{supply} kW des Chassis"
+      en: "power draw %{draw} kW exceeds chassis power supply %{supply} kW"
+      es: "el consumo eléctrico %{draw} kW supera el suministro eléctrico %{supply} kW del chasis"
+      fr: "la consommation électrique %{draw} kW dépasse l'alimentation %{supply} kW du châssis"
+      it: "l'assorbimento elettrico %{draw} kW supera l'alimentazione %{supply} kW del telaio"
+      ja: "消費電力 %{draw} kW がシャーシの電源供給 %{supply} kW を超過"
+      ko: "전력 소모 %{draw} kW가 섀시 전원 공급 %{supply} kW를 초과"
+      "pt-BR": "o consumo de energia %{draw} kW excede o suprimento elétrico %{supply} kW do chassi"
+      ru: "потребление энергии %{draw} кВт превышает электропитание шасси %{supply} кВт"
+      zh: "耗电量 %{draw} kW 超过机体供电 %{supply} kW"
+      "zh-TW": "耗電量 %{draw} kW 超過機體供電 %{supply} kW"
+    component_not_allowed_on_chassis:
+      de: "Komponente '%{component}' kann nicht am Chassis '%{chassis}' montiert werden"
+      en: "component '%{component}' cannot be mounted on chassis '%{chassis}'"
+      es: "el componente '%{component}' no puede montarse en el chasis '%{chassis}'"
+      fr: "le composant '%{component}' ne peut pas être monté sur le châssis '%{chassis}'"
+      it: "il componente '%{component}' non può essere montato sul telaio '%{chassis}'"
+      ja: "コンポーネント '%{component}' はシャーシ '%{chassis}' に搭載できません"
+      ko: "구성요소 '%{component}'은(는) 섀시 '%{chassis}'에 장착할 수 없음"
+      "pt-BR": "o componente '%{component}' não pode ser montado no chassi '%{chassis}'"
+      ru: "компонент '%{component}' не может быть установлен на шасси '%{chassis}'"
+      zh: "组件 '%{component}' 无法安装在机体 '%{chassis}' 上"
+      "zh-TW": "元件 '%{component}' 無法安裝在機體 '%{chassis}' 上"
   logistics:
     vehicle_on_battery:
       de: "Treibstoff leer · Batteriebetrieb"
@@ -367,7 +403,7 @@ event:
       zh: "生成被拒：%{reason}"
       "zh-TW": "生成被拒：%{reason}"
     bingo_fuel:
-      en: "bingo fuel"
+      en: "low fuel"
       de: "Treibstoff knapp"
       es: "combustible bajo"
       fr: "carburant critique"
@@ -379,7 +415,7 @@ event:
       zh: "燃料不足"
       "zh-TW": "燃料不足"
     bingo_fuel_rtb:
-      en: "bingo fuel · RTB"
+      en: "low fuel · RTB"
       de: "Treibstoff knapp · RTB"
       es: "combustible bajo · RTB"
       fr: "carburant critique · RTB"
@@ -486,6 +522,18 @@ event:
       ru: "изменение загрузки отклонено · магазин заполнен"
       zh: "装载编辑被拒 — 弹仓已满"
       "zh-TW": "裝載編輯被拒 — 彈艙已滿"
+    set_loadout_rejected_unaccountable:
+      en: "loadout edit rejected · unreadable manifest"
+      de: "Ladungsänderung abgelehnt · Ladeliste unlesbar"
+      es: "edición de carga rechazada · manifiesto ilegible"
+      fr: "modification d'armement rejetée · manifeste illisible"
+      it: "modifica carico respinta · manifesto illeggibile"
+      ja: "装備変更却下 — 装備表読取不能"
+      ko: "무장 편성 거부 — 편성표 판독 불가"
+      "pt-BR": "edição de carga rejeitada · manifesto ilegível"
+      ru: "изменение загрузки отклонено · ведомость нечитаема"
+      zh: "装载编辑被拒 — 装载清单无法识别"
+      "zh-TW": "裝載編輯被拒 — 裝載清單無法識別"
   tasking:
     intercept_abort_fuel:
       en: "intercept aborted · fuel"
@@ -775,6 +823,18 @@ event:
     ru: "Матч завершён (%{reason}) · ничья"
     zh: "比赛结束（%{reason}）— 平局"
     "zh-TW": "比賽結束（%{reason}）— 平局"
+  match_ended_defeat:
+    de: "Gefecht beendet (%{reason}) · Niederlage: %{team_name}"
+    en: "Match ended (%{reason}) · defeat: %{team_name}"
+    es: "Partida terminada (%{reason}) · derrota: %{team_name}"
+    fr: "Partie terminée (%{reason}) · défaite : %{team_name}"
+    it: "Partita terminata (%{reason}) · sconfitta: %{team_name}"
+    ja: "試合終了 (%{reason}) — 敗北: %{team_name}"
+    ko: "경기 종료 (%{reason}) — 패배: %{team_name}"
+    "pt-BR": "Partida encerrada (%{reason}) · derrota: %{team_name}"
+    ru: "Матч завершён (%{reason}) · поражение: %{team_name}"
+    zh: "比赛结束（%{reason}）— 失败：%{team_name}"
+    "zh-TW": "比賽結束（%{reason}）— 失敗：%{team_name}"
   match_end_reason:
     elimination:
       de: "Auslöschung"
@@ -800,7 +860,67 @@ event:
       ru: "время истекло"
       zh: "时间到"
       "zh-TW": "時間到"
+    player_eliminated:
+      de: "Spieler ausgeschieden"
+      en: "player eliminated"
+      es: "jugador eliminado"
+      fr: "joueur éliminé"
+      it: "giocatore eliminato"
+      ja: "プレイヤー敗退"
+      ko: "플레이어 탈락"
+      "pt-BR": "jogador eliminado"
+      ru: "игрок выбыл"
+      zh: "玩家出局"
+      "zh-TW": "玩家出局"
   combat:
+    threat_clear:
+      de: "keine Bedrohung"
+      en: "threat clear"
+      es: "amenaza despejada"
+      fr: "menace écartée"
+      it: "minaccia cessata"
+      ja: "脅威なし"
+      ko: "위협 없음"
+      "pt-BR": "ameaça encerrada"
+      ru: "угроза снята"
+      zh: "威胁解除"
+      "zh-TW": "威脅解除"
+    threat_tracked:
+      de: "%{track} erfasst uns"
+      en: "%{track} tracking us"
+      es: "%{track} nos rastrea"
+      fr: "%{track} nous suit"
+      it: "%{track} ci sta tracciando"
+      ja: "%{track} が追尾中"
+      ko: "%{track} 추적 중"
+      "pt-BR": "%{track} nos rastreia"
+      ru: "%{track} ведёт нас"
+      zh: "%{track} 正在跟踪我方"
+      "zh-TW": "%{track} 正在追蹤我方"
+    threat_targeted:
+      de: "%{track} ist aufgeschaltet"
+      en: "%{track} locked on us"
+      es: "%{track} nos ha fijado"
+      fr: "%{track} nous a verrouillés"
+      it: "%{track} ci ha agganciato"
+      ja: "%{track} がロックオン"
+      ko: "%{track} 조준 고정"
+      "pt-BR": "%{track} travou em nós"
+      ru: "%{track} захватил нас"
+      zh: "%{track} 已锁定我方"
+      "zh-TW": "%{track} 已鎖定我方"
+    threat_inbound:
+      de: "%{track} im Anflug"
+      en: "%{track} inbound"
+      es: "%{track} en aproximación"
+      fr: "%{track} en approche"
+      it: "%{track} in avvicinamento"
+      ja: "%{track} 接近中"
+      ko: "%{track} 접근 중"
+      "pt-BR": "%{track} em aproximação"
+      ru: "%{track} на подлёте"
+      zh: "%{track} 来袭"
+      "zh-TW": "%{track} 來襲"
     weapon_fired:
       de: "%{missile} ausgelöst"
       en: "%{missile} away"
@@ -995,48 +1115,12 @@ event:
       ru: "огонь удержан · дальность не определена (единственный пассивный источник)"
       zh: "保留射击 — 距离未确定（单一被动源）"
       "zh-TW": "保留射擊 — 距離未確定（單一被動源）"
-    contact_destroyed:
-      de: "Kontakt zerstört"
-      en: "Contact destroyed"
-      es: "Contacto destruido"
-      fr: "Contact détruit"
-      it: "Contatto distrutto"
-      ja: "接触を撃破"
-      ko: "접촉 격파"
-      "pt-BR": "Contato destruído"
-      ru: "Контакт уничтожен"
-      zh: "接触被摧毁"
-      "zh-TW": "接觸被摧毀"
-    # #2432: attacker-side kill confirmation with the firing weapon identified
-    # (fog-of-war: only ever shown to the team that fired it).
-    contact_destroyed_by:
-      de: "Kontakt zerstört (%{weapon})"
-      en: "Contact destroyed (%{weapon})"
-      es: "Contacto destruido (%{weapon})"
-      fr: "Contact détruit (%{weapon})"
-      it: "Contatto distrutto (%{weapon})"
-      ja: "接触を撃破 (%{weapon})"
-      ko: "접촉 격파 (%{weapon})"
-      "pt-BR": "Contato destruído (%{weapon})"
-      ru: "Контакт уничтожен (%{weapon})"
-      zh: "接触被摧毁 (%{weapon})"
-      "zh-TW": "接觸被摧毀 (%{weapon})"
-    # #2516: attacker-side kill is a fog-of-war ASSESSMENT, not ground truth —
-    # phrased as an assessment ("assessed destroyed · BDA probable") so a wrong
-    # inference reads honestly and can be corrected (contact_reassessed_alive).
+    # #2516/#2432: the ATTACKER-side event. A kill claim is a fog-of-war
+    # ASSESSMENT, not ground truth — phrased as one ("assessed destroyed · BDA
+    # probable") so a wrong inference reads honestly and can be corrected
+    # (contact_reassessed_alive). Always names the firing weapon; fog of war
+    # means it is only ever shown to the team that fired it.
     contact_assessed_destroyed:
-      de: "Kontakt vermutlich zerstört (BDA: wahrscheinlich)"
-      en: "Contact assessed destroyed (BDA: probable)"
-      es: "Contacto evaluado como destruido (BDA: probable)"
-      fr: "Contact évalué détruit (BDA : probable)"
-      it: "Contatto valutato distrutto (BDA: probabile)"
-      ja: "接触撃破と評価 (戦果判定: 可能性大)"
-      ko: "접촉 격파로 평가 (전투피해평가: 유력)"
-      "pt-BR": "Contato avaliado como destruído (BDA: provável)"
-      ru: "Контакт оценён как уничтоженный (BDA: вероятно)"
-      zh: "接触评估为被摧毁 (战损评估: 很可能)"
-      "zh-TW": "接觸評估為被摧毀 (戰損評估: 很可能)"
-    contact_assessed_destroyed_by:
       de: "Kontakt vermutlich zerstört (%{weapon}, BDA: wahrscheinlich)"
       en: "Contact assessed destroyed (%{weapon}, BDA: probable)"
       es: "Contacto evaluado como destruido (%{weapon}, BDA: probable)"
@@ -1048,6 +1132,22 @@ event:
       ru: "Контакт оценён как уничтоженный (%{weapon}, BDA: вероятно)"
       zh: "接触评估为被摧毁 (%{weapon}, 战损评估: 很可能)"
       "zh-TW": "接觸評估為被摧毀 (%{weapon}, 戰損評估: 很可能)"
+    # #2391/#3333: the DEFENDER-side event, shown to the team that was HIT. Its
+    # subject is the enemy round that reached us, not a kill of ours — this read
+    # "Contact destroyed" until #3333 split the variant, which announced taking a
+    # missile in the same words as scoring one.
+    incoming_munition_spent:
+      de: "Anfliegende Waffe beim Einschlag verbraucht"
+      en: "Inbound round expended on impact"
+      es: "Munición entrante consumida en el impacto"
+      fr: "Munition entrante consommée à l'impact"
+      it: "Munizione in arrivo consumata all'impatto"
+      ja: "飛来兵器が着弾により消耗"
+      ko: "착탄으로 접근 무장 소모"
+      "pt-BR": "Munição recebida consumida no impacto"
+      ru: "Атакующий боеприпас израсходован при попадании"
+      zh: "来袭弹药于命中时耗尽"
+      "zh-TW": "來襲彈藥於命中時耗盡"
     # #2516: correction — a track earlier assessed destroyed is reacquired alive.
     contact_reassessed_alive:
       de: "Kontakt als lebend neu bewertet (Spur wiedererfasst)"
@@ -1366,6 +1466,18 @@ event:
       zh: "调试生成失败"
       "zh-TW": "除錯生成失敗"
   detection:
+    contact_lost:
+      de: "Kontakt verloren"
+      en: "Contact lost"
+      es: "Contacto perdido"
+      fr: "Contact perdu"
+      it: "Contatto perso"
+      ja: "接触を喪失"
+      ko: "접촉 상실"
+      "pt-BR": "Contato perdido"
+      ru: "Контакт потерян"
+      zh: "失去接触"
+      "zh-TW": "失去接觸"
     contact_detected:
       de: "Neuer Kontakt erfasst"
       en: "New contact detected"

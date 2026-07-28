@@ -34,5 +34,11 @@
     guidance_uplink: FromLauncher,
     battery_capacity_kwh: 1.0,
     base_power_draw_kw: 1.0,
+    // Must stay above base + the heaviest sanctioned seeker by the authoring
+    // margin `default_blueprints_keep_power_authoring_margin` enforces (#3263):
+    // the MK-55A carries the AN/SQS-30, so 1.0 base + 0.5 sonar = 1.5kW draw.
+    // At 1.5 supply the shipped torpedo passed by exactly 0.0kW and any retune
+    // of the active-sonar floor would have invalidated it silently.
+    power_supply_kw: 1.8,
     engine_bells: (loiter: None, cruise: None, full: None),
 )

@@ -32,6 +32,10 @@ Warhead-pricing tuning knobs.
 
 Chassis-pricing tuning knobs.
 
+### `power` : [`PowerKnobs`](#powerknobs)
+
+Derived-sensor-power-draw tuning knobs (`crate::power`).
+
 ## `Envelope`
 
 Reference engagement envelope: the named battle every price is
@@ -84,6 +88,12 @@ Normalizers for the delivery/survivability currencies.
 Reference platform speed (m/s). The delivery currency's mobility factor
 normalizes a hull's top speed against this (`mobility = (speed / reference_speed_mps)^exp`).
 
+### `reference_supply_kw` : f32
+
+Reference electrical supply (kW). The chassis power-supply term
+normalizes `power_supply_kw` against this (`rates.power_supply` is the
+dollar value of a hull supplying exactly this much).
+
 ## `CurrencyRates`
 
 Dollar rates: one per value currency (design doc §Value currencies).
@@ -121,6 +131,12 @@ $ per normalized HP point (`hit_points / reference hp`).
 ### `battery_per_kwh` : f32
 
 $ per kWh of battery capacity (the chassis battery term).
+
+### `power_supply` : f32
+
+$ at the reference supply (`envelope.reference_supply_kw`) for the
+chassis power-supply term — hosting capacity priced like payload
+capacity, concave via `chassis.power_supply_exponent` (design §5a).
 
 ### `hull_per_kg` : f32
 
@@ -231,6 +247,76 @@ Max premium (as a fraction of the hull's own subtotal) for a submarine's depth m
 ### `depth_half_point_m` : f32
 
 `saturating_credit` half-point (m) for the depth margin.
+
+### `power_supply_exponent` : f32
+
+Concave exponent on normalized power supply
+(`power_supply_kw / envelope.reference_supply_kw`) for the power-supply
+price term. Below 1.0 flattens the game's ~4-order-of-magnitude supply
+spread (design §5a).
+
+### `coverage_avail_cap` : f32
+
+Cap on the persistence coverage floor (design §5b) — the highest
+floored availability credited to a hull whose speed × endurance sweeps
+the reference map in one sortie.
+
+### `coverage_map_transits` : f32
+
+Number of reference-map-radius transits treated as full map coverage
+for the persistence floor's coverage fraction
+(`speed · endurance / (this × envelope.map_radius_m)`, capped at 1).
+
+## `PowerKnobs`
+
+Knobs for derived sensor power draw (`crate::power`). Tuned so shipped
+sensors land on the design §2 targets; detection-facing fields are never
+changed to tune draw. The emission-driven transmit term is radar-only
+(design §2 amendment) — every other sensor kind contributes only its
+per-kind processing floor.
+
+### `reference_erp_w` : f32
+
+ERP normalization anchor in watts — `emission_strength` equal to this
+contributes exactly `transmit_scale_kw` (before coverage scaling).
+
+### `transmit_scale_kw` : f32
+
+kW contributed by a full-coverage radar at the reference ERP.
+
+### `erp_exponent` : f32
+
+Superlinear exponent on normalized ERP — stretches the game's ~6×
+ERP spread toward the realistic ~600× draw spread.
+
+### `min_coverage` : f32
+
+Floor for the scan-coverage factor (`fov_h`/360 × `fov_v`/180) so narrow
+seekers keep a nonzero transmit term.
+
+### `floor_radar_kw` : f32
+
+Processing/cooling floor in kW for radar sensors.
+
+### `floor_ir_kw` : f32
+
+Processing floor in kW for IR sensors.
+
+### `floor_rwr_kw` : f32
+
+Processing floor in kW for RWR/ESM sensors.
+
+### `floor_visual_kw` : f32
+
+Processing floor in kW for visual sensors.
+
+### `floor_sonar_active_kw` : f32
+
+Processing floor in kW for active sonar.
+
+### `floor_sonar_passive_kw` : f32
+
+Processing floor in kW for passive sonar.
 
 ## `ReferenceTarget`
 

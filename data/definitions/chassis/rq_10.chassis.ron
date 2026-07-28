@@ -6,7 +6,11 @@
     domain: Air,
     launch_requires: [FlightDeck],
     recovery_requires: [FlightDeck],
-    provides: [(facility: AirLaunch, cells: 4, max_simultaneous_launches: 4)],
+    // #3148: the RQ-10 is a scout / loitering-munition airframe — it rams with
+    // its own warhead (target_domains below), it does not fire missiles. It
+    // therefore provides no AirLaunch cells. (Charging AirLaunch's flat
+    // $700k/cell here previously baked ~$2.8M into every RQ-10/AQ-10 design.)
+    provides: [],
     length: 5.0,
     weight: 260.0,
     max_weight: 560.0,
@@ -39,7 +43,9 @@
     ),
     propulsion: Propeller,
     engine: Powered((thrust_n: 1000.0, fuel_burn_rate: 3.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
-    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    // #3148: no AirLaunch cells to deploy carried entities from, so the scout
+    // chassis mounts sensors / its own warhead / utility only.
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility)],
     carrier: false,
     ntds_classification: DeriveFromDomain,
     // #3090: what an ARMED (warhead-carrying) RQ-10 can ram — a loitering
@@ -50,5 +56,6 @@
     guidance_uplink: None,
     battery_capacity_kwh: 0.5,
     base_power_draw_kw: 0.5,
+    power_supply_kw: 3.0,
     engine_bells: (loiter: Some(0.12), cruise: Some(0.4), full: Some(0.76)),
 )

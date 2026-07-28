@@ -49,6 +49,18 @@ game_over:
     ru: "Вражеский флот уничтожен"
     zh: "敌方舰队已消灭"
     "zh-TW": "敵方艦隊已消滅"
+  reason_player_eliminated:
+    de: "Eigene Flotte vernichtet · aufgegeben"
+    en: "Own fleet eliminated · conceded"
+    es: "Flota propia eliminada · concedido"
+    fr: "Flotte amie éliminée · concédé"
+    it: "Flotta propria eliminata · concesso"
+    ja: "自軍艦隊壊滅 — 断念"
+    ko: "아군 함대 격멸 — 포기"
+    "pt-BR": "Frota própria eliminada · concedido"
+    ru: "Свой флот уничтожен · капитуляция"
+    zh: "己方舰队已消灭——认输"
+    "zh-TW": "己方艦隊已消滅——認輸"
   reason_timeout:
     de: "Zeit abgelaufen"
     en: "Time expired"

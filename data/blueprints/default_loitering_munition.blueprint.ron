@@ -8,8 +8,8 @@
     inventory: [
         // EO/IR turret — the loitering search sensor ("a recon drone that can kill")
         (kind: Component(component_id: "an_aaq_55")),
-        // RWR
-        (kind: Component(component_id: "an_alr_90")),
+        // Budget RWR (#3161): self-protection cueing, not a surveillance suite
+        (kind: Component(component_id: "an_alr_20")),
         // The drone IS the weapon: light warhead, effective vs air/boats/land,
         // not vs capital ships. Recoverable if unspent (#3090).
         (kind: Component(component_id: "mk_40")),

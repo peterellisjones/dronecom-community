@@ -6,7 +6,7 @@
     category: Sensors,
     mount_rule: Single,
     weight: 45.0,
-    power_draw: 6.0,
+    power_draw: Derived,
     // Navalized EO/IR mast (#3081): the AAQ-55 optics in a marinized housing.
     // Gives surface ships a fully passive detection layer — a silent USV is no
     // longer blind to everything but radar emitters, and sea-skimmers get a

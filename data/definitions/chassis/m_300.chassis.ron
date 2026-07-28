@@ -52,5 +52,6 @@
     // that lengthens the coast re-fails it until this is resized.
     battery_capacity_kwh: 0.5,
     base_power_draw_kw: 0.5,
+    power_supply_kw: 0.8,
     engine_bells: (loiter: None, cruise: None, full: None),
 )

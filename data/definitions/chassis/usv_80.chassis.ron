@@ -29,5 +29,6 @@
     guidance_uplink: None,
     battery_capacity_kwh: 50.0,
     base_power_draw_kw: 5.0,
+    power_supply_kw: 50.0,
     engine_bells: (loiter: Some(0.18), cruise: Some(0.6), full: Some(0.84)),
 )

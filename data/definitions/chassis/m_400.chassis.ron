@@ -56,5 +56,6 @@
     // (sea-level) launch geometry.
     battery_capacity_kwh: 0.6,
     base_power_draw_kw: 0.5,
+    power_supply_kw: 1.1,
     engine_bells: (loiter: None, cruise: None, full: None),
 )

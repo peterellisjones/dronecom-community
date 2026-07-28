@@ -298,8 +298,8 @@ SimConfig(
             // weapon's CPA flags it provisionally hostile. An Unknown missile-
             // kinematic track (is_munition class, or speed >= missile_min) whose
             // closest approach to any own unit falls within this radius while
-            // closing is auto-classified Enemy (IFF overrules). Sized to the
-            // doctrine safety-range outer (DEFAULT_SAFETY_RANGE.outer = 7500).
+            // closing is auto-classified Enemy (IFF overrules). Sized to a
+            // fast unit's Vehicle::safety_band outer edge (7500).
             inbound_hostile_radius_m: 7500.0,
             // Size (length) likelihood σ as a fraction of observed length.
             size_sigma_frac: 0.2,

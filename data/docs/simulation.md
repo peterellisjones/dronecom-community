@@ -1289,10 +1289,11 @@ closest point of approach flags it provisionally hostile (#2720). An
 `Unknown` track that is missile-kinematic (`is_munition` class, or speed
 at or above `missile_min_speed_mps`) *and* whose CPA against any own unit
 falls within this radius while still closing is auto-classified `Enemy`
-(provisionally - the IFF system overrules it). Sized to the doctrine
-safety-range outer edge (`doctrine::DEFAULT_SAFETY_RANGE.outer` = 7500),
-the outer boundary of a unit's threat-reaction envelope, so any inbound
-weapon closing within the volume a screen guards is flagged.
+(provisionally - the IFF system overrules it). Sized to a fast unit's
+`Vehicle::safety_band` outer edge (7500 — the historical
+`(5000, 7500)` default `safety_range_for_physics` clamps fast hulls
+to), the outer boundary of a unit's threat-reaction envelope, so any
+inbound weapon closing within the volume a screen guards is flagged.
 
 ### `size_sigma_frac` : f32
 

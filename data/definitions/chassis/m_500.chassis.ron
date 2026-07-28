@@ -48,5 +48,6 @@
     guidance_uplink: FromLauncher,
     battery_capacity_kwh: 0.05,
     base_power_draw_kw: 0.5,
+    power_supply_kw: 1.5,
     engine_bells: (loiter: None, cruise: None, full: None),
 )

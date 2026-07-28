@@ -6,7 +6,7 @@
     category: Sensors,
     mount_rule: Single,
     weight: 8.0,
-    power_draw: 3.0,
+    power_draw: Derived,
     allowed: [Domain(Air)],
     payload: Sensor([(
         kind: Ir,

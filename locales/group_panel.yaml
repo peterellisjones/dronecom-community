@@ -161,6 +161,10 @@ group_panel:
   # live under `glossary.{mbr,roe,form}` and the envelope rows under
   # `glossary.{spdenv,altband}`.
   members:
+    # The group panel's own member rows dropped their LEADER tag in #3216
+    # (leadership is derived, and the masthead already links the anchor), but
+    # the key stays: the top toolbar's groups tooltip still badges the anchor in
+    # its member list, where nothing else identifies it.
     leader:
       de: "Anführer"
       en: "leader"
@@ -173,6 +177,45 @@ group_panel:
       ru: "ведущий"
       zh: "领队"
       "zh-TW": "領隊"
+    # #3216: the design each member was built from, shown bare (no per-unit
+    # index) beside its callsign — the callsign hides the designator its name
+    # would otherwise carry.
+    designator_tooltip:
+      de: "Der Entwurf, aus dem dieses Mitglied gebaut wurde."
+      en: "The design this member was built from."
+      es: "El diseño con el que se construyó este miembro."
+      fr: "Le modèle à partir duquel ce membre a été construit."
+      it: "Il progetto da cui è stato costruito questo membro."
+      ja: "このメンバーの製造元となった設計。"
+      ko: "이 구성원이 제작된 설계."
+      "pt-BR": "O projeto a partir do qual este membro foi construído."
+      ru: "Проект, по которому построен этот участник."
+      zh: "该成员所依据的设计。"
+      "zh-TW": "該成員所依據的設計。"
+    rounds_tooltip:
+      de: "Munition an Bord, gemessen an der Beladung, für die dieses Mitglied bestückt wurde. Bernstein, wenn nichts mehr übrig ist."
+      en: "Munitions aboard, against the loadout this member was armed to. Amber when it is out."
+      es: "Municiones a bordo, frente a la carga con la que se armó este miembro. Ámbar cuando se ha quedado sin ellas."
+      fr: "Munitions à bord, par rapport à l'emport pour lequel ce membre a été armé. Ambre lorsqu'il n'en a plus."
+      it: "Munizioni a bordo, rispetto al carico con cui questo membro è stato armato. Ambra quando le ha esaurite."
+      ja: "搭載中の弾数と、このメンバーが装備した搭載計画との比。撃ち尽くすと橙色になる。"
+      ko: "탑재된 탄약과 이 구성원이 무장한 적재 계획의 비율. 모두 소진되면 호박색으로 표시됩니다."
+      "pt-BR": "Munições a bordo, em relação à carga com que este membro foi armado. Âmbar quando acabam."
+      ru: "Боезапас на борту относительно снаряжения, которым вооружён этот участник. Янтарный, когда он израсходован."
+      zh: "机上弹药与该成员装载计划的比值。打光时显示为琥珀色。"
+      "zh-TW": "機上彈藥與該成員裝載計畫的比值。打光時顯示為琥珀色。"
+    fuel_tooltip:
+      de: "Verbleibender Treibstoff in Prozent der Kapazität dieses Mitglieds. Bernstein bei Mindestreserve."
+      en: "Fuel remaining, as a percentage of this member's capacity. Amber at bingo fuel."
+      es: "Combustible restante, como porcentaje de la capacidad de este miembro. Ámbar al llegar a la reserva."
+      fr: "Carburant restant, en pourcentage de la capacité de ce membre. Ambre au seuil de réserve."
+      it: "Carburante rimanente, in percentuale sulla capacità di questo membro. Ambra alla riserva minima."
+      ja: "このメンバーの燃料容量に対する残量の割合。最低残量に達すると橙色になる。"
+      ko: "이 구성원의 연료 용량 대비 잔량 비율. 최소 연료에 도달하면 호박색으로 표시됩니다."
+      "pt-BR": "Combustível restante, como porcentagem da capacidade deste membro. Âmbar na reserva mínima."
+      ru: "Остаток топлива в процентах от ёмкости этого участника. Янтарный при минимальном запасе."
+      zh: "剩余燃料占该成员燃料容量的百分比。达到最低油量时显示为琥珀色。"
+      "zh-TW": "剩餘燃料佔該成員燃料容量的百分比。達到最低油量時顯示為琥珀色。"
     detach:
       de: "Lösen"
       en: "Detach"

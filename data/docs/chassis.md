@@ -147,6 +147,16 @@ Battery capacity in kWh — powers electronics after fuel depletion.
 
 Base power draw in kW — flight computer, datalink, avionics.
 
+### `power_supply_kw` : f32
+
+Electrical power supply in kW — what the airframe's alternator / APU /
+generator provides. The designer rejects loadouts whose total draw
+(`base_power_draw_kw` + component draws) exceeds it. Sized to the
+chassis's real-world analog (design doc §3:
+`docs/plans/2026-07-23-chassis-power-budgets-design.md`), not its
+engine — an M-500 cruise missile and an MQ-220 drone share the same
+turbojet class but very different electrical plants.
+
 ### `engine_bells` : [`EngineBells`](#enginebells)
 
 Per-chassis engine-order bell throttles (#1430). Each slow bell

@@ -6,7 +6,7 @@
     category: Sensors,
     mount_rule: Single,
     weight: 80.0,
-    power_draw: 12.0,
+    power_draw: Derived,
     allowed: [Domain(Submarine)],
     payload: Sensor([(
         kind: SonarActive,

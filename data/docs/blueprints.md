@@ -178,9 +178,12 @@ Variants:
 ## `BlueprintDoctrine`
 
 Player-authored subset of doctrine, stored on `Blueprint` and cached
-on `BlueprintStats`. The other 3 runtime `Doctrine` fields
-(`engagement_range`, `safety_range`, `auto_rtb`) are derived from
-capabilities at spawn time and are not authored per blueprint.
+on `BlueprintStats`. The remaining runtime `Doctrine` fields are not
+authored per blueprint: `reaction_envelope`-equivalent reaction geometry
+is now computed live from design facts and the current loadout rather
+than stored at all (#3192 — see `Doctrine`'s own doc comment), and
+`auto_rtb` is a design-fixed spawn default that stays player/sim-mutable
+afterward (see `Doctrine::auto_rtb`).
 
 ### `posture` : [`Posture`](#posture)
 

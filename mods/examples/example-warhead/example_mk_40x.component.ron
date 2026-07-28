@@ -10,7 +10,7 @@
     category: Warheads,
     mount_rule: SoleInCategory,
     weight: 13.0,
-    power_draw: 0.0,
+    power_draw: Fixed(0.0),
     allowed: [],
     payload: Warhead((
         damage: 60.0,

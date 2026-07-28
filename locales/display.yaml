@@ -716,3 +716,42 @@ doctrine:
       ru: "Использовать все датчики, включая активные излучатели"
       zh: "使用所有传感器，包括主动发射器"
       "zh-TW": "使用所有感測器，包括主動發射器"
+  # ── Short-form doctrine tokens (#3254) ──────────────────────────────────────
+  # Mil-console abbreviations for density-constrained surfaces: the doctrine
+  # editor's segmented controls and the accordion row-header summary, where the
+  # full labels above do not fit a value column. Same in all languages, like the
+  # NTDS map codes (`symbol_label.mission_code.*`) and the sensor short-codes
+  # (`info_panel.sensors.sensor_kind_short.*`) — see UNIVERSAL_KEYS in
+  # tests/locale_parity.rs. Surfaces with room keep the full labels above.
+  posture_short:
+    # 3-letter prefix truncations. NOT ATK/EVD: those are live mission map-codes
+    # (`mission_code.atk` / `.evd`), and posture is orthogonal to mission.
+    pursue:
+      en: PUR
+    defend:
+      en: DEF
+    evade:
+      en: EVA
+  roe_short:
+    # The real weapons-control ladder: HOLD (fire at nothing) / TIGHT (fire at
+    # positively-identified enemies) / FREE (fire at enemy and unidentified) —
+    # one-for-one with RulesOfEngagement::permits.
+    hold_fire:
+      en: HOLD
+    engage_known:
+      en: TIGHT
+    engage_unknown:
+      en: FREE
+  firing_discipline_short:
+    # Both are the real terms, not truncations: R-max (maximum-range release)
+    # and NEZ (No-Escape Zone).
+    rmax:
+      en: RMAX
+    no_escape:
+      en: NEZ
+  emcon_short:
+    # Prefix truncations of the Silent / Radiate value labels above.
+    passive:
+      en: SIL
+    active:
+      en: RAD

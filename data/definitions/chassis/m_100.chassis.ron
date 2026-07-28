@@ -52,5 +52,6 @@
     // `ir_missile_battery_outlasts_best_range_direct`.
     battery_capacity_kwh: 0.13,
     base_power_draw_kw: 0.5,
+    power_supply_kw: 1.0,
     engine_bells: (loiter: None, cruise: None, full: None),
 )
