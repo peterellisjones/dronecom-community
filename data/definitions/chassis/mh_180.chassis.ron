@@ -17,7 +17,14 @@
     em_signatures: Some((rcs: 0.5, ir_base: 6.0, visual_cross_section: 0.6)),
     acoustic_signatures: None,
     physics: RotaryWing(
-        min_altitude: 0.0,
+        // Must stay above sea level (#3436): the waterline is terminal for an air
+        // vehicle, and this value is a *commandable* floor — it bounds
+        // SetCommandedAltitude, is the fallback attack floor, and is the altitude
+        // flown when the recovery carrier is lost. At the previous 0.0 the
+        // helicopter was authorised onto the surface and duly sat there (68
+        // separate idle-loiter touches across the scenario suite). 10 m matches
+        // both `RotaryWingModel::default()` and the flight-deck height.
+        min_altitude: 10.0,
         max_altitude: 4000.0,
         default_altitude: 200.0,
         max_pitch_rate: 0.44,

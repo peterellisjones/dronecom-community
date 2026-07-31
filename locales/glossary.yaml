@@ -1006,18 +1006,6 @@ glossary:
       ru: "УО"
       zh: "火控"
       "zh-TW": "火控"
-    tag_unlimited:
-      de: "ALLE"
-      en: "ALL"
-      es: "TODO"
-      fr: "TOUS"
-      it: "TUTTI"
-      ja: "全て"
-      ko: "전체"
-      "pt-BR": "TODOS"
-      ru: "ВСЕ"
-      zh: "全部"
-      "zh-TW": "全部"
     # Prose role names for the ROLE row of both tooltips. Sentence case.
     search:
       de: "Suche"
@@ -1056,18 +1044,6 @@ glossary:
       zh: "搜索与火力控制"
       "zh-TW": "搜索與火力控制"
     # Prose capacity readings.
-    unlimited:
-      de: "Unbegrenzt"
-      en: "Unlimited"
-      es: "Ilimitado"
-      fr: "Illimité"
-      it: "Illimitato"
-      ja: "無制限"
-      ko: "무제한"
-      "pt-BR": "Ilimitado"
-      ru: "Неограничено"
-      zh: "无限"
-      "zh-TW": "無限"
     tracks:
       de: "%{count} Spuren"
       en: "%{count} tracks"

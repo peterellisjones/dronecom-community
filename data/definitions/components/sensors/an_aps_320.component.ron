@@ -5,7 +5,7 @@
     codename: "Deneb",
     category: Sensors,
     mount_rule: Single,
-    weight: 50.0,
+    weight: 35.0,
     power_draw: Derived,
     allowed: [Domain(Air)],
     payload: Sensor([(

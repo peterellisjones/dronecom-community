@@ -60,6 +60,17 @@ for `FixedWing` chassis). Persisted in the RON; threaded onto the spawn
 Role-level default altitude posture the vehicle launches with. Persisted
 in the RON; threaded onto the spawn `BlueprintRecipe` via `materialize_recipe`.
 
+### `unknown_range_launch` : [`UnknownRangeLaunch`](#unknownrangelaunch)
+
+Whether an automatic engagement may fire this munition at a target held
+bearing-only — a contact with no resolved range at all (#3528). `Withhold`
+on every shipped design: the round would otherwise fly at a phantom datum.
+`Permit` is for long-reach munitions (torpedoes, land-attack cruise
+missiles) whose reach exceeds the launcher's own ranging capability, where
+firing down a bearing is the intended employment. Inert on a design that is
+not itself a munition — only a fired round's value is ever read. Persisted
+in the RON; threaded onto the spawn `BlueprintRecipe` via `materialize_recipe`.
+
 ### `stores` : `Vec`<[`BlueprintStore`](#blueprintstore)>
 
 Spare munitions seeded into cargo at spawn — distinct from `inventory`
@@ -149,6 +160,28 @@ Variants:
 - **`Ceiling`** — `Hold` at the chassis `max_altitude` (the operating ceiling). Air only.
 - **`Hold`**(f32) — `Hold` at a specific MSL. Validated against the chassis envelope.
 - **`TerrainFollow`** — Nap-of-the-earth masking (`AltMode::TerrainFollow`); retained MSL = chassis default. Air only.
+
+## `UnknownRangeLaunch`
+
+Whether an **automatic** engagement may commit this munition at a contact
+held bearing-only — a track with no resolved range at all.
+
+The #2203 gate withholds ordnance from such a shot by default, and that is
+right for most rounds: a bearing-only track's range band opens at zero and
+does not tighten as the launcher closes, so the round would fly at a phantom
+datum. But for a munition whose reach exceeds its launcher's sensor range —
+a torpedo, a land-attack cruise missile — firing on a bearing *is* the
+intended employment, not a mistake. Which of the two a design is cannot be
+inferred from its parts, so it is stated here.
+
+Distinct from the launching unit's `FiringDiscipline` doctrine: that is a
+runtime posture about reach margin on a *resolved* target, retunable mid-match;
+this is a fixed property of the round, chosen when the weapon is designed.
+
+Variants:
+
+- **`Withhold`** — Hold fire while the target's range is unresolved, and keep closing to resolve it. The default for every shipped munition.
+- **`Permit`** — Fire down the bearing anyway. For long-reach munitions whose whole purpose is engaging beyond the launcher's own ranging capability.
 
 ## `BlueprintStore`
 

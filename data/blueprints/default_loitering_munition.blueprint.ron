@@ -18,5 +18,6 @@
     // Lofted = the dive attack: cruise high, terminal-dive on the target (#3090).
     trajectory: Lofted,
     default_altitude: Chassis,
+    unknown_range_launch: Withhold,
     stores: [],
 )

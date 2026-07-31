@@ -110,12 +110,6 @@ least this far below the sea surface. The submerged no-broach ceiling is
 Minimum node edge length (`half_size * 2`) for edge-projected waypoints.
 Nodes smaller than this use their center. Default 400m.
 
-### `aircraft_descent_rate_multiplier` : f32
-
-Fixed-wing descent rate as a multiple of `climb_rate`.
-DC-74: replace with proper dive physics (total speed = `max_speed` split
-between horizontal and vertical components).
-
 ### `submarine_max_depth_change_m` : f32
 
 Maximum depth change (metres) a submarine route may use to clear a
@@ -218,19 +212,61 @@ weapon speeds: a slow torpedo damps hard, a fast missile barely at all.
 
 ### `munition_battery_scuttle_secs` : f32
 
-How long (seconds) a spent munition (`VehicleKind::Projectile`) that has
-run its fuel dry and switched to battery power may persist before it
-**scuttles** (#2520). Once fuel is out a projectile can no longer power
-toward its target — a missile coasts on residual kinetic energy, a
-torpedo coasts to a stop — so it is spent; without this bound an
-underwater round (no fixed/rotary-wing terrain-collision despawn) sits
-dead-in-the-water indefinitely, pinging its seeker on hotel battery
-(~1 h on a 1 kWh / 1 kW MK-55) as an immortal navigation hazard / decoy.
-At this age-on-battery the round scuttles as a spent one
-(`LostReason::MunitionSpent` → LOGISTICS; a *platform* that runs its
-battery flat is `BatteryDepleted` instead, #2560). Sized well above any
-legitimate battery-phase terminal coast so a real intercept is never cut
-short. Platforms are unaffected — only projectiles scuttle on this bound.
+Grace period (seconds) before a spent munition (`VehicleKind::Projectile`)
+that has run its fuel dry and switched to battery power becomes eligible
+to **scuttle** (#2520). Eligibility is not sufficient on its own: the
+round must *also* have stopped making way, at or below
+`Self::munition_derelict_speed_mps` (#3378). Both conditions together
+scuttle it as a spent round (`LostReason::MunitionSpent` → LOGISTICS; a
+*platform* that runs its battery flat is `BatteryDepleted` instead,
+#2560). Platforms are unaffected — only projectiles scuttle on this bound.
+
+Without a bound an underwater round (which has no fixed/rotary-wing
+terrain-collision despawn to fall back on) sits dead-in-the-water
+indefinitely, pinging its seeker on hotel battery (~1 h on a 1 kWh / 1 kW
+MK-55) as an immortal navigation hazard / decoy.
+
+This window is **not** sized above a legitimate terminal coast, and must
+not be read as though it were (#3378 — it long claimed to be, while three
+of the four shipped guarded rounds coast far past it: the M-250 glides
+83 s to its own credited max reach). What keeps a live round alive is the
+making-way condition, not this number. Its job is only to absorb the one
+case where a round that is still flying reads momentarily slow — a lofted
+missile near apogee, shortly after burnout — so a knife-edge speed sample
+can never delete it.
+
+### `munition_derelict_speed_mps` : f32
+
+Speed (m/s) at or below which a spent munition past the
+`Self::munition_battery_scuttle_secs` grace period counts as
+**derelict** and scuttles (#3378) — "no longer making way", the naval
+sense of dead in the water.
+
+This is the condition that separates the round the scuttle exists to
+remove from the rounds it must not touch, and the two are driven apart by
+the physics models themselves rather than by tuning:
+
+- A spent **submarine-domain** round is forced to a hard stop — both
+  branches command zero speed as soon as propulsion flips to `Battery`
+  (`dc_physics`' `submarine_physics` "no thrust — surface and stop", and
+  `SubmarineModel::homing_substep`, which takes `target_speed = 0.0` at
+  zero thrust), so it decelerates to rest and settles here. That is the
+  0.0 m/s immortal sonar emitter of #2520.
+- A spent **fixed-wing** round keeps gliding on kinetic energy at flight
+  speed — the slowest any shipped round flies during its credited-reach
+  coast is 174 m/s, over two orders of magnitude clear — so it is never
+  near this threshold while it is still a weapon.
+
+So it wants to sit far below any speed a live round ever flies at, not
+close to the torpedo's rest speed of exactly zero. `dc_autopilot`'s
+`munition_battery_reserve` guard asserts that margin against every
+shipped guarded round's credited-reach flyout.
+
+Note this bound only ever removes a round that has come to **rest**, so
+it is not what disposes of an air round that misses: that one keeps
+gliding, settles onto the sea and is removed as a terrain collision
+instead (`battery_drain` treats the surface as terrain for a projectile,
+#3378).
 
 ### `munition_out_of_bounds_scuttle_margin_m` : f32
 
@@ -396,6 +432,11 @@ astern, rank being its live position in that queue.
 Radius (metres) within which all group members must arrive before the
 group transitions out of `TaskingKind::FormingUp`. Used by the
 `FormingUp` tick body (Task 16).
+
+### `deck_phases` : [`DeckPhaseSection`](#deckphasesection)
+
+How long each launch facility's deck-pipeline phases take. See
+`DeckPhaseSection`.
 
 ## `DebugSpawnSection`
 
@@ -592,6 +633,26 @@ interrogation *leash* is not a separate constant — it is tied to the
 engagement-scan geometry (`CPA_LOOKAHEAD_MULT × engagement_range.inner`) so
 a legitimately-admitted contact never trips it.
 
+### `range_block_abort_seconds` : f32
+
+#3504: seconds an automatic engagement may sit withholding fire on a
+range-quality block — bearing-only (#2203) or single-passive-source
+(#2520) — *after it has already released a round at that track*, before
+tasking gives the engagement up and frees the unit for reassignment.
+
+The "already fired" precondition is what makes this safe, and it is not
+optional: a launcher's *approach* is legitimately spent range-blocked
+(measured at 32.8 s before the first shot in
+`arena::scenarios::multi_target_engagement`), so a bare dwell timer would
+abort engagements that go on to kill. Once a round has been expended, the
+only thing this timer has to outlast is the transient between a munition
+dying and a fresh fix — hence a value far below that approach time.
+
+**Balance knob, deliberately conservative.** Raising it makes a launcher
+persist longer on a target it may never be able to range; lowering it
+frees the unit sooner but gives up on recoverable fixes. Retune freely —
+no code assumes a particular magnitude.
+
 ## `PatrolSection`
 
 Patrol boundary tuning parameters. Loaded from
@@ -669,7 +730,18 @@ Cost per fuel order (dollars).
 
 ### `transfer_rate_kg_per_second` : f32
 
-Transfer rate for rearming (kg/s). Each transfer progresses at this rate.
+Transfer rate for rearming (kg/s). Each munition transfer progresses at
+this rate, so a heavier round takes proportionally longer.
+
+### `drone_transfer_seconds` : f32
+
+Seconds to move one recoverable platform (drone, USV, UUV) between the
+carrier's stores and its hangar, in either direction — a fixed deck
+evolution (spot, fold, lift, chock) whose duration is set by the deck,
+not the airframe's mass, unlike the mass-flow
+`transfer_rate_kg_per_second` that paces munition transfers. The
+move occupies the Aviation station's single transfer slot for this long,
+so munition rearm queued at that station waits behind it (#3326).
 
 ### `cost_to_seconds_rate` : f32
 
@@ -760,6 +832,24 @@ Radius (m) around this unit within which a hostile fast/munition
 track's closest point of approach — while still closing — raises the
 unit's `ThreatAlert` to `MissileInbound`. Consumed by the per-unit
 `ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+
+### `missile_speed_sigma_admission` : f32
+
+How many standard deviations of the observed speed estimate's own
+uncertainty the inbound-weapon test adds before comparing against
+`ClassificationSection`'s `missile_min_speed_mps` (#3392).
+
+The gate asks "could this track be doing missile speed?", not "is its
+best-guess speed above the line". A track sampled once and then
+dead-reckoned has a speed σ that grows with age, so the same estimate
+admits a munition more readily the staler it gets — the warning degrades
+with confidence instead of flipping on a point estimate that happened to
+be sampled mid-boost. A well-tracked contact has a tight σ and is
+unaffected: at 2.0 a 200 m/s fighter held to ±10 m/s reads 220 and still
+does not alarm.
+
+0.0 restores the pre-#3392 bare-mean comparison. Consumed by the
+per-unit `ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
 
 ### `lock_clear_hysteresis_secs` : f32
 
@@ -949,6 +1039,43 @@ the reverse (station-keep → orbit) is position-based on
 Kept low so only a genuinely near-stopped protectee stops the screen; a
 protectee under way orbits, and a slow creeper resumes orbiting via the
 standoff-drift reverse gate.
+
+## `DeckPhaseSection`
+
+Duration of every phase in each launch facility's deck pipeline, in seconds
+(#3380).
+
+A launch runs through an ordered list of phases; a vehicle occupies one at a
+time, and the sum is how long it takes to get away. Only the **durations**
+are tunable here. Each phase's name and whether it admits one vehicle at a
+time or many are structural properties of the facility, fixed in code: the
+VLS ejecting one round at a time is what staggers a salvo instead of
+activating every round on the same tick, and the phase count is what maps a
+facility's launch order onto its reverse for recovery. Retuning a duration
+cannot break either.
+
+Recovery re-uses the launch durations of the phases it flies in reverse, so
+there is nothing separate to set for it.
+
+### `vls` : [`VlsPhases`](#vlsphases)
+
+Vertical launch system — ship-magazine cells that fire missiles.
+
+### `air_launch` : [`AirLaunchPhases`](#airlaunchphases)
+
+Air-launch rail — an aircraft releasing a carried munition in flight.
+
+### `torpedo_tube` : [`TorpedoTubePhases`](#torpedotubephases)
+
+Torpedo tube.
+
+### `flight_deck` : [`FlightDeckPhases`](#flightdeckphases)
+
+Flight deck / helipad — fixed- and rotary-wing aircraft.
+
+### `well_deck` : [`WellDeckPhases`](#welldeckphases)
+
+Flooded well deck — surface craft and submarines.
 
 ## `StaleRetentionSection`
 
@@ -1162,6 +1289,24 @@ velocity baseline, short enough that a maneuver does not corrupt the fit.
 Hard cap on retained measurements per track (bounded memory/compute);
 the oldest are dropped first once exceeded.
 
+### `max_fdoa_pairs_per_scan` : u32
+
+Hard cap on the number of FDOA (differential range-rate) pairs emitted
+for one track in one scan (count, dimensionless). Every FDOA-capable
+passive observer hearing an emitting track can be paired with every
+other one, so the candidate count grows as N²/2 with the number of
+observers; only the most informative `max_fdoa_pairs_per_scan` are kept,
+ranked by baseline geometry against pair noise (`|û_a − û_b| / σ`, the
+row's velocity sensitivity per unit noise). An FDOA row constrains a
+2-degree-of-freedom quantity (horizontal velocity) and the noise-free
+deltas are exactly additive across observers, so a spanning set of
+`N − 1` pairs already covers every direction the geometry offers —
+beyond that, extra pairs buy only noise averaging. Eight rows is roughly
+fourfold redundancy on that 2-D subspace: enough that no single noisy
+row carries the estimate, while capping a 20-observer track at 8 rows
+per scan instead of ~190 (which alone would overrun `max_measurements`
+in a single scan and crowd the bearing rows out of the window).
+
 ### `velocity_resolved_var_threshold` : f32
 
 Major-eigenvalue threshold ((m/s)²) on the solved velocity covariance at
@@ -1173,6 +1318,35 @@ honestly Unknown and the solver falls back to a position-only fix.
 Reduced-χ² (per degree of freedom) of the weighted batch residual above
 which the target is judged to have maneuvered (broken the CV model); the
 window is flushed so velocity re-converges on the new leg.
+
+### `solve_interval_secs` : f32
+
+Minimum interval (s, sim time) between full batch solves for one track
+(#3552). The solve is the dominant per-tick cost of contact tracking —
+a joint least-squares plus a Gauss–Newton refinement over a window that
+pins at `max_measurements` rows — and re-running it every tick buys
+almost nothing: a tick adds at most one scan per detecting sensor, a few
+rows out of hundreds and under a fifteenth of `window_secs`.
+
+Between solves a track's estimate is not frozen. It is dead-reckoned on
+the same constant-velocity model the batch fits, with its covariance
+grown by `filter.process_noise_accel_mps2`, so for a genuinely-CV target
+the propagated state is what a solve would have produced — and where the
+target is accelerating, the estimate becomes correctly *less certain*
+rather than confidently wrong. At the shipped 2 s the extrapolation
+error implied by that declared 2 m/s² of unmodelled acceleration is
+½·a·t² ≈ 4 m, negligible beside a bearing-only track's kilometre-scale
+down-range uncertainty.
+
+Solves are staggered deterministically across tracks (by track code), so
+the population's solve load spreads evenly over ticks instead of every
+track re-solving on the same one.
+
+The interval also bounds maneuver-response latency, since the
+`maneuver_residual_chi2` test only runs when a solve does. Fire-control
+locks are unaffected: a locked sensor feeds a private per-track
+refinement that updates every scan and never touches the batch. Set to
+`0.0` to solve on every refresh (the pre-#3552 behaviour).
 
 ## `ClusteringSection`
 
@@ -1333,3 +1507,95 @@ going `Lost`.
 
 Seconds after a lock goes `Lost` (eval fails / gate no longer fits) at
 which the designation is released and the track de-designated.
+
+## `VlsPhases`
+
+`Facility::VLS` phase durations, in seconds.
+
+Both phases are short by design: a VLS round is stored in a sealed canister
+that doubles as its launch tube, kept on ship power and the fire-control
+datalink, so it is ready to fire rather than needing to be prepared. The
+long magazine-hoist cycle these numbers used to carry belongs to the rail
+launchers a VLS replaced.
+
+### `arming` : f32
+
+Powering up and aligning the round. Every cell of a salvo arms at once,
+so this is paid once for the whole salvo rather than per round.
+
+### `launch` : f32
+
+Ejecting one round from its cell. Rounds leave one at a time, so a salvo
+of N is fully away `arming + N * launch` seconds after the order — the
+stagger that keeps a salvo from activating as a single stack.
+
+## `AirLaunchPhases`
+
+`Facility::AirLaunch` phase durations, in seconds — an
+aircraft releasing a munition from its rails.
+
+### `arming` : f32
+
+Powering up the round and handing it its target. Every round on the
+rails arms at once.
+
+### `release` : f32
+
+Releasing one round from its rail. Rounds leave one at a time.
+
+## `TorpedoTubePhases`
+
+`Facility::TorpedoTube` phase durations, in seconds.
+
+### `flooding` : f32
+
+Flooding the tube and equalising it with sea pressure. All loaded tubes
+flood together.
+
+### `launch` : f32
+
+Ejecting the torpedo. All flooded tubes may fire together.
+
+## `FlightDeckPhases`
+
+`Facility::FlightDeck` and
+`Facility::HeliPad` phase durations, in seconds.
+
+One aircraft at a time occupies each phase, so these add up per aircraft
+rather than being shared across a wave. Recovery flies the same phases in
+reverse — deck, then elevator, then hangar.
+
+### `hangar` : f32
+
+Readying the aircraft in the hangar.
+
+### `elevator` : f32
+
+Riding the elevator between hangar and flight deck.
+
+### `deck` : f32
+
+Moving across the deck to the catapult.
+
+### `catapult` : f32
+
+The catapult stroke itself.
+
+## `WellDeckPhases`
+
+`Facility::WellDeck` phase durations, in seconds — surface
+craft and submarines entering and leaving a flooded well deck, one at a time.
+
+### `staging` : f32
+
+Moving the craft to the well deck and preparing it.
+
+### `well_deck` : f32
+
+Flooding the well deck and floating the craft out.
+
+### `approach` : f32
+
+Clearing the stern. Zero because a launching craft is released under its
+own power the moment the well deck is clear; the phase is kept so launch
+and recovery have the same number of slots to mirror.

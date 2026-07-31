@@ -216,18 +216,38 @@ group_panel:
       ru: "Остаток топлива в процентах от ёмкости этого участника. Янтарный при минимальном запасе."
       zh: "剩余燃料占该成员燃料容量的百分比。达到最低油量时显示为琥珀色。"
       "zh-TW": "剩餘燃料佔該成員燃料容量的百分比。達到最低油量時顯示為琥珀色。"
-    detach:
-      de: "Lösen"
-      en: "Detach"
-      es: "Separar"
-      fr: "Détacher"
-      it: "Distacca"
-      ja: "分離"
-      ko: "분리"
-      "pt-BR": "Separar"
-      ru: "Отсоединить"
-      zh: "分离"
-      "zh-TW": "分離"
+    # #3338: promote this member to the front of the group's order of battle.
+    # Leadership is derived from membership order, so this IS the reassignment;
+    # it also moves the member into formation slot 0 (point).
+    promote_tooltip:
+      de: "Dieses Mitglied zum Gruppenführer machen. Es rückt an die Spitze der Formation, die übrigen rücken einen Platz zurück."
+      en: "Make this member the group leader. It moves to the front of the formation; the others shift back one slot."
+      es: "Hacer que este miembro lidere el grupo. Pasa al frente de la formación y los demás retroceden un puesto."
+      fr: "Faire de ce membre le chef de groupe. Il passe en tête de la formation ; les autres reculent d'une place."
+      it: "Rendi questo membro capo del gruppo. Passa in testa alla formazione; gli altri arretrano di un posto."
+      ja: "このメンバーをグループリーダーにする。編隊の先頭に移動し、他のメンバーは1つ後ろにずれる。"
+      ko: "이 구성원을 편대장으로 지정합니다. 대형의 선두로 이동하고 나머지는 한 자리씩 밀립니다."
+      "pt-BR": "Tornar este membro o líder do grupo. Ele passa à frente da formação e os demais recuam uma posição."
+      ru: "Назначить этого участника ведущим группы. Он выходит в голову строя, остальные смещаются на одну позицию назад."
+      zh: "将该成员设为编组长机。其将移至编队最前方，其余成员各后移一位。"
+      "zh-TW": "將該成員設為編組長機。其將移至編隊最前方，其餘成員各後移一位。"
+    # Shown on the disabled promote arrow, i.e. on `members[0]` — the one row
+    # the host would no-op. Worded as "already at the front" rather than
+    # "already leads": the two diverge whenever `members[0]` is stowed, and in
+    # that state this row is NOT the leader (an airborne member holds the
+    # anchor). Front-of-order is true in both states.
+    promote_disabled_reason:
+      de: "Dieses Mitglied steht bereits an der Spitze der Formation."
+      en: "This member is already at the front of the formation."
+      es: "Este miembro ya está al frente de la formación."
+      fr: "Ce membre est déjà en tête de la formation."
+      it: "Questo membro è già in testa alla formazione."
+      ja: "このメンバーはすでに編隊の先頭にいる。"
+      ko: "이 구성원은 이미 대형의 선두에 있습니다."
+      "pt-BR": "Este membro já está à frente da formação."
+      ru: "Этот участник уже находится в голове строя."
+      zh: "该成员已位于编队最前方。"
+      "zh-TW": "該成員已位於編隊最前方。"
     # DC-990: client-side multi-select shortcut. No GroupCommand dispatch, so
     # stays enabled in network mode (asymmetric with detach / disband).
     select_all:

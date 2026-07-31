@@ -8,15 +8,21 @@
     inventory: [
         // EO/IR turret (passive — rides the team picture)
         (kind: Component(component_id: "an_aaq_55")),
+        // Search radar — the strike role prosecutes a quiet contact on its own
+        // rather than waiting on the fleet picture to range it (#3529).
+        (kind: Component(component_id: "an_aps_440")),
         // RWR
         (kind: Component(component_id: "an_alr_90")),
         // Radar Missile 1 (M-250)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
         // Radar Missile 2 (M-250)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // Radar Missile 3 (M-250)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
     ],
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    unknown_range_launch: Withhold,
     stores: [],
 )

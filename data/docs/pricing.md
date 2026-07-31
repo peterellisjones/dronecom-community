@@ -212,8 +212,9 @@ Max blast (near-miss damage retention) credit at saturation.
 ## `ChassisKnobs`
 
 Tuning knobs for the chassis value formula (`super::price_chassis`):
-speed exponents, the EM/acoustic/depth survivability premiums, and the
-platform's share of horizon (vantage) value.
+speed exponents, the EM/acoustic/depth survivability premiums, the dash
+premium for fast recoverable hulls, and the platform's share of horizon
+(vantage) value.
 
 ### `speed_exponent` : f32
 
@@ -247,6 +248,25 @@ Max premium (as a fraction of the hull's own subtotal) for a submarine's depth m
 ### `depth_half_point_m` : f32
 
 `saturating_credit` half-point (m) for the depth margin.
+
+### `dash_premium_max` : f32
+
+Max premium (as a fraction of the hull's own subtotal) for a recoverable
+hull's dash speed above `Envelope::reference_speed_mps` — reaching a
+developing engagement first, forcing a stern chase, and leaving one are
+worth more than the linear credit the `delivery` term pays at
+`ChassisKnobs::speed_exponent` 1.0. Structured like the EM/acoustic
+stealth and depth premiums: it scales the hull's own subtotal.
+Expendable (munition-class) hulls are excluded — their speed is already
+priced super-linearly through
+`ChassisKnobs::munition_speed_exponent`, and charging both would
+price one capability twice.
+
+### `dash_half_point_mps` : f32
+
+`saturating_credit` half-point (m/s) for the dash margin: a recoverable
+hull this far above `Envelope::reference_speed_mps` earns half of
+`dash_premium_max`.
 
 ### `power_supply_exponent` : f32
 

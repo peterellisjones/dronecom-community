@@ -8,7 +8,6 @@ SimConfig(
         submarine_terrain_clearance: 10.0,
         submarine_surface_clearance: 5.0,
         edge_projection_min_size: 400.0,
-        aircraft_descent_rate_multiplier: 3.0,
         submarine_max_depth_change_m: 50.0,
         air_climb_rate_fraction: 0.3,
         terrain_avoidance: (
@@ -75,14 +74,25 @@ SimConfig(
         // Fast missiles keep full lead (σ_v small vs this·V); only slow weapons
         // (torpedoes) — where the same noise fishtails the heading — damp.
         lead_velocity_noise_tolerance_rad: 0.025,
-        // #2520: a spent munition (fuel dry → on battery) scuttles after this
-        // long on battery, so an out-of-fuel torpedo doesn't sit dead-in-the-
-        // water pinging its seeker for ~an hour of hotel battery. Sized well
-        // above any legitimate battery-phase terminal coast (a missile that
-        // reaches its target does so in seconds of coast), so a real intercept
-        // is never cut short. Only projectiles scuttle on this; platforms keep
-        // their full battery.
+        // #2520: grace period before a spent munition (fuel dry → on battery)
+        // may scuttle, so an out-of-fuel torpedo doesn't sit dead-in-the-water
+        // pinging its seeker for ~an hour of hotel battery. Only projectiles
+        // scuttle on this; platforms keep their full battery.
+        //
+        // #3378: this is NOT sized above a legitimate terminal coast — it used
+        // to claim it was, while the M-250 glides 83 s to its own credited max
+        // reach and was deleted mid-flight for it. Raising it is not how a
+        // coasting round is protected; `munition_derelict_speed_mps` below is.
+        // Keep it well short of any credited flight so a genuinely dead round
+        // still goes away promptly.
         munition_battery_scuttle_secs: 45.0,
+        // #3378: at or below this speed a spent munition past the grace period
+        // above is derelict — dead in the water — and scuttles. A spent torpedo
+        // is driven to a hard stop by the submarine model itself (battery mode
+        // commands zero speed), so it settles at 0.0 and trips this; a spent
+        // missile glides on at flight speed, two orders of magnitude clear, so it
+        // is never near this. 1 m/s ≈ 2 kt: no hull under way is this slow.
+        munition_derelict_speed_mps: 1.0,
         // #2515: how far past the quadtree extent (`half_extent`, ~51.2 km on the
         // 50 km production map) a projectile may stray before it is scuttled.
         // `half_extent` is the exact boundary past which `find_path` can't route a
@@ -130,6 +140,19 @@ SimConfig(
         // threshold.
         well_deck_holding_station_spacing_m: 100.0,
         rally_radius_m: 120.0,
+        deck_phases: (
+            // Must stay near 1 s total: the carrier first sees an inbound
+            // M-250 at ~11 km (~12 s out), and a slower response leaves no
+            // room for an interceptor to fly out past its own dead zone
+            // (#3380, #3381).
+            vls: (arming: 0.5, launch: 0.5),
+            air_launch: (arming: 0.5, release: 0.5),
+            torpedo_tube: (flooding: 5.0, launch: 2.0),
+            flight_deck: (hangar: 15.0, elevator: 10.0, deck: 8.0, catapult: 5.0),
+            // `approach` must stay 0.0 — a launching craft leaves under its own
+            // power; the slot exists only so recovery has a phase to mirror.
+            well_deck: (staging: 12.0, well_deck: 10.0, approach: 0.0),
+        ),
     ),
     debug_spawn: (
         air_default_altitude: 500.0,
@@ -232,12 +255,21 @@ SimConfig(
             window_secs: 30.0,
             // Hard cap on retained bearings per track (oldest dropped first).
             max_measurements: 256,
+            // Hard cap on FDOA pairs emitted per track per scan. Candidates
+            // grow as N²/2 in the observer count; the most informative are
+            // kept (largest baseline per unit noise).
+            max_fdoa_pairs_per_scan: 8,
             // Velocity covariance major eigenvalue ((m/s)²) at/below which
             // velocity reads Resolved (σ ≈ 40 m/s). Above it, velocity is Unknown.
             velocity_resolved_var_threshold: 1600.0,
             // Reduced-χ² per DOF above which a maneuver is inferred and the
             // window is flushed (~3σ).
             maneuver_residual_chi2: 9.0,
+            // Minimum interval (s) between full batch solves per track, spread
+            // deterministically across tracks. Must stay well under
+            // window_secs — at 2 s only ~7% of a 30 s window is new per solve.
+            // 0.0 solves on every refresh.
+            solve_interval_secs: 2.0,
         ),
         // DC-36.3 formation merging (used only when noisy sensing is on).
         clustering: (
@@ -362,6 +394,12 @@ SimConfig(
         // of chasing. Sized above a fast surface craft / slow drone, below any
         // missile or strike aircraft.
         interrogation_max_chase_speed_mps: 60.0,
+        // Must stay well below the time a launcher legitimately spends closing
+        // while range-blocked before its FIRST shot — measured at 32.8s in
+        // arena::scenarios::multi_target_engagement (#3504). It only applies
+        // after a round has already been expended, so it need only outlast the
+        // gap between a munition dying and a fresh fix.
+        range_block_abort_seconds: 10.0,
     ),
     patrol: (
         min_radius: 500.0,
@@ -377,6 +415,7 @@ SimConfig(
         fuel_order_quantity_kg: 500.0,
         fuel_order_cost: 50000.0,
         transfer_rate_kg_per_second: 3.0,
+        drone_transfer_seconds: 30.0,
         cost_to_seconds_rate: 0.000005,
     ),
     acoustic: (
@@ -402,6 +441,7 @@ SimConfig(
     ),
     threat_reaction: (
         missile_cpa_radius_m: 2500.0,
+        missile_speed_sigma_admission: 2.0,
         lock_clear_hysteresis_secs: 5.0,
         engagement_commitment_max_secs: 90.0,
     ),

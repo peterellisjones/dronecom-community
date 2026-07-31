@@ -336,10 +336,10 @@ Variants:
 - **`Radar`** — Radar: doppler notching + look-down clutter + low-altitude clutter.
   - `v_notch` : f32 — Max radial speed (m/s) below which target enters the notch.
   - `notch_fraction` : f32 — Effective RCS fraction at zero radial velocity (0.0-1.0).
-  - `look_down_clutter_max_db` : f32 — Max look-down clutter attenuation in dB.
+  - `look_down_clutter_max_db` : f32 — Max look-down clutter attenuation in dB, scaled down for a target that is not near the surface — see `low_altitude_clutter_ceiling`.
   - `look_down_clutter_max_angle` : f32 — Depression angle (degrees below horizon) at which max look-down clutter is reached.
   - `low_altitude_clutter_max_db` : f32 — Max low-altitude clutter attenuation in dB for low-altitude targets.
-  - `low_altitude_clutter_ceiling` : f32 — Altitude (metres) above which low-altitude clutter has no effect.
+  - `low_altitude_clutter_ceiling` : f32 — Altitude (metres) above which a target is clear of the ground's illuminated range cell, so neither clutter term applies.  Gates both clutter terms, ramping each to zero as the target rises from the surface to this ceiling: main-lobe clutter competes only when the ground patch shares the target's own range cell, which a target well above the surface is not in — however steeply the beam points down at it.
   - `low_altitude_clutter_gate_angle` : f32 — Depression below the radar horizon (degrees) at which low-altitude clutter reaches full strength.  Low-altitude clutter needs a sea patch illuminated in the same resolution cell as the target, so it only applies when the radar is looking *down* — a mast-height surface-search radar level with a surface ship sees none. This ramps that gate in rather than switching it on at the horizon: for a sea-level target the horizon is crossed at exactly half the radar horizon, so a hard edge would make a closing contact drop out and reacquire much later.
 - **`SonarActive`** — Active sonar: doppler notching only.
   - `v_notch` : f32 — Max radial speed (m/s) below which target enters the notch.
@@ -425,12 +425,12 @@ Variants:
 
 ## `ContactCapacity`
 
-Maximum number of contacts a sensor can simultaneously hold.
+Maximum number of contacts a sensor can simultaneously hold — always
+finite; bounded further to `MAX_SENSOR_TRACKS` at definition load.
 
 Variants:
 
 - **`Limited`**(u32) — A finite track file of `n` contacts.
-- **`Unlimited`** — No cap — every detectable contact is held (today's behaviour).
 
 ## `LockCapacity`
 

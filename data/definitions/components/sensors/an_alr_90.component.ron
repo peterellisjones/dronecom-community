@@ -10,7 +10,7 @@
     allowed: [Domain(Air)],
     payload: Sensor([(
         kind: Rwr,
-        capability: Search( tracks: Unlimited, lock_detection: true ),
+        capability: Search( tracks: Limited(16), lock_detection: true ),
         threshold: 0.1,
         scan_interval: 1.0,
         acquire_dwell_secs: 1.0,

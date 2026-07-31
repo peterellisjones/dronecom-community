@@ -10,7 +10,7 @@
     allowed: [Domain(Sea)],
     payload: Sensor([(
         kind: Radar,
-        capability: Search( tracks: Limited(100), lock_detection: false ),
+        capability: Search( tracks: Limited(64), lock_detection: false ),
         threshold: 0.0000000000000000033,
         scan_interval: 2.0,
         acquire_dwell_secs: 1.0,

@@ -619,6 +619,21 @@ event:
       ru: "атака невозможна · нет оружия"
       zh: "无法交战 — 无武器"
       "zh-TW": "無法交戰 — 無武器"
+    # #3504: the launcher is armed and willing but cannot get firing-quality
+    # range on this target, so the engagement is given up and the unit freed.
+    # Distinct from "no weapon" above — it still has a good round on the rail.
+    engagement_complete_range_unresolvable:
+      en: "engagement ended · cannot range target"
+      de: "Angriff beendet · Entfernung unbestimmbar"
+      es: "ataque terminado · sin alcance determinable"
+      fr: "engagement terminé · distance indéterminable"
+      it: "ingaggio concluso · distanza indeterminabile"
+      ja: "交戦終了 — 距離測定不能"
+      ko: "교전 종료 — 거리 측정 불가"
+      "pt-BR": "ataque encerrado · sem telemetria"
+      ru: "атака завершена · дальность не определить"
+      zh: "交战结束 — 无法测距"
+      "zh-TW": "交戰結束 — 無法測距"
     engagement_complete_broke_off:
       en: "engagement ended · broke off"
       de: "Gefecht beendet · abgebrochen"
@@ -1115,6 +1130,18 @@ event:
       ru: "огонь удержан · дальность не определена (единственный пассивный источник)"
       zh: "保留射击 — 距离未确定（单一被动源）"
       "zh-TW": "保留射擊 — 距離未確定（單一被動源）"
+    cannot_engage_range_unknown:
+      de: "Feuer zurückgehalten · nur Peilung, keine Entfernung"
+      en: "fire withheld · bearing only, no range"
+      es: "fuego retenido · solo marcación, sin alcance"
+      fr: "tir retenu · relèvement seul, distance inconnue"
+      it: "fuoco trattenuto · solo rilevamento, distanza ignota"
+      ja: "射撃保留 — 方位のみ、距離不明"
+      ko: "사격 보류 — 방위만, 거리 불명"
+      "pt-BR": "fogo retido · apenas marcação, sem alcance"
+      ru: "огонь удержан · только пеленг, дистанция неизвестна"
+      zh: "保留射击 — 仅方位，距离未知"
+      "zh-TW": "保留射擊 — 僅方位，距離未知"
     # #2516/#2432: the ATTACKER-side event. A kill claim is a fog-of-war
     # ASSESSMENT, not ground truth — phrased as one ("assessed destroyed · BDA
     # probable") so a wrong inference reads honestly and can be corrected
@@ -1132,6 +1159,22 @@ event:
       ru: "Контакт оценён как уничтоженный (%{weapon}, BDA: вероятно)"
       zh: "接触评估为被摧毁 (%{weapon}, 战损评估: 很可能)"
       "zh-TW": "接觸評估為被摧毀 (%{weapon}, 戰損評估: 很可能)"
+    # #3251: the honest "we could not tell". Deliberately NOT phrased as any
+    # kind of kill — it names no weapon and makes no claim. Mirrors the
+    # `(…, BDA: …)` shape of contact_assessed_destroyed so the two read as the
+    # two outcomes of one assessment.
+    contact_assessment_inconclusive:
+      de: "Kontaktbewertung ergebnislos (BDA: keine Abdeckung)"
+      en: "Contact assessment inconclusive (BDA: no coverage)"
+      es: "Evaluación del contacto no concluyente (BDA: sin cobertura)"
+      fr: "Évaluation du contact non concluante (BDA : aucune couverture)"
+      it: "Valutazione del contatto inconcludente (BDA: nessuna copertura)"
+      ja: "接触の戦果判定不能 (戦果判定: 覆域なし)"
+      ko: "접촉 전투피해평가 불가 (전투피해평가: 탐지 범위 없음)"
+      "pt-BR": "Avaliação do contato inconclusiva (BDA: sem cobertura)"
+      ru: "Оценка контакта неопределённа (BDA: нет покрытия)"
+      zh: "接触战损评估无法判定 (战损评估: 无传感器覆盖)"
+      "zh-TW": "接觸戰損評估無法判定 (戰損評估: 無感測器覆蓋)"
     # #2391/#3333: the DEFENDER-side event, shown to the team that was HIT. Its
     # subject is the enemy round that reached us, not a kill of ours — this read
     # "Contact destroyed" until #3333 split the variant, which announced taking a

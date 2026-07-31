@@ -73,6 +73,7 @@
     doctrine_setting: Suggested,
     trajectory: Direct,
     default_altitude: Chassis,
+    unknown_range_launch: Withhold,
     // Spare munitions for the air wing + VLS/tube reloads (#2995). Weight
     // budget (see `cargo run --bin blueprint-stats`): CV-3000 designed
     // loadout (`Cargo wt`) is 42872 kg against a 237645 kg `Cargo cap` —

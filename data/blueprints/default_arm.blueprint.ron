@@ -19,5 +19,6 @@
     // swings the geometry) — reach still overflies the M-250 SAM envelope.
     trajectory: Direct,
     default_altitude: Chassis,
+    unknown_range_launch: Withhold,
     stores: [],
 )

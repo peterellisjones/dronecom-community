@@ -10,11 +10,10 @@
     length: 6.0,
     weight: 550.0,
     max_weight: 1100.0,
-    // ~400 km kinematic range (#3081): 80 kg ÷ 4 kg/min = 20 min powered at
-    // ~332 m/s. The previous 338 kg tank gave ~1,683 km — ~17× the play
-    // space (on-map ceiling 100 km), so launch position never mattered.
-    // 400 km still crosses any map with terrain-follow routing margin.
-    max_fuel: 80.0,
+    // ~200 km kinematic range: 40 kg ÷ 4 kg/min = 10 min powered at ~332 m/s.
+    // Theatre-range rule (ADR-0018): standoff one-way munition range should
+    // sit at ~1-3x theatre diameter (on-map ceiling ~100 km).
+    max_fuel: 40.0,
     hit_points: 8.0,
     drag: 0.080,
     mast_height: 0.0,

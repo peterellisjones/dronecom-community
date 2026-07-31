@@ -18,5 +18,6 @@
     // flat onto the target; only a genuine BVR shot lofts high.
     trajectory: Lofted,
     default_altitude: Chassis,
+    unknown_range_launch: Withhold,
     stores: [],
 )

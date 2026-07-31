@@ -377,10 +377,24 @@ Variants:
 
 ## `EngineBells`
 
-The throttle fraction a chassis runs at for each *slow* engine-order bell.
-A bell is offered iff its throttle is `Some`. `Flank` is implicit and always
-available (throttle 1.0 → `max_speed`); `Stop` is not represented here — it
-is physics-gated on `min_speed == 0` (see `Self::available`).
+The **translation demand** a chassis runs at for each *slow* engine-order
+bell. A bell is offered iff its demand is `Some`. `Flank` is implicit and
+always available (demand 1.0 → the fastest speed the platform can hold);
+`Stop` is not represented here — it is physics-gated on
+`BellEnvelope::can_stop` (see `Self::available`).
+
+A demand is the fraction of the platform's **translation budget** (#3484) —
+the part of its thrust vector not already spent holding itself up — that this
+bell asks for. It is *not* a total collective: the hover share depends on mass,
+so read as a collective the MH-180's `loiter: 0.195` would sit below its
+hover throttle and mean "descend", and the same authored number would buy a
+different speed on every loadout of one chassis. It is *not* a fraction of
+max thrust either, or every demand above `√(1 − hover²)` would be thrust the
+airframe does not have. See `ThrustBudget` for the two
+curves — speed and burn — that a demand resolves onto.
+
+For every domain but rotary-wing the hover share is zero, so a demand *is*
+the collective and the distinction is inert.
 
 Replaces the former single `cruise_throttle: f32`. No `#[serde(default)]` —
 every chassis RON authors this explicitly; a fire-and-forget munition
@@ -388,18 +402,19 @@ authors all-`None` (leaving only `Flank`).
 
 ### `loiter` : `Option`<f32>
 
-Throttle fraction (0.0–1.0 of `max_speed`) for the Loiter bell, or `None`
-if the chassis does not offer it.
+Translation demand (0.0–1.0 of the translation budget) for the Loiter
+bell, or `None` if the chassis does not offer it.
 
 ### `cruise` : `Option`<f32>
 
-Throttle fraction (0.0–1.0 of `max_speed`) for the Cruise bell, or `None`
-if the chassis does not offer it. This is also the fuel/endurance anchor.
+Translation demand (0.0–1.0 of the translation budget) for the Cruise
+bell, or `None` if the chassis does not offer it. This is also the
+fuel/endurance anchor.
 
 ### `full` : `Option`<f32>
 
-Throttle fraction (0.0–1.0 of `max_speed`) for the Full bell, or `None` if
-the chassis does not offer it.
+Translation demand (0.0–1.0 of the translation budget) for the Full bell,
+or `None` if the chassis does not offer it.
 
 ## `PassiveSonarNoise`
 

@@ -81,7 +81,8 @@ info_panel:
   # #1527/#1701: vehicle inspect panel GROUP row (entity_view.rs) — the row
   # label, plus the per-member Detach action (every member, leader included —
   # leadership is derived) and its glossary tooltip. Disband now lives only in
-  # the group panel. Button strings mirror group_panel.members.detach.
+  # the group panel. Both this row and the group panel's MBR row (#3338)
+  # render Detach as the same `LinkBreak` icon button, keyed by this tooltip.
   group:
     label_tooltip:
       de: "Die Gruppe, zu der diese Einheit gehört. Klicken, um das Gruppenfenster zu öffnen."
@@ -121,30 +122,21 @@ info_panel:
       ru: "ведущий"
       zh: "领队"
       "zh-TW": "領隊"
-    detach:
-      de: "Lösen"
-      en: "Detach"
-      es: "Separar"
-      fr: "Détacher"
-      it: "Distacca"
-      ja: "分離"
-      ko: "분리"
-      "pt-BR": "Separar"
-      ru: "Отсоединить"
-      zh: "分离"
-      "zh-TW": "分離"
+    # Now the button's only text (an icon button, #3338), so the wording must
+    # stand alone as a self-describing action rather than a hover gloss on a
+    # visible "Detach" label.
     detach_tooltip:
-      de: "Diese Einheit aus ihrer Gruppe lösen; sie wird allein."
-      en: "Detach this unit from its group, leaving it solo."
-      es: "Separar esta unidad de su grupo; queda en solitario."
-      fr: "Détacher cette unité de son groupe ; elle devient autonome."
-      it: "Distacca questa unità dal gruppo; resta da sola."
-      ja: "このユニットをグループから分離し、単独にします。"
-      ko: "이 유닛을 그룹에서 분리하여 단독으로 만듭니다."
-      "pt-BR": "Separar esta unidade do grupo, deixando-a sozinha."
-      ru: "Отсоединить эту единицу от группы; станет одиночной."
-      zh: "将该单位从编组中分离，使其单独行动。"
-      "zh-TW": "將該單位從編組中分離，使其單獨行動。"
+      de: "Dieses Mitglied von der Gruppe lösen. Es fliegt danach unter eigenen Befehlen weiter."
+      en: "Detach this member from the group. It keeps flying under its own orders."
+      es: "Separar este miembro del grupo. Seguirá volando bajo sus propias órdenes."
+      fr: "Détacher ce membre du groupe. Il continue de voler sous ses propres ordres."
+      it: "Distacca questo membro dal gruppo. Continuerà a volare sotto i propri ordini."
+      ja: "このメンバーをグループから分離します。以後は自身の命令下で飛行を続けます。"
+      ko: "이 구성원을 그룹에서 분리합니다. 이후 자신의 명령 하에 계속 비행합니다."
+      "pt-BR": "Separar este membro do grupo. Ele continuará voando sob suas próprias ordens."
+      ru: "Отсоединить этого участника от группы. Он продолжит полёт по собственным приказам."
+      zh: "将该成员从编组中分离。此后它将依据自身的指令继续飞行。"
+      "zh-TW": "將該成員從編組中分離。此後它將依據自身的指令繼續飛行。"
   # DC-1002: shared rename UX strings — used by both the vehicle inspect
   # header (entity_view.rs) and the group inspect header (group_view.rs).
   rename:
@@ -381,6 +373,23 @@ info_panel:
       ru: "РЕЛЬЕФ"
       zh: "地形"
       "zh-TW": "地形"
+    # #2203/#3504: a launcher is holding fire because the target is held
+    # bearing-only — no resolved range at all, so there is no datum to shoot at.
+    # It keeps closing to resolve range. Distinct from range_uncertain below,
+    # where a range exists but is not trustworthy: naming a single passive
+    # source here would be false.
+    range_unknown:
+      de: "NUR PEILUNG"
+      en: "BRG ONLY"
+      es: "SOLO DEMORA"
+      fr: "RELÈV SEUL"
+      it: "SOLO RILEV"
+      ja: "方位のみ"
+      ko: "방위만"
+      "pt-BR": "SÓ MARCAÇÃO"
+      ru: "ТОЛЬКО ПЕЛЕНГ"
+      zh: "仅方位"
+      "zh-TW": "僅方位"
     # #2520: a launcher is holding fire because the target's range is not
     # trustworthily resolved for a committed automatic shot — a single passive
     # platform's range can be confidently wrong. It keeps closing to resolve.
@@ -988,6 +997,21 @@ info_panel:
   # header convention — so the value is never double-uppercased in the source.
   # CJK has no case (rendered as-is); VLS is a universal acronym (stays caps).
   facility:
+    # The Aviation *station* (deck crew, #3442) — not a facility tag like its
+    # siblings below, so it has no launch/stow location of its own; it covers
+    # both flight_deck and heli_pad (Station::recovery, #3383).
+    aviation:
+      de: "Flugbetrieb"
+      en: "Aviation"
+      es: "Aviación"
+      fr: "Aviation"
+      it: "Aviazione"
+      ja: "航空科"
+      ko: "항공과"
+      "pt-BR": "Aviação"
+      ru: "Авиация"
+      zh: "航空科"
+      "zh-TW": "航空科"
     flight_deck:
       de: "Flugdeck"
       en: "Flight Deck"
@@ -4255,6 +4279,53 @@ info_panel:
       ru: "ВЫГРУЗКА НА СКЛАД"
       zh: "卸载至库存中"
       "zh-TW": "卸載至庫存中"
+    # The station tag on an active-transfer row (#3442): glossary tooltip for
+    # the crew model — each station is an independent crew, one transfer at a
+    # time (#3024), so a round at a different station is never held up by this
+    # one.
+    station_tooltip:
+      de: "Die Decksmannschaft, die diesen Transfer ausführt. Jede Station bearbeitet jeweils einen Transfer; eine Runde an einer anderen Station wartet nicht auf diese."
+      en: "The deck crew running this transfer. Each station works one transfer at a time, so a round at a different station is not waiting on this one."
+      es: "La dotación de cubierta que realiza este traslado. Cada estación gestiona un traslado a la vez, así que una ronda en otra estación no espera a esta."
+      fr: "L'équipage de pont qui effectue ce transfert. Chaque station traite un transfert à la fois, donc une munition à une autre station n'attend pas celle-ci."
+      it: "La squadra di coperta che esegue questo trasferimento. Ogni stazione gestisce un trasferimento alla volta, quindi un colpo a un'altra stazione non attende questo."
+      ja: "この移送を担当する甲板班。各ステーションは一度に1件の移送しか扱わないため、別のステーションの弾はこれを待たない。"
+      ko: "이 이송을 담당하는 갑판 요원. 각 스테이션은 한 번에 하나의 이송만 처리하므로, 다른 스테이션의 탄은 이 이송을 기다리지 않는다."
+      "pt-BR": "A equipe de convés que executa esta transferência. Cada estação processa uma transferência por vez, então um projétil em outra estação não espera por esta."
+      ru: "Палубная команда, выполняющая этот трансфер. Каждая станция обрабатывает один трансфер за раз, поэтому снаряд на другой станции не ждёт этот."
+      zh: "负责此次转运的甲板班组。每个站位一次只处理一次转运，因此另一个站位的弹药不会等待这次转运。"
+      "zh-TW": "負責此次轉運的甲板班組。每個站位一次只處理一次轉運，因此另一個站位的彈藥不會等待這次轉運。"
+    # #3326 ↓ on a HANGARED DRONE row: warehouse the airframe into the carrier's
+    # stores. Distinct from `return_to_stores` (a munition round) because the
+    # move is a slow deck evolution and it frees hangar space rather than
+    # ammunition.
+    strike_down_tooltip:
+      de: "Diese Drohne ins Lager abrüsten und Hangarplatz freigeben. Ein langsames Decksmanöver, das den Flugdeck-Umschlag für seine Dauer belegt."
+      en: "Strike this drone down into stores, freeing hangar space. A slow deck evolution that ties up the flight deck's transfer crew while it runs."
+      es: "Bajar este dron al pañol, liberando espacio en el hangar. Una maniobra de cubierta lenta que ocupa la dotación de transferencia mientras dura."
+      fr: "Descendre ce drone en soute pour libérer de la place au hangar. Une manœuvre de pont lente qui monopolise l'équipe de transfert pendant toute sa durée."
+      it: "Ricovera questo drone nel deposito, liberando spazio nell'hangar. Una manovra di coperta lenta che impegna la squadra di trasferimento per tutta la durata."
+      ja: "このドローンを在庫に降ろし、格納庫の空きを作る。時間のかかる甲板作業で、その間は飛行甲板の移送班を占有する。"
+      ko: "이 드론을 저장고로 내려 격납고 공간을 확보한다. 진행 중에는 비행갑판 이송 요원을 점유하는 느린 갑판 작업이다."
+      "pt-BR": "Recolher este drone ao paiol, liberando espaço no hangar. Uma manobra de convés lenta que ocupa a equipe de transferência enquanto dura."
+      ru: "Убрать этот дрон на склад, освободив место в ангаре. Медленная палубная операция, занимающая расчёт перегрузки на всё её время."
+      zh: "将此无人机收入库存，腾出机库空间。这是一项缓慢的甲板作业，期间会占用飞行甲板的转运班组。"
+      "zh-TW": "將此無人機收入庫存，騰出機庫空間。這是一項緩慢的甲板作業，期間會占用飛行甲板的轉運班組。"
+    # #3326 LOAD tooltip on a WAREHOUSED DRONE row in a carrier's STORES: the
+    # reverse move. Replaces `load_to_facility_tooltip`, which speaks of
+    # promoting a round into a launcher.
+    bring_up_tooltip:
+      de: "Diese Drohne aus dem Lager in den Hangar holen, wo sie startklar gemacht werden kann. Ein langsames Decksmanöver, das den Flugdeck-Umschlag für seine Dauer belegt."
+      en: "Bring this drone up from stores into the hangar, where it can be readied for launch. A slow deck evolution that ties up the flight deck's transfer crew while it runs."
+      es: "Subir este dron del pañol al hangar, donde puede prepararse para el lanzamiento. Una maniobra de cubierta lenta que ocupa la dotación de transferencia mientras dura."
+      fr: "Remonter ce drone de la soute au hangar, où il pourra être préparé au lancement. Une manœuvre de pont lente qui monopolise l'équipe de transfert pendant toute sa durée."
+      it: "Porta questo drone dal deposito all'hangar, dove può essere preparato al lancio. Una manovra di coperta lenta che impegna la squadra di trasferimento per tutta la durata."
+      ja: "このドローンを在庫から格納庫へ上げ、発艦準備ができる状態にする。時間のかかる甲板作業で、その間は飛行甲板の移送班を占有する。"
+      ko: "이 드론을 저장고에서 격납고로 올려 발진 준비가 가능한 상태로 만든다. 진행 중에는 비행갑판 이송 요원을 점유하는 느린 갑판 작업이다."
+      "pt-BR": "Subir este drone do paiol para o hangar, onde pode ser preparado para o lançamento. Uma manobra de convés lenta que ocupa a equipe de transferência enquanto dura."
+      ru: "Поднять этот дрон со склада в ангар, где его можно подготовить к вылету. Медленная палубная операция, занимающая расчёт перегрузки на всё её время."
+      zh: "将此无人机从库存提升到机库，以便准备起飞。这是一项缓慢的甲板作业，期间会占用飞行甲板的转运班组。"
+      "zh-TW": "將此無人機從庫存提升到機庫，以便準備起飛。這是一項緩慢的甲板作業，期間會佔用飛行甲板的轉運班組。"
     return_to_stores:
       de: "Runde ins Lager zurückgeben. Freigegebene Runden stehen für das automatische Nachladen der Drohnen bereit."
       en: "Return round to stores. Freed rounds are used for automatic drone rearming."
@@ -4351,8 +4422,10 @@ info_panel:
       ru: "Нет места: занято %{used}/%{capacity} (нужно %{need} свободно)."
       zh: "无空间：%{capacity} 中已用 %{used}（需 %{need} 空闲）。"
       "zh-TW": "無空間：%{capacity} 中已用 %{used}（需 %{need} 空閒）。"
-    # Trailing marker on a round waiting for the busy deck crew (one transfer per
-    # carrier); flips to a live percentage when it becomes the active transfer.
+    # Trailing marker on a round waiting for its station's busy deck crew (one
+    # transfer per station, #3024/#3442 — not per carrier, which can run
+    # several crews at once); flips to a live percentage when it becomes the
+    # active transfer.
     queued:
       de: "IN WARTESCHLANGE"
       en: "QUEUED"
@@ -4624,6 +4697,20 @@ info_panel:
     ru: "Пусковая платформа убрана"
     zh: "发射平台已收纳"
     "zh-TW": "發射平台已收納"
+  # #3326/#3109: the drone is warehoused in the carrier's stores rather than
+  # spotted in its hangar, so it cannot launch until it is brought up.
+  launch_disabled_in_stores:
+    de: "Im Lager — erst in den Hangar holen"
+    en: "In stores — bring up to the hangar first"
+    es: "En el pañol: súbalo antes al hangar"
+    fr: "En soute — remontez-le d'abord au hangar"
+    it: "Nel deposito — portalo prima nell'hangar"
+    ja: "在庫内 — 先に格納庫へ上げてください"
+    ko: "저장고에 있음 — 먼저 격납고로 올리십시오"
+    "pt-BR": "No paiol — suba-o ao hangar primeiro"
+    ru: "На складе — сначала поднимите в ангар"
+    zh: "位于库存中——请先提升到机库"
+    "zh-TW": "位於庫存中——請先提升到機庫"
   launch_disabled_no_parent:
     de: "Startplattform nicht verfügbar"
     en: "Launch platform not available"
