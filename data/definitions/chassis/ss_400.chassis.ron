@@ -15,7 +15,7 @@
     drag: 0.08,
     mast_height: 0.0,
     em_signatures: Some((rcs: 0.0, ir_base: 3.0, visual_cross_section: 4.0)),
-    acoustic_signatures: Some((passive_noise: (base: 0.5, cavitation_speed: 8.6, quiet_noise_per_mps: 0.0581395, cavitation_noise_per_mps: 0.581395), sonar_cross_section: 1.0)),
+    acoustic_signatures: Some((passive_noise: (base: 0.5, cavitation_speed: 8.6, quiet_slope: CavitationSpeed), sonar_cross_section: 1.0)),
     physics: Submarine(
         max_depth: 300.0,
         default_depth: 100.0,
@@ -29,6 +29,7 @@
     engine: Powered((thrust_n: 27300.0, fuel_burn_rate: 5.0, idle_burn_fraction: 0.05, thrust_response: Constant, thrust_schedule: BoostCoast)),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
     carrier: false,
+    availability: PlayerAvailable,
     ntds_classification: DeriveFromDomain,
     target_domains: [],
     guidance_uplink: None,

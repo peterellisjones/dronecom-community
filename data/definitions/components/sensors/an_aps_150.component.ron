@@ -26,11 +26,6 @@
         characteristics: Radar(
             v_notch: 20.0,
             notch_fraction: 0.1,
-            look_down_clutter_max_db: 20.0,
-            look_down_clutter_max_angle: 10.0,
-            low_altitude_clutter_max_db: 15.0,
-            low_altitude_clutter_ceiling: 200.0,
-            low_altitude_clutter_gate_angle: 2.0,
         ),
         physics: ActiveRadar(bandwidth_hz: 1000000.0, carrier_freq_hz: 9500000000.0, aperture_m: 0.4),
         authored_noise: (velocity_sigma_mps: 4.0, altitude_sigma_m: 90.0, fdoa_sigma_mps: 40.0),

@@ -1,0 +1,63 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
+// #3704 (epic #3459): civilian neutral traffic. `availability: CivilianOnly`
+// keeps this out of the designer/purchase catalog (#3703 entitlement gates);
+// it still joins the chassis registry and the classifier's hypothesis space
+// like any other shipped chassis, which is the point — a spawned cargo ship's
+// class ID can genuinely converge on its own hull.
+(
+    id: "autonomous_cargo_ship",
+    designator: "ACS-100",
+    codename: "Meridian",
+    domain: Sea,
+    // #3704 code review: an independent, director-spawned hull — never stowed
+    // or launched from a parent facility — so `carrier: true` (not a claim of
+    // "carries other vehicles"; it just means "self-deploying", the same
+    // reading `cv_1000`/`cv_3000` document) is what makes empty
+    // `launch_requires`/`recovery_requires` valid (`validate_chassis`
+    // requires a non-carrier to declare a launch facility). Verified inert
+    // for player exposure: the carrier-selection UI
+    // (`build_carrier_list_view`) and the new-game auto-fallback both gate on
+    // `entry.draft.validation.is_valid()` before ever checking `.carrier`,
+    // which is false for any draft on a `CivilianOnly` chassis (#3703) — and
+    // the designer's chassis picker already refuses to let a player create
+    // one in the first place.
+    launch_requires: [],
+    recovery_requires: [],
+    provides: [],
+    length: 150.0,
+    weight: 200000.0,
+    max_weight: 260000.0,
+    max_fuel: 20000.0,
+    hit_points: 400.0,
+    drag: 0.05,
+    mast_height: 18.0,
+    // A large unstealthed steel hull returns a big radar contact — deliberately
+    // in carrier territory (design doc's "big-contact-≈-carrier" IFF trap). Its
+    // slow single screw is loud too: `passive_noise.base` (9e8) is the same
+    // order of magnitude as `cv_1000`'s own floor (2.75e8, not `cv_3000`'s
+    // 7e11 — nowhere near carrier-tier acoustically) but roughly six to nine
+    // orders of magnitude louder than either submarine chassis
+    // (`ss_400` 0.5, `ss_800` 1800) or `usv_200` (31.5) — loud enough on its
+    // own terms to mask a submarine transiting nearby.
+    em_signatures: Some((rcs: 6000.0, ir_base: 40.0, visual_cross_section: 300.0)),
+    acoustic_signatures: Some((passive_noise: (base: 900000000.0, cavitation_speed: 9.0, quiet_slope: ServiceSpeed), sonar_cross_section: 5000000000.0)),
+    physics: SeaSurface(
+        draft: 10.0,
+        min_turn_rate_fraction: 0.15,
+    ),
+    propulsion: Screw,
+    // #3704: zero `fuel_burn_rate` is pure data (`FuelCurve::ZERO` shape) — a
+    // civilian hull that never depletes its tank, no sim-side exemption. Every
+    // consumer of `fuel_burn_rate` already guards `> 0.0` before dividing.
+    engine: Powered((thrust_n: 784800.0, fuel_burn_rate: 0.0, idle_burn_fraction: 0.15, thrust_response: Constant, thrust_schedule: BoostCoast)),
+    allowed_components: [Category(Sensors), Category(Utility)],
+    carrier: true,
+    availability: CivilianOnly,
+    ntds_classification: DeriveFromDomain,
+    target_domains: [],
+    guidance_uplink: None,
+    battery_capacity_kwh: 80.0,
+    base_power_draw_kw: 8.0,
+    power_supply_kw: 150.0,
+    engine_bells: (loiter: Some(0.15), cruise: Some(0.55), full: Some(0.8)),
+)

@@ -34,6 +34,7 @@
     engine: Powered((thrust_n: 8600.0, fuel_burn_rate: 5.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
     carrier: false,
+    availability: PlayerAvailable,
     ntds_classification: DeriveFromDomain,
     target_domains: [],
     guidance_uplink: None,

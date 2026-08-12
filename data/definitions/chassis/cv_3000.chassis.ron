@@ -15,7 +15,7 @@
     drag: 0.04,
     mast_height: 30.0,
     em_signatures: Some((rcs: 10000.0, ir_base: 80.0, visual_cross_section: 400.0)),
-    acoustic_signatures: Some((passive_noise: (base: 700000000000.0, cavitation_speed: 8.5, quiet_noise_per_mps: 82352941180.0, cavitation_noise_per_mps: 823529411800.0), sonar_cross_section: 6000000000000.0)),
+    acoustic_signatures: Some((passive_noise: (base: 700000000000.0, cavitation_speed: 8.5, quiet_slope: CavitationSpeed), sonar_cross_section: 6000000000000.0)),
     physics: SeaSurface(
         draft: 12.0,
         min_turn_rate_fraction: 0.25,
@@ -24,6 +24,7 @@
     engine: Powered((thrust_n: 2940000.0, fuel_burn_rate: 100.0, idle_burn_fraction: 0.15, thrust_response: Constant, thrust_schedule: BoostCoast)),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
     carrier: true,
+    availability: PlayerAvailable,
     ntds_classification: Explicit(CommandShip),
     target_domains: [],
     guidance_uplink: None,

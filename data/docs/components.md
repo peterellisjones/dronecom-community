@@ -115,12 +115,13 @@ Variants:
 
 ## `ChassisFilter`
 
-Filter that matches chassis by domain or physics model.
+Filter that matches chassis by domain, physics model, or a single named id.
 
 Variants:
 
 - **`Domain`**([`Domain`](#domain)) — Matches any chassis in this physical `Domain` (Air / Sea / Submarine).
 - **`Physics`**([`PhysicsModel`](#physicsmodel)) — Matches any chassis using this `PhysicsModel`.
+- **`Chassis`**([`ChassisId`](#chassisid)) — Matches exactly one chassis, by id — confines a component to a single named hull rather than an entire domain/physics class (#3704). Used to keep a component reachable only from a specific `CivilianOnly` chassis without a parallel availability axis on `ComponentDefinition` itself: since players can never select a `CivilianOnly` chassis (#3703), a component whose only `allowed` entry is that chassis's id becomes unreachable from every player-facing surface (designer catalog, purchase queue, `dc_mcp`) for free.
 
 ## `ComponentPayload`
 
@@ -152,6 +153,14 @@ Variants:
 - **`RotaryWing`** — Rotary-wing flight — helicopters, which can hover.
 - **`SeaSurface`** — Surface vessel moving on the water plane.
 - **`Submarine`** — Submerged vessel moving in three dimensions below the surface.
+
+## `ChassisId`
+
+Identifier for a chassis definition, used as a registry lookup key.
+
+### `0` : `String`
+
+The chassis definition's registry key string.
 
 ## `SensorDef`
 
@@ -331,16 +340,15 @@ Replaces the per-field Options that were implicitly discriminated by `SensorKind
 Radar and active sonar have doppler processing (notching); radar also has
 look-down and low-altitude clutter models.
 
+The clutter model itself is not authored per sensor — it describes the
+environment, not the antenna, and lives in `crate::formulas` as five
+constants (#3768).
+
 Variants:
 
-- **`Radar`** — Radar: doppler notching + look-down clutter + low-altitude clutter.
+- **`Radar`** — Radar: doppler notching, plus the shared look-down and low-altitude clutter model from `crate::formulas`.
   - `v_notch` : f32 — Max radial speed (m/s) below which target enters the notch.
   - `notch_fraction` : f32 — Effective RCS fraction at zero radial velocity (0.0-1.0).
-  - `look_down_clutter_max_db` : f32 — Max look-down clutter attenuation in dB, scaled down for a target that is not near the surface — see `low_altitude_clutter_ceiling`.
-  - `look_down_clutter_max_angle` : f32 — Depression angle (degrees below horizon) at which max look-down clutter is reached.
-  - `low_altitude_clutter_max_db` : f32 — Max low-altitude clutter attenuation in dB for low-altitude targets.
-  - `low_altitude_clutter_ceiling` : f32 — Altitude (metres) above which a target is clear of the ground's illuminated range cell, so neither clutter term applies.  Gates both clutter terms, ramping each to zero as the target rises from the surface to this ceiling: main-lobe clutter competes only when the ground patch shares the target's own range cell, which a target well above the surface is not in — however steeply the beam points down at it.
-  - `low_altitude_clutter_gate_angle` : f32 — Depression below the radar horizon (degrees) at which low-altitude clutter reaches full strength.  Low-altitude clutter needs a sea patch illuminated in the same resolution cell as the target, so it only applies when the radar is looking *down* — a mast-height surface-search radar level with a surface ship sees none. This ramps that gate in rather than switching it on at the horizon: for a sea-level target the horizon is crossed at exactly half the radar horizon, so a hard edge would make a closing contact drop out and reacquire much later.
 - **`SonarActive`** — Active sonar: doppler notching only.
   - `v_notch` : f32 — Max radial speed (m/s) below which target enters the notch.
   - `notch_fraction` : f32 — Effective RCS fraction at zero radial velocity (0.0-1.0).

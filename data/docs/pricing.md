@@ -51,9 +51,14 @@ saturate here — capability beyond the map is worthless.
 The reference target/emitter every sensor footprint, the lethality
 currency, and the hit-point currency are measured against.
 
-### `raid_size` : u32
+### `reference_track_capacity` : u32
 
-Typical raid size — track/lock capacity saturates here.
+Track-file capacity (number of simultaneous contacts) that prices at
+exactly ×1.0 — the size of the engagement every sensor's servicing
+value is measured against. A sensor holding fewer contacts than this
+prices proportionally below ×1.0; one holding more earns
+`SensorKnobs::capacity_premium_max` on a saturating curve
+(`super::price_sensor`'s servicing term).
 
 ### `reference_miss_distance_m` : f32
 
@@ -164,11 +169,37 @@ dispersed radars beat one giant). Expect ~0.8.
 
 ### `lock_premium` : f32
 
-Fire-control locks are worth this multiple of a search track.
+Fire-control locks are worth this multiple of a search track. Converts
+a sensor's lock count into the track-equivalents the servicing term
+prices (`super::price_sensor`).
 
 ### `scan_or_track_penalty` : f32
 
-`TrackConcurrency::ScanOrTrack` multiplier (< 1; `WhileScanning = 1.0`).
+Derates a `TrackConcurrency::ScanOrTrack` sensor's *lock* contribution
+to its track-equivalent capacity — it cannot hold those locks while
+searching, so they are worth less than a `WhileScanning` sensor's
+(which counts at 1.0). Expect < 1. Applies only to `SearchAndTrack`
+capabilities, the only ones that do both jobs. Note the servicing
+curve is concave, so the resulting *price* difference is smaller than
+this fraction.
+
+### `capacity_premium_max` : f32
+
+Largest servicing premium a track file can earn above
+`Envelope::reference_track_capacity`, as a fraction of the sensor's
+footprint value: a sensor with an unboundedly large track file
+approaches `1.0 + this` (e.g. 0.5 → up to ×1.5). Capacity above the
+reference used to be free, so an 8-track and a 64-track radar priced
+identically (#3617).
+
+### `capacity_half_point_tracks` : f32
+
+`saturating_credit` half-point for the capacity premium, in
+**track-equivalents above the reference** (locks counted at
+`SensorKnobs::lock_premium`): a sensor this far above
+`Envelope::reference_track_capacity` earns half of
+`SensorKnobs::capacity_premium_max`. Smaller values reward modest
+track files sooner but compress the large ones together.
 
 ### `refresh_exponent` : f32
 

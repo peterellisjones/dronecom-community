@@ -41,6 +41,14 @@ Must contain at least one entry.
 Facilities required on the carrier to recover this entity.
 Empty means expendable (no recovery).
 
+Every entry must be a facility that can recover this chassis's
+operating domain, or the chassis is rejected at load: a flight deck or
+heli pad recovers Air, a flooded well deck recovers Sea and Submarine,
+and a launch-only facility (VLS, torpedo tube, air-launch rail)
+recovers nothing. A returning unit's recovery order names whichever
+entry its chosen carrier provides, and only the matching domain has
+flight execution for that approach.
+
 ### `provides` : `Vec`<[`FacilityProvision`](#facilityprovision)>
 
 Facilities this chassis provides when mounted as a carrier component,
@@ -122,6 +130,11 @@ matches at least one filter. Empty means any component is allowed.
 Whether this chassis can serve as a team's command carrier — the
 mothership/flagship that hosts and commands a fleet. `false` for drones,
 munitions, and escorts.
+
+### `availability` : [`ChassisAvailability`](#chassisavailability)
+
+Who may purchase or design a vehicle on this chassis (#3703). See
+`ChassisAvailability` for the full enforcement contract.
 
 ### `ntds_classification` : [`NtdsClassification`](#ntdsclassification)
 
@@ -342,6 +355,31 @@ Variants:
 
 - **`Category`**([`ComponentCategory`](#componentcategory)) — Matches any component in this `ComponentCategory`.
 
+## `ChassisAvailability`
+
+Who may purchase or design a vehicle on this chassis (#3703, epic #3459).
+
+`PlayerAvailable` chassis behave exactly as before this field existed —
+listed in the designer and purchase catalog, purchasable/designable by a
+player. `CivilianOnly` chassis are non-combatant neutral traffic: excluded
+from every player-facing listing, and rejected by the purchase/design
+entitlement gates (`dc_blueprints::validation::Blueprint::validate`'s
+draft check, `dc_blueprints::eligibility::find_civilian_only_chassis`'s
+recipe-level walk, and their call sites — the purchase-queue handler and
+the network lobby's fleet gate) regardless of which surface (UI, MCP, a
+hand-crafted wire command) made the request. Deliberately **not**
+enforced inside `validate_recipe` itself: that function is the structural
+spawn gate shared by save/load reconstruction, scenario spawn, and stow —
+a civilian-only vehicle must still be a legal *thing that can exist*, so
+scripted neutral traffic (a later slice of epic #3459) can spawn it. This
+is an entitlement rule about who may *request* one, not about whether the
+design is physically valid.
+
+Variants:
+
+- **`PlayerAvailable`** — Ordinary content: listed in the designer/catalog, purchasable and designable by a player. Every chassis shipped before #3703.
+- **`CivilianOnly`** — Reserved for scripted neutral/civilian traffic. Never purchasable or designable by a player, on any chassis it appears on directly or that a design carries/stores (nested or loose-stored rounds included).
+
 ## `NtdsClassification`
 
 How the NTDS symbol class is determined for this chassis.
@@ -420,26 +458,31 @@ or `None` if the chassis does not offer it.
 
 Speed-dependent passive sonar source level (engine/propeller noise).
 
-Two-slope-with-base model: a constant machinery floor (`base`, never silent),
-a gentle `quiet_noise_per_mps` slope below the cavitation inception speed, and
-a steep `cavitation_noise_per_mps` slope above it. See
+Two-slope-with-base model: a constant machinery floor (`base`, heard even at
+rest), a gentle quiet slope below the cavitation inception speed, and a steep
+cavitating slope above it. See
 `docs/plans/2026-06-16-dc387-speed-dependent-sonar-noise-design.md`.
+
+**Only the floor and the knee are authored.** Both slopes follow from them:
+the quiet slope is `base` divided by the reference speed that `quiet_slope`
+names, and the cavitating slope is ten times the quiet slope. So a louder
+hull is written by raising `base` alone — there is no way to author a slope
+that contradicts the floor it grows from, and none to put the two slopes in
+the wrong order.
 
 ### `base` : f32
 
-Always-on machinery floor (strength at zero speed).
+Always-on machinery floor (strength at zero speed). Both speed slopes
+scale with this, so it sets the hull's whole acoustic level.
 
 ### `cavitation_speed` : f32
 
-Cavitation inception speed in m/s — the knee.
+Cavitation inception speed in m/s — the knee, above which the propeller
+cavitates and the noise slope steepens.
 
-### `quiet_noise_per_mps` : f32
+### `quiet_slope` : [`QuietSlopeReference`](#quietslopereference)
 
-Strength gained per m/s below the knee (gentle).
-
-### `cavitation_noise_per_mps` : f32
-
-Strength gained per m/s above the knee (steep, `>= quiet_noise_per_mps`).
+Which speed the quiet-band slope is referenced to.
 
 ## `TrajectoryProfile`
 
@@ -523,6 +566,20 @@ Variants:
 - **`CommandShip`** — A carrier or other high-value command ship. Renders with a cross overlay to distinguish it from a plain `Surface` contact.
 - **`Missile`** — A missile in flight (an airborne weapon).
 - **`Torpedo`** — A torpedo running (a subsurface weapon).
+
+## `QuietSlopeReference`
+
+Which speed a hull's quiet-band noise slope is referenced to.
+
+The quiet slope is always `base / reference_speed`: the reference speed is
+the speed at which propulsion noise has grown to equal the always-on
+machinery floor. The two hull populations in the game reference it
+differently, and that difference is authored rather than inferred (#3895).
+
+Variants:
+
+- **`CavitationSpeed`** — The hull's own cavitation knee: `quiet = base / cavitation_speed`, so the source level is exactly twice the machinery floor at the knee.  Every military hull — a warship's quieting is designed around its own cavitation inception speed, so the two move together.
+- **`ServiceSpeed`** — A fixed civilian service speed of `CIVILIAN_SERVICE_SPEED_MPS` m/s: `quiet = base / 10`, independent of where the hull cavitates.  Merchant and fishing hulls, whose unrefined machinery is sized for a commercial cruise speed rather than for acoustic stealth — so a hull that happens to cavitate late does not get a quieter slope for it.
 
 ## `ThrustResponse`
 

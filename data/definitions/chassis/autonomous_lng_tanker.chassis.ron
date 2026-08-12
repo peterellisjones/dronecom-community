@@ -1,0 +1,44 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
+// #3704 (epic #3459): civilian neutral traffic — the design doc's second
+// "big-contact-≈-carrier" silhouette, sized close to but distinguishable from
+// the Autonomous Cargo Ship so both remain separately identifiable chassis in
+// the classifier's hypothesis space rather than a duplicate.
+(
+    id: "autonomous_lng_tanker",
+    designator: "ALT-100",
+    codename: "Boreal",
+    domain: Sea,
+    // #3704 code review: independent, director-spawned hull — see
+    // `autonomous_cargo_ship.chassis.ron` for why `carrier: true` with empty
+    // `launch_requires`/`recovery_requires` is correct and verified inert for
+    // player exposure.
+    launch_requires: [],
+    recovery_requires: [],
+    provides: [],
+    length: 145.0,
+    weight: 190000.0,
+    max_weight: 245000.0,
+    max_fuel: 19000.0,
+    hit_points: 350.0,
+    drag: 0.05,
+    mast_height: 17.0,
+    em_signatures: Some((rcs: 5500.0, ir_base: 35.0, visual_cross_section: 280.0)),
+    acoustic_signatures: Some((passive_noise: (base: 850000000.0, cavitation_speed: 9.0, quiet_slope: ServiceSpeed), sonar_cross_section: 4500000000.0)),
+    physics: SeaSurface(
+        draft: 11.0,
+        min_turn_rate_fraction: 0.15,
+    ),
+    propulsion: Screw,
+    // #3704: zero `fuel_burn_rate` — see `autonomous_cargo_ship.chassis.ron`.
+    engine: Powered((thrust_n: 745560.0, fuel_burn_rate: 0.0, idle_burn_fraction: 0.15, thrust_response: Constant, thrust_schedule: BoostCoast)),
+    allowed_components: [Category(Sensors), Category(Utility)],
+    carrier: true,
+    availability: CivilianOnly,
+    ntds_classification: DeriveFromDomain,
+    target_domains: [],
+    guidance_uplink: None,
+    battery_capacity_kwh: 80.0,
+    base_power_draw_kw: 8.0,
+    power_supply_kw: 150.0,
+    engine_bells: (loiter: Some(0.15), cruise: Some(0.55), full: Some(0.8)),
+)

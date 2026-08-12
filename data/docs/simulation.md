@@ -78,6 +78,13 @@ and lock-clear hysteresis feeding the automatic-evasion reflex.
 Consumed by the `ThreatAlerts<TEAM>` rollup (`dc_sensors`) and the
 tasking evade-clear checks (`dc_tasking`).
 
+### `traffic` : [`TrafficSection`](#trafficsection)
+
+Neutral civilian traffic tuning (#3705): the live-population band the
+traffic director holds, its spawn cadence and type mix, and the
+entry/exit ring geometry. Consumed by the traffic director (`dc_sim`),
+and only when the scenario's `neutral_traffic` toggle is on.
+
 ## `AutopilotSection`
 
 Autopilot tuning parameters.
@@ -265,8 +272,8 @@ shipped guarded round's credited-reach flyout.
 Note this bound only ever removes a round that has come to **rest**, so
 it is not what disposes of an air round that misses: that one keeps
 gliding, settles onto the sea and is removed as a terrain collision
-instead (`battery_drain` treats the surface as terrain for a projectile,
-#3378).
+instead (the battery drain treats the surface as terrain for a
+projectile, #3378).
 
 ### `munition_out_of_bounds_scuttle_margin_m` : f32
 
@@ -858,6 +865,59 @@ lock-triggered evade (`EvadeReason::Locked`) clears and the unit
 resumes its previous assignment. Consumed by the tasking evade-clear
 check (`evading::tick`).
 
+### `threat_alert_min_dwell_secs` : f32
+
+Seconds a raised RWR call is held before it may be *announced* as
+cleared (#3889). The release timer is refreshed every tick the rung is
+re-asserted, so a threat that keeps qualifying never announces a clear;
+it expires only after the rung has gone un-asserted for this long.
+
+This governs the announced `ThreatAlertChanged` call only — the derived
+`ThreatAlert` the tasking reflexes read is
+instantaneous and unaffected. Escalations are never delayed by it.
+
+It exists because the underlying test is a bare threshold with no dead
+band (`cpa_distance <= missile_cpa_radius_m && time_to_cpa >= 0.0`), so
+a track sitting on the CPA boundary — or one passing a unit, where a
+noisy velocity estimate flips the sign of time-to-CPA — toggles the rung
+at tick rate and emitted an inbound/clear pair per evaluation.
+
+0.0 restores the pre-#3889 behaviour of announcing every rung change
+immediately. Consumed by the per-unit `ThreatAlerts<TEAM>` rollup in
+`dc_sensors` (`manage_contacts`).
+
+### `bearing_only_reflex_max_secs` : f32
+
+Seconds a unit keeps reacting to one *range-unresolved* munition track
+before that track's survival reflex is spent (#3713).
+
+A passive bearing-only track states that a hostile weapon lies on a
+bearing, but not how far away it is — and against a closing munition the
+range never becomes observable, so the solution stays frozen for the
+track's whole life. The reflex therefore fails toward caution (the unit
+evades on that evidence alone) but is bounded: without a bound, evidence
+that never improves would hold the unit in an evasive weave permanently,
+abandoning its assignment at full throttle.
+
+Measured from the first tick the unit's **alert named that track** — not
+from the first tick it reacted. The window is charged by the threat
+rollup, which cannot see whether the tasking layer acted on the alert, so
+a unit that is prevented from reacting still spends the budget. That is
+reachable today: a launcher committed to guiding a shot defers this evade
+for up to `engagement_commitment_max_secs`, and while that exceeds this
+value the launcher can burn the whole window without ever evading. See
+#3747 — the fix is to charge at reaction, which needs the tasking layer to
+report back; raising this value above the commitment window is
+deliberately NOT the fix, because it would make one player-editable field
+silently depend on another.
+
+When it expires the unit resumes its assignment and does **not** re-alarm
+on the same track — a bare timeout would simply oscillate. The budget
+re-arms only on new information: the track's range resolving (which moves
+it to the ordinary CPA test, where no budget applies), the track going
+stale or lost, or a genuinely different track. Consumed by the per-unit
+`ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+
 ### `engagement_commitment_max_secs` : f32
 
 Seconds a launcher will hold an engagement open against a break-off
@@ -871,6 +931,175 @@ the `HoldFire` firing safety or to an inbound missile the unit cannot
 fight. Consumed by the intercept supervisor's doctrine gate
 (`threat_response::engaged_track`) and the engaging-unit survival reflex
 (`engagement::tick_if_engaging`).
+
+## `TrafficSection`
+
+Neutral civilian traffic tuning — the population the traffic director holds
+on the map and the shipping lanes it flies. Loaded from
+`assets/config/simulation.ron` (traffic section), consumed by `dc_sim`'s
+traffic director. Only in force when the scenario's `neutral_traffic` toggle
+is on (#3705).
+
+### `target_population` : u32
+
+Centre of the live-population band — how many civilians the director
+aims to keep on the map at once. The working target drifts around this
+value rather than sitting on it, so the sea does not look metered.
+
+### `population_band` : u32
+
+Half-width of the population band, in vehicles. The working target stays
+within `target_population ± this`, and the director stops spawning at
+`target_population + this` however far behind it has fallen.
+
+### `spawn_interval_min_s` : f32
+
+Shortest gap between spawns, in seconds of simulated time.
+
+### `spawn_interval_max_s` : f32
+
+Longest gap between spawns, in seconds of simulated time. Each gap is
+drawn uniformly from `spawn_interval_min_s..spawn_interval_max_s`, which
+is what keeps arrivals from arriving on a metronome.
+
+### `target_drift_min_s` : f32
+
+Shortest interval between re-rolls of the working population target, in
+seconds of simulated time.
+
+### `target_drift_max_s` : f32
+
+Longest interval between re-rolls of the working population target, in
+seconds of simulated time. A re-roll picks a fresh target anywhere in the
+band, so traffic thickens and thins over a match.
+
+### `ring_radius_fraction` : f32
+
+Radius of the entry/exit ring as a fraction of the map radius. Below 1.0
+deliberately: the playable map is the circle of the terrain radius, and a
+point placed exactly on it is one float step from the off-map water the
+runtime pathfinder refuses to enter (#2271).
+
+### `retirement_ring_fraction` : f32
+
+How far out a civilian must be, as a fraction of the entry/exit ring
+radius, before having no active order counts as "finished its crossing"
+and it is removed from the map.
+
+Retirement is positional as well as order-based, and has to be. A hull
+with no active order has either *arrived* at a rim exit or *never had*
+an order, and only the first should be removed — a civilian spawned
+mid-map by a debug command is the second, and deleting it on the tick it
+appeared would be a bug rather than an exit.
+
+Below 1.0 by enough to cover the loiter a vehicle settles into once its
+waypoint order completes: the order finishes within the autopilot's
+waypoint-capture threshold of the exit point, but the hull then orbits
+that point rather than sitting on it.
+
+### `min_crossing_separation_deg` : f32
+
+Smallest angle between a crossing's entry and exit point, in degrees.
+Without a floor an unlucky draw puts the two within the autopilot's
+waypoint-capture threshold and the civilian retires on its first tick.
+
+### `max_placement_attempts` : u32
+
+How many times to re-draw an entry or exit angle that lands on land
+before giving up on this spawn and trying again at the next interval.
+The rim of a generated map is not guaranteed to be water.
+
+### `start_keep_out_m` : f32
+
+How far a civilian's entry or exit point must stay from every team's
+starting anchorage, in metres (#3886).
+
+Without it the two circles all but coincide: on the default 50 km map
+team carriers start at 49,000 m (`compute_spawn_radius`) and the
+entry/exit ring sits at 48,500 m (`ring_radius_fraction`), so a civilian
+drawn at an angle near a team's sector arrives ~500 m from its
+anchorage — inside weapons reach of a fleet that has not left harbour.
+A parking `ClusterAnchor` hull does not even transit past; it sets up
+there for its whole visit count.
+
+Measured against the start positions, which are fixed at new-game and
+never move, so this excludes a fixed arc of the ring rather than
+following the fleet around the map.
+
+### `mix` : `Vec`<[`TrafficTypeSection`](#traffictypesection)>
+
+The civilian types the director draws from, with their relative weights.
+An empty mix means no traffic however the population band is set.
+
+### `orbit_radius_m` : f32
+
+Radius of the ring an `TrafficBehavior::OrbitHop`,
+`TrafficBehavior::ClusterAnchor` or `TrafficBehavior::ClusterEscort`
+civilian circles, in metres — shared by every hop's ring and by a
+`ClusterAnchor`'s own stationary loiter. Floored per-domain to the
+flying/turning platform's minimum (a fixed-wing cannot fly a ring
+tighter than its turn radius, #2450) — a smaller configured value
+simply defers to that floor rather than erroring.
+
+### `orbit_hop_min_orbits` : f32
+
+Fewest laps of `orbit_radius_m` a hopping or anchoring civilian holds
+its station before its next decision (hop to a new point, stay another
+dwell, or head home), drawn uniformly per dwell. There is no lap
+counter on `Order::Orbit`, so this converts to a dwell time at roll
+time using the hull's own cruise speed — the reason it is "orbits" and
+not seconds: a flat seconds range would give a 5 m/s fishing skiff a
+fraction of a lap for the same number that gives a 100+ m/s strike
+drone a dozen.
+
+### `orbit_hop_max_orbits` : f32
+
+Longest laps of `orbit_radius_m` per dwell — see
+`Self::orbit_hop_min_orbits`.
+
+### `orbit_hop_radius_m` : f32
+
+How far a fresh point may be drawn from a civilian's current orbit
+centre, in metres, when hopping with no cluster anchor to stay near —
+an `TrafficBehavior::OrbitHop` civilian's ordinary hop, and the
+fallback radius a `TrafficBehavior::ClusterEscort` hops within once
+its anchor has died. Keeps a lone hopper patrolling a local patch of
+theatre instead of crossing the whole map one hop at a time.
+
+### `orbit_hop_visits_min` : u32
+
+Fewest points an `TrafficBehavior::OrbitHop` or
+`TrafficBehavior::ClusterEscort` civilian visits before it heads for
+the rim and leaves the map, drawn once when it starts its visit.
+Without a cap here the population band would fill with civilians that
+never leave: an `Order::Orbit` never completes on its own (unlike
+`Order::GoToWaypoint`), so nothing would ever end the hull's turn and
+free its slot in the band.
+
+### `orbit_hop_visits_max` : u32
+
+Most points visited before heading home — see
+`Self::orbit_hop_visits_min`.
+
+### `cluster_radius_m` : f32
+
+How far a `TrafficBehavior::ClusterEscort` civilian's spawn point,
+and every point it subsequently visits, may be drawn from the nearest
+live `TrafficBehavior::ClusterAnchor` hull's current position, in
+metres — the escort screen never drifts away from its trawler.
+
+### `cluster_anchor_visits_min` : u32
+
+Fewest dwell periods a `TrafficBehavior::ClusterAnchor` holds its
+single station before it too heads for the rim and leaves (the same
+finite-visit rule as `Self::orbit_hop_visits_min`, scaled well above
+it so the anchor reads as the long-parked centre of its cluster rather
+than leaving on the same schedule as the escorts hopping around it).
+
+### `cluster_anchor_visits_max` : u32
+
+Most dwell periods before a `ClusterAnchor` heads home — see
+`Self::cluster_anchor_visits_min`.
 
 ## `TerrainAvoidanceConfig`
 
@@ -916,10 +1145,18 @@ then neither fuzes nor spends and loops to battery death. Keying the floor
 to `max_speed` (a capability, not the coasted speed) makes it
 dt-independent AND scales it with the mover: a fast one-shot missile gets a
 terminal envelope larger than its miss (M-250 ~266 m), while a slow
-re-attacking torpedo gets a floor *below its fuze radius* (~6–8 m) so its
-spend gate stays subsumed by the fuze and its behaviour is unchanged.
-`max(...)` never narrows the gate below `speed·dt·gate_range_steps`, so
-coarse-dt behaviour is unchanged.
+torpedo gets a floor *below its fuze radius* — 7.1 m for the MK-30A and
+8.4 m for the MK-55A, against a 30 m fuze — so its spend gate is
+subsumed by the fuze. `max(...)` never narrows the gate below
+`speed·dt·gate_range_steps`, so coarse-dt behaviour is unchanged.
+
+That subsumption is not the no-op this doc used to call it (#2649). It
+means the #2290 spend can never fire for a slow round, so before the
+loiter guard *nothing* ended one that reached its target and settled
+into a circle just outside the fuze radius: it neither fuzed nor
+receded, and orbited a survivable target until its battery died. What is
+unchanged is the one-pass geometry the floor was tuned for; the
+stalemate case is now the loiter guard's, not this gate's.
 
 ### `max_substep_secs` : f32
 
@@ -948,6 +1185,33 @@ The angle-domain law aims a fixed lead time ahead of the line of sight
 the integrator turns at full authority at every tick / substep (a
 dt-scaled aim only nulled the crossing miss via the #1835 coarse-step
 over-turn artifact). Larger leads pull harder onto a fast-rotating LOS.
+
+### `loiter_spend_secs` : f32
+
+How long (seconds) a warhead may hold station inside its own blast
+radius of the true target, without ever getting closer, before it
+spends itself — the #2649 loiter guard.
+
+The #2290 spend ends the *overshoot-and-recede* go-around; a round that
+settles into a constant-range circle around a reached target neither
+recedes nor closes, so it satisfies neither the proximity fuze (its
+closest approach never enters `proximity_fuze_radius_m`) nor that spend,
+and orbits a survivable target until its battery dies. This is the clock
+that ends such an orbit. Set it long enough that a round still working
+its way in is never cut short — a genuine terminal approach improves its
+closest approach continuously, and any improvement of at least
+`loiter_progress_m` restarts the clock.
+
+### `loiter_progress_m` : f32
+
+How much a warhead must improve its closest approach (metres) for the
+#2649 loiter clock to count it as progress and restart.
+
+A circling round shaves millimetres off its best approach every frame
+through float noise alone, so "any improvement at all" would restart the
+clock forever and the guard would never fire. This is the margin that
+separates converging from circling; it must stay well below the
+per-second closing rate of a real terminal approach.
 
 ## `PatrolLoopSection`
 
@@ -1087,13 +1351,21 @@ protected until its BDA deadline resolves regardless of these bounds
 (#2402): purging it early would erase the track before the kill-
 confirmation check ever runs.
 
-Under the shipped `filter.process_noise_accel_mps2` (2.0 m/s²), dead-
-reckoned position σ grows roughly quadratically with time since last
-observation, so `max_position_sigma_m` is normally the bound that fires —
-around 4 minutes after a track goes `Lost` — well before `max_age_secs`.
-`max_age_secs` is a backstop for contacts whose position fix never
-resolves numerically (e.g. a persistently unresolved fix) rather than the
-common case.
+Dead-reckoned position σ grows as `σ_a · dt² / 2`, so `max_position_sigma_m`
+is normally the bound that fires — well before `max_age_secs`, which is a
+backstop for contacts whose position fix never resolves numerically (e.g. a
+persistently unresolved fix) rather than the common case.
+
+**Time-to-purge is therefore per class** since #3879 made `σ_a` per class
+(`ProcessNoiseSection`): it scales as `1/√σ_a`, so at the shipped table a
+`Lost` aircraft is purged around 100 s after its last look, a ship around
+120 s, and a submarine around 240 s. (Under the single global 2.0 m/s² this
+section was originally tuned against, every class took the submarine's
+~224 s.) That is the honest consequence of an honest `σ_a` — a lost aircraft's
+position genuinely does become unknowable far sooner than a lost submarine's
+— and this bound is expressed in metres of uncertainty, not seconds, so it
+keeps meaning the same thing. Re-deriving the 50 km itself is deliberately
+left alone: it is a picture-quality decision, not a filter one.
 
 ### `max_age_secs` : f32
 
@@ -1117,18 +1389,20 @@ instant a bound is actually crossed.
 
 Tuning for the per-track recursive (Kalman) kinematic filter (DC-36.1).
 
-### `process_noise_accel_mps2` : f32
+### `process_noise` : [`ProcessNoiseSection`](#processnoisesection)
 
-Horizontal process-noise acceleration σ (m/s²) — unmodelled
-acceleration the constant-velocity model tolerates per predict step.
-Larger values track manoeuvres faster but settle at a higher
-covariance floor.
+Horizontal process-noise acceleration σ (m/s²) per tracked-object class
+(#3879).
 
 ### `vertical_process_noise_accel_mps2` : f32
 
 Vertical process-noise acceleration σ (m/s²) for the vertical
-constant-velocity axis. Tuned separately from horizontal — a missile's
-vertical agility differs sharply from a ship's.
+constant-velocity axis — global, not per class. Deliberately unlike the
+horizontal table above: #2151 fixed this value by a *coupling*
+constraint rather than by agility (a high value over-couples PY↔VY, so
+noisy long-range altitude observations leak into a large spurious
+vertical velocity that the dead-reckon path integrates), and that
+constraint is not per class.
 
 ### `initial_position_var` : f32
 
@@ -1283,11 +1557,17 @@ geometry/time baseline actually constrains it.
 Length (s, sim time) of the per-track bearing history window. The
 constant-velocity assumption must hold across it — long enough for a
 velocity baseline, short enough that a maneuver does not corrupt the fit.
+8 s (#3870), down from 30: measured ~3× tighter horizontal error on
+both active and passive geometry (a shorter window is less often
+straddling a real leg change), and each solve is ~4× cheaper (fewer
+rows to fit).
 
 ### `max_measurements` : u32
 
 Hard cap on retained measurements per track (bounded memory/compute);
-the oldest are dropped first once exceeded.
+the oldest are dropped first once exceeded. 128 (#3870), down from 256:
+measured identical bearing-only observability to 256 rows, at −20%
+fleet tick cost.
 
 ### `max_fdoa_pairs_per_scan` : u32
 
@@ -1319,34 +1599,77 @@ Reduced-χ² (per degree of freedom) of the weighted batch residual above
 which the target is judged to have maneuvered (broken the CV model); the
 window is flushed so velocity re-converges on the new leg.
 
-### `solve_interval_secs` : f32
+### `maneuver_innovation_chi2` : f32
 
-Minimum interval (s, sim time) between full batch solves for one track
-(#3552). The solve is the dominant per-tick cost of contact tracking —
-a joint least-squares plus a Gauss–Newton refinement over a window that
-pins at `max_measurements` rows — and re-running it every tick buys
-almost nothing: a tick adds at most one scan per detecting sensor, a few
-rows out of hundreds and under a fifteenth of `window_secs`.
+Reduced-χ² (per degree of freedom) of the measurements captured *since*
+a track's last batch solve, scored against the state that solve left it
+dead-reckoning on, above which a fresh solve is forced regardless of
+`picture_backstop_secs` (#3866).
 
-Between solves a track's estimate is not frozen. It is dead-reckoned on
-the same constant-velocity model the batch fits, with its covariance
-grown by `filter.process_noise_accel_mps2`, so for a genuinely-CV target
-the propagated state is what a solve would have produced — and where the
-target is accelerating, the estimate becomes correctly *less certain*
-rather than confidently wrong. At the shipped 2 s the extrapolation
-error implied by that declared 2 m/s² of unmodelled acceleration is
-½·a·t² ≈ 4 m, negligible beside a bearing-only track's kilometre-scale
-down-range uncertainty.
+This is the Kalman innovation gate, and it is what keeps
+maneuver-response latency off the solve interval. `maneuver_residual_chi2`
+scores a state that was *fitted* to its rows, so it can only be computed
+by running the solve; this scores rows the state has never seen, at
+O(new rows) with no matrix inverse, so it can run every tick.
 
-Solves are staggered deterministically across tracks (by track code), so
-the population's solve load spreads evenly over ticks instead of every
-track re-solving on the same one.
+It decides only whether to *solve*, never whether to flush — that stays
+on `maneuver_residual_chi2` over the whole window, the statistically
+stable test. So a false positive here costs one extra solve and can
+never discard measurements, and the value belongs **below**
+`maneuver_residual_chi2` rather than at it.
 
-The interval also bounds maneuver-response latency, since the
-`maneuver_residual_chi2` test only runs when a solve does. Fire-control
-locks are unaffected: a locked sensor feeds a private per-track
-refinement that updates every scan and never touches the batch. Set to
-`0.0` to solve on every refresh (the pre-#3552 behaviour).
+Raising it trades accuracy against maneuvering targets for solve cost;
+lowering it past ~4 makes the gate fire on essentially every scan, which
+is `picture_backstop_secs: 0.0` by a longer route.
+
+### `maneuver_solve_interval_secs` : f32
+
+The solve interval (s, sim time) a track falls back to while its
+measurements contradict the state it is being dead-reckoned on — i.e.
+while `maneuver_innovation_chi2` is exceeded (#3866). Replaces
+`picture_backstop_secs` for that track until the model fits again.
+
+This is a **decimation knob on maneuver-driven solves**, and it only
+bites *above* the sensor scan cadence. The gate cannot fire unless a
+measurement newer than the last solve exists, so a maneuvering track
+already re-solves at most once per scan however small this is — measured
+at 100 drones (#3866), 0.25 and 0.5 give the identical 25.0% solve rate,
+and so does forcing a solve outright. 1.0 is the first value that
+decimates anything: 18.5%, 237 ms/tick against 293 ms.
+
+So what it trades is manoeuvre-response latency against solve cost, and
+only for sensors scanning faster than it. Lowering it below the fastest
+search sensor's `scan_interval` buys nothing at any price; raising it
+past that starts skipping scans on the fastest sensors first.
+
+### `picture_backstop_secs` : f32
+
+Backstop interval (s) between full batch solves for a Picture-tier
+track that is converged and un-contradicted — the only schedule left
+once solve-on-demand triggers (first fix, unconverged, innovation
+gate) have had their say. Bounds slow sub-χ² drift accumulation.
+Staggered per track (golden-ratio phase). `<= 0.0` solves on every
+refresh unconditionally — including a contradicted track, which would
+otherwise drop to the shorter `maneuver_solve_interval_secs` — the
+v0.0.4-equivalent escape hatch the measurement harness uses as its
+baseline proxy.
+
+### `strict_eta_secs` : f32
+
+A track is Strict-tier when a weapon in flight guides on it via the
+team track (`GuidancePhase::Coasting`) with time-to-go at or below
+this (s). Strict tier solves on every refresh. Non-closing weapons
+never qualify — an opening weapon cannot consume endgame accuracy.
+
+### `picture_position_sigma_m` : f32
+
+Picture-tier unconverged threshold: horizontal position σ (m, root of
+the estimate covariance's major eigenvalue) above which a refreshed
+track re-solves immediately. 75 m — half the *largest* warhead blast
+radius (150 m), and comfortably inside the 70–150 m family with linear
+falloff, so coasting below this cannot cost a kill against any warhead
+in the family; validated by the #3866 measured campaign. Acquisition
+(σ far above) therefore solves on every refresh until convergence.
 
 ## `ClusteringSection`
 
@@ -1508,6 +1831,26 @@ going `Lost`.
 Seconds after a lock goes `Lost` (eval fails / gate no longer fits) at
 which the designation is released and the track de-designated.
 
+## `TrafficTypeSection`
+
+One civilian type the traffic director may spawn, and how often.
+
+### `blueprint` : `String`
+
+Codename of the blueprint in `assets/civilian_blueprints/`, e.g.
+`"Autonomous Cargo Ship"`. A name with no matching blueprint is reported
+once at match start and the entry is skipped.
+
+### `weight` : f32
+
+Relative likelihood of picking this type for a spawn, against the other
+entries' weights. Not a probability — the weights are normalised. An
+entry weighted 0.0 never spawns.
+
+### `behavior` : [`TrafficBehavior`](#trafficbehavior)
+
+What this type does on the map.
+
 ## `VlsPhases`
 
 `Facility::VLS` phase durations, in seconds.
@@ -1586,6 +1929,12 @@ The catapult stroke itself.
 `Facility::WellDeck` phase durations, in seconds — surface
 craft and submarines entering and leaving a flooded well deck, one at a time.
 
+The well deck's third launch slot (`approach`, clearing the stern) takes no
+time and is not authored: a launching craft is released under its own power
+the moment the well deck is clear. Its zero duration is a fact about the
+facility, not a tuning knob, so it lives in
+`dc_vehicle::deck_ops::well_deck` (#3768).
+
 ### `staging` : f32
 
 Moving the craft to the well deck and preparing it.
@@ -1594,8 +1943,70 @@ Moving the craft to the well deck and preparing it.
 
 Flooding the well deck and floating the craft out.
 
-### `approach` : f32
+## `ProcessNoiseSection`
 
-Clearing the stern. Zero because a launching craft is released under its
-own power the moment the well deck is clear; the phase is kept so launch
-and recovery have the same number of slots to mirror.
+Horizontal process-noise acceleration σ (m/s²) per tracked-object class
+(#3879) — the unmodelled acceleration the constant-velocity model tolerates
+between updates. Larger values track manoeuvres faster but settle at a
+higher covariance floor, and grow every published uncertainty faster.
+
+One global value used to serve everything from a cargo ship to an IR
+missile — roughly three orders of magnitude of real spread — so it was
+wrong in both directions at once. Each entry below is derived from the
+shipped chassis that classify into it: `a_max = min(max_lateral_g · 9.81,
+max_speed · turn_rate)`, maxed over the class, then `σ_a = a_max / √3` (the
+acceleration σ of a uniform manoeuvre over `±a_max` — the least-committed
+choice given only a bound, which is also the "bias high when uncertain"
+rule this filter wants).
+
+Classes that interconvert *and* share a motion regime share an entry, so a
+classification flip cannot change `σ_a`: `Air`/`Helicopter` both read
+`Self::air_mps2`, `Surface`/`CommandShip`/`Land` all read
+`Self::surface_mps2`. `Subsurface` and `Torpedo` also interconvert but
+differ by an order of magnitude in agility, so they keep separate entries
+and the speed floor (see `ProcessNoiseModel`) covers the flip.
+
+### `subsurface_mps2` : f32
+
+`σ_a` (m/s²) for a submarine contact (`NtdsClass::Subsurface`).
+
+### `surface_mps2` : f32
+
+`σ_a` (m/s²) for a surface or land contact (`NtdsClass::Surface`,
+`NtdsClass::CommandShip`, `NtdsClass::Land`).
+
+### `torpedo_mps2` : f32
+
+`σ_a` (m/s²) for a running torpedo (`NtdsClass::Torpedo`).
+
+### `air_mps2` : f32
+
+`σ_a` (m/s²) for an aircraft (`NtdsClass::Air`,
+`NtdsClass::Helicopter`).
+
+### `missile_mps2` : f32
+
+`σ_a` (m/s²) for a missile in flight (`NtdsClass::Missile`).
+
+### `unknown_mps2` : f32
+
+`σ_a` (m/s²) for a contact with no class evidence yet
+(`NtdsClass::Unknown`). Must be at or above every other entry: an
+unclassified contact could be any of them, and under-modelling a
+manoeuvre costs far more (lag, then divergence) than over-modelling one
+(a higher covariance floor). Checked by a `debug_assert!` in
+`ProcessNoiseModel::resolve`.
+
+## `TrafficBehavior`
+
+What a civilian does once the traffic director has put it on the map.
+
+The behaviour is a property of the *type* in the mix table, not of the
+individual hull: a tanker crosses because tankers cross.
+
+Variants:
+
+- **`Cross`** — Steam from the entry point on the map rim to a distant point on the rim, then leave the map. The through-traffic of the theatre: cargo ships and tankers with somewhere else to be.
+- **`OrbitHop`** — Enter from the rim, then work a local patch of theatre: hold an orbit for a few laps, hop to a new nearby point, repeat for a handful of visits, then head back out to the rim and leave. The unaffiliated loiterers — the two air neutrals (#3707).
+- **`ClusterAnchor`** — Anchors a cluster: enters from the rim, holds a single long-parked orbit (many more dwell periods than an `OrbitHop` visit), then heads out and leaves, same as any other civilian. `ClusterEscort` mix entries hop around whichever `ClusterAnchor` hull is currently alive and nearest.
+- **`ClusterEscort`** — Like `OrbitHop`, but every point it visits — its spawn point included — is drawn near the nearest live `ClusterAnchor` hull rather than near its own last position, so it reads as escorting that hull instead of wandering independently. Falls back to a plain `OrbitHop`-style local hop if no anchor is currently alive (its trawler has retired or been destroyed).

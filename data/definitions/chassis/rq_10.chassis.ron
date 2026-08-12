@@ -47,6 +47,7 @@
     // chassis mounts sensors / its own warhead / utility only.
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility)],
     carrier: false,
+    availability: PlayerAvailable,
     ntds_classification: DeriveFromDomain,
     // #3090: what an ARMED (warhead-carrying) RQ-10 can ram — a loitering
     // munition can dive on helicopters/drones, boats, and land targets.

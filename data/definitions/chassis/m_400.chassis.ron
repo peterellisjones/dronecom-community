@@ -45,6 +45,7 @@
     engine: Powered((thrust_n: 20000.0, fuel_burn_rate: 25.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostSustain(boost_fuel_kg: 2.0, sustain_thrust_fraction: 0.45, sustain_burn_rate: 8.0))),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
     carrier: false,
+    availability: PlayerAvailable,
     ntds_classification: Explicit(Missile),
     // Dedicated anti-air: unlike the multi-role M-250 this round only ever
     // commits on air tracks — the ladder's specialist tier.

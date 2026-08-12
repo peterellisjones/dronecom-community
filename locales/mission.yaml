@@ -154,6 +154,30 @@ mission:
   # #1356: launching-drone action area. RTB is hidden while a drone is in the
   # launch pipeline; CANCEL LAUNCH replaces it, but a launch can only be
   # cancelled while still queued — once it has started it is committed.
+  cancel_pending_launch:
+    de: "Ausstehenden Start abbrechen"
+    en: "Cancel pending launch"
+    es: "Cancelar lanzamiento pendiente"
+    fr: "Annuler le lancement en attente"
+    it: "Annulla lancio in attesa"
+    ja: "保留中の発進を中止"
+    ko: "보류 중인 발진 취소"
+    "pt-BR": "Cancelar lançamento pendente"
+    ru: "Отменить отложенный запуск"
+    zh: "取消待命发射"
+    "zh-TW": "取消待命發射"
+  cancel_pending_launch_tooltip:
+    de: "Den ausstehenden Startbefehl zurücknehmen. Die Drohne war nie festgelegt: die Wartung läuft ununterbrochen weiter."
+    en: "Withdraw the pending launch order. The drone was never committed, so servicing continues uninterrupted."
+    es: "Retirar la orden de lanzamiento pendiente. El dron nunca quedó comprometido: el mantenimiento sigue sin interrupción."
+    fr: "Retirer l'ordre de lancement en attente. Le drone n'a jamais été engagé : la maintenance se poursuit sans interruption."
+    it: "Ritira l'ordine di lancio in attesa. Il drone non è mai stato impegnato: la manutenzione prosegue senza interruzioni."
+    ja: "保留中の発進命令を撤回します。機体は確定していないため、整備は中断されずに続きます。"
+    ko: "보류 중인 발진 명령을 철회합니다. 기체가 확정된 적이 없으므로 정비는 중단 없이 계속됩니다."
+    "pt-BR": "Retirar a ordem de lançamento pendente. O drone nunca foi comprometido, então a manutenção continua sem interrupção."
+    ru: "Отозвать отложенный приказ на запуск. Дрон не был закреплён, поэтому обслуживание продолжится без перерыва."
+    zh: "撤回待命中的发射命令。该机从未被占用，维护将不间断地继续。"
+    "zh-TW": "撤回待命中的發射命令。該機從未被佔用，維護將不間斷地繼續。"
   cancel_launch:
     de: "Start abbrechen"
     en: "Cancel launch"

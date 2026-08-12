@@ -1,0 +1,50 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
+// #3704 (epic #3459): civilian neutral traffic — small, slow, sized close to
+// `usv_80`/`usv_200` (the design doc's "small-slow-loiterer ≈ patrol USV" IFF
+// trap). Spawns in clusters anchored by the Autonomous Factory Trawler.
+(
+    id: "autonomous_fishing_vessel",
+    designator: "AFV-100",
+    codename: "Driftnet",
+    domain: Sea,
+    // #3704 code review: independent, director-spawned hull — see
+    // `autonomous_cargo_ship.chassis.ron` for why `carrier: true` with empty
+    // `launch_requires`/`recovery_requires` is correct and verified inert for
+    // player exposure.
+    launch_requires: [],
+    recovery_requires: [],
+    provides: [],
+    length: 18.0,
+    weight: 4500.0,
+    max_weight: 6000.0,
+    max_fuel: 900.0,
+    hit_points: 60.0,
+    drag: 0.09,
+    mast_height: 5.0,
+    em_signatures: Some((rcs: 40.0, ir_base: 9.0, visual_cross_section: 6.0)),
+    // Still flagged for the maintainer's balance pass: at `passive_noise.base`
+    // 1.4 this hull reads *quieter* than `usv_200` (31.5) despite having no
+    // acoustic quieting — a real fishing boat's unrefined diesel screw should
+    // plausibly be louder than a purpose-quieted military USV, not quieter.
+    // #3895 did not settle that: it normalized only the *slope*, which this
+    // hull alone authored off its population's rule (0.09, where `base / 10`
+    // gives 0.14). The floor itself is untouched and still reads low.
+    acoustic_signatures: Some((passive_noise: (base: 1.4, cavitation_speed: 12.0, quiet_slope: ServiceSpeed), sonar_cross_section: 0.00015)),
+    physics: SeaSurface(
+        draft: 2.2,
+        min_turn_rate_fraction: 0.4,
+    ),
+    propulsion: Screw,
+    // #3704: zero `fuel_burn_rate` — see `autonomous_cargo_ship.chassis.ron`.
+    engine: Powered((thrust_n: 15450.0, fuel_burn_rate: 0.0, idle_burn_fraction: 0.15, thrust_response: Constant, thrust_schedule: BoostCoast)),
+    allowed_components: [Category(Sensors), Category(Utility)],
+    carrier: true,
+    availability: CivilianOnly,
+    ntds_classification: DeriveFromDomain,
+    target_domains: [],
+    guidance_uplink: None,
+    battery_capacity_kwh: 20.0,
+    base_power_draw_kw: 3.0,
+    power_supply_kw: 80.0,
+    engine_bells: (loiter: Some(0.18), cruise: Some(0.6), full: Some(0.84)),
+)

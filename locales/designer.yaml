@@ -2294,6 +2294,18 @@ designer:
     ru: "Превышение энергобюджета: %{draw}/%{supply} кВт"
     zh: "耗电超出预算: %{draw}/%{supply} kW"
     "zh-TW": "耗電超出預算: %{draw}/%{supply} kW"
+  error_civilian_only_chassis:
+    de: "Chassis ist für den Zivilverkehr reserviert und kann nicht von einem Spieler entworfen werden"
+    en: "Chassis is reserved for civilian traffic and cannot be designed by a player"
+    es: "El chasis está reservado para el tráfico civil y no puede ser diseñado por un jugador"
+    fr: "Le châssis est réservé au trafic civil et ne peut pas être conçu par un joueur"
+    it: "Il telaio è riservato al traffico civile e non può essere progettato da un giocatore"
+    ja: "このシャーシは民間交通用に予約されており、プレイヤーが設計することはできません"
+    ko: "이 섀시는 민간 교통용으로 예약되어 있어 플레이어가 설계할 수 없습니다"
+    "pt-BR": "O chassi é reservado para tráfego civil e não pode ser projetado por um jogador"
+    ru: "Шасси зарезервировано для гражданского движения и не может быть спроектировано игроком"
+    zh: "此机体保留给民用交通使用，玩家无法设计"
+    "zh-TW": "此機體保留給民用交通使用，玩家無法設計"
   notice_save_failed:
     de: "Speichern fehlgeschlagen: %{reason}"
     en: "Save failed: %{reason}"

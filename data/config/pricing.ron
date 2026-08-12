@@ -16,7 +16,7 @@
             hp: 20.0,
             altitude_m: 10.0,
         ),
-        raid_size: 6,
+        reference_track_capacity: 6,
         reference_miss_distance_m: 30.0,
         engagement_timescale_secs: 60.0,
         station_distance_m: 30000.0,
@@ -62,6 +62,8 @@
         area_exponent: 0.8,
         lock_premium: 2.0,
         scan_or_track_penalty: 0.7,
+        capacity_premium_max: 0.5,
+        capacity_half_point_tracks: 12.0,
         refresh_exponent: 0.25,
         refresh_clamp: (0.5, 2.0),
         bearing_only_quality: 0.6,
@@ -84,7 +86,10 @@
         dash_premium_max: 0.5,
         dash_half_point_mps: 100.0,
         power_supply_exponent: 0.85,
-        coverage_avail_cap: 0.7,
+        // Must stay above 0.0: six munitions have raw availability 0 (endurance
+        // below two transit legs) and would price persistence at $0, cutting
+        // mk_55 by ~42% of its chassis price.
+        coverage_avail_cap: 0.3,
         coverage_map_transits: 4.0,
     ),
     power: (

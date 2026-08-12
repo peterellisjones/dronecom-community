@@ -916,6 +916,54 @@ info_panel:
     "zh-TW": "升限"
   # Caps mil-status codes for the RDY readout on a stowed-unit tooltip (#1532).
   stowed_status:
+    launch_pending:
+      de: "START AUSSTEHEND"
+      en: "LAUNCH PENDING"
+      es: "LANZAMIENTO PENDIENTE"
+      fr: "LANCEMENT EN ATTENTE"
+      it: "LANCIO IN ATTESA"
+      ja: "発進保留"
+      ko: "발진 보류"
+      "pt-BR": "LANÇAMENTO PENDENTE"
+      ru: "ЗАПУСК ОТЛОЖЕН"
+      zh: "发射待命"
+      "zh-TW": "發射待命"
+    launch_pending_tooltip:
+      de: "Der Start ist befohlen und wartet auf den Abschluss der Wartung. Die Drohne startet danach von selbst — kein weiterer Befehl nötig."
+      en: "The launch is commanded and is waiting for servicing to finish. The drone goes by itself once it does — no further input needed."
+      es: "El lanzamiento está ordenado y espera a que termine el mantenimiento. El dron saldrá solo cuando acabe: no hace falta nada más."
+      fr: "Le lancement est ordonné et attend la fin de la maintenance. Le drone partira de lui-même — aucune autre action requise."
+      it: "Il lancio è ordinato e attende la fine della manutenzione. Il drone partirà da solo: non serve altro."
+      ja: "発進命令済み。整備の完了を待っています。完了後は自動的に発進するため、追加の操作は不要です。"
+      ko: "발진 명령이 내려졌으며 정비 완료를 기다리는 중입니다. 완료되면 자동으로 발진하므로 추가 조작은 필요 없습니다."
+      "pt-BR": "O lançamento está ordenado e aguarda o fim da manutenção. O drone parte sozinho quando terminar — nada mais é preciso."
+      ru: "Запуск отдан и ждёт окончания обслуживания. После этого дрон уйдёт сам — вмешательство не требуется."
+      zh: "发射命令已下达，正在等待维护完成。完成后无人机会自行起飞，无需再操作。"
+      "zh-TW": "發射命令已下達，正在等待維護完成。完成後無人機會自行起飛，無需再操作。"
+    scramble_pending:
+      de: "ALARMSTART"
+      en: "SCRAMBLE"
+      es: "ALERTA"
+      fr: "ALERTE"
+      it: "ALLARME"
+      ja: "緊急発進"
+      ko: "긴급발진"
+      "pt-BR": "ALERTA"
+      ru: "ТРЕВОГА"
+      zh: "紧急起飞"
+      "zh-TW": "緊急起飛"
+    scramble_pending_tooltip:
+      de: "Notstart befohlen. Die Wartung läuft weiter; die Drohne startet, sobald nichts anderes mehr die Startbahn belegt — auch unvollständig bewaffnet."
+      en: "Emergency launch commanded. Servicing continues; the drone goes the moment nothing else is holding its deck, even part-armed."
+      es: "Lanzamiento de emergencia ordenado. El mantenimiento continúa; el dron sale en cuanto nada más ocupe su cubierta, aunque vaya parcialmente armado."
+      fr: "Lancement d'urgence ordonné. La maintenance se poursuit ; le drone part dès que plus rien n'occupe son pont, même partiellement armé."
+      it: "Lancio d'emergenza ordinato. La manutenzione prosegue; il drone parte non appena nulla occupa più il suo ponte, anche se parzialmente armato."
+      ja: "緊急発進を命令済み。整備は継続し、甲板が空いた瞬間に、武装が不完全でも発進します。"
+      ko: "긴급발진 명령 상태. 정비는 계속되며, 갑판이 비는 즉시 무장이 불완전해도 발진합니다."
+      "pt-BR": "Lançamento de emergência ordenado. A manutenção continua; o drone parte assim que nada mais ocupar seu convés, mesmo parcialmente armado."
+      ru: "Отдан экстренный взлёт. Обслуживание продолжается; дрон уйдёт, как только палубу ничто не занимает, даже с неполным вооружением."
+      zh: "已下达紧急起飞命令。维护继续进行；一旦甲板无人占用即刻起飞，武装不全也照走。"
+      "zh-TW": "已下達緊急起飛命令。維護繼續進行；一旦甲板無人佔用即刻起飛，武裝不全也照走。"
     recovering:
       de: "AUFNAHME"
       en: "RECOVERING"
@@ -1123,18 +1171,18 @@ info_panel:
     # multi-leader's per-vehicle doctrine row, clarifying that the edit
     # applies group-wide (because `Group` lives on the leader, the existing
     # per-vehicle DoctrineCommand path already updates the whole group).
-    group_badge:
-      de: "(Gruppe)"
-      en: "(group)"
-      es: "(grupo)"
-      fr: "(groupe)"
-      it: "(gruppo)"
-      ja: "(グループ)"
-      ko: "(그룹)"
-      "pt-BR": "(grupo)"
-      ru: "(группа)"
-      zh: "(编组)"
-      "zh-TW": "(編組)"
+    group_scope_note:
+      de: "Gilt für die ganze Gruppe"
+      en: "Settings apply to the whole group"
+      es: "Se aplica a todo el grupo"
+      fr: "S'applique à tout le groupe"
+      it: "Vale per tutto il gruppo"
+      ja: "編隊全体に適用"
+      ko: "편대 전체에 적용"
+      "pt-BR": "Aplica-se a todo o grupo"
+      ru: "Применяется ко всей группе"
+      zh: "适用于整个编组"
+      "zh-TW": "適用於整個編組"
     posture:
       label:
         de: Haltung
@@ -4478,6 +4526,34 @@ info_panel:
       ru: "Отменить нехватку. Целевой норматив снижается на один снаряд."
       zh: "取消此缺额。定额目标降低一发。"
       "zh-TW": "取消此缺額。定額目標降低一發。"
+    # #3023, the ✕ on an ACTIVE transfer row. Scope is the whole munition type on
+    # this platform, which is why it is worded differently from the queued one
+    # below — a single string would have to lie about one of them.
+    cancel_transfer_tooltip:
+      de: "Diesen Transfer abbrechen. Die Munition kehrt dorthin zurück, woher sie kam, und der restliche Umschlag dieses Typs wird gestrichen."
+      en: "Cancel this transfer. The round goes back where it came from and the rest of this munition's queue is cancelled."
+      es: "Cancelar este traslado. El proyectil vuelve de donde salió y se anula el resto de la cola de esta munición."
+      fr: "Annuler ce transfert. La munition retourne d'où elle vient et le reste de la file de ce type est annulé."
+      it: "Annulla questo trasferimento. Il colpo torna da dove è venuto e il resto della coda di questa munizione viene annullato."
+      ja: "この移送を取り消す。弾は元の場所へ戻り、この弾種の残りの作業も取り消される。"
+      ko: "이 이송을 취소. 탄은 원래 자리로 돌아가고 이 탄종의 남은 작업도 취소된다."
+      "pt-BR": "Cancelar esta transferência. O projétil volta de onde saiu e o resto da fila desta munição é cancelado."
+      ru: "Отменить это перемещение. Снаряд вернётся на прежнее место, а остальная очередь по этому типу будет снята."
+      zh: "取消此次移送。弹药返回原处，该弹种的其余作业一并取消。"
+      "zh-TW": "取消此次移送。彈藥返回原處，該彈種的其餘作業一併取消。"
+    # #3023, the ✕ on a QUEUED (reservation) row. One move only — siblings stand.
+    cancel_queued_tooltip:
+      de: "Diesen eingereihten Transfer abbrechen, bevor er beginnt. Das Sollziel sinkt um eine Runde."
+      en: "Cancel this queued transfer before it starts. The manifest target drops by one round."
+      es: "Cancelar este traslado en cola antes de que empiece. El objetivo del manifiesto baja en una ronda."
+      fr: "Annuler ce transfert en file avant qu'il ne commence. La cible du manifeste baisse d'une munition."
+      it: "Annulla questo trasferimento in coda prima che inizi. L'obiettivo del manifesto cala di un colpo."
+      ja: "開始前のこの移送を取り消す。定数目標が1発下がる。"
+      ko: "시작 전인 이 이송을 취소. 편제 목표가 1발 낮아진다."
+      "pt-BR": "Cancelar esta transferência em fila antes que comece. A meta do manifesto cai em um projétil."
+      ru: "Отменить это перемещение из очереди до его начала. Целевой норматив снижается на один снаряд."
+      zh: "在开始前取消此排队移送。定额目标降低一发。"
+      "zh-TW": "在開始前取消此排隊移送。定額目標降低一發。"
     # Missing-armament badge tooltip (#2697): one entry per stockless-shortfall
     # munition type on a stowed unit's OWN manifest, e.g. "M-100: 2 SHORT". %{name}
     # is the blueprint's own designator (as-typed, never case-coerced); multiple
@@ -4699,6 +4775,42 @@ info_panel:
     "zh-TW": "發射平台已收納"
   # #3326/#3109: the drone is warehoused in the carrier's stores rather than
   # spotted in its hangar, so it cannot launch until it is brought up.
+  scramble:
+    de: "ALARMSTART"
+    en: "SCRAMBLE"
+    es: "ALERTA"
+    fr: "ALERTE"
+    it: "ALLARME"
+    ja: "緊急発進"
+    ko: "긴급발진"
+    "pt-BR": "ALERTA"
+    ru: "ТРЕВОГА"
+    zh: "紧急起飞"
+    "zh-TW": "緊急起飛"
+  scramble_tooltip:
+    de: "Notstart. Die Wartung läuft weiter, während der Start wartet; die Drohne startet, sobald nichts anderes mehr die Startbahn belegt — in dem Betankungs- und Bewaffnungszustand, den sie bis dahin erreicht hat. Nicht vollständig bewaffnet zu starten ist der Preis dafür."
+    en: "Emergency launch. Servicing continues while the launch waits; the drone goes the moment nothing else is holding its deck, in whatever fuelled and armed state it has reached by then. Launching partly armed is the price."
+    es: "Lanzamiento de emergencia. El mantenimiento continúa mientras el lanzamiento espera; el dron sale en cuanto nada más ocupe su cubierta, con el combustible y el armamento que haya alcanzado. El precio es despegar parcialmente armado."
+    fr: "Lancement d'urgence. La maintenance se poursuit pendant l'attente ; le drone part dès que plus rien n'occupe son pont, dans l'état de carburant et d'armement atteint à ce moment. Décoller partiellement armé en est le prix."
+    it: "Lancio d'emergenza. La manutenzione prosegue mentre il lancio attende; il drone parte non appena nulla occupa più il suo ponte, con il carburante e l'armamento raggiunti fino a quel momento. Il prezzo è decollare parzialmente armato."
+    ja: "緊急発進。待機中も整備は継続し、甲板が空いた瞬間に、その時点の燃料・武装状態のまま発進します。武装が不完全なまま出ることが代償です。"
+    ko: "긴급발진. 대기하는 동안에도 정비는 계속되며, 갑판이 비는 즉시 그 시점의 연료·무장 상태 그대로 발진합니다. 무장이 불완전한 채 출격하는 것이 대가입니다."
+    "pt-BR": "Lançamento de emergência. A manutenção continua enquanto o lançamento aguarda; o drone parte assim que nada mais ocupar seu convés, no estado de combustível e armamento alcançado até então. O preço é decolar parcialmente armado."
+    ru: "Экстренный взлёт. Обслуживание продолжается, пока запуск ждёт; дрон уходит, как только палубу ничто не занимает, — с тем запасом топлива и вооружения, что успел набрать. Цена — взлёт с неполным вооружением."
+    zh: "紧急起飞。等待期间维护继续进行；一旦甲板无人占用即刻起飞，以届时已达到的燃油与武装状态出击。代价是武装不全就上天。"
+    "zh-TW": "緊急起飛。等待期間維護持續進行；一旦甲板無人佔用即刻起飛，以屆時已達到的燃油與武裝狀態出擊。代價是武裝不全就上天。"
+  scramble_disabled_ready:
+    de: "Keine Wartung im Gange — es gibt nichts zu überspringen; Starten reiht regulär ein"
+    en: "Nothing being serviced — there is nothing to skip; Launch queues it normally"
+    es: "No hay mantenimiento en curso: no hay nada que saltarse; Lanzar lo pone en cola con normalidad"
+    fr: "Aucune maintenance en cours — rien à écourter ; Lancer le met en file normalement"
+    it: "Nessuna manutenzione in corso — non c'è nulla da saltare; Lancio lo accoda normalmente"
+    ja: "整備中ではありません — 短縮するものがありません。通常の発射で順番に並びます"
+    ko: "정비 중이 아닙니다 — 건너뛸 것이 없습니다. 일반 발사로 정상 대기합니다"
+    "pt-BR": "Nada em manutenção — não há o que abreviar; Lançar o enfileira normalmente"
+    ru: "Обслуживание не идёт — сокращать нечего; обычный запуск поставит в очередь"
+    zh: "当前没有维护作业——无可跳过；使用发射即可正常排队"
+    "zh-TW": "目前沒有維護作業——無可跳過；使用發射即可正常排隊"
   launch_disabled_in_stores:
     de: "Im Lager — erst in den Hangar holen"
     en: "In stores — bring up to the hangar first"

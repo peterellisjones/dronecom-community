@@ -42,6 +42,7 @@
     engine: Powered((thrust_n: 5400.0, fuel_burn_rate: 4.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility)],
     carrier: false,
+    availability: PlayerAvailable,
     ntds_classification: Explicit(Missile),
     target_domains: [SeaSurface, Land],
     guidance_uplink: FromLauncher,

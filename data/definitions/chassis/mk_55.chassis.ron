@@ -15,7 +15,7 @@
     drag: 0.05,
     mast_height: 0.0,
     em_signatures: None,
-    acoustic_signatures: Some((passive_noise: (base: 0.06, cavitation_speed: 20.3, quiet_noise_per_mps: 0.00295567, cavitation_noise_per_mps: 0.0295567), sonar_cross_section: 0.000012)),
+    acoustic_signatures: Some((passive_noise: (base: 0.06, cavitation_speed: 20.3, quiet_slope: CavitationSpeed), sonar_cross_section: 0.000012)),
     physics: Submarine(
         max_depth: 600.0,
         default_depth: 150.0,
@@ -29,6 +29,7 @@
     engine: Powered((thrust_n: 4754.0, fuel_burn_rate: 0.336, idle_burn_fraction: 0.08, thrust_response: Constant, thrust_schedule: BoostCoast)),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility)],
     carrier: false,
+    availability: PlayerAvailable,
     ntds_classification: Explicit(Torpedo),
     target_domains: [Submarine, SeaSurface],
     guidance_uplink: FromLauncher,

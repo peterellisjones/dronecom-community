@@ -37,6 +37,12 @@ SimConfig(
             off_nose_min_speed_rad: 1.2,
             turn_speed_frac: 0.1,
             los_lead_secs: 0.4,
+            // #2649 loiter guard. A round that reaches its target but settles
+            // into a constant-range circle neither fuzes nor recedes, so
+            // nothing ended it: 3 s inside its own blast radius without
+            // improving its closest approach by 5 m spends it.
+            loiter_spend_secs: 3.0,
+            loiter_progress_m: 5.0,
         ),
         patrol_loop: (
             sample_spacing_m: 100.0,
@@ -149,9 +155,7 @@ SimConfig(
             air_launch: (arming: 0.5, release: 0.5),
             torpedo_tube: (flooding: 5.0, launch: 2.0),
             flight_deck: (hangar: 15.0, elevator: 10.0, deck: 8.0, catapult: 5.0),
-            // `approach` must stay 0.0 — a launching craft leaves under its own
-            // power; the slot exists only so recovery has a phase to mirror.
-            well_deck: (staging: 12.0, well_deck: 10.0, approach: 0.0),
+            well_deck: (staging: 12.0, well_deck: 10.0),
         ),
     ),
     debug_spawn: (
@@ -163,11 +167,13 @@ SimConfig(
     sensors: (
         // #2375: a Lost contact is purged once EITHER bound below is crossed
         // (whichever comes first) — except while AwaitingBda, which is
-        // protected until its BDA deadline resolves (#2402). Under
-        // filter.process_noise_accel_mps2 below, max_position_sigma_m is
-        // normally the bound that fires, ~4 minutes after loss;
-        // max_age_secs is a backstop for contacts whose position fix never
-        // resolves numerically.
+        // protected until its BDA deadline resolves (#2402).
+        // max_position_sigma_m is normally the bound that fires; max_age_secs
+        // is a backstop for contacts whose position fix never resolves
+        // numerically. Since #3879 made filter.process_noise below per class,
+        // time-to-purge is per class too (it scales as 1/√σ_a): ~100 s for an
+        // aircraft, ~120 s for a ship, ~240 s for a submarine, where the old
+        // global 2.0 gave every class ~224 s.
         stale_retention: (
             max_age_secs: 600.0,
             max_position_sigma_m: 50000.0,
@@ -176,12 +182,39 @@ SimConfig(
         contact_capacity_hysteresis: 0.10,
         // DC-36.1 recursive track filter (used only when noisy sensing is on).
         filter: (
-            process_noise_accel_mps2: 2.0,
+            // #3879: per-class horizontal process noise, replacing one global
+            // 2.0 that served a cargo ship and an IR missile alike. Derived from
+            // the shipped chassis — a_max = min(max_lateral_g·9.81, max_speed ×
+            // turn_rate), maxed over the class, then σ_a = a_max/√3 (uniform
+            // manoeuvre). The three fastest entries are then held at a CEILING
+            // of 10.0: above √velocity_resolved_var_threshold / (slowest
+            // air-search scan_interval) = 40/4, a tracked target's course and
+            // speed read Unresolved between scans, and the AI stops leading its
+            // shots. Raising the ceiling means making that gate fractional
+            // rather than an absolute 40 m/s σ — tracked separately.
+            process_noise: (
+                // ss_400: 8.6 m/s × 0.343 rad/s = 3.0 m/s².
+                subsurface_mps2: 1.7,
+                // usv_80: 17.5 m/s × 0.699 rad/s = 12.2 m/s². Also carries Land
+                // (a static target is no more agile than a ship).
+                surface_mps2: 7.0,
+                // mk_55: 28.0 × 1.118 = 31.3 m/s² → 18.1, at the ceiling.
+                torpedo_mps2: 10.0,
+                // mq_160: 230.5 × 0.300 = 69.2 m/s² → 40.0, at the ceiling.
+                air_mps2: 10.0,
+                // m_100: structural 60 g = 588.6 m/s² → 340.0, at the ceiling.
+                missile_mps2: 10.0,
+                // Must stay >= every entry above: an unclassified contact could
+                // be any of them, and lag costs more than a covariance floor.
+                unknown_mps2: 10.0,
+            ),
             // #2151: vertical maneuvering is gentler than horizontal, so keep this
-            // BELOW process_noise_accel_mps2. A high value over-couples PY<->VY, so
+            // BELOW the horizontal entries. A high value over-couples PY<->VY, so
             // noisy long-range altitude observations leak into a large spurious
             // vertical velocity (was 4.0 → up to ±21 m/s on a stationary contact;
             // 1.0 caps it near ~8 m/s while altitude resolution stays smooth).
+            // subsurface_mps2 (1.7) is the lowest horizontal entry, so the
+            // ordering holds across the whole table.
             vertical_process_noise_accel_mps2: 1.0,
             initial_position_var: 10000.0,
             initial_velocity_var: 2500.0,
@@ -252,9 +285,13 @@ SimConfig(
         // DC-1053 batch pseudo-linear TMA velocity solver (noisy sensing only).
         tma: (
             // Bearing-history window (s). The CV assumption must hold across it.
-            window_secs: 30.0,
+            // 8 s (#3870), down from 30: ~3× tighter horizontal error on both
+            // active and passive geometry, and ~4× cheaper per solve.
+            window_secs: 8.0,
             // Hard cap on retained bearings per track (oldest dropped first).
-            max_measurements: 256,
+            // 128 (#3870), down from 256: identical bearing-only observability
+            // to 256 rows, at −20% fleet tick cost.
+            max_measurements: 128,
             // Hard cap on FDOA pairs emitted per track per scan. Candidates
             // grow as N²/2 in the observer count; the most informative are
             // kept (largest baseline per unit noise).
@@ -265,11 +302,41 @@ SimConfig(
             // Reduced-χ² per DOF above which a maneuver is inferred and the
             // window is flushed (~3σ).
             maneuver_residual_chi2: 9.0,
-            // Minimum interval (s) between full batch solves per track, spread
-            // deterministically across tracks. Must stay well under
-            // window_secs — at 2 s only ~7% of a 30 s window is new per solve.
-            // 0.0 solves on every refresh.
-            solve_interval_secs: 2.0,
+            // Reduced-χ² per DOF of the measurements arrived SINCE the last
+            // solve, scored against the dead-reckoned state, above which a
+            // solve is forced early. Set below maneuver_residual_chi2: this
+            // decides only whether to solve, never whether to flush, so a
+            // false positive costs one solve. 6.0 is the measured knee (#3866)
+            // — full p95 parity with solving on every refresh at ~73% of its
+            // solve count; below ~4 it fires on every scan.
+            maneuver_innovation_chi2: 6.0,
+            // Solve interval (s) a track falls back to while the gate above
+            // says its model is broken. A DECIMATOR on maneuver-driven solves,
+            // effective only above the scan cadence: the gate needs a row newer
+            // than the last solve, so 0.25 and 0.5 measure identically (#3866).
+            // 0.5 matches the fastest search sensor's scan_interval, so no scan
+            // is skipped; 1.0 halves the fleet cost by skipping every other
+            // scan on those sensors.
+            maneuver_solve_interval_secs: 0.5,
+            // Backstop interval (s) between full batch solves for a converged,
+            // un-contradicted Picture-tier track — the only schedule left once
+            // the solve-on-demand triggers (first fix, unconverged, innovation
+            // gate) have had their say. Bounds slow sub-χ² drift accumulation.
+            // <= 0.0 solves on every refresh — the v0.0.4-equivalent baseline
+            // proxy the measurement harness uses. 5.0 (#3866, up from 2.0): the
+            // unconditional per-refresh solve is gone, so the earlier triggers
+            // now cover what a shorter unconditional interval used to.
+            picture_backstop_secs: 5.0,
+            // A track is Strict-tier when a weapon in flight guides on it via
+            // the team track with time-to-go at or below this (s); Strict
+            // solves on every refresh. Non-closing weapons never qualify.
+            strict_eta_secs: 10.0,
+            // Picture-tier unconverged threshold: horizontal position σ (m)
+            // above which a refreshed track re-solves immediately. Half the
+            // LARGEST warhead blast radius (150 m) — comfortably inside the
+            // 70-150 m family with linear falloff, validated by the #3866
+            // measured campaign.
+            picture_position_sigma_m: 75.0,
         ),
         // DC-36.3 formation merging (used only when noisy sensing is on).
         clustering: (
@@ -443,6 +510,93 @@ SimConfig(
         missile_cpa_radius_m: 2500.0,
         missile_speed_sigma_admission: 2.0,
         lock_clear_hysteresis_secs: 5.0,
+        // #3889: how long a raised RWR call is held before it may announce a
+        // clear. Matched to `lock_clear_hysteresis_secs` so the announced call
+        // and the evade-clear decision relax on the same timescale.
+        threat_alert_min_dwell_secs: 5.0,
+        // #3713: one bounded evasive reaction per range-unresolved munition
+        // track. Sized to cover a full sonar-range torpedo run (~60 s at the
+        // engagement ranges a passive array actually detects at), so the reflex
+        // outlasts the threat it can see rather than expiring mid-run; the bound
+        // exists to stop a permanently-frozen track holding a unit off its
+        // assignment forever, not to cut a live reaction short.
+        bearing_only_reflex_max_secs: 60.0,
         engagement_commitment_max_secs: 90.0,
+    ),
+    traffic: (
+        // #3705 (epic #3459). Eight hulls on a 100 km-wide theatre is sparse
+        // enough that a civilian in the picture is an event rather than
+        // scenery, and dense enough that one is usually somewhere.
+        target_population: 8,
+        population_band: 3,
+        // Spawn cadence. The band, not this, decides how much traffic there is;
+        // this decides how fast the map fills from empty (~8 spawns at a ~95 s
+        // mean gap ≈ 13 min) and how ragged arrivals look once it is full.
+        spawn_interval_min_s: 45.0,
+        spawn_interval_max_s: 150.0,
+        // Target drift. Re-rolled every 4–10 min so traffic thickens and thins
+        // across a match instead of pinning to one number.
+        target_drift_min_s: 240.0,
+        target_drift_max_s: 600.0,
+        // Inside the rim, never on it: the playable map is the circle of the
+        // terrain radius and a point placed exactly on it is one float step
+        // from the off-map water A* refuses to enter (#2271). At the 50 km
+        // default radius this is a 1.5 km inset.
+        ring_radius_fraction: 0.97,
+        // Retirement is positional as well as order-based: a civilian with no
+        // active order has either arrived at a rim exit or never had an order,
+        // and only the first is an exit. 0.9 of the entry ring leaves ~4.9 km
+        // of slack at the default 50 km radius — far more than the loiter a
+        // hull settles into on arrival, and far less than the middle of the map
+        // where a debug-spawned demo vessel sits.
+        retirement_ring_fraction: 0.9,
+        // A crossing spans at least a quadrant — ~69 km at the default radius,
+        // so a civilian is genuinely transiting the theatre rather than
+        // clipping a corner of it.
+        min_crossing_separation_deg: 90.0,
+        max_placement_attempts: 16,
+        // #3886: keep civilians out of the teams' starting anchorages. On the
+        // default 50 km map the carriers start at 49.0 km and this ring sits at
+        // 48.5 km — 500 m apart — so without this a civilian drawn near a
+        // team's angle arrives on top of it. 15 km excludes ~35.4° of ring per
+        // team (~20% at 2 teams, ~39% at 4), leaving ample water to draw from.
+        start_keep_out_m: 15000.0,
+        // #3707: the full six-type roster. Weights are first-pass — flagged
+        // for a balance pass once the cast is actually visible in matches.
+        mix: [
+            (blueprint: "Autonomous Cargo Ship", weight: 3.0, behavior: Cross),
+            (blueprint: "Autonomous LNG Tanker", weight: 2.0, behavior: Cross),
+            (blueprint: "Autonomous Fishing Vessel", weight: 2.0, behavior: ClusterEscort),
+            (blueprint: "Autonomous Factory Trawler", weight: 1.0, behavior: ClusterAnchor),
+            (blueprint: "Peacekeeping Observation Drone", weight: 1.0, behavior: OrbitHop),
+            (blueprint: "Press War Correspondent Drone", weight: 1.0, behavior: OrbitHop),
+        ],
+        // #3707: orbit-hop / cluster tuning. `orbit_radius_m` is shared by
+        // every hop's ring and by a `ClusterAnchor`'s own stationary loiter;
+        // 1.5 km is well inside the map footprint at the default 50 km
+        // radius (`ring_radius_fraction` above already insets that) and
+        // comfortably clears every shipped hull's minimum turn radius.
+        orbit_radius_m: 1500.0,
+        // "A few laps" — converted to a dwell time per hull from its own
+        // cruise speed at roll time (see the field docs), so this range
+        // means the same thing for a 5 m/s fishing skiff and a 100+ m/s
+        // strike drone alike.
+        orbit_hop_min_orbits: 2.0,
+        orbit_hop_max_orbits: 5.0,
+        // How far a free hop (no cluster anchor to stay near) may range from
+        // its current point — a local patch of theatre, not the whole map.
+        orbit_hop_radius_m: 8_000.0,
+        // A handful of points visited before heading home and freeing the
+        // slot — without this cap an orbiting civilian never leaves (see the
+        // module docs).
+        orbit_hop_visits_min: 2,
+        orbit_hop_visits_max: 5,
+        // The escort screen stays within 4 km of its trawler.
+        cluster_radius_m: 4_000.0,
+        // The trawler's own "long loiter" — several times an escort's visit
+        // count, so it reads as the parked centre of the cluster rather than
+        // leaving on the same schedule as the boats working around it.
+        cluster_anchor_visits_min: 20,
+        cluster_anchor_visits_max: 40,
     ),
 )
