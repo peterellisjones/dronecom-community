@@ -724,6 +724,31 @@ glossary:
       ru: "Диапазон скоростей, который может выдерживать каждая машина группы."
       zh: "编队所有成员都能保持的速度区间。"
       "zh-TW": "編隊所有成員都能保持的速度區間。"
+  pace:
+    label:
+      de: "TEMPO"
+      en: "PACE"
+      es: "RITMO"
+      fr: "ALLURE"
+      it: "ANDATURA"
+      ja: "編隊速力"
+      ko: "편대 속력"
+      "pt-BR": "RITMO"
+      ru: "ТЕМП"
+      zh: "编队航速"
+      "zh-TW": "編隊航速"
+    tooltip:
+      de: "Formationstempo: die höchste Geschwindigkeit, die dieser Gruppe befohlen werden kann, während jeder Formationsplatz auf der befohlenen Station im Geschwindigkeitsbereich der Gruppe bleibt. Ein seitlich versetzter Platz umkreist einen weiteren Kreis als der Führer und braucht entsprechend mehr Fahrt, daher kostet eine breite Formation auf einem engen Ring die ganze Gruppe Geschwindigkeit. \"--\" bedeutet, dass keine Geschwindigkeit diese Formation auf dieser Station hält: Abstand verringern, in Kiellinie wechseln oder die Station weiten."
+      en: "Formation pace: the fastest this group can be ordered while every formation slot stays inside the group's speed envelope on the commanded station. A slot offset to port or starboard orbits a wider circle than the leader and needs proportionally more speed, so a wide formation on a tight ring costs the whole group speed. \"--\" means no speed holds this formation on this station: close the spacing, switch to a column, or widen the station."
+      es: "Ritmo de formación: la velocidad máxima que se puede ordenar a este grupo manteniendo cada puesto de formación dentro de la envolvente de velocidad del grupo en la estación ordenada. Un puesto desplazado a babor o estribor recorre un círculo más amplio que el líder y necesita proporcionalmente más velocidad, así que una formación ancha en un anillo estrecho le cuesta velocidad a todo el grupo. \"--\" significa que ninguna velocidad mantiene esta formación en esta estación: cierra la separación, pasa a columna o amplía la estación."
+      fr: "Allure de formation : la vitesse maximale que l'on peut ordonner à ce groupe tout en gardant chaque poste de formation dans l'enveloppe de vitesse du groupe sur la station ordonnée. Un poste décalé à bâbord ou à tribord parcourt un cercle plus large que le leader et exige proportionnellement plus de vitesse ; une formation large sur un anneau serré coûte donc de la vitesse à tout le groupe. « -- » signifie qu'aucune vitesse ne tient cette formation sur cette station : resserrez l'espacement, passez en file ou élargissez la station."
+      it: "Andatura di formazione: la velocità massima ordinabile a questo gruppo mantenendo ogni posto di formazione dentro l'inviluppo di velocità del gruppo sulla stazione ordinata. Un posto spostato a sinistra o a dritta percorre un cerchio più ampio del capo e richiede proporzionalmente più velocità, quindi una formazione larga su un anello stretto costa velocità a tutto il gruppo. \"--\" significa che nessuna velocità tiene questa formazione su questa stazione: riduci la distanza, passa in colonna o allarga la stazione."
+      ja: "編隊速力：指定されたステーションで全ての編隊位置が速力範囲に収まるまま、この編隊に命じられる最大速力。左右にずれた位置は僚長より大きな円を描くため比例して速力を要し、狭い環に対する幅広の編隊は編隊全体の速力を削る。「--」はこのステーションでこの編隊を保てる速力が存在しないことを示す。間隔を詰めるか、縦列に変えるか、ステーションを広げること。"
+      ko: "편대 속력: 지정된 스테이션에서 모든 편대 위치가 그룹 속력 범위 안에 머무르는 조건으로 이 그룹에 명령할 수 있는 최대 속력. 좌우로 벌어진 위치는 리더보다 큰 원을 돌아 그만큼 더 빠른 속력이 필요하므로, 좁은 링에 넓은 편대는 그룹 전체의 속력을 깎는다. \"--\"는 이 스테이션에서 이 편대를 유지할 수 있는 속력이 없다는 뜻이다. 간격을 좁히거나 종대로 바꾸거나 스테이션을 넓혀야 한다."
+      "pt-BR": "Ritmo de formação: a maior velocidade que se pode ordenar a este grupo mantendo cada posto de formação dentro do envelope de velocidade do grupo na estação ordenada. Um posto deslocado a bombordo ou a boreste percorre um círculo mais largo que o líder e precisa de proporcionalmente mais velocidade, então uma formação larga num anel apertado custa velocidade a todo o grupo. \"--\" significa que nenhuma velocidade sustenta esta formação nesta estação: feche o espaçamento, passe para coluna ou amplie a estação."
+      ru: "Темп строя: наибольшая скорость, которую можно назначить группе так, чтобы каждое место в строю оставалось в диапазоне скоростей группы на заданной станции. Смещённое к борту место обходит более широкий круг, чем ведущий, и требует пропорционально большей скорости, поэтому широкий строй на тесном кольце отнимает скорость у всей группы. «--» означает, что этот строй на этой станции не держится ни на какой скорости: сократите интервал, перестройтесь в кильватер или расширьте станцию."
+      zh: "编队航速：在保持每个编队位置都处于编队速度区间内的前提下，该编组在指定站位上可被命令的最高航速。左右偏置的位置绕行的圆周比长机更大，所需航速也按比例更高，因此紧凑环上的宽阔编队会拖慢整个编组。\"--\"表示该站位上没有任何航速能维持此编队：缩小间距、改为纵队，或扩大站位。"
+      "zh-TW": "編隊航速：在保持每個編隊位置都處於編隊速度區間內的前提下，該編組在指定站位上可被命令的最高航速。左右偏置的位置繞行的圓周比長機更大，所需航速也按比例更高，因此緊湊環上的寬闊編隊會拖慢整個編組。\"--\"表示該站位上沒有任何航速能維持此編隊：縮小間距、改為縱隊，或擴大站位。"
   altband:
     label:
       de: "HÖHENBAND"

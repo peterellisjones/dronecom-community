@@ -276,6 +276,14 @@ diagnostics_modal:
     en: "Connected Clients"
   server_commands_per_sec:
     en: "Commands/sec"
+  server_send_buffer_full:
+    en: "Send Buffer Full"
+  server_send_too_large:
+    en: "Send Too Large"
+  server_snapshots_deferred:
+    en: "Snapshots Deferred"
+  server_contact_deltas_deferred:
+    en: "Contact Deltas Deferred"
   client_snapshot_age:
     en: "Snapshot Age"
   client_snapshot_rate:

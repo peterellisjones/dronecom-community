@@ -10,9 +10,14 @@ Thresholds the strategy assessment uses to choose an objective + posture.
 
 ### `horizon_secs` : f32
 
-Commitment window (seconds): a chosen objective is held this long before
-a scheduled re-assessment, unless an emergency (a threatened carrier)
-forces an earlier switch. Hysteresis — stops per-tick posture flapping.
+Commitment window (seconds): a chosen fleet objective is held this long
+before a scheduled re-assessment, unless an emergency (a threatened
+carrier) forces an earlier switch.
+
+Commits the **objective only** (#4294). The per-carrier posture is
+re-derived from raw signals on every assessment and is not held by this
+window; `emcon_relax_dwell_secs` is what stops that jitter reaching a
+doctrine command.
 
 ### `threat_range_m` : f32
 
@@ -101,3 +106,25 @@ contact crosses this radius — and is evicted — far sooner than a slow one.
 
 Confidence floor (`0..1`): a decaying belief below this is evicted (the AI
 has forgotten the contact).
+
+### `emcon_relax_dwell_secs` : f32
+
+How long (seconds) the AI keeps a unit **radiating** after its resolved
+EMCON level first reads Passive, before it orders the unit quiet.
+
+Only the *relaxation* is damped: a unit whose resolved level reads Active
+is ordered to radiate immediately — needing to see is urgent, going quiet
+is not. `0.0` disables the damping.
+
+EMCON is a standing disposition, but the posture it is derived from is
+re-read on every assessment and no commitment window holds it (see
+`horizon_secs`), so a momentary dip in a strategy signal reaches the
+doctrine bus as a real command. Measured on #4294: the team's armed-unit
+count falls to zero for ~1.2 s while a strike wave's ordnance hands off
+from launcher magazines to airborne rounds, dropping the team below
+`press_force_floor` and flipping every picket Press to Probe and back —
+switching their radars off and on again, twice per wave.
+
+Must exceed `ai.ron`'s `evaluation_interval`, or the damping cannot bite:
+the level is resampled only once per commander evaluation, so a shorter
+dwell always elapses before the next look.

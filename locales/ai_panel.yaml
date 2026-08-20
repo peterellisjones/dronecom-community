@@ -181,6 +181,20 @@ ai_panel:
     ru: "Сектор (%{row}, %{col}) требует патрулирования"
     zh: "区域 (%{row}, %{col}) 需要巡逻"
     "zh-TW": "區域 (%{row}, %{col}) 需要巡邏"
+  # #4150: the zone is deliberately not named — see the comment on
+  # `goal_occupy_zone` below.
+  rationale_occupy_zone:
+    de: "Territoriumszone unbesetzt oder umkämpft"
+    en: "Territory zone unheld or contested"
+    es: "Zona de territorio sin control o disputada"
+    fr: "Zone de territoire non tenue ou disputée"
+    it: "Zona di territorio non controllata o contesa"
+    ja: "占領ゾーンが未確保または係争中"
+    ko: "영역 구역이 미확보 또는 분쟁 중"
+    "pt-BR": "Zona de território sem controle ou disputada"
+    ru: "Зона территории не удержана или оспаривается"
+    zh: "领土区域未控制或存在争夺"
+    "zh-TW": "領土區域未控制或存在爭奪"
   spatial_overlay:
     label:
       de: "Raumübersicht"
@@ -302,6 +316,20 @@ ai_panel:
     ru: "Патруль"
     zh: "巡逻"
     "zh-TW": "巡邏"
+  # #4150 (epic #4140): the territory-capture advisor, which sends
+  # surface hulls to stand in capturable zones.
+  advisor_territory:
+    de: "Territorium"
+    en: "Territory"
+    es: "Territorio"
+    fr: "Territoire"
+    it: "Territorio"
+    ja: "領域"
+    ko: "영역"
+    "pt-BR": "Território"
+    ru: "Территория"
+    zh: "领土"
+    "zh-TW": "領土"
   goal_classify_contact:
     de: "Kontakt T%{track_code} identifizieren"
     en: "Classify contact T%{track_code}"
@@ -374,6 +402,24 @@ ai_panel:
     ru: "Патрулирование сектора (%{row}, %{col})"
     zh: "巡逻区域 (%{row}, %{col})"
     "zh-TW": "巡邏區域 (%{row}, %{col})"
+  # #4150: which zone is deliberately not interpolated. Naming it needs
+  # the zone geometry for the compass bearing (the single naming scheme
+  # `dc_ui_client::display::ZoneIdUi` owns, shared with the map labels and
+  # the income tooltip), and this panel's label helpers are pure
+  # `&GoalLabel -> String` functions with no world access. A second,
+  # geometry-free scheme is what that helper exists to prevent.
+  goal_occupy_zone:
+    de: "Territoriumszone besetzen"
+    en: "Occupy territory zone"
+    es: "Ocupar zona de territorio"
+    fr: "Occuper une zone de territoire"
+    it: "Occupare zona di territorio"
+    ja: "占領ゾーンを確保"
+    ko: "영역 구역 확보"
+    "pt-BR": "Ocupar zona de território"
+    ru: "Занять зону территории"
+    zh: "占据领土区域"
+    "zh-TW": "佔據領土區域"
   # #1692: AI co-pilot panel — strategic-picture / missions section labels,
   # objective / posture / EMCON values (tactical, CAPS in Latin locales), and
   # plain-language coaching prose (sentence case).
@@ -665,6 +711,18 @@ ai_panel:
     ru: "Патрулирование сектора для воспрещения пространства и расширения зоны датчиков."
     zh: "巡逻一个区域以封锁空间并扩展传感器范围。"
     "zh-TW": "巡邏一個區域以封鎖空間並擴展感測器範圍。"
+  why_occupy_zone:
+    de: "Ein Überwasserschiff hält eine Territoriumszone besetzt, um deren Einnahmen zu sichern."
+    en: "Holding a territory zone with a surface vessel to secure its income."
+    es: "Manteniendo una zona de territorio con un buque de superficie para asegurar su renta."
+    fr: "Tenue d'une zone de territoire avec un bâtiment de surface pour en sécuriser le revenu."
+    it: "Mantenere una zona di territorio con una nave di superficie per assicurarne il reddito."
+    ja: "水上艦で占領ゾーンを確保し、その収入を得る。"
+    ko: "수상함으로 영역 구역을 확보하여 수입을 얻는다."
+    "pt-BR": "Mantendo uma zona de território com um navio de superfície para garantir sua renda."
+    ru: "Удержание зоны территории надводным кораблём ради её дохода."
+    zh: "以水面舰艇控制领土区域以获取其收入。"
+    "zh-TW": "以水面艦艇控制領土區域以獲取其收入。"
   why_move_carrier:
     de: "Neupositionierung des Trägers."
     en: "Repositioning the carrier."
@@ -809,6 +867,18 @@ ai_panel:
     ru: "Запуск дрона %{entity_id}"
     zh: "正在发射无人机 %{entity_id}"
     "zh-TW": "正在發射無人機 %{entity_id}"
+  log_occupying_zone:
+    de: "Einheit %{entity_id} bezieht Position in der Zone"
+    en: "Unit %{entity_id} taking station in zone"
+    es: "La unidad %{entity_id} toma posición en la zona"
+    fr: "L'unité %{entity_id} prend station dans la zone"
+    it: "L'unità %{entity_id} prende posizione nella zona"
+    ja: "ユニット %{entity_id} がゾーンで配置につく"
+    ko: "유닛 %{entity_id} 구역에 배치 중"
+    "pt-BR": "Unidade %{entity_id} assumindo posição na zona"
+    ru: "Юнит %{entity_id} занимает позицию в зоне"
+    zh: "单位 %{entity_id} 正在区域内就位"
+    "zh-TW": "單位 %{entity_id} 正在區域內就位"
   log_monitor_contact_lost:
     de: "Kontakt T%{track_code} während Überwachung verloren"
     en: "Contact T%{track_code} lost during monitoring"

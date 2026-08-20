@@ -45,7 +45,13 @@
     carrier: false,
     availability: PlayerAvailable,
     ntds_classification: DeriveFromDomain,
-    target_domains: [],
+    // What an ARMED MH-180 can ram. Unarmed builds claim none of these (the
+    // seeding in blueprint stats is warhead-conditional). `RotaryWing` declares
+    // no attack-altitude override, so the ram runs in at the deliberate 10 m
+    // floor above (#3436) rather than at the surface — inside every warhead's
+    // 20–30 m proximity-fuze radius, so it still fuzes. Must not name
+    // `Submarine` — an air hull cannot reach a submerged target.
+    target_domains: [Air, SeaSurface, Land],
     guidance_uplink: None,
     battery_capacity_kwh: 1.0,
     base_power_draw_kw: 1.0,

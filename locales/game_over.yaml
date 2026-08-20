@@ -85,6 +85,18 @@ game_over:
     ru: "Время истекло · тай-брейк: уничтоженная стоимость"
     zh: "时间到——决胜依据：摧毁费用"
     "zh-TW": "時間到——決勝依據：摧毀費用"
+  reason_territory_control:
+    de: "Alle Gebietszonen gehalten"
+    en: "Held every territory zone"
+    es: "Todas las zonas territoriales controladas"
+    fr: "Toutes les zones de territoire tenues"
+    it: "Tutte le zone di territorio controllate"
+    ja: "全領域ゾーンを制圧"
+    ko: "모든 영역 구역 장악"
+    "pt-BR": "Todas as zonas de território controladas"
+    ru: "Все зоны территории удержаны"
+    zh: "占据全部领土区域"
+    "zh-TW": "占據全部領土區域"
   engagement_debrief:
     de: "GEFECHTSAUSWERTUNG"
     en: "ENGAGEMENT DEBRIEF"

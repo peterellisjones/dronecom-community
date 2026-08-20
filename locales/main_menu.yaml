@@ -64,6 +64,22 @@ main_menu:
     ru: "Закрыть"
     zh: "关闭"
     "zh-TW": "關閉"
+  # dronecom #3961: header for the new-game/network-client counterpart of
+  # load_failed above — shown when the shared carrier-spawn-radius search
+  # exhausts the falloff taper for the chosen map + seed. Shares
+  # load_failed_dismiss for its dismiss button (main_menu.rs).
+  scenario_setup_failed:
+    de: "Einrichtung der Operation fehlgeschlagen"
+    en: "Failed to set up the operation"
+    es: "No se pudo preparar la operación"
+    fr: "Échec de la préparation de l'opération"
+    it: "Impossibile preparare l'operazione"
+    ja: "作戦の準備に失敗しました"
+    ko: "작전 준비에 실패했습니다"
+    "pt-BR": "Falha ao preparar a operação"
+    ru: "Не удалось подготовить операцию"
+    zh: "行动准备失败"
+    "zh-TW": "行動準備失敗"
   config_failed:
     de: "Einige Konfigurationsdateien in deiner Spielinstallation konnten nicht gelesen werden."
     en: "Some config files in your game install could not be read."
@@ -148,6 +164,47 @@ main_menu:
     ru: "Недоступно, пока не исправлены ошибки в файлах определений."
     zh: "在定义文件错误修复之前不可用。"
     "zh-TW": "在定義檔錯誤修復之前無法使用。"
+  # Headline of the non-blocking design-load notice (#3071): user designs
+  # missing from the library this session — files that failed to parse, plus
+  # designs retained as unresolved because a nested design is missing.
+  designs_failed:
+    de: "%{count} deiner gespeicherten Entwürfe konnten nicht geladen werden."
+    en: "%{count} of your saved designs could not be loaded."
+    es: "No se pudieron cargar %{count} de tus diseños guardados."
+    fr: "%{count} de vos modèles enregistrés n'ont pas pu être chargés."
+    it: "%{count} dei tuoi progetti salvati non si sono potuti caricare."
+    ja: "保存済みの設計のうち %{count} 件を読み込めませんでした。"
+    ko: "저장된 설계 중 %{count}개를 불러오지 못했습니다."
+    "pt-BR": "%{count} dos seus projetos salvos não puderam ser carregados."
+    ru: "Не удалось загрузить сохранённые проекты: %{count}."
+    zh: "你保存的设计中有 %{count} 个无法加载。"
+    "zh-TW": "你儲存的設計中有 %{count} 個無法載入。"
+  # Per-entry reason for a design retained as unresolved (#3050/#3070): the
+  # file parsed, but a design it references by id is absent from the library.
+  designs_failed_unresolved:
+    de: "Ein referenzierter Entwurf fehlt in der Bibliothek – meist eine deinstallierte Mod."
+    en: "A design it references is missing from the library — most often an uninstalled mod."
+    es: "Falta en la biblioteca un diseño al que hace referencia; normalmente, un mod desinstalado."
+    fr: "Un modèle qu'il référence est absent de la bibliothèque — le plus souvent un mod désinstallé."
+    it: "Un progetto a cui fa riferimento manca dalla libreria — di solito una mod disinstallata."
+    ja: "参照している設計がライブラリにありません。多くの場合、アンインストールされた Mod が原因です。"
+    ko: "참조하는 설계가 라이브러리에 없습니다. 대부분 제거된 모드가 원인입니다."
+    "pt-BR": "Um projeto que ele referencia está ausente da biblioteca — geralmente um mod desinstalado."
+    ru: "Проект, на который он ссылается, отсутствует в библиотеке — обычно из-за удалённого мода."
+    zh: "它引用的设计不在库中——通常是因为卸载了模组。"
+    "zh-TW": "它引用的設計不在庫中——通常是因為移除了模組。"
+  designs_failed_remedy:
+    de: "Die Dateien bleiben unverändert in deinem Entwurfsordner – nichts wird gelöscht. Eine Datei, die nicht geladen werden kann, stammt möglicherweise aus einer anderen Version des Spiels."
+    en: "The files are kept untouched in your designs folder — nothing is deleted. A file that fails to load may have been saved by a different version of the game."
+    es: "Los archivos se conservan intactos en tu carpeta de diseños; no se elimina nada. Un archivo que no se puede cargar puede provenir de otra versión del juego."
+    fr: "Les fichiers restent intacts dans votre dossier de modèles — rien n'est supprimé. Un fichier qui ne se charge pas provient peut-être d'une autre version du jeu."
+    it: "I file restano intatti nella cartella dei progetti — non viene eliminato nulla. Un file che non si carica potrebbe provenire da un'altra versione del gioco."
+    ja: "ファイルは設計フォルダーにそのまま残り、削除されることはありません。読み込めないファイルは、別のバージョンのゲームで保存された可能性があります。"
+    ko: "파일은 설계 폴더에 그대로 남아 있으며 삭제되지 않습니다. 불러올 수 없는 파일은 다른 버전의 게임에서 저장되었을 수 있습니다."
+    "pt-BR": "Os arquivos permanecem intactos na sua pasta de projetos — nada é excluído. Um arquivo que não carrega pode ter sido salvo por outra versão do jogo."
+    ru: "Файлы остаются нетронутыми в папке проектов — ничего не удаляется. Файл, который не удаётся загрузить, мог быть сохранён другой версией игры."
+    zh: "这些文件会原样保留在你的设计文件夹中，不会被删除。无法加载的文件可能是由其他版本的游戏保存的。"
+    "zh-TW": "這些檔案會原樣保留在你的設計資料夾中，不會被刪除。無法載入的檔案可能是由其他版本的遊戲儲存的。"
   join_game:
     de: "Operation beitreten"
     en: "Join Operation"

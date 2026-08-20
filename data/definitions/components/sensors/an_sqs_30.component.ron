@@ -31,10 +31,7 @@
         mounting: MastBoth,
         iff_threshold: 0.000000000000197,
         spreading_exponent: 1.2,
-        characteristics: SonarActive(
-            v_notch: 3.0,
-            notch_fraction: 0.3,
-        ),
+        characteristics: SonarActive(),
         // Torpedo-scale acoustics: high homing frequency + short array -> a ~9.5deg
         // beam; wide bandwidth -> a ~10 m range cell for terminal precision.
         physics: ActiveSonar(bandwidth_hz: 75.0, frequency_hz: 30000.0, array_length_m: 0.3, sound_speed_mps: 1500.0),

@@ -259,6 +259,21 @@ info_panel:
       ru: Держит дистанцию
       zh: 保持距离中
       "zh-TW": 保持距離中
+    # #4111: a well-deck recovery holding station astern because the deck is
+    # busy — distinct from the generic "Recovering", which now means the craft
+    # is actually closing on its carrier.
+    holding_deck_slot:
+      de: "Wartet auf Dockplatz"
+      en: "Holding for deck slot"
+      es: "Esperando puesto en dique"
+      fr: "Attente de place au radier"
+      it: "In attesa di posto in bacino"
+      ja: "ウェルデッキ待機中"
+      ko: "웰 데크 대기 중"
+      "pt-BR": "Aguardando vaga na doca"
+      ru: "Ожидание места в док-камере"
+      zh: "等待坞舱空位"
+      "zh-TW": "等待塢艙空位"
     tracking:
       de: Verfolgt
       en: Tracking
@@ -1285,23 +1300,24 @@ info_panel:
         "zh-TW": 輻射管制
       # Value labels (active=Radiate / passive=Silent) are the canonical
       # `doctrine.emcon.*` keys (display.yaml), shared with the designer (#1935).
-      # #3256: the emissions row's own tooltip advertises the keybinding. The
-      # glossary meaning is repeated here rather than referenced so the row has
-      # one tooltip, not two stacked ones; %{binding} is the player's current
-      # binding as the Controls tab renders it (an egui tooltip cannot host
-      # another tooltip, so this is the only place the shortcut can surface).
-      label_tooltip_with_shortcut:
-        de: "Emissionskontrolle: ob Sensoren strahlen (aktiv) oder still bleiben (passiv). Kurzbefehl: %{binding}"
-        en: "Emission control: whether sensors radiate (active) or stay silent (passive). Shortcut: %{binding}"
-        es: "Control de emisiones: si los sensores radian (activo) o permanecen en silencio (pasivo). Atajo: %{binding}"
-        fr: "Contrôle des émissions : si les capteurs émettent (actif) ou restent silencieux (passif). Raccourci : %{binding}"
-        it: "Controllo delle emissioni: se i sensori irradiano (attivo) o restano silenti (passivo). Scorciatoia: %{binding}"
-        ja: "センサーが放射するか（能動）静かに保つか（受動）。ショートカット：%{binding}"
-        ko: "센서가 방사하는지(능동) 침묵을 유지하는지(수동)。단축키：%{binding}"
-        "pt-BR": "Controle de emissões: se os sensores irradiam (ativo) ou permanecem em silêncio (passivo). Atalho: %{binding}"
-        ru: "Контроль излучения: излучают ли датчики (активный) или хранят молчание (пассивный). Сочетание клавиш: %{binding}"
-        zh: "传感器是辐射（主动）还是保持静默（被动）。快捷键：%{binding}"
-        "zh-TW": "感測器是輻射（主動）還是保持靜默（被動）。快捷鍵：%{binding}"
+      # #3256 advertised the keybinding in this prose, interpolating %{binding}.
+      # #4217 moved it into the tooltip's keycap footer, which reads the live
+      # binding at render time — so the locale string is back to the plain
+      # glossary meaning and a rebind no longer has to pass through YAML. The
+      # meaning is repeated here rather than referenced so the row has one
+      # tooltip, not two stacked ones.
+      label_tooltip:
+        de: "Emissionskontrolle: ob Sensoren strahlen (aktiv) oder still bleiben (passiv)"
+        en: "Emission control: whether sensors radiate (active) or stay silent (passive)"
+        es: "Control de emisiones: si los sensores radian (activo) o permanecen en silencio (pasivo)"
+        fr: "Contrôle des émissions : si les capteurs émettent (actif) ou restent silencieux (passif)"
+        it: "Controllo delle emissioni: se i sensori irradiano (attivo) o restano silenti (passivo)"
+        ja: "センサーが放射するか（能動）静かに保つか（受動）"
+        ko: "센서가 방사하는지(능동) 침묵을 유지하는지(수동)"
+        "pt-BR": "Controle de emissões: se os sensores irradiam (ativo) ou permanecem em silêncio (passivo)"
+        ru: "Контроль излучения: излучают ли датчики (активный) или хранят молчание (пассивный)"
+        zh: "传感器是辐射（主动）还是保持静默（被动）"
+        "zh-TW": "感測器是輻射（主動）還是保持靜默（被動）"
       silent_locked_tooltip:
         de: "Dieses Fahrzeug hat keine aktiven Sensoren: immer lautlos"
         en: "This vehicle has no active sensors: always silent"

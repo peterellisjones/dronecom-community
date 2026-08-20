@@ -26,6 +26,15 @@
     carrier: true,
     availability: PlayerAvailable,
     ntds_classification: Explicit(CommandShip),
+    // Must stay empty (#4125). Nothing recovers a carrier, so
+    // `recovery_requires: []` above makes `is_recoverable()` false — and
+    // `is_expendable_munition()` is `!is_recoverable() && !target_domains`,
+    // so naming any domain here reclassifies the flagship as expendable
+    // ordnance for pricing: the munition delivery-speed exponent replaces the
+    // platform one and the mast loses its vantage credit. A carrier arms
+    // itself by carrying munitions, not by ramming. The designer refuses a
+    // warhead on this hull *and says so*, rather than dropping
+    // `Category(Warheads)` from `allowed_components` and explaining nothing.
     target_domains: [],
     guidance_uplink: None,
     battery_capacity_kwh: 100.0,

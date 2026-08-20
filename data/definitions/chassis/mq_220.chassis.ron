@@ -20,7 +20,13 @@
         min_altitude: 100.0,
         max_altitude: 5000.0,
         default_altitude: 500.0,
-        min_attack_altitude: None,
+        // Must stay `Some(0.0)` for as long as `target_domains` below names a
+        // surface or land domain (#4125): the Attack clamp otherwise falls back
+        // to `min_altitude`, holding the ram 100 m over its target, clear of
+        // every warhead's fuze. Ordinary flight keeps the 100 m floor — this
+        // bound applies to Attack navigation only, and only a warhead-carrying
+        // build is ever issued one.
+        min_attack_altitude: Some(0.0),
         max_attack_altitude: None,
         launch_speed: None,
         max_pitch_rate: 0.35,
@@ -36,7 +42,11 @@
     carrier: false,
     availability: PlayerAvailable,
     ntds_classification: DeriveFromDomain,
-    target_domains: [],
+    // What an ARMED MQ-220 can ram. Unarmed builds claim none of these (the
+    // seeding in blueprint stats is warhead-conditional). Must not name
+    // `Submarine` — an air hull cannot reach a submerged target — and must
+    // move together with `min_attack_altitude` above.
+    target_domains: [Air, SeaSurface, Land],
     guidance_uplink: None,
     battery_capacity_kwh: 1.0,
     base_power_draw_kw: 1.0,

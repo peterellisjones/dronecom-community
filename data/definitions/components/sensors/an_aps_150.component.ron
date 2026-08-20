@@ -23,10 +23,7 @@
         mounting: MastBoth,
         iff_threshold: 0.000000000000001232,
         spreading_exponent: 2.0,
-        characteristics: Radar(
-            v_notch: 20.0,
-            notch_fraction: 0.1,
-        ),
+        characteristics: Radar(),
         physics: ActiveRadar(bandwidth_hz: 1000000.0, carrier_freq_hz: 9500000000.0, aperture_m: 0.4),
         authored_noise: (velocity_sigma_mps: 4.0, altitude_sigma_m: 90.0, fdoa_sigma_mps: 40.0),
         signature_capability: None,

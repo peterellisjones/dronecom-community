@@ -31,7 +31,12 @@
     carrier: false,
     availability: PlayerAvailable,
     ntds_classification: DeriveFromDomain,
-    target_domains: [],
+    // What an ARMED SS-800 can ram — the same pair the MK-30/MK-55 torpedoes
+    // launched from this hull already carry. Unarmed builds claim none of these
+    // (the seeding in blueprint stats is warhead-conditional). `SeaSurface`
+    // needs no attack-depth override: `min_attack_depth: None` above already
+    // resolves to 0 m, the surface. Must not name `Air` or `Land`.
+    target_domains: [Submarine, SeaSurface],
     guidance_uplink: None,
     battery_capacity_kwh: 50.0,
     base_power_draw_kw: 5.0,

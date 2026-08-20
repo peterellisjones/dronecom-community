@@ -704,17 +704,17 @@ mission:
     # is deliberately collapsed into one verb, so these values track `move`
     # below. The keys stay split (the §3.2 lockstep test asserts on keys).
     hold:
-      de: "Bewegen"
-      en: "Goto"
-      es: "Mover"
-      fr: "Déplacement"
-      it: "Spostamento"
-      ja: "移動"
-      ko: "이동"
-      "pt-BR": "Mover"
-      ru: "Перемещение"
-      zh: "移动"
-      "zh-TW": "移動"
+      de: "Halten"
+      en: "Hold"
+      es: "Mantener"
+      fr: "Maintien"
+      it: "Mantieni"
+      ja: "待機"
+      ko: "대기"
+      "pt-BR": "Manter"
+      ru: "Удержание"
+      zh: "保持"
+      "zh-TW": "保持"
     observe:
       de: "Beobachten"
       en: "Observe"

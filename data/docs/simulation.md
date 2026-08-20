@@ -85,6 +85,18 @@ traffic director holds, its spawn cadence and type mix, and the
 entry/exit ring geometry. Consumed by the traffic director (`dc_sim`),
 and only when the scenario's `neutral_traffic` toggle is on.
 
+### `territory` : [`TerritorySection`](#territorysection)
+
+Territory-capture zone radial geometry (#4141): the centre-circle and
+outer-ring fractions of the map's spawn radius. Consumed wherever
+`TerritoryZones` is built (`dc_assembly::new_game`,
+`dc_sim::loading::build_scenario`, both host-only) — unconditionally,
+every match, like `sectors` above (`TerritoryZones` is always present
+for the whole match on the host, state-scoped to `HostInGame` via
+`dc_sim`'s `CoreSimResources`; whether anything reads it for
+territory purposes is a separate question, see
+`dc_app_state::win_condition::zones_active`).
+
 ## `AutopilotSection`
 
 Autopilot tuning parameters.
@@ -301,8 +313,9 @@ the autopilot weave maneuver (`evade_weave`).
 
 Sim-time period (seconds) of one full weave oscillation. The weave is
 sim-time-parameterized — never frame-based — so it stays dt-invariant
-by construction. Consumed by the autopilot weave maneuver
-(`evade_weave`, #2863).
+by construction. A value of 0 or below disables the weave (the unit
+flies the plain beam heading). Consumed by the autopilot weave
+maneuver (`evade_weave`, #2863).
 
 ### `evade_weave_look_ahead_m` : f32
 
@@ -650,10 +663,11 @@ tasking gives the engagement up and frees the unit for reassignment.
 The "already fired" precondition is what makes this safe, and it is not
 optional: a launcher's *approach* is legitimately spent range-blocked
 (measured at 32.8 s before the first shot in
-`arena::scenarios::multi_target_engagement`), so a bare dwell timer would
-abort engagements that go on to kill. Once a round has been expended, the
-only thing this timer has to outlast is the transient between a munition
-dying and a fresh fix — hence a value far below that approach time.
+`arena::scenarios::engagement_basics::multi_target_engagement`), so a bare
+dwell timer would abort engagements that go on to kill. Once a round has
+been expended, the only thing this timer has to outlast is the transient
+between a munition dying and a fresh fix — hence a value far below that
+approach time.
 
 **Balance knob, deliberately conservative.** Raising it makes a launcher
 persist longer on a target it may never be able to range; lowering it
@@ -840,6 +854,34 @@ track's closest point of approach — while still closing — raises the
 unit's `ThreatAlert` to `MissileInbound`. Consumed by the per-unit
 `ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
 
+Since #3745 it is also the half-width of the *bearing-only* cone — see
+`bearing_cone_sigma_admission`, which widens it by the track's own
+across-bearing uncertainty.
+
+### `bearing_cone_sigma_admission` : f32
+
+How many standard deviations of a *range-unresolved* track's
+across-bearing position uncertainty (`cross_range_sigma_m`) widen
+`missile_cpa_radius_m` when deciding whether a unit is close enough to
+that track's line of bearing to raise `ThreatAlert::WeaponBearing`
+(#3745).
+
+A bearing-only track states that a weapon lies somewhere on a half-line
+from the detecting sensor, at an unknown range. The closest that weapon
+could possibly be to a given unit — minimised over every range the
+bearing allows — is that unit's distance to the half-line, which needs no
+range at all. A unit further off it than this gate is *provably* outside
+the alarm radius whatever the range turns out to be, and does not weave;
+before #3745 one distant torpedo track alerted every unit on the team.
+
+Larger than `missile_speed_sigma_admission` because the two point in
+opposite directions: that one *admits* a candidate, so a small multiple
+is the cautious choice, while this one *rejects* a unit, so the cautious
+choice is a generous cone. 0.0 gates on `missile_cpa_radius_m` alone
+(ignoring how well the bearing is known); a very large value restores the
+pre-#3745 team-wide alert. Consumed by the per-unit `ThreatAlerts<TEAM>`
+rollup in `dc_sensors` (`manage_contacts`).
+
 ### `missile_speed_sigma_admission` : f32
 
 How many standard deviations of the observed speed estimate's own
@@ -899,24 +941,32 @@ evades on that evidence alone) but is bounded: without a bound, evidence
 that never improves would hold the unit in an evasive weave permanently,
 abandoning its assignment at full throttle.
 
-Measured from the first tick the unit's **alert named that track** — not
-from the first tick it reacted. The window is charged by the threat
-rollup, which cannot see whether the tasking layer acted on the alert, so
-a unit that is prevented from reacting still spends the budget. That is
-reachable today: a launcher committed to guiding a shot defers this evade
-for up to `engagement_commitment_max_secs`, and while that exceeds this
-value the launcher can burn the whole window without ever evading. See
-#3747 — the fix is to charge at reaction, which needs the tasking layer to
-report back; raising this value above the commitment window is
-deliberately NOT the fix, because it would make one player-editable field
-silently depend on another.
+Measured from the first tick the unit **actually weaves** — not from the
+first tick its alert named the track (#3747). The two differ whenever the
+tasking layer declines to break off: a launcher still guiding a shot
+defers this evade for up to `engagement_commitment_max_secs`, and while
+that exceeds this value the launcher used to burn its whole window
+without ever evading, then find the reflex spent for that track's life.
+Charging at the reaction is what keeps the two fields independent —
+raising this one above the commitment window would have closed the hole
+for the shipped pair only, by making one player-editable value silently
+depend on another.
 
 When it expires the unit resumes its assignment and does **not** re-alarm
 on the same track — a bare timeout would simply oscillate. The budget
-re-arms only on new information: the track's range resolving (which moves
-it to the ordinary CPA test, where no budget applies), the track going
-stale or lost, or a genuinely different track. Consumed by the per-unit
-`ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+re-arms only on new information: a genuinely different track, or this one
+ceasing to be a range-unresolved munition candidate — its range resolving
+(which moves it to the ordinary CPA test, where no budget applies), or it
+going stale or lost — **and staying that way for this same duration**.
+
+That second use of the value is #4082: the departure has to persist,
+because the reading it is derived from is a bare variance threshold with
+no dead band, and a track sitting on it used to buy a fresh full window on
+every crossing — so the bound did not bind and the unit weaved
+indefinitely. Sizing the dwell at one window rather than at a field of its
+own bounds the weave against any one track to half the time, whatever its
+covariance does. Consumed by the per-unit `ThreatAlerts<TEAM>` rollup in
+`dc_sensors` (`manage_contacts`).
 
 ### `engagement_commitment_max_secs` : f32
 
@@ -1014,13 +1064,20 @@ The rim of a generated map is not guaranteed to be water.
 How far a civilian's entry or exit point must stay from every team's
 starting anchorage, in metres (#3886).
 
-Without it the two circles all but coincide: on the default 50 km map
-team carriers start at 49,000 m (`compute_spawn_radius`) and the
-entry/exit ring sits at 48,500 m (`ring_radius_fraction`), so a civilian
-drawn at an angle near a team's sector arrives ~500 m from its
-anchorage — inside weapons reach of a fleet that has not left harbour.
-A parking `ClusterAnchor` hull does not even transit past; it sets up
-there for its whole visit count.
+Without it the two circles can nearly coincide. Pre-#3961, on the
+default 50 km map, team carriers started at 49,000 m
+(`compute_spawn_radius`) against an entry/exit ring at 48,500 m
+(`ring_radius_fraction`) — a civilian drawn at an angle near a team's
+sector arrived ~500 m from its anchorage, inside weapons reach of a
+fleet that had not left harbour. #3961 moved the spawn ring to the
+falloff zone's midpoint (45,000 m on the same default map), widening
+the default gap to 3,500 m — but at the low end of the
+player-editable `falloff` slider the two rings narrow to *less* room
+than before the fix (`falloff = 0.05` puts spawn at 48,750 m against
+the same 48,500 m ring, a 250 m gap, tighter than the pre-#3961
+500 m), so this keep-out stays load-bearing rather than becoming
+default-only insurance. A parking `ClusterAnchor` hull does not even
+transit past; it sets up there for its whole visit count.
 
 Measured against the start positions, which are fixed at new-game and
 never move, so this excludes a fixed arc of the ring rather than
@@ -1034,12 +1091,13 @@ An empty mix means no traffic however the population band is set.
 ### `orbit_radius_m` : f32
 
 Radius of the ring an `TrafficBehavior::OrbitHop`,
-`TrafficBehavior::ClusterAnchor` or `TrafficBehavior::ClusterEscort`
-civilian circles, in metres — shared by every hop's ring and by a
-`ClusterAnchor`'s own stationary loiter. Floored per-domain to the
-flying/turning platform's minimum (a fixed-wing cannot fly a ring
-tighter than its turn radius, #2450) — a smaller configured value
-simply defers to that floor rather than erroring.
+`TrafficBehavior::ClusterAnchor`, `TrafficBehavior::ClusterEscort`
+or `TrafficBehavior::ActionHop` civilian circles, in metres — shared
+by every hop's ring and by a `ClusterAnchor`'s own stationary loiter.
+Floored per-domain to the flying/turning platform's minimum (a
+fixed-wing cannot fly a ring tighter than its turn radius, #2450) — a
+smaller configured value simply defers to that floor rather than
+erroring.
 
 ### `orbit_hop_min_orbits` : f32
 
@@ -1061,16 +1119,20 @@ Longest laps of `orbit_radius_m` per dwell — see
 
 How far a fresh point may be drawn from a civilian's current orbit
 centre, in metres, when hopping with no cluster anchor to stay near —
-an `TrafficBehavior::OrbitHop` civilian's ordinary hop, and the
-fallback radius a `TrafficBehavior::ClusterEscort` hops within once
-its anchor has died. Keeps a lone hopper patrolling a local patch of
-theatre instead of crossing the whole map one hop at a time.
+an `TrafficBehavior::OrbitHop` civilian's ordinary hop, the fallback
+radius a `TrafficBehavior::ClusterEscort` hops within once its anchor
+has died, and the fallback an `TrafficBehavior::ActionHop` chaser
+takes when no combat site is within
+`Self::action_search_radius_m`. Keeps a lone hopper patrolling a
+local patch of theatre instead of crossing the whole map one hop at a
+time.
 
 ### `orbit_hop_visits_min` : u32
 
-Fewest points an `TrafficBehavior::OrbitHop` or
-`TrafficBehavior::ClusterEscort` civilian visits before it heads for
-the rim and leaves the map, drawn once when it starts its visit.
+Fewest points an `TrafficBehavior::OrbitHop`,
+`TrafficBehavior::ClusterEscort` or `TrafficBehavior::ActionHop`
+civilian visits before it heads for the rim and leaves the map, drawn
+once when it starts its visit.
 Without a cap here the population band would fill with civilians that
 never leave: an `Order::Orbit` never completes on its own (unlike
 `Order::GoToWaypoint`), so nothing would ever end the hull's turn and
@@ -1101,6 +1163,57 @@ than leaving on the same schedule as the escorts hopping around it).
 Most dwell periods before a `ClusterAnchor` heads home — see
 `Self::cluster_anchor_visits_min`.
 
+### `action_recency_s` : f32
+
+How long a combat site stays worth flying to, in seconds of simulated
+time — the recency window an `TrafficBehavior::ActionHop` civilian
+draws its next station from.
+
+A destroyed unit's position and a missile launch are recorded when they
+happen and forgotten this many seconds later, so the press converges on
+a fight while it is still a story and drifts off once it is history.
+Sized against a dwell rather than in the abstract: a hopper holds each
+station for `orbit_hop_min_orbits..=max_orbits` laps, so a window
+shorter than the shortest dwell would mean a site had always aged out
+before any on-station drone next chose, and the behaviour would degrade
+to a plain `OrbitHop` for everything but a fresh spawn.
+
+### `action_search_radius_m` : f32
+
+How far an `TrafficBehavior::ActionHop` civilian will look from its
+current position for a combat site or a command ship to orbit, in
+metres. Nothing inside this radius means it hops at random instead.
+
+A bound rather than the whole map, so the press is drawn to the
+fighting *near* it rather than teleporting its interest across the
+theatre — and so several drones spread over a large map converge on
+different actions instead of stacking on one.
+
+## `TerritorySection`
+
+Configuration for territory-zone radial geometry. Loaded from
+`assets/config/simulation.ron` (`territory` section).
+
+Radial fractions only — the income mode and per-band income rates are
+scenario/match settings (`ScenarioConfig`/`MatchConfig`,
+`dc_app_state::win_condition`), not simulation tuning: a player picks them
+per match (via the scenario-setup UI, #4147), so they have no shipped-file
+reader and do not belong here.
+
+### `inner_radius_fraction` : f32
+
+Fraction of the map's spawn radius R marking the centre-circle zone's
+outer edge: the centre zone is `[0, R * inner_radius_fraction]`
+(#4140 design default 1/3).
+
+### `outer_radius_fraction` : f32
+
+Fraction of R marking the outer ring's outer edge: the ring is
+`(R * inner_radius_fraction, R * outer_radius_fraction]`; beyond this
+is zone-free water that belongs to no zone (3/4 since #4229, which
+widened the ring from the #4140 design's 2/3 — the centre disc was
+left alone, so the whole widening comes out of the zone-free water).
+
 ## `TerrainAvoidanceConfig`
 
 Tuning for terrain-aware climbing/steering in autopilots.
@@ -1112,6 +1225,22 @@ How many seconds ahead to look for terrain (distance = speed * this value).
 ### `avoidance_angles` : `Vec`<f32>
 
 Escalating angles (degrees) to try when ahead is blocked.
+
+### `turn_circle_cap_m` : f32
+
+Upper bound, in metres, on the **turn-circle** term of a surface hull's
+reactive probe (#4179).
+
+A hull looks ahead the greater of `speed × look_ahead_seconds` and its own
+turn radius `speed / turn_rate`, because it must begin its turn a radius
+short of a coast to roll out clear of it. This caps the second term only,
+so it can never shorten the horizon the first term gives.
+
+Every shipped `Sea` chassis has a full-speed turn radius of 25 m, so this
+is inert on all of them. It bounds the cost of a hull authored with an
+extreme thrust-to-mass ratio, whose turn circle — and so whose per-tick
+terrain query on each of the probed headings — would otherwise be
+unbounded. Aviation and submarine avoidance ignore this field.
 
 ## `TerminalHomingSection`
 
@@ -1222,13 +1351,22 @@ into points classified navigable/blocked, and the navigable arcs are joined
 by bridge paths into a closed loop. Sample count is adaptive to the ring
 circumference: `(circumference / sample_spacing_m)` clamped to
 `[min_samples, max_samples]`. Spacing is roughly one sample per terrain-cell
-width — fine enough to catch a short navigable nub, coarse enough not to
-waste samples. (Density only affects arc/gap classification; bridge A* runs
-on the full-resolution quadtree, so thin straits are still found.)
+width — fine enough to trace a short navigable nub, coarse enough not to
+waste samples.
+
+Density decides how finely the loop is **traced**, not what terrain is
+**seen**. The arc between each pair of consecutive samples is tested against
+the full-resolution terrain, not just its two endpoints, so a headland
+narrower than the spacing is still found — which matters because past the
+`max_samples` clamp the spacing stretches with the ring and soon exceeds a
+terrain cell. Bridge routing likewise runs at full resolution, so thin
+straits are still found.
 
 ### `sample_spacing_m` : f32
 
-Target arc length (metres) between adjacent ring samples.
+Target arc length (metres) between adjacent ring samples. Sets how finely
+a patrol loop traces the navigable arcs; it does not decide what terrain
+the ring is checked against, which is done at full terrain resolution.
 
 ### `min_samples` : u32
 
@@ -1236,7 +1374,10 @@ Minimum ring samples regardless of circumference (small rings).
 
 ### `max_samples` : u32
 
-Maximum ring samples regardless of circumference (large rings).
+Maximum ring samples regardless of circumference (large rings). Past this
+the effective spacing grows with the ring — a 10 km patrol is sampled
+every 245 m rather than the requested `sample_spacing_m` — so the loop is
+traced more coarsely, but terrain on it is still detected.
 
 ### `follow_lookahead_m` : f32
 
@@ -1671,6 +1812,50 @@ falloff, so coasting below this cannot cost a kill against any warhead
 in the family; validated by the #3866 measured campaign. Acquisition
 (σ far above) therefore solves on every refresh until convergence.
 
+### `min_row_information_gain` : f32
+
+Marginal information gain (dimensionless, relative) below which a
+candidate measurement row is not admitted to a batch solve (#3871).
+
+The batch used to fit whatever the window held, bounded only by
+`Self::window_secs` and `Self::max_measurements` — two global
+constants that know nothing about the geometry of the track being
+fitted. This replaces that with a per-track test on the conditioning of
+the normal matrix `N = Σ w·h·hᵀ`. A candidate row with Jacobian `h` and
+weight `w = 1/σ²` scores `s = w·hᵀN⁻¹h` against the rows already
+admitted: the fraction by which it would increase the information along
+its own direction, so admitting it shrinks that direction's variance by
+`s/(1+s)`. Rows are admitted highest-first until the best remaining one
+scores below this.
+
+The effective row count and time span therefore become *outputs* of the
+geometry rather than settings: a parallax-starved single-observer track
+keeps essentially every row (its normal matrix stays near-singular
+down-range, so anything carrying parallax scores high), a
+wide-baseline multi-observer track stops after a spanning set, and a
+track held by many observers on a similar bearing stops adding to the
+one saturated direction while still admitting rows that reach the
+scarce ones.
+
+Rows are never dropped while the fit is still short of resolving: the
+rule may spend surplus precision, never a `Resolved` verdict. So what
+this trades is noise averaging on tracks that have *already* resolved,
+against the cost of fitting rows that buy little.
+
+`0.05` is picked on the reproducible half of the measurement. Per-solve
+cost, A/B'd in-process against selection disabled, is `0.73x` on a
+window near the `Self::max_measurements` cap and `1.07x` on one the
+resolution floor leaves untouched — and `0.02` inverts that to `1.21x`
+and `1.07x`, i.e. it costs on every window size production can actually
+produce, since the row cap forbids the large windows where a low floor
+pays. Accuracy across `0.0 / 0.01 / 0.02 / 0.05 / 0.1` moves
+**non-monotonically** on the two-observer passive cell (median 97.0 /
+98.9 / 90.8 / 126.0 / 119.9 m) with p95, max and `vel_resolved` identical
+to the digit at every value — one deterministic realisation per setting,
+so that ordering establishes no sign and the cost signal decides. `0.0`
+admits everything, which is exactly the pre-#3871 behaviour and the
+baseline arm the measurement harness A/Bs against.
+
 ## `ClusteringSection`
 
 Tuning for honest formation merging (DC-36.3). Closely-spaced targets a sensor
@@ -2007,6 +2192,7 @@ individual hull: a tanker crosses because tankers cross.
 Variants:
 
 - **`Cross`** — Steam from the entry point on the map rim to a distant point on the rim, then leave the map. The through-traffic of the theatre: cargo ships and tankers with somewhere else to be.
-- **`OrbitHop`** — Enter from the rim, then work a local patch of theatre: hold an orbit for a few laps, hop to a new nearby point, repeat for a handful of visits, then head back out to the rim and leave. The unaffiliated loiterers — the two air neutrals (#3707).
+- **`OrbitHop`** — Enter from the rim, then work a local patch of theatre: hold an orbit for a few laps, hop to a new *nearby* point drawn at random, repeat for a handful of visits, then head back out to the rim and leave. The unaffiliated loiterers, with no interest in where anyone else is (#3707). The shipped mix carries none today: the two air neutrals it was written for became `ActionHop` in #3460, which is this behaviour plus a preference for recent combat.
 - **`ClusterAnchor`** — Anchors a cluster: enters from the rim, holds a single long-parked orbit (many more dwell periods than an `OrbitHop` visit), then heads out and leaves, same as any other civilian. `ClusterEscort` mix entries hop around whichever `ClusterAnchor` hull is currently alive and nearest.
 - **`ClusterEscort`** — Like `OrbitHop`, but every point it visits — its spawn point included — is drawn near the nearest live `ClusterAnchor` hull rather than near its own last position, so it reads as escorting that hull instead of wandering independently. Falls back to a plain `OrbitHop`-style local hop if no anchor is currently alive (its trawler has retired or been destroyed).
+- **`ActionHop`** — Like `OrbitHop`, but each point it visits — its spawn station included — is the **nearest recent combat site** rather than a point drawn at random: a fresh wreck first, then a missile launch, then a command ship or carrier, and only if none of those is within `TrafficSection::action_search_radius_m` does it hop at random like a plain `OrbitHop`. The press and peacekeeping-observer drones — war correspondents go where the story is.  Only where the hull *goes* changes. It still carries no tasking, doctrine or threat evaluation of its own: it flies **toward** combat and never away from it, and the damage reaction (`abandon_and_flee_when_damaged`) remains the only thing that overrides a station.

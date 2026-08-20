@@ -13,6 +13,9 @@ SimConfig(
         terrain_avoidance: (
             look_ahead_seconds: 3.0,
             avoidance_angles: [10.0, 20.0, 30.0, 40.0, 50.0, 70.0, 90.0, 120.0, 150.0, 180.0],
+            // Must stay well above the shipped Sea fleet's 25 m full-speed turn
+            // radius or this clips a hull we ship (#4179).
+            turn_circle_cap_m: 200.0,
         ),
         group_target_lookahead_secs: 0.1,
         formation_reform_gain: 0.5,
@@ -337,6 +340,16 @@ SimConfig(
             // 70-150 m family with linear falloff, validated by the #3866
             // measured campaign.
             picture_position_sigma_m: 75.0,
+            // Marginal information gain below which a row is not admitted to a
+            // solve (#3871). A row scores w·hᵀN⁻¹h against the rows already in:
+            // the fraction by which it grows the information along its own
+            // direction. Rows are taken highest-first until the best remaining
+            // one falls below this AND the fit has resolved, so the row count
+            // and time span a solve uses follow the geometry instead of
+            // window_secs/max_measurements. Never drops a row while the fit is
+            // still short of resolving. 0.05 is measured net-cheaper per solve; 0.0 admits
+            // everything (the pre-#3871 baseline arm).
+            min_row_information_gain: 0.05,
         ),
         // DC-36.3 formation merging (used only when noisy sensing is on).
         clustering: (
@@ -508,6 +521,12 @@ SimConfig(
     ),
     threat_reaction: (
         missile_cpa_radius_m: 2500.0,
+        // #3745: how far off a bearing-only track's line of bearing a unit may
+        // stand and still weave, expressed in that track's own across-bearing
+        // sigma on top of `missile_cpa_radius_m`. Deliberately generous — the
+        // gate REJECTS units, so an over-tight cone silences a warning, while an
+        // over-wide one only weaves a unit that was never in danger.
+        bearing_cone_sigma_admission: 3.0,
         missile_speed_sigma_admission: 2.0,
         lock_clear_hysteresis_secs: 5.0,
         // #3889: how long a raised RWR call is held before it may announce a
@@ -568,8 +587,10 @@ SimConfig(
             (blueprint: "Autonomous LNG Tanker", weight: 2.0, behavior: Cross),
             (blueprint: "Autonomous Fishing Vessel", weight: 2.0, behavior: ClusterEscort),
             (blueprint: "Autonomous Factory Trawler", weight: 1.0, behavior: ClusterAnchor),
-            (blueprint: "Peacekeeping Observation Drone", weight: 1.0, behavior: OrbitHop),
-            (blueprint: "Press War Correspondent Drone", weight: 1.0, behavior: OrbitHop),
+            // #3460: the two air neutrals chase the action rather than hopping
+            // at random — a fresh wreck, then a launch, then a command ship.
+            (blueprint: "Peacekeeping Observation Drone", weight: 1.0, behavior: ActionHop),
+            (blueprint: "Press War Correspondent Drone", weight: 1.0, behavior: ActionHop),
         ],
         // #3707: orbit-hop / cluster tuning. `orbit_radius_m` is shared by
         // every hop's ring and by a `ClusterAnchor`'s own stationary loiter;
@@ -598,5 +619,29 @@ SimConfig(
         // leaving on the same schedule as the boats working around it.
         cluster_anchor_visits_min: 20,
         cluster_anchor_visits_max: 40,
+        // #3460: how long a wreck or a launch stays newsworthy. Must stay
+        // above the SHORTEST dwell or a site always ages out before any
+        // on-station drone next chooses, and the behaviour degrades to a plain
+        // `OrbitHop` for everything except fresh spawns: at `orbit_radius_m`
+        // 1500 m and the two air neutrals' ~60 m/s cruise a lap is ~157 s, so
+        // the 2-5 lap dwell spans 314-785 s. Ten minutes clears the short end
+        // with room and still reads as news in a match measured in tens of
+        // minutes.
+        action_recency_s: 600.0,
+        // Most of a 100 km-wide theatre, but not all of it: on a large map two
+        // press drones on opposite rims converge on different fights.
+        action_search_radius_m: 30000.0,
+    ),
+    territory: (
+        // Territory-capture zone radial bounds (#4141): the centre-circle
+        // zone is [0, R/3]; the outer ring is (R/3, 3R/4]; beyond 3R/4 is
+        // zone-free water.
+        //
+        // The ring's outer edge was widened from 2R/3 to 3R/4 on #4229 — the
+        // maintainer's manual pass found the ring too thin to fight over. The
+        // centre disc is unchanged, so the widening is entirely at the ring's
+        // expense of the zone-free water outside it.
+        inner_radius_fraction: 0.3333333,
+        outer_radius_fraction: 0.75,
     ),
 )

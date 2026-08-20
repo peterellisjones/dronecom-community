@@ -14,18 +14,6 @@ drone_list:
       ru: "На хранении"
       zh: "存放"
       "zh-TW": "存放"
-    servicing:
-      de: "Wartung"
-      en: "Servicing"
-      es: "En servicio"
-      fr: "Entretien"
-      it: "Manutenzione"
-      ja: "整備中"
-      ko: "정비 중"
-      "pt-BR": "Em manutenção"
-      ru: "Обслуживание"
-      zh: "维护中"
-      "zh-TW": "維護中"
   # The unit's *actual* live emission (#2377) — RADIATING / SILENT — distinct
   # from the *commanded* EMCON permission (`doctrine.emcon.*`, display.yaml:
   # "Radiate" / "Silent" as an editor toggle verb, not a state readout). A unit

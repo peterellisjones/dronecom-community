@@ -3,8 +3,9 @@
 // Every field explicit — no serde defaults (missing field fails to load).
 (
     // Commitment window (seconds) for a chosen objective before a scheduled
-    // re-assessment. Hysteresis: stops per-tick posture flapping. An emergency
-    // (a threatened carrier) preempts this immediately.
+    // re-assessment. An emergency (a threatened carrier) preempts this
+    // immediately. Commits the OBJECTIVE only — the per-carrier posture is
+    // re-derived every assessment (see emcon_relax_dwell_secs).
     horizon_secs: 30.0,
     // A carrier is "threatened" when its nearest fresh enemy contact is within
     // this planar range (metres) and closing. Matches carrier_danger_radius.
@@ -56,4 +57,13 @@
     belief_useful_radius_m: 50000.0,
     // Confidence floor (0..1): a decaying belief below this is evicted.
     belief_confidence_floor: 0.1,
+
+    // ── EMCON relaxation damping (#4294) ──────────────────────────────────
+    // How long (s) a unit keeps radiating after its resolved EMCON level first
+    // reads Passive, before the AI orders it quiet. Only the relaxation is
+    // damped — a unit that needs to see is ordered Active immediately. 0.0
+    // disables it.
+    // Must stay above ai.ron's evaluation_interval (10 s) or the dwell always
+    // elapses before the level is next resampled and the damping is inert.
+    emcon_relax_dwell_secs: 20.0,
 )

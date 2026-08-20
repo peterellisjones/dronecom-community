@@ -26,7 +26,12 @@
     carrier: false,
     availability: PlayerAvailable,
     ntds_classification: DeriveFromDomain,
-    target_domains: [],
+    // What an ARMED USV-200 can ram. Unarmed builds claim none of these (the
+    // seeding in blueprint stats is warhead-conditional). Surface-only by
+    // construction: a `SeaSurface` hull is pinned to y = 0, so it can reach
+    // neither an aircraft nor a submerged boat, and it cannot beach itself to
+    // reach `Land`.
+    target_domains: [SeaSurface],
     guidance_uplink: None,
     battery_capacity_kwh: 50.0,
     base_power_draw_kw: 5.0,

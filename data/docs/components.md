@@ -340,18 +340,25 @@ Replaces the per-field Options that were implicitly discriminated by `SensorKind
 Radar and active sonar have doppler processing (notching); radar also has
 look-down and low-altitude clutter models.
 
-The clutter model itself is not authored per sensor — it describes the
-environment, not the antenna, and lives in `crate::formulas` as five
-constants (#3768).
+Neither model is authored per sensor — both describe the environment (or a
+generic antenna response), not any one part, and live in
+`crate::formulas`: the clutter magnitudes as four constants (#3768), the
+notch model as two per-kind pairs (#3897). The clutter model's fifth number,
+the altitude ceiling both its terms gate on, is not a constant either — it
+is derived from the radar's own beamwidth and the range to the target
+(`crate::formulas::surface_clutter_ceiling_m`, #3364), reading the same
+`aperture_m` / `carrier_freq_hz` the resolution and accuracy models do.
+
+`Radar` and `SonarActive` are deliberately **empty struct variants**
+(`Radar {}`, not the bare unit variant `Radar`) rather than
+data-carrying ones — see the
+`crate::formulas` module doc for why that distinction is load-bearing
+for old-definition compatibility.
 
 Variants:
 
-- **`Radar`** — Radar: doppler notching, plus the shared look-down and low-altitude clutter model from `crate::formulas`.
-  - `v_notch` : f32 — Max radial speed (m/s) below which target enters the notch.
-  - `notch_fraction` : f32 — Effective RCS fraction at zero radial velocity (0.0-1.0).
-- **`SonarActive`** — Active sonar: doppler notching only.
-  - `v_notch` : f32 — Max radial speed (m/s) below which target enters the notch.
-  - `notch_fraction` : f32 — Effective RCS fraction at zero radial velocity (0.0-1.0).
+- **`Radar`** — Radar: doppler notching (shared constants, `crate::formulas::RADAR_V_NOTCH` / `crate::formulas::RADAR_NOTCH_FRACTION`), plus the shared look-down and low-altitude clutter model from `crate::formulas`.
+- **`SonarActive`** — Active sonar: doppler notching only (shared constants, `crate::formulas::SONAR_ACTIVE_V_NOTCH` / `crate::formulas::SONAR_ACTIVE_NOTCH_FRACTION`).
 - **`Simple`** — No kind-specific characteristics (passive sonar, IR, visual, RWR).
 
 ## `SensorPhysics`

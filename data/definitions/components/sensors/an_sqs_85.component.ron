@@ -23,10 +23,7 @@
         mounting: Hull,
         iff_threshold: 0.000000000000197,
         spreading_exponent: 1.2,
-        characteristics: SonarActive(
-            v_notch: 3.0,
-            notch_fraction: 0.3,
-        ),
+        characteristics: SonarActive(),
         physics: ActiveSonar(bandwidth_hz: 1.875, frequency_hz: 5000.0, array_length_m: 3.44, sound_speed_mps: 1500.0),
         authored_noise: (velocity_sigma_mps: 5.0, altitude_sigma_m: 80.0, fdoa_sigma_mps: 30.0),
         signature_capability: Capable(min_snr_db: 8.0),

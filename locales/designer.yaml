@@ -225,6 +225,21 @@ designer:
     ru: "не разрешено"
     zh: "无法解析"
     "zh-TW": "無法解析"
+  # Library footer (#3071): design files skipped at startup because they
+  # failed to parse — count + reason class. The files stay on disk; the
+  # main-menu notice carries the per-file detail.
+  load_failures:
+    de: "%{count} Entwurfsdatei(en) konnten nicht geladen werden (inkompatible Version oder beschädigte Datei)"
+    en: "%{count} design file(s) could not be loaded (incompatible version or corrupted file)"
+    es: "No se pudieron cargar %{count} archivo(s) de diseño (versión incompatible o archivo dañado)"
+    fr: "%{count} fichier(s) de modèle n'ont pas pu être chargés (version incompatible ou fichier corrompu)"
+    it: "%{count} file di progetto non caricati (versione incompatibile o file danneggiato)"
+    ja: "%{count} 件の設計ファイルを読み込めませんでした（バージョン非互換またはファイル破損）"
+    ko: "%{count}개의 설계 파일을 불러오지 못했습니다(호환되지 않는 버전 또는 손상된 파일)"
+    "pt-BR": "%{count} arquivo(s) de projeto não puderam ser carregados (versão incompatível ou arquivo corrompido)"
+    ru: "Не удалось загрузить файлы проектов: %{count} (несовместимая версия или повреждённый файл)"
+    zh: "%{count} 个设计文件无法加载（版本不兼容或文件损坏）"
+    "zh-TW": "%{count} 個設計檔案無法載入（版本不相容或檔案損壞）"
   # ── Blueprint library table column headers ───────────────────────────────────
   col:
     name:
@@ -385,6 +400,24 @@ designer:
     ru: "Объект, на который этот проект должен приземлиться или пристыковаться, чтобы быть возвращённым и использованным повторно. Одноразовые проекты никогда не возвращаются — каждый строится один раз и расходуется."
     zh: "该设计必须降落或对接的设施，才能被回收再利用。消耗品设计永远不会被回收 —— 每个都只建造一次并被用尽。"
     "zh-TW": "該設計必須降落或對接的設施，才能被回收再利用。消耗品設計永遠不會被回收 —— 每個都只建造一次並被用盡。"
+  # #4249: added alongside the fix for the LAUNCH row's overflow — the
+  # existing designer.stat() call had no tooltip, which (via `push_id`'s
+  # scoped child `Ui`) silently escapes the grid's wrap layout regardless of
+  # `label_value_grid_bounded`; `stat_with_tooltip` renders straight into the
+  # grid's own `Ui` instead, so it both fixes the overflow and gives LAUNCH
+  # parity with RECOVERY's existing tooltip.
+  launch_requires_tooltip:
+    de: "Die Einrichtung, von der aus dieser Entwurf starten muss — eine davon an Bord des Trägers genügt; der Entwurf braucht nicht alle."
+    en: "The facility this design must launch from — any one of these aboard the carrier is enough; the design doesn't need all of them."
+    es: "La instalación desde la que este diseño debe despegar — basta con una de ellas a bordo del portaaviones; el diseño no necesita todas."
+    fr: "L'installation depuis laquelle ce modèle doit être lancé — une seule d'entre elles à bord du porte-avions suffit ; le modèle n'a pas besoin de toutes."
+    it: "La struttura da cui questo progetto deve essere lanciato — ne basta una sola a bordo della portaerei; il progetto non ha bisogno di tutte."
+    ja: "この設計が発艦する必要がある施設 —— 空母にそのうち1つがあれば十分で、すべては必要ない。"
+    ko: "이 설계가 발진해야 하는 시설입니다 —— 모함에 이 중 하나만 있으면 충분하며, 전부 필요하지는 않습니다."
+    "pt-BR": "A instalação a partir da qual este projeto deve ser lançado — basta uma delas a bordo do porta-aviões; o projeto não precisa de todas."
+    ru: "Объект, с которого должна запускаться эта конструкция — на авианосце достаточно одного из них; все сразу не нужны."
+    zh: "该设计必须从中发射的设施——航母上只需具备其中一个即可，无需全部。"
+    "zh-TW": "該設計必須從中發射的設施——航母上只需具備其中一個即可，無需全部。"
   facility_flight_deck:
     de: "Flugdeck"
     en: "Flight Deck"
@@ -606,6 +639,34 @@ designer:
     ru: "Запас прочности корпуса — сколько повреждений этот проект способен выдержать до уничтожения."
     zh: "船体生命值容量 —— 该设计在被摧毁前能够承受的伤害量。"
     "zh-TW": "船體生命值容量 —— 該設計在被摧毀前能夠承受的傷害量。"
+  # #3549: a munition's one-way distance, replacing the two cruise/max range
+  # rows below. Different basis, so a different label — this figure comes from
+  # the flight model (the same fit the launch gate reads), not from dividing a
+  # tank by a burn rate.
+  reach:
+    de: "Reichweite:"
+    en: "Reach:"
+    es: "Alcance:"
+    fr: "Portée :"
+    it: "Gittata:"
+    ja: "到達距離:"
+    ko: "도달거리:"
+    "pt-BR": "Alcance:"
+    ru: "Дальность:"
+    zh: "射程:"
+    "zh-TW": "射程:"
+  reach_tooltip:
+    de: "Einfache Strecke, die diese Waffe auf ihrem eigenen Flugprofil zurücklegt, gestartet auf Meereshöhe mit vollem Tank. Aus dem Flugmodell gemessen, nicht aus der Reiseflug-Ausdauer — genau die Zahl, mit der die Startfreigabe entscheidet, ob ein Ziel in Reichweite ist."
+    en: "One-way distance this weapon covers flying its own trajectory profile, launched at sea level with a full tank. Measured from the flight model, not from cruise endurance — the same figure the launch gate uses to decide whether a target is in range."
+    es: "Distancia de ida que recorre esta arma volando su propio perfil de trayectoria, lanzada a nivel del mar con el depósito lleno. Medida a partir del modelo de vuelo, no de la autonomía de crucero: es la misma cifra que usa el control de lanzamiento para decidir si un blanco está a tiro."
+    fr: "Distance en aller simple que cette arme parcourt en suivant son propre profil de trajectoire, tirée au niveau de la mer avec un plein. Mesurée à partir du modèle de vol, et non de l'autonomie de croisière — c'est le chiffre qu'utilise l'autorisation de tir pour décider si une cible est à portée."
+    it: "Distanza di sola andata che quest'arma percorre volando il proprio profilo di traiettoria, lanciata a livello del mare con il serbatoio pieno. Misurata dal modello di volo, non dall'autonomia di crociera: è la stessa cifra con cui il controllo di lancio decide se un bersaglio è a tiro."
+    ja: "この兵器が自らの弾道プロファイルで飛行した場合の片道距離。海面高度から満タンで発射した場合の値。巡航持続時間からではなく飛行モデルから算出しており、発射判定が目標を射程内と見なすかどうかに使う数値と同じ。"
+    ko: "이 무장이 자신의 탄도 프로파일로 비행할 때의 편도 거리입니다. 해수면 고도에서 연료를 가득 채우고 발사한 값입니다. 순항 지속시간이 아니라 비행 모델에서 산출하며, 발사 판정이 표적을 사거리 안으로 볼지 결정할 때 쓰는 수치와 같습니다."
+    "pt-BR": "Distância de ida que esta arma percorre voando o próprio perfil de trajetória, lançada ao nível do mar com o tanque cheio. Medida a partir do modelo de voo, não da autonomia de cruzeiro — é o mesmo número que o controle de lançamento usa para decidir se um alvo está ao alcance."
+    ru: "Расстояние в один конец, которое это оружие проходит по собственному профилю траектории при пуске с уровня моря и полном баке. Рассчитано по модели полёта, а не по крейсерской продолжительности, — это та же величина, по которой пусковой контроль решает, находится ли цель в зоне поражения."
+    zh: "该武器沿自身弹道剖面飞行时的单程距离，按海平面高度、满油发射计算。取自飞行模型而非巡航续航时间 —— 与发射判定用来决定目标是否在射程内的数值相同。"
+    "zh-TW": "該武器沿自身彈道剖面飛行時的單程距離，按海平面高度、滿油發射計算。取自飛行模型而非巡航續航時間 —— 與發射判定用來決定目標是否在射程內的數值相同。"
   range_cruise:
     de: "Reichweite (Reise):"
     en: "Range (cruise):"
@@ -962,6 +1023,24 @@ designer:
     ru: "Не хватает энергии: потребляет %{needed}, свободно только %{free}"
     zh: "电力不足：消耗 %{needed}，仅剩 %{free}。"
     "zh-TW": "電力不足：消耗 %{needed}，僅剩 %{free}。"
+  # One sentence, two surfaces (#4125): the disabled hover on a warhead the hull
+  # cannot deliver, AND the warnings-bar text for
+  # ValidationError::WarheadRequiresTargetDomain, so what a player reads before
+  # mounting and after cannot drift apart. States the rule, then the remedy —
+  # the old copy named the `target_domains` .ron field, which the designer shows
+  # nowhere, and the reporter duly went looking for a targeting sensor.
+  warhead_no_self_delivery:
+    de: "Ein Sprengkopf wird ins Ziel geflogen, was dieser Rumpf nie tut. Stattdessen Munition in der Bewaffnung mitführen."
+    en: "A warhead is delivered by flying the vehicle into its target, which this hull never does. Carry a munition in the loadout instead."
+    es: "Una cabeza de combate se entrega lanzando el vehículo contra su objetivo, algo que este casco nunca hace. Lleva munición en el armamento en su lugar."
+    fr: "Une ogive est délivrée en projetant le véhicule sur sa cible, ce que cette coque ne fait jamais. Emportez plutôt une munition dans l'emport."
+    it: "Una testata viene portata a segno lanciando il veicolo sul bersaglio, cosa che questo scafo non fa mai. Imbarca invece una munizione nell'armamento."
+    ja: "弾頭は機体ごと目標に突入して届けるものですが、この艇体はそれを行いません。代わりに兵装へ弾薬を搭載してください。"
+    ko: "탄두는 기체를 표적에 직접 충돌시켜 투발하지만, 이 선체는 그런 공격을 하지 않습니다. 대신 무장에 탄약을 실으세요."
+    "pt-BR": "Uma ogiva é entregue lançando o veículo contra o alvo, o que este casco nunca faz. Leve uma munição no armamento em vez disso."
+    ru: "Боеголовка доставляется тараном — самим аппаратом, а этот корпус так не атакует. Вместо неё возьмите боеприпас в загрузку."
+    zh: "战斗部依靠载具自身撞向目标来投送，本艇体不会这样攻击。请改为在挂载中携带弹药。"
+    "zh-TW": "彈頭依靠載具自身撞向目標來投送，本艇體不會這樣攻擊。請改為在掛載中攜帶彈藥。"
   # Mirrors info_panel.loadout.load_facility_full's phrasing (#3017) — the
   # designer-picker sibling of that runtime LOAD-button reason, disabled on a
   # cell-capped facility (VLS/TorpedoTube/AirLaunch) once %{used} == %{cells}.
@@ -1788,6 +1867,23 @@ designer:
     ru: "Перегрузка: %{used}/%{available} кг"
     zh: "超重: %{used}/%{available} kg"
     "zh-TW": "超重: %{used}/%{available} kg"
+  # Same overage, stated with the fuel load named (#4124). The validator counts
+  # fuel toward the payload budget but no other designer surface does — the
+  # payload bar and cargo readout both total components + cargo — so a design
+  # put over by its fuel needs the message to say so, or it reads as a
+  # contradiction of the bar right above it.
+  error_over_capacity_fuel:
+    de: "Übergewicht: %{used}/%{available} kg (inkl. %{fuel} kg Treibstoff)"
+    en: "Over weight: %{used}/%{available} kg (includes %{fuel} kg fuel)"
+    es: "Sobrepeso: %{used}/%{available} kg (incluye %{fuel} kg de combustible)"
+    fr: "Surpoids : %{used}/%{available} kg (dont %{fuel} kg de carburant)"
+    it: "Sovrappeso: %{used}/%{available} kg (inclusi %{fuel} kg di carburante)"
+    ja: "重量超過: %{used}/%{available} kg (燃料 %{fuel} kg を含む)"
+    ko: "중량 초과: %{used}/%{available} kg (연료 %{fuel} kg 포함)"
+    "pt-BR": "Excesso de peso: %{used}/%{available} kg (inclui %{fuel} kg de combustível)"
+    ru: "Перегрузка: %{used}/%{available} кг (включая %{fuel} кг топлива)"
+    zh: "超重: %{used}/%{available} kg (含燃料 %{fuel} kg)"
+    "zh-TW": "超重: %{used}/%{available} kg (含燃料 %{fuel} kg)"
   # Loose stores push cargo_weight + stores_weight over cargo_capacity — mirrors
   # dc_blueprints::recipe_validation::validate_stores_capacity (#3063) so a
   # design that previews as fitting is a design that spawns.
@@ -2270,18 +2366,9 @@ designer:
     ru: "Компонент в слоте %{index} не может находиться на одной машине с другим компонентом %{category}"
     zh: "插槽 %{index} 上的组件不能与另一个 %{category} 组件共用同一载具"
     "zh-TW": "插槽 %{index} 上的元件不能與另一個 %{category} 元件共用同一載具"
-  error_warhead_requires_target_domain:
-    de: "Sprengkopf erfordert ein Chassis mit mindestens einer Zieldomäne"
-    en: "Warhead requires a chassis with at least one target domain"
-    es: "La cabeza de combate requiere un chasis con al menos un dominio objetivo"
-    fr: "L'ogive nécessite un châssis avec au moins un domaine cible"
-    it: "La testata richiede un telaio con almeno un dominio bersaglio"
-    ja: "弾頭には、少なくとも1つの目標ドメインを持つシャーシが必要です"
-    ko: "탄두는 하나 이상의 표적 영역을 가진 섀시가 필요합니다"
-    "pt-BR": "A ogiva requer um chassi com pelo menos um domínio de alvo"
-    ru: "Боеголовка требует шасси хотя бы с одним целевым доменом"
-    zh: "战斗部需要至少具有一个目标域的底盘"
-    "zh-TW": "彈頭需要至少具有一個目標域的底盤"
+  # `WarheadRequiresTargetDomain` renders `designer.warhead_no_self_delivery`
+  # (above), the same sentence the catalog's disabled hover shows — see that
+  # key's comment. It has no `error_` key of its own, deliberately.
   error_over_power_budget:
     de: "Stromverbrauch zu hoch: %{draw}/%{supply} kW"
     en: "Over power budget: %{draw}/%{supply} kW"

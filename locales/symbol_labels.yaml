@@ -110,7 +110,7 @@ symbol_label:
     form:
       en: FORM
     hold:
-      en: GOTO
+      en: HOLD
     grd:
       en: GRD
     obs:
