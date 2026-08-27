@@ -317,6 +317,42 @@ event:
       ru: "шасси '%{chassis}' зарезервировано для гражданского движения и не может быть куплено или спроектировано игроком"
       zh: "机体 '%{chassis}' 保留给民用交通使用，玩家无法购买或设计"
       "zh-TW": "機體 '%{chassis}' 保留給民用交通使用，玩家無法購買或設計"
+    missing_munition_salvo:
+      de: "mitgeführte Munitionsrezeptur %{munition} hat keine angeforderte Salve"
+      en: "carried munition recipe %{munition} has no requested salvo"
+      es: "la receta de munición transportada %{munition} no tiene una salva solicitada"
+      fr: "la recette de munition embarquée %{munition} n'a aucune salve demandée"
+      it: "la ricetta di munizione trasportata %{munition} non ha una salva richiesta"
+      ja: "搭載弾薬レシピ %{munition} に要求斉射数がありません"
+      ko: "탑재 탄약 레시피 %{munition}에 요청 일제사격 수가 없습니다"
+      "pt-BR": "a receita de munição transportada %{munition} não tem salva solicitada"
+      ru: "для перевозимого боеприпаса %{munition} не задан размер залпа"
+      zh: "携带的弹药配方 %{munition} 未设置请求齐射数"
+      "zh-TW": "攜帶的彈藥配方 %{munition} 未設定請求齊射數"
+    duplicate_munition_salvo:
+      de: "mehr als eine angeforderte Salve nennt die Munitionsrezeptur %{munition}"
+      en: "more than one requested salvo names munition recipe %{munition}"
+      es: "más de una salva solicitada nombra la receta de munición %{munition}"
+      fr: "plus d'une salve demandée désigne la recette de munition %{munition}"
+      it: "più di una salva richiesta indica la ricetta di munizione %{munition}"
+      ja: "弾薬レシピ %{munition} に複数の要求斉射数が指定されています"
+      ko: "탄약 레시피 %{munition}에 요청 일제사격 수가 두 번 이상 지정되었습니다"
+      "pt-BR": "mais de uma salva solicitada referencia a receita de munição %{munition}"
+      ru: "для боеприпаса %{munition} задано несколько размеров залпа"
+      zh: "弹药配方 %{munition} 设置了多个请求齐射数"
+      "zh-TW": "彈藥配方 %{munition} 設定了多個請求齊射數"
+    extraneous_munition_salvo:
+      de: "angeforderte Salve nennt eine nicht mitgeführte oder nicht als Munition verwendbare Rezeptur %{munition}"
+      en: "requested salvo names non-carried or non-munition recipe %{munition}"
+      es: "la salva solicitada nombra una receta no transportada o que no es munición %{munition}"
+      fr: "la salve demandée désigne une recette non embarquée ou non munition %{munition}"
+      it: "la salva richiesta indica una ricetta non trasportata o non di munizione %{munition}"
+      ja: "要求斉射数が未搭載または非弾薬レシピ %{munition} を指定しています"
+      ko: "요청 일제사격 수가 탑재되지 않았거나 탄약이 아닌 레시피 %{munition}을(를) 지정합니다"
+      "pt-BR": "a salva solicitada referencia uma receita não transportada ou que não é munição %{munition}"
+      ru: "размер залпа ссылается на неперевозимый объект или небоеприпас %{munition}"
+      zh: "请求齐射数引用了未携带或非弹药配方 %{munition}"
+      "zh-TW": "請求齊射數引用了未攜帶或非彈藥配方 %{munition}"
   logistics:
     vehicle_on_battery:
       de: "Treibstoff leer · Batteriebetrieb"
@@ -1149,9 +1185,9 @@ event:
       ru: "повреждена · %{condition} (%{source})"
       zh: "受损 — %{condition} (%{source})"
       "zh-TW": "受損 — %{condition} (%{source})"
-    # #2626: the persistent-advisory half of critical-damage auto-RTB — fires
-    # once when doctrine.auto_rtb is off (the RTB half is critical_damage_rtb
-    # below).
+    # #2626: the persistent-advisory half of critical-damage recovery — fires
+    # once when doctrine.auto_rtb_policy is Never (the RTB half is
+    # critical_damage_rtb below).
     critical_damage:
       de: "kritischer Schaden"
       en: "critical damage"

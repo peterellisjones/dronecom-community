@@ -9,6 +9,7 @@
     designator: "ACS-100",
     codename: "Meridian",
     domain: Sea,
+    automatic_evasion_policy: On,
     // #3704 code review: an independent, director-spawned hull — never stowed
     // or launched from a parent facility — so `carrier: true` (not a claim of
     // "carries other vehicles"; it just means "self-deploying", the same

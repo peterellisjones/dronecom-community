@@ -4,6 +4,7 @@
     designator: "M-100",
     codename: "Stiletto",
     domain: Air,
+    automatic_evasion_policy: Off,
     launch_requires: [VLS, AirLaunch],
     recovery_requires: [],
     provides: [],

@@ -4,6 +4,7 @@
     designator: "M-300",
     codename: "Sabre",
     domain: Air,
+    automatic_evasion_policy: Off,
     launch_requires: [VLS, AirLaunch],
     recovery_requires: [],
     provides: [],

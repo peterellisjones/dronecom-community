@@ -4,6 +4,7 @@
     designator: "MQ-450",
     codename: "Panther",
     domain: Air,
+    automatic_evasion_policy: On,
     launch_requires: [FlightDeck],
     recovery_requires: [FlightDeck],
     provides: [(facility: AirLaunch, cells: 4, max_simultaneous_launches: 4)],

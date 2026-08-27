@@ -24,6 +24,35 @@ doctrine command.
 A carrier counts as threatened when its nearest fresh enemy contact is
 within this planar range (metres) and closing.
 
+That is the *raw* read; `threat_clear_dwell_secs` damps how quickly the
+assessment believes it has stopped being true.
+
+### `threat_clear_dwell_secs` : f32
+
+How long (seconds) the AI keeps treating a carrier as **threatened**
+after its raw read first says the coast is clear, before it stands the
+carrier down.
+
+Only the *all-clear* is damped: a carrier whose raw read turns
+threatening is committed to defence immediately — going defensive is
+urgent, standing down is not. `0.0` disables the damping.
+
+The raw read is `threat_range_m` plus "closing", both re-derived every
+tick, and neither is steady while a raid maneuvers (#4311). "Closing" is
+a sign test, so it flips the moment a raider crosses the carrier's beam
+even though the range has barely moved; and "nearest" is recomputed each
+tick, so a second track overtaking the first steps the range far enough
+to cross the threshold on its own. Measured in a carrier-defence match:
+the defended carrier read clear for 16 s with a raider maneuvering
+4.4 km off, and for a further 6.8 s when the nearest track changed and
+the range stepped 13096 → 14329 m between two 0.4 s ticks.
+
+Must exceed the longest such transient (6.8 s measured) and stay well
+under `horizon_secs`, so a stale defensive commitment can never outlive
+the objective commitment it protects. Unlike `emcon_relax_dwell_secs`
+there is no `evaluation_interval` floor: the threat read is resampled
+every tick, not once per commander evaluation.
+
 ### `press_force_floor` : u32
 
 Minimum count of own armed units to adopt a `Press` posture; below it the

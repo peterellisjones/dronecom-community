@@ -33,4 +33,8 @@
     default_altitude: Chassis,
     unknown_range_launch: Withhold,
     stores: [],
+    munition_salvos: [
+        (munition: BlueprintId("00000000-0000-0000-0000-000000000009"), requested: 1),
+        (munition: BlueprintId("00000000-0000-0000-0000-000000000011"), requested: 1),
+    ],
 )

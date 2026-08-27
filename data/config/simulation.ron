@@ -225,6 +225,11 @@ SimConfig(
             initial_vertical_velocity_var: 2500.0,
             elevation_resolved_var_threshold: 10000.0,
         ),
+        // #4357 synthesized active direct-fix tuning: temporal correlation for
+        // the truth-relative error process.
+        synthesis: (
+            smoothing_tau_secs: 1.0,
+        ),
         // DC-36.1 measurement-noise SNR scaling (used only when noisy sensing is on).
         noise: (
             snr_reference_db: 15.0,
@@ -406,13 +411,6 @@ SimConfig(
             // altitude. ~5.7x headroom over the fastest surface hull (USV-80,
             // 17.4 m/s), same scale as heli_max_speed_mps.
             surface_max_speed_mps: 100.0,
-            // #2720: radius (m) around an own unit within which an inbound
-            // weapon's CPA flags it provisionally hostile. An Unknown missile-
-            // kinematic track (is_munition class, or speed >= missile_min) whose
-            // closest approach to any own unit falls within this radius while
-            // closing is auto-classified Enemy (IFF overrules). Sized to a
-            // fast unit's Vehicle::safety_band outer edge (7500).
-            inbound_hostile_radius_m: 7500.0,
             // Size (length) likelihood σ as a fraction of observed length.
             size_sigma_frac: 0.2,
             // Floor on size σ (m).

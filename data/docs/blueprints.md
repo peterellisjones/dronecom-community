@@ -77,6 +77,13 @@ Spare munitions seeded into cargo at spawn — distinct from `inventory`
 (the mounted loadout + stowed drones). Persisted in the RON; threaded
 onto the spawn `BlueprintRecipe` via `materialize_recipe`.
 
+### `munition_salvos` : `Vec`<[`BlueprintMunitionSalvo`](#blueprintmunitionsalvo)>
+
+Requested launch count for each distinct carried warhead blueprint.
+
+Separate from physical inventory: repeated carried rounds share one
+pair-level request while retaining their individual slots.
+
 ## `BlueprintId`
 
 Unique identifier for a blueprint (UUID v4).
@@ -196,6 +203,18 @@ Library `BlueprintId` of the spare munition stocked in cargo.
 
 How many spare rounds to seed.
 
+## `BlueprintMunitionSalvo`
+
+Requested launch count for one distinct carried warhead blueprint.
+
+### `munition` : [`BlueprintId`](#blueprintid)
+
+Library `BlueprintId` of the carried warhead this salvo controls.
+
+### `requested` : `NonZeroU32`
+
+Number of matching rounds requested per launch command.
+
 ## `InventoryItemKind`
 
 What occupies an inventory slot.
@@ -210,13 +229,15 @@ Variants:
 
 ## `BlueprintDoctrine`
 
-Player-authored subset of doctrine, stored on `Blueprint` and cached
-on `BlueprintStats`. The remaining runtime `Doctrine` fields are not
-authored per blueprint: `reaction_envelope`-equivalent reaction geometry
-is now computed live from design facts and the current loadout rather
-than stored at all (#3192 — see `Doctrine`'s own doc comment), and
-`auto_rtb` is a design-fixed spawn default that stays player/sim-mutable
-afterward (see `Doctrine::auto_rtb`).
+Player-authored doctrine, stored on `Blueprint` and cached on
+`BlueprintStats`. These fields seed a newly materialized runtime
+`Doctrine`; unlike its mutable runtime counterpart, they remain the
+blueprint's spawn defaults.
+
+Reaction geometry is computed live from design facts and the current
+loadout rather than stored at all (#3192 — see `Doctrine`'s own doc
+comment). Every field below is an explicit authored spawn default whose
+runtime counterpart remains player/sim-mutable afterward.
 
 ### `posture` : [`Posture`](#posture)
 
@@ -231,6 +252,19 @@ known enemies only, or enemies and unknowns).
 
 Emissions-control level — whether the unit's active sensors may radiate
 (Passive keeps them silent, Active enables emitters).
+
+### `firing_discipline` : [`FiringDiscipline`](#firingdiscipline)
+
+Weapon-release range discipline for a freshly materialized launcher.
+Runtime changes are tactical overrides on `Doctrine` only.
+
+### `automatic_evasion_policy` : [`AutomaticEvasionPolicy`](#automaticevasionpolicy)
+
+Whether the vehicle automatically enters evasion when threatened.
+
+### `auto_rtb_policy` : [`AutoRtbPolicy`](#autortbpolicy)
+
+Fuel/ammunition conditions under which the vehicle returns to base.
 
 ## `ComponentId`
 
@@ -268,3 +302,41 @@ Variants:
 
 - **`Passive`** — Disable all active sensors.
 - **`Active`** — Enable all sensors including active emitters.
+
+## `FiringDiscipline`
+
+Weapon-release range discipline — *how aggressively* a unit commits weapons
+against a moving target. Orthogonal to `RulesOfEngagement` (whether to fire
+at all) and `Posture` (whether to engage / chase). The sim weapon-release
+gate (`dc_orders::weapon_launch`) computes a No-Escape-Zone reach and applies
+this policy.
+
+Variants:
+
+- **`Rmax`** — Fire when the target is within the weapon's maximum range (the engine default and pre-#1934 behavior). Maximizes shot opportunities; may waste weapons on a target that can outrun them.
+- **`NoEscape`** — Hold fire until the weapon can reach a no-escape intercept of the moving target before exhausting its flyout. Conserves weapons; closes the kiting exploit. A strict subset of `Rmax` (only ever withholds).
+
+## `AutomaticEvasionPolicy`
+
+Whether a vehicle automatically enters tactical evasion when threatened.
+
+Authored by chassis for suggested blueprint doctrine, explicitly
+overrideable by manual blueprint doctrine, and copied to runtime doctrine at
+spawn. Physical terrain, collision, and envelope safety do not consult this
+policy.
+
+Variants:
+
+- **`On`** — Permit tasking to begin every otherwise-eligible tactical evade.
+- **`Off`** — Suppress every new tactical evade; physical safety remains automatic.
+
+## `AutoRtbPolicy`
+
+Fuel and ammunition conditions that can trigger automatic return to base.
+
+Variants:
+
+- **`Never`** — Never return automatically for bingo fuel or Winchester.
+- **`Bingo`** — Return when fuel reaches the bingo reserve.
+- **`Winchester`** — Return when a design-capable platform has no recoverable combat contribution left.
+- **`BingoOrWinchester`** — Return for either bingo fuel or Winchester.

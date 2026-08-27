@@ -20,4 +20,5 @@
     default_altitude: Ceiling,
     unknown_range_launch: Withhold,
     stores: [],
+    munition_salvos: [(munition: BlueprintId("00000000-0000-0000-0000-000000000008"), requested: 1)],
 )

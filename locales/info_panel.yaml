@@ -165,27 +165,27 @@ info_panel:
       zh: "名称"
       "zh-TW": "名稱"
     save:
-      de: "Speichern"
-      en: "Save"
-      es: "Guardar"
-      fr: "Enregistrer"
-      it: "Salva"
+      de: "SPEICHERN"
+      en: "SAVE"
+      es: "GUARDAR"
+      fr: "ENREGISTRER"
+      it: "SALVA"
       ja: "保存"
       ko: "저장"
-      "pt-BR": "Salvar"
-      ru: "Сохранить"
+      "pt-BR": "SALVAR"
+      ru: "СОХРАНИТЬ"
       zh: "保存"
       "zh-TW": "儲存"
     cancel:
-      de: "Abbrechen"
-      en: "Cancel"
-      es: "Cancelar"
-      fr: "Annuler"
-      it: "Annulla"
+      de: "ABBRECHEN"
+      en: "CANCEL"
+      es: "CANCELAR"
+      fr: "ANNULER"
+      it: "ANNULLA"
       ja: "キャンセル"
       ko: "취소"
-      "pt-BR": "Cancelar"
-      ru: "Отменить"
+      "pt-BR": "CANCELAR"
+      ru: "ОТМЕНИТЬ"
       zh: "取消"
       "zh-TW": "取消"
   tasking_status:
@@ -1175,9 +1175,8 @@ info_panel:
     ru: "КАВИТАЦИЯ (+%{boost}ДБ)"
     zh: "空泡 (+%{boost}DB)"
     "zh-TW": "空泡 (+%{boost}DB)"
-  # DC-992: `info_panel.auto_rtb.*` keys moved into the doctrine subtree
-  # (`info_panel.doctrine.auto_rtb.*`) when the standalone Auto-RTB
-  # checkbox was folded into the shared doctrine editor.
+  # DC-992 moved the original Auto-RTB keys into the doctrine subtree; #4434
+  # replaced that Boolean control with `info_panel.doctrine.auto_rtb_policy.*`.
   # DC-993: `rtb_now` / `rtb_now_tooltip` keys removed — the standalone
   # "RTB Now" button was subsumed by the unified Mission selector's
   # `mission.rtb` row.
@@ -1343,46 +1342,31 @@ info_panel:
     # guidance explaining why the row is no longer editable, not a tactical
     # data value) — there is no per-unit numeric wire field yet to show a
     # real distance.
-    # DC-992: Auto-RTB toggle moved into the shared doctrine editor from
-    # the standalone Row 9 checkbox in entity_view. Keys re-homed from
-    # `info_panel.auto_rtb.*` to keep the doctrine subtree self-contained.
-    auto_rtb:
-      label_tooltip:
-        de: "Wenn aktiviert, kehrt die Einheit bei niedrigem Treibstoff selbstständig zur Basis zurück."
-        en: "When enabled, the unit returns to base on its own once fuel runs low."
-        es: "Si está activado, la unidad regresa a la base por sí sola cuando queda poco combustible."
-        fr: "Si activé, l'unité rentre à la base d'elle-même dès que le carburant est bas."
-        it: "Se attivato, l'unità rientra alla base da sola quando il carburante è basso."
-        ja: "有効にすると、燃料が少なくなった時点でユニットが自動的に帰投する。"
-        ko: "활성화하면 연료가 부족해질 때 유닛이 스스로 기지로 복귀합니다."
-        "pt-BR": "Quando ativado, a unidade retorna à base sozinha assim que o combustível fica baixo."
-        ru: "Если включено, юнит сам возвращается на базу при низком уровне топлива."
-        zh: "启用后，单位在燃料不足时会自动返回基地。"
-        "zh-TW": "啟用後，單位在燃料不足時會自動返回基地。"
+    auto_rtb_policy:
       label:
-        de: Auto-RTB
-        en: Auto RTB
-        es: RTB automático
-        fr: RTB auto
-        it: RTB automatico
-        ja: 自動RTB
-        ko: 자동 RTB
-        "pt-BR": RTB automático
-        ru: Авто-RTB
-        zh: 自动返航
-        "zh-TW": 自動返航
-      tooltip:
-        de: Automatisch zum Träger zurückkehren bei niedrigem Treibstoff
-        en: Automatically return to carrier when fuel is low
-        es: Regresar automáticamente al portaaviones cuando el combustible esté bajo
-        fr: Retour automatique au porte-avions quand le carburant est faible
-        it: Ritorno automatico alla portaerei con carburante basso
-        ja: 燃料低下時に自動的に母艦へ帰還
-        ko: 연료 부족 시 자동으로 항모로 귀환
-        "pt-BR": Retornar automaticamente ao porta-aviões quando combustível estiver baixo
-        ru: Автоматическое возвращение на авианосец при низком уровне топлива
-        zh: 燃料不足时自动返回母舰
-        "zh-TW": 燃料不足時自動返回母艦
+        de: "Auto-RTB"
+        en: "Auto RTB"
+        es: "RTB automático"
+        fr: "RTB auto"
+        it: "RTB automatico"
+        ja: "自動RTB"
+        ko: "자동 RTB"
+        "pt-BR": "RTB automático"
+        ru: "Авто-RTB"
+        zh: "自动返航"
+        "zh-TW": "自動返航"
+      label_tooltip:
+        de: "Wähle, ob die Einheit bei Bingo-Treibstoff, Winchester, bei beiden Bedingungen oder nie automatisch zurückkehrt."
+        en: "Choose whether the unit returns automatically for bingo fuel, Winchester, either condition, or never."
+        es: "Elige si la unidad regresa automáticamente por combustible bingo, Winchester, cualquiera de las dos condiciones o nunca."
+        fr: "Choisissez si l’unité rentre automatiquement pour carburant bingo, Winchester, l’une ou l’autre condition, ou jamais."
+        it: "Scegli se l’unità rientra automaticamente per carburante bingo, Winchester, una delle due condizioni o mai."
+        ja: "ビンゴ燃料、ウィンチェスター、いずれかの条件、または自動帰投なしを選択します。"
+        ko: "빙고 연료, 윈체스터, 두 조건 중 하나 또는 자동 복귀 안 함을 선택합니다."
+        "pt-BR": "Escolha se a unidade retorna automaticamente por combustível bingo, Winchester, qualquer condição ou nunca."
+        ru: "Выберите автоматический возврат при топливе «Бинго», состоянии Winchester, любом из них или никогда."
+        zh: "选择单位在燃油达到 Bingo、弹药耗尽、任一条件或从不自动返航。"
+        "zh-TW": "選擇單位在燃油達到 Bingo、彈藥耗盡、任一條件或從不自動返航。"
   # DC-993: `patrol_button` / `patrol_tooltip` keys removed — the
   # standalone "Patrol" buttons in the per-vehicle inspect panel were
   # subsumed by the unified Mission selector's `mission.patrol` row.
@@ -1911,15 +1895,15 @@ info_panel:
     zh: M
     "zh-TW": M
   view_blueprint:
-    de: Bauplan anzeigen
-    en: View Blueprint
-    es: Ver plano
-    fr: Voir le plan
-    it: Visualizza progetto
+    de: BAUPLAN ANZEIGEN
+    en: VIEW BLUEPRINT
+    es: VER PLANO
+    fr: VOIR LE PLAN
+    it: VISUALIZZA PROGETTO
     ja: 設計図を表示
     ko: 설계도 보기
-    "pt-BR": Ver projeto
-    ru: Просмотр чертежа
+    "pt-BR": VER PROJETO
+    ru: ПРОСМОТР ЧЕРТЕЖА
     zh: 查看蓝图
     "zh-TW": 檢視藍圖
   navigate_back:
@@ -3956,15 +3940,15 @@ info_panel:
       zh: 排队中
       "zh-TW": 排隊中
     launch:
-      de: Starten
-      en: Launch
-      es: Lanzar
-      fr: Lancer
-      it: Lancio
+      de: STARTEN
+      en: LAUNCH
+      es: LANZAR
+      fr: LANCER
+      it: LANCIO
       ja: 発射
       ko: 발사
-      "pt-BR": Lançar
-      ru: Запуск
+      "pt-BR": LANÇAR
+      ru: ЗАПУСК
       zh: 发射
       "zh-TW": 發射
     collapse:
@@ -4586,6 +4570,54 @@ info_panel:
       ru: "%{name}: %{count} НЕДОСТАЁТ"
       zh: "%{name}：缺%{count}发"
       "zh-TW": "%{name}：缺%{count}發"
+    salvo_effective:
+      de: "SALVE ×%{count}"
+      en: "SALVO ×%{count}"
+      es: "SALVA ×%{count}"
+      fr: "SALVE ×%{count}"
+      it: "SALVA ×%{count}"
+      ja: "一斉発射 ×%{count}"
+      ko: "일제 사격 ×%{count}"
+      "pt-BR": "SALVA ×%{count}"
+      ru: "ЗАЛП ×%{count}"
+      zh: "齐射 ×%{count}"
+      "zh-TW": "齊射 ×%{count}"
+    salvo_override_tooltip:
+      de: "Entwurfswert %{default}; diese Plattform fordert pro Angriffsversuch bis zu %{requested} passende, bereite Geschosse an. %{aboard} passende Geschosse sind an Bord. Die flottenweite Zielkapazität wird beim Abschuss angewandt und hier während des Zielanflugs angezeigt."
+      en: "Blueprint default %{default}; this platform requests up to %{requested} matching ready rounds per engagement attempt. %{aboard} matching rounds are aboard. Target-wide fleet capacity is applied at launch and shown here while closing on a target."
+      es: "Valor predeterminado del diseño %{default}; esta plataforma solicita hasta %{requested} proyectiles compatibles listos por intento de ataque. Hay %{aboard} a bordo. La capacidad de flota por objetivo se aplica al lanzar y se muestra durante la aproximación."
+      fr: "Valeur par défaut du modèle : %{default} ; cette plateforme demande jusqu’à %{requested} munitions compatibles prêtes par tentative d’engagement. %{aboard} sont à bord. La capacité de flotte par cible s’applique au tir et s’affiche pendant l’approche."
+      it: "Valore predefinito del progetto %{default}; questa piattaforma richiede fino a %{requested} colpi compatibili pronti per tentativo d’ingaggio. %{aboard} sono a bordo. La capacità della flotta per bersaglio si applica al lancio e appare durante l’avvicinamento."
+      ja: "設計既定値%{default}。このプラットフォームは交戦試行ごとに同種の発射可能弾を最大%{requested}発要求します。同種弾%{aboard}発を搭載中です。目標ごとの艦隊共通枠は発射時に適用され、接近中はここに表示されます。"
+      ko: "설계 기본값 %{default}; 이 플랫폼은 교전 시도마다 같은 종류의 준비된 탄을 최대 %{requested}발 요청합니다. 같은 탄 %{aboard}발이 탑재되어 있습니다. 표적별 함대 공용 용량은 발사 시 적용되며 접근 중 여기에 표시됩니다."
+      "pt-BR": "Padrão do projeto %{default}; esta plataforma solicita até %{requested} projéteis compatíveis prontos por tentativa de engajamento. Há %{aboard} a bordo. A capacidade da frota por alvo é aplicada no lançamento e aparece durante a aproximação."
+      ru: "Значение проекта %{default}; эта платформа запрашивает до %{requested} готовых боеприпасов этого типа за попытку атаки. На борту %{aboard}. Общая ёмкость флота по цели применяется при пуске и показывается во время сближения."
+      zh: "蓝图默认%{default}；此平台每次交战尝试最多请求%{requested}发同型待发弹药，当前搭载%{aboard}发。全舰队目标余量在发射时生效，并在接近目标时显示于此。"
+      "zh-TW": "藍圖預設%{default}；此平台每次交戰嘗試最多要求%{requested}發同型待發彈藥，目前搭載%{aboard}發。全艦隊目標餘量在發射時生效，並在接近目標時顯示於此。"
+    salvo_override_preview_limited:
+      de: "Entwurfswert %{default} · effektiv %{requested} · bereit %{ready} · flottenweite Zielplätze %{capacity} · bei Auswahl höchstens %{conditional}."
+      en: "Blueprint default %{default} · effective %{requested} · ready %{ready} · target-wide fleet slots %{capacity} · if selected, up to %{conditional}."
+      es: "Diseño %{default} · efectivo %{requested} · listos %{ready} · cupos de flota para el objetivo %{capacity} · si se selecciona, hasta %{conditional}."
+      fr: "Modèle %{default} · effectif %{requested} · prêtes %{ready} · places de flotte sur la cible %{capacity} · si sélectionnée, jusqu’à %{conditional}."
+      it: "Progetto %{default} · effettivo %{requested} · pronti %{ready} · posti flotta sul bersaglio %{capacity} · se selezionato, fino a %{conditional}."
+      ja: "設計 %{default} · 有効 %{requested} · 発射可能 %{ready} · 目標に対する艦隊共通枠 %{capacity} · 選択時上限 %{conditional}。"
+      ko: "설계 %{default} · 적용 %{requested} · 준비 %{ready} · 표적별 함대 공용 슬롯 %{capacity} · 선택 시 최대 %{conditional}."
+      "pt-BR": "Projeto %{default} · efetivo %{requested} · prontos %{ready} · vagas da frota no alvo %{capacity} · se selecionado, até %{conditional}."
+      ru: "Проект %{default} · действует %{requested} · готово %{ready} · общих мест флота по цели %{capacity} · при выборе не более %{conditional}."
+      zh: "蓝图 %{default} · 生效 %{requested} · 待发 %{ready} · 全舰队目标余量 %{capacity} · 若选用，上限 %{conditional}。"
+      "zh-TW": "藍圖 %{default} · 生效 %{requested} · 待發 %{ready} · 全艦隊目標餘量 %{capacity} · 若選用，上限 %{conditional}。"
+    salvo_override_preview_unlimited:
+      de: "Entwurfswert %{default} · effektiv %{requested} · bereit %{ready} · flottenweites Ziellimit unbegrenzt · bei Auswahl höchstens %{conditional}."
+      en: "Blueprint default %{default} · effective %{requested} · ready %{ready} · target-wide fleet cap unlimited · if selected, up to %{conditional}."
+      es: "Diseño %{default} · efectivo %{requested} · listos %{ready} · límite de flota para el objetivo ilimitado · si se selecciona, hasta %{conditional}."
+      fr: "Modèle %{default} · effectif %{requested} · prêtes %{ready} · limite de flotte sur la cible illimitée · si sélectionnée, jusqu’à %{conditional}."
+      it: "Progetto %{default} · effettivo %{requested} · pronti %{ready} · limite flotta sul bersaglio illimitato · se selezionato, fino a %{conditional}."
+      ja: "設計 %{default} · 有効 %{requested} · 発射可能 %{ready} · 目標に対する艦隊共通上限なし · 選択時上限 %{conditional}。"
+      ko: "설계 %{default} · 적용 %{requested} · 준비 %{ready} · 표적별 함대 한도 없음 · 선택 시 최대 %{conditional}."
+      "pt-BR": "Projeto %{default} · efetivo %{requested} · prontos %{ready} · limite da frota no alvo ilimitado · se selecionado, até %{conditional}."
+      ru: "Проект %{default} · действует %{requested} · готово %{ready} · общий лимит флота по цели отсутствует · при выборе не более %{conditional}."
+      zh: "蓝图 %{default} · 生效 %{requested} · 待发 %{ready} · 全舰队目标上限无限 · 若选用，上限 %{conditional}。"
+      "zh-TW": "藍圖 %{default} · 生效 %{requested} · 待發 %{ready} · 全艦隊目標上限無限 · 若選用，上限 %{conditional}。"
     # Glossary tooltip for the per-facility cell-occupancy stat row (#3017 cap,
     # #3147 physical readout, `VLS 1/12`): %{facility} is the launcher tag
     # (already caps), %{used} / %{capacity} are bare cell counts — %{used} is
@@ -5008,6 +5040,18 @@ info_panel:
       ru: "Применяется при запуске."
       zh: "起飞时应用。"
       "zh-TW": "起飛時套用。"
+    vertical_unavailable:
+      de: "Keine Höhensteuerung für Überwassereinheiten."
+      en: "Altitude control unavailable for surface groups."
+      es: "El control de altitud no está disponible para grupos de superficie."
+      fr: "Le contrôle d'altitude n'est pas disponible pour les groupes de surface."
+      it: "Il controllo dell'altitudine non è disponibile per i gruppi di superficie."
+      ja: "水上グループでは高度制御を利用できません。"
+      ko: "수상 그룹에서는 고도 제어를 사용할 수 없습니다."
+      "pt-BR": "O controle de altitude não está disponível para grupos de superfície."
+      ru: "Управление высотой недоступно для надводных групп."
+      zh: "水面编队无法控制高度。"
+      "zh-TW": "水面編隊無法控制高度。"
     con:
       de: "%{count} TRACKS · NÄCHSTER %{track} %{range}"
       en: "%{count} TRK · NEAREST %{track} %{range}"

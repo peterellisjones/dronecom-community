@@ -4,6 +4,7 @@
     designator: "MK-30",
     codename: "Mako",
     domain: Submarine,
+    automatic_evasion_policy: Off,
     launch_requires: [TorpedoTube],
     recovery_requires: [],
     provides: [],

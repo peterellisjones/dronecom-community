@@ -90,12 +90,12 @@ and only when the scenario's `neutral_traffic` toggle is on.
 Territory-capture zone radial geometry (#4141): the centre-circle and
 outer-ring fractions of the map's spawn radius. Consumed wherever
 `TerritoryZones` is built (`dc_assembly::new_game`,
-`dc_sim::loading::build_scenario`, both host-only) — unconditionally,
-every match, like `sectors` above (`TerritoryZones` is always present
-for the whole match on the host, state-scoped to `HostInGame` via
-`dc_sim`'s `CoreSimResources`; whether anything reads it for
+`dc_sim::loading::build_scenario`, and `dc_core_client::loading`) —
+unconditionally, every match, like `sectors` above. `TerritoryZones` is
+present for the whole match on every peer, state-scoped to `AppState`
+via `dc_sim`'s `CoreSharedResources`; whether anything reads it for
 territory purposes is a separate question, see
-`dc_app_state::win_condition::zones_active`).
+`dc_app_state::win_condition::zones_active`.
 
 ## `AutopilotSection`
 
@@ -500,6 +500,11 @@ displaced by an only-marginally-closer newcomer. Range 0.0..1.0.
 Recursive track-filter tuning (DC-36.1). Used only when a scenario runs
 with noisy sensing enabled.
 
+### `synthesis` : [`SynthesisSection`](#synthesissection)
+
+Synthesized-estimator temporal correlation (#4357). Used only on noisy
+active direct-fix team tracks.
+
 ### `noise` : [`MeasurementNoiseSection`](#measurementnoisesection)
 
 Measurement-noise model tuning (DC-36.1): how the authored per-sensor
@@ -842,10 +847,8 @@ May be empty to disable warnings entirely.
 
 Threat-reaction ladder tuning (#2863): the CPA radius that raises a unit's
 `ThreatAlert` to `MissileInbound`, and the clear hysteresis for a
-lock-triggered evade. Distinct from `ClassificationSection`'s
-`inbound_hostile_radius_m` — that flags a track provisionally hostile so it
-*can* be engaged; this drives the survival reflex (evade/weave) once a
-track is already known hostile.
+lock-triggered evade. This geometry drives the survival reflex; it does not
+classify affiliation (#4340).
 
 ### `missile_cpa_radius_m` : f32
 
@@ -1568,6 +1571,15 @@ Initial vertical-velocity variance ((m/s)²) when a track is seeded.
 Vertical-position variance (m²) at or below which `ElevationFix` flips to
 `Resolved` (DC-1049). Above it, altitude is honestly Unknown.
 
+## `SynthesisSection`
+
+Tuning for synthesized contact estimation on the active direct-fix lane (#4357).
+
+### `smoothing_tau_secs` : f32
+
+OU error-correlation time constant in seconds, consumed by synthesized
+active contact estimation.
+
 ## `MeasurementNoiseSection`
 
 Tuning for how per-sensor measurement sigmas scale with detection SNR
@@ -1963,19 +1975,6 @@ previously sea-level-pinned) altitude reads (#2386): kinematics dominate
 altitude. 100.0 gives ~5.7x headroom over the fastest surface hull in the
 game (USV-80, 17.4 m/s) — comfortably clear of any legitimate surface or
 submarine craft, same tuning scale as `heli_max_speed_mps`.
-
-### `inbound_hostile_radius_m` : f32
-
-Radius (m) around an own-team unit within which an inbound weapon's
-closest point of approach flags it provisionally hostile (#2720). An
-`Unknown` track that is missile-kinematic (`is_munition` class, or speed
-at or above `missile_min_speed_mps`) *and* whose CPA against any own unit
-falls within this radius while still closing is auto-classified `Enemy`
-(provisionally - the IFF system overrules it). Sized to a fast unit's
-`Vehicle::safety_band` outer edge (7500 — the historical
-`(5000, 7500)` default `safety_range_for_physics` clamps fast hulls
-to), the outer boundary of a unit's threat-reaction envelope, so any
-inbound weapon closing within the volume a screen guards is flagged.
 
 ### `size_sigma_frac` : f32
 

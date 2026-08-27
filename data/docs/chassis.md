@@ -31,6 +31,11 @@ Physical environment this chassis operates in (Air / Sea / Submarine).
 Drives navigation, the default NTDS class, and propulsion-signature
 validation.
 
+### `automatic_evasion_policy` : [`AutomaticEvasionPolicy`](#automaticevasionpolicy)
+
+Whether suggested blueprint doctrine automatically enters evasion when
+threatened. Every chassis asset authors this explicitly.
+
 ### `launch_requires` : `Vec`<[`Facility`](#facility)>
 
 Facilities required on the carrier to launch this entity.
@@ -212,6 +217,20 @@ Variants:
 - **`Air`** — Operates in the air — a fixed- or rotary-wing aircraft.
 - **`Sea`** — Operates on the sea surface — a ship or surface craft.
 - **`Submarine`** — Operates below the sea surface — a submarine.
+
+## `AutomaticEvasionPolicy`
+
+Whether a vehicle automatically enters tactical evasion when threatened.
+
+Authored by chassis for suggested blueprint doctrine, explicitly
+overrideable by manual blueprint doctrine, and copied to runtime doctrine at
+spawn. Physical terrain, collision, and envelope safety do not consult this
+policy.
+
+Variants:
+
+- **`On`** — Permit tasking to begin every otherwise-eligible tactical evade.
+- **`Off`** — Suppress every new tactical evade; physical safety remains automatic.
 
 ## `Facility`
 

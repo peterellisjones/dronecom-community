@@ -4,6 +4,7 @@
     designator: "CV-1000",
     codename: "Bastion",
     domain: Sea,
+    automatic_evasion_policy: On,
     launch_requires: [],
     recovery_requires: [],
     provides: [(facility: FlightDeck, cells: 1, max_simultaneous_launches: 1), (facility: WellDeck, cells: 1, max_simultaneous_launches: 1), (facility: VLS, cells: 8, max_simultaneous_launches: 8), (facility: TorpedoTube, cells: 2, max_simultaneous_launches: 2)],

@@ -4,6 +4,7 @@
     designator: "SS-800",
     codename: "Specter",
     domain: Submarine,
+    automatic_evasion_policy: On,
     launch_requires: [WellDeck],
     recovery_requires: [WellDeck],
     provides: [(facility: TorpedoTube, cells: 6, max_simultaneous_launches: 6)],

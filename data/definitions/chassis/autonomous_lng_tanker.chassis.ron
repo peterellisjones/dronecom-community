@@ -8,6 +8,7 @@
     designator: "ALT-100",
     codename: "Boreal",
     domain: Sea,
+    automatic_evasion_policy: On,
     // #3704 code review: independent, director-spawned hull — see
     // `autonomous_cargo_ship.chassis.ron` for why `carrier: true` with empty
     // `launch_requires`/`recovery_requires` is correct and verified inert for

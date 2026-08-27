@@ -4,6 +4,7 @@
     designator: "MQ-220",
     codename: "Lynx",
     domain: Air,
+    automatic_evasion_policy: On,
     launch_requires: [FlightDeck],
     recovery_requires: [FlightDeck],
     provides: [(facility: AirLaunch, cells: 6, max_simultaneous_launches: 6)],

@@ -9,7 +9,15 @@
     horizon_secs: 30.0,
     // A carrier is "threatened" when its nearest fresh enemy contact is within
     // this planar range (metres) and closing. Matches carrier_danger_radius.
+    // That is the RAW read — see threat_clear_dwell_secs.
     threat_range_m: 14000.0,
+    // How long (s) a carrier keeps being treated as threatened after the raw
+    // read first says the coast is clear. Only the all-clear is damped — a
+    // carrier that comes under threat goes defensive immediately. 0.0 disables.
+    // Must stay above the longest measured transient (6.8 s of track-identity
+    // churn across the range threshold) and below horizon_secs, so a stale
+    // defensive commitment cannot outlive the objective it protects.
+    threat_clear_dwell_secs: 15.0,
     // Minimum own armed units to adopt a Press posture; below this the
     // main-effort carrier probes (scouts) instead of committing.
     press_force_floor: 2,

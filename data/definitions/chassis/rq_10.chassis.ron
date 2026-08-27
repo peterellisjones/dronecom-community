@@ -4,6 +4,7 @@
     designator: "RQ-10",
     codename: "Jackal",
     domain: Air,
+    automatic_evasion_policy: On,
     launch_requires: [FlightDeck],
     recovery_requires: [FlightDeck],
     // #3148: the RQ-10 is a scout / loitering-munition airframe — it rams with

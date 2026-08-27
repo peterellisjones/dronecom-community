@@ -92,4 +92,9 @@
         // Spare silent light torpedoes (ASW picket tubes)
         (blueprint: BlueprintId("00000000-0000-0000-0000-00000000000f"), count: 4), // MK-30
     ],
+    munition_salvos: [
+        (munition: BlueprintId("00000000-0000-0000-0000-000000000008"), requested: 1),
+        (munition: BlueprintId("00000000-0000-0000-0000-000000000003"), requested: 1),
+        (munition: BlueprintId("00000000-0000-0000-0000-000000000007"), requested: 1),
+    ],
 )

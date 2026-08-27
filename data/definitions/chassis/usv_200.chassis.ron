@@ -4,6 +4,7 @@
     designator: "USV-200",
     codename: "Surge",
     domain: Sea,
+    automatic_evasion_policy: On,
     launch_requires: [WellDeck],
     recovery_requires: [WellDeck],
     provides: [(facility: VLS, cells: 16, max_simultaneous_launches: 16), (facility: TorpedoTube, cells: 4, max_simultaneous_launches: 4)],

@@ -4,6 +4,7 @@
     designator: "M-400",
     codename: "Pike",
     domain: Air,
+    automatic_evasion_policy: Off,
     // VLS-only (#3082): a ship-magazine area-defence round, not a drone
     // hardpoint weapon — no AirLaunch, unlike every other missile.
     launch_requires: [VLS],
