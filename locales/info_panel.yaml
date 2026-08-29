@@ -3433,6 +3433,30 @@ info_panel:
         ru: ИЗ КИНЕМАТИКИ
         zh: 来自运动学
         "zh-TW": 來自運動學
+      basis_mixed:
+        de: GEMISCHT
+        en: MIXED
+        es: MIXTO
+        fr: MIXTE
+        it: MISTO
+        ja: 混在
+        ko: 혼재
+        "pt-BR": MISTO
+        ru: СМЕШАННЫЙ
+        zh: 混合
+        "zh-TW": 混合
+      basis_tooltip_mixed:
+        de: "Zwei oder mehr Plattformen unter dieser Spur liefern unterschiedliche Antriebssignaturen, daher lässt sich kein einzelner Typ ablesen."
+        en: "Two or more platforms under this track return different propulsion signatures, so no single type can be read."
+        es: "Dos o más plataformas bajo esta traza devuelven firmas de propulsión distintas, por lo que no puede leerse un tipo único."
+        fr: "Deux plateformes ou plus sous cette piste renvoient des signatures de propulsion différentes ; aucun type unique ne peut être lu."
+        it: "Due o più piattaforme sotto questa traccia restituiscono firme di propulsione diverse, quindi non è leggibile un tipo unico."
+        ja: "この航跡の下にある2つ以上のプラットフォームが異なる推進シグネチャを返すため、単一の種別は判読できません。"
+        ko: "이 항적 아래의 둘 이상의 플랫폼이 서로 다른 추진 시그니처를 반환하므로 단일 기종을 판독할 수 없습니다."
+        "pt-BR": "Duas ou mais plataformas sob esta trilha retornam assinaturas de propulsão diferentes, portanto nenhum tipo único pode ser lido."
+        ru: "Две или более платформы в этом треке дают разные сигнатуры движителей, поэтому единый тип не читается."
+        zh: "该航迹下有两个或更多平台返回不同的推进特征，因此无法读出单一类型。"
+        "zh-TW": "該航跡下有兩個或更多平台回傳不同的推進特徵，因此無法讀出單一類型。"
       outline:
         confirmed:
           de: BESTÄTIGT
@@ -3711,17 +3735,17 @@ info_panel:
         zh: 尺寸 (雷达)
         "zh-TW": 尺寸 (雷達)
       size_tooltip:
-        de: "Vom Radar beobachtete Größe, als Beweis für den führenden Plattform-Treffer gewichtet."
-        en: "Radar-observed size, weighed as evidence toward the leading platform match."
-        es: "Tamaño observado por radar, ponderado como evidencia para la plataforma más probable."
-        fr: "Taille observée au radar, pondérée comme preuve pour la plateforme la plus probable."
-        it: "Dimensione osservata dal radar, ponderata come prova a favore della piattaforma più probabile."
-        ja: "レーダーで観測されたサイズ。最有力プラットフォーム候補への証拠として重み付けされる。"
-        ko: "레이더로 관측된 크기 — 유력한 플랫폼 후보에 대한 증거로 가중됩니다."
-        "pt-BR": "Tamanho observado pelo radar, ponderado como evidência para a plataforma mais provável."
-        ru: "Размер, наблюдаемый радаром, учитываемый как признак в пользу наиболее вероятной платформы."
-        zh: "雷达观测到的尺寸，作为判定最可能平台的证据权重之一。"
-        "zh-TW": "雷達觀測到的尺寸，作為判定最可能平台的證據權重之一。"
+        de: "Vom Radar beobachtete Größe, als Beweis für den führenden Plattform-Treffer gewichtet. Bei einer verschmolzenen Spur mit unterschiedlich großen Rümpfen wird der beobachtete Bereich angezeigt."
+        en: "Radar-observed size, weighed as evidence toward the leading platform match. A merged track of differently-sized hulls shows the observed range."
+        es: "Tamaño observado por radar, ponderado como evidencia para la plataforma más probable. Un contacto fusionado con cascos de distinto tamaño muestra el rango observado."
+        fr: "Taille observée au radar, pondérée comme preuve pour la plateforme la plus probable. Une piste fusionnée aux coques de tailles différentes affiche la plage observée."
+        it: "Dimensione osservata dal radar, ponderata come prova a favore della piattaforma più probabile. Una traccia fusa con scafi di dimensioni diverse mostra l'intervallo osservato."
+        ja: "レーダーで観測されたサイズ。最有力プラットフォーム候補への証拠として重み付けされる。大きさの異なる船体が融合した航跡では観測された範囲を表示する。"
+        ko: "레이더로 관측된 크기 — 유력한 플랫폼 후보에 대한 증거로 가중됩니다. 크기가 다른 선체가 병합된 항적은 관측된 범위를 표시합니다."
+        "pt-BR": "Tamanho observado pelo radar, ponderado como evidência para a plataforma mais provável. Um contato fundido com cascos de tamanhos diferentes mostra a faixa observada."
+        ru: "Размер, наблюдаемый радаром, учитываемый как признак в пользу наиболее вероятной платформы. Для объединённой трассы из корпусов разного размера показывается наблюдаемый диапазон."
+        zh: "雷达观测到的尺寸，作为判定最可能平台的证据权重之一。若为不同尺寸舰体合并的航迹，则显示观测到的范围。"
+        "zh-TW": "雷達觀測到的尺寸，作為判定最可能平台的證據權重之一。若為不同尺寸艦體合併的航跡，則顯示觀測到的範圍。"
       kinematics:
         de: Kinematik
         en: Kinematics
@@ -4303,6 +4327,66 @@ info_panel:
     "zh-TW": "右鍵設定巡邏半徑 · Esc 取消"
   # #2696 declarative loadout / ordnance editor.
   loadout:
+    munition_totals:
+      de: "MUNITIONSGESAMTMENGEN"
+      en: "MUNITION TOTALS"
+      es: "TOTALES DE MUNICIÓN"
+      fr: "TOTAUX DE MUNITIONS"
+      it: "TOTALI MUNIZIONI"
+      ja: "弾薬合計"
+      ko: "탄약 합계"
+      "pt-BR": "TOTAIS DE MUNIÇÃO"
+      ru: "ИТОГИ БОЕПРИПАСОВ"
+      zh: "弹药总数"
+      "zh-TW": "彈藥總數"
+    munition_totals_tooltip:
+      de: "Physische Munitionsgesamtmengen auf diesem Träger und seinen verstauten Plattformen."
+      en: "Physical munition totals across this carrier and its stowed platforms."
+      es: "Totales físicos de munición en este portaaviones y sus plataformas estibadas."
+      fr: "Totaux physiques de munitions sur ce porte-avions et ses plateformes arrimées."
+      it: "Totali fisici delle munizioni su questa portaerei e sulle sue piattaforme stivate."
+      ja: "この空母と搭載中のプラットフォーム全体にある物理的な弾薬合計です。"
+      ko: "이 항공모함과 적재된 플랫폼 전체의 물리적 탄약 합계입니다."
+      "pt-BR": "Totais físicos de munição neste porta-aviões e em suas plataformas estocadas."
+      ru: "Физические итоги боеприпасов на этом носителе и его размещённых платформах."
+      zh: "此航母及其存放平台中的实体弹药总数。"
+      "zh-TW": "此航母及其存放平台中的實體彈藥總數。"
+    munition_total_tooltip:
+      de: "Lager: %{stores}; geladen: %{loaded}; aktive Transfers: %{in_transit}; gesamt: %{total}. Eingeplante Bewegungen bleiben in ihrem aktuellen physischen Bereich."
+      en: "Stores: %{stores}; loaded: %{loaded}; active transfers: %{in_transit}; total: %{total}. Queued moves remain in their current physical bucket."
+      es: "Pañol: %{stores}; cargada: %{loaded}; traslados activos: %{in_transit}; total: %{total}. Los movimientos en cola permanecen en su categoría física actual."
+      fr: "Soute : %{stores} ; chargées : %{loaded} ; transferts actifs : %{in_transit} ; total : %{total}. Les mouvements en file restent dans leur catégorie physique actuelle."
+      it: "Deposito: %{stores}; caricate: %{loaded}; trasferimenti attivi: %{in_transit}; totale: %{total}. I movimenti in coda restano nella loro categoria fisica corrente."
+      ja: "在庫: %{stores}、搭載済み: %{loaded}、進行中の移送: %{in_transit}、合計: %{total}。キュー内の移送は現在の物理的な区分に残ります。"
+      ko: "저장고: %{stores}; 장전됨: %{loaded}; 진행 중 이송: %{in_transit}; 합계: %{total}. 대기 중인 이동은 현재의 물리적 구분에 남아 있습니다."
+      "pt-BR": "Paiol: %{stores}; carregada: %{loaded}; transferências ativas: %{in_transit}; total: %{total}. Movimentos na fila permanecem em sua categoria física atual."
+      ru: "Склад: %{stores}; заряжено: %{loaded}; активные перемещения: %{in_transit}; всего: %{total}. Ожидающие перемещения остаются в текущей физической категории."
+      zh: "库存：%{stores}；已装填：%{loaded}；进行中的转运：%{in_transit}；总数：%{total}。排队中的转运仍属于当前实体类别。"
+      "zh-TW": "庫存：%{stores}；已裝填：%{loaded}；進行中的轉運：%{in_transit}；總數：%{total}。排隊中的轉運仍屬於目前實體類別。"
+    buy_one_more:
+      de: "NOCH EINE KAUFEN"
+      en: "BUY ONE MORE"
+      es: "COMPRAR UNA MÁS"
+      fr: "ACHETER UNE AUTRE"
+      it: "ACQUISTA UN'ALTRA"
+      ja: "もう1つ購入"
+      ko: "하나 더 구매"
+      "pt-BR": "COMPRAR MAIS UMA"
+      ru: "КУПИТЬ ЕЩЁ ОДИН"
+      zh: "再购买一个"
+      "zh-TW": "再購買一個"
+    buy_one_more_tooltip:
+      de: "Fügt einen separaten Kaufauftrag für diesen Träger hinzu."
+      en: "Adds one separate purchase order for this carrier."
+      es: "Añade un pedido de compra separado para este portaaviones."
+      fr: "Ajoute une commande d'achat distincte pour ce porte-avions."
+      it: "Aggiunge un ordine di acquisto separato per questa portaerei."
+      ja: "この空母に個別の購入注文を1件追加します。"
+      ko: "이 항공모함에 별도의 구매 주문 하나를 추가합니다."
+      "pt-BR": "Adiciona um pedido de compra separado para este porta-aviões."
+      ru: "Добавляет отдельный заказ на покупку для этого носителя."
+      zh: "为此航母添加一个独立购买订单。"
+      "zh-TW": "為此航母新增一個獨立購買訂單。"
     loading_from_stores:
       de: "WIRD AUS LAGER GELADEN"
       en: "LOADING FROM STORES"

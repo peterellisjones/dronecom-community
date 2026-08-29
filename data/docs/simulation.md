@@ -621,15 +621,26 @@ the same time. Keep below ~0.3 so the spiral stays tight enough to cover.
 
 ### `search_duration_seconds` : f32
 
-Seconds the drone spends flying the expanding LKP search spiral before
-giving up (`SearchingLKP` → `Complete`). The timer runs only once the
-drone has reached the datum (the spiral phase), not during transit.
+Seconds an `InterceptPhase::SearchingLKP` runs before giving up
+(`SearchingLKP` → `Complete` on `CompletionReason::TrackLost`).
+
+The timer covers **both** the transit to the datum and the spiral over
+it (`advance_intercept_phases` adds `dt` unconditionally), so a drone
+that can never reach a fast-receding datum still terminates in bounded
+time.
 
 ### `search_spiral_start_radius_m` : f32
 
-Distance (metres) within which the drone is considered to have reached
-the dead-reckoned datum — it then switches from transit to the expanding
-spiral, which begins at this radius.
+Radius (metres) of the LKP search spiral's first ring — and therefore
+also the range within which the drone counts as having reached the
+dead-reckoned datum (`search_arrived`) and switches from transit to the
+spiral.
+
+One quantity, deliberately: "arrived" means "on the ring the spiral is
+about to open at", so the flip is continuous with the geometry it
+installs. What must *not* also read it is the transit arm's own approach
+geometry — a controller whose set point is this radius converges to it
+from outside and so can never cross the gate (#4618).
 
 ### `bda_orbit_radius` : f32
 
@@ -740,6 +751,29 @@ Extra headroom (kg) beyond the drone's own weight that an *alternative*
 carrier must have before a holding autonomous drone diverts to it. The
 hysteresis margin prevents diverting to a deck that barely fits and is
 likely to fill before arrival. See DC-35.8.
+
+### `rtb_headroom_slot_worth_m` : f32
+
+Extra transit distance (metres) a returning vehicle will accept to reach
+a deck with one more *slot* of headroom, where a slot is the returner's
+own weight (#4628). This is the exchange rate that lets the RTB carrier
+ranking weigh emptiness against distance instead of ordering the two
+lexicographically -- under the old rule any headroom edge, however
+small, beat any detour, however long, so every returner piled onto the
+emptiest deck in the fleet. Raise to spread returners harder across
+decks; lower to send them to the nearest adequate deck.
+
+### `rtb_headroom_saturation_slots` : f32
+
+Headroom (in slots of the returner's own weight) beyond which a deck
+stops counting as any emptier (#4628). This cap, not the blend, is what
+fixes the emptiest-deck pathology: carrier capacities (237.6 t on a
+stock `cv_3000`) dwarf a recoverable (0.3-6 t), so two decks routinely differ
+by tens of slots, and an uncapped linear blend would still let that
+difference outrank any distance on the map. Past a few slots of margin
+the deck is equally safe to commit to, so distance decides; below it,
+a tight deck is still passed over for a farther one -- which is the
+spread-across-decks intent the ranking was written for.
 
 ### `refuel_rate_kg_per_second` : f32
 
@@ -1479,7 +1513,11 @@ Torpedo tube.
 
 ### `flight_deck` : [`FlightDeckPhases`](#flightdeckphases)
 
-Flight deck / helipad — fixed- and rotary-wing aircraft.
+Flight deck — fixed- and rotary-wing aircraft off a catapult deck.
+
+### `heli_pad` : [`HeliPadPhases`](#helipadphases)
+
+Helipad — rotary-wing aircraft off a spot. Its own station since #4629.
 
 ### `well_deck` : [`WellDeckPhases`](#welldeckphases)
 
@@ -2085,12 +2123,14 @@ Ejecting the torpedo. All flooded tubes may fire together.
 
 ## `FlightDeckPhases`
 
-`Facility::FlightDeck` and
-`Facility::HeliPad` phase durations, in seconds.
+`Facility::FlightDeck` phase durations, in seconds.
 
 One aircraft at a time occupies each phase, so these add up per aircraft
 rather than being shared across a wave. Recovery flies the same phases in
 reverse — deck, then elevator, then hangar.
+
+The helipad is a separate station with its own durations — see
+`HeliPadPhases`.
 
 ### `hangar` : f32
 
@@ -2107,6 +2147,32 @@ Moving across the deck to the catapult.
 ### `catapult` : f32
 
 The catapult stroke itself.
+
+## `HeliPadPhases`
+
+`Facility::HeliPad` phase durations, in seconds.
+
+The flight deck's cycle without the catapult: a helicopter is spotted on the
+pad and lifts off under its own rotor, so there is no stroke to wait for.
+The three shared phases deliberately carry the *same* numbers as
+`FlightDeckPhases` — #4629 split the helipad off the flight deck's
+pipeline so a hull authoring both actually gets two lanes, and holding these
+equal keeps that split the only variable it changed. A helipad is not also a
+faster place to work an aircraft.
+
+Recovery flies these in reverse — pad, then elevator, then hangar.
+
+### `hangar` : f32
+
+Readying the aircraft in the hangar.
+
+### `elevator` : f32
+
+Riding the elevator between hangar and pad level.
+
+### `pad` : f32
+
+Spotting the aircraft on the pad, turning rotors, and lifting.
 
 ## `WellDeckPhases`
 

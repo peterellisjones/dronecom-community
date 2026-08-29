@@ -5,8 +5,13 @@
     codename: "Hornet",
     domain: Air,
     automatic_evasion_policy: On,
-    launch_requires: [FlightDeck, HeliPad],
-    recovery_requires: [FlightDeck, HeliPad],
+    // Helipad first: #4629 made it its own station, and first-match is what the
+    // display tag, the munition-transfer station, and recovery routing all use.
+    // A helo spots, rearms and lands on the pad; the flight deck is the fallback
+    // for a hull that has no pad (the CV-1000) and, at launch, for a pad that is
+    // already busy.
+    launch_requires: [HeliPad, FlightDeck],
+    recovery_requires: [HeliPad, FlightDeck],
     provides: [(facility: AirLaunch, cells: 4, max_simultaneous_launches: 4)],
     length: 8.0,
     weight: 550.0,
