@@ -110,6 +110,18 @@ designer:
     ru: "Новый проект"
     zh: "新设计"
     "zh-TW": "新設計"
+  chassis_tooltip:
+    de: "Der Rumpf, auf dem dieser Entwurf aufbaut. Er wird einmal hier gewählt und kann später nicht mehr geändert werden — für einen anderen Rumpf beginne einen neuen Entwurf."
+    en: "The hull this design is built on. It is chosen once, here, and cannot be changed later — to try another hull, start a new design."
+    es: "El casco sobre el que se construye este diseño. Se elige una sola vez, aquí, y no puede cambiarse después: para probar otro casco, empieza un diseño nuevo."
+    fr: "La coque sur laquelle ce modèle est construit. Elle se choisit une seule fois, ici, et ne peut plus être changée ensuite — pour essayer une autre coque, commencez un nouveau modèle."
+    it: "Lo scafo su cui si basa questo progetto. Si sceglie una sola volta, qui, e non può più essere cambiato — per provare un altro scafo, avvia un nuovo progetto."
+    ja: "この設計の基となる船体。ここで一度だけ選択し、後から変更はできない。別の船体を試すには新しい設計を始めること。"
+    ko: "이 설계의 기반이 되는 선체입니다. 여기서 한 번만 선택하며 이후에는 바꿀 수 없습니다 — 다른 선체를 쓰려면 새 설계를 시작하십시오."
+    "pt-BR": "O casco sobre o qual este projeto é construído. É escolhido uma única vez, aqui, e não pode ser alterado depois — para testar outro casco, inicie um novo projeto."
+    ru: "Корпус, на котором строится эта конструкция. Он выбирается один раз, здесь, и позже не меняется — чтобы попробовать другой корпус, начните новую конструкцию."
+    zh: "该设计所基于的舰体。只在此处选择一次，之后无法更改——要换用其他舰体，请新建一个设计。"
+    "zh-TW": "該設計所基於的艦體。只在此處選擇一次，之後無法更改——要改用其他艦體，請新建一個設計。"
   chassis:
     de: "Chassis"
     en: "Chassis"
@@ -146,6 +158,18 @@ designer:
     ru: "Нет доступных шасси"
     zh: "无可用底盘"
     "zh-TW": "無可用底盤"
+  max_weight_tooltip:
+    de: "Das Höchstgewicht, das dieser Rumpf voll beladen erreichen darf. Zieht man sein Leergewicht ab, bleibt das Nutzlastbudget für Komponenten und Treibstoff."
+    en: "The most this hull may weigh fully loaded. Subtract its empty weight and what remains is the payload budget for components and fuel."
+    es: "Lo máximo que este casco puede pesar a plena carga. Resta su peso en vacío y lo que queda es el presupuesto de carga para componentes y combustible."
+    fr: "Le poids maximal que cette coque peut atteindre à pleine charge. Retirez sa masse à vide et il reste le budget de charge utile pour les composants et le carburant."
+    it: "Il peso massimo che questo scafo può raggiungere a pieno carico. Sottratto il peso a vuoto, ciò che resta è il budget di carico per componenti e carburante."
+    ja: "この船体が満載時に許される最大重量。空虚重量を差し引いた残りが、コンポーネントと燃料に使えるペイロード予算になる。"
+    ko: "이 선체가 만재 상태에서 가질 수 있는 최대 중량입니다. 공허 중량을 빼고 남는 값이 구성품과 연료에 쓸 수 있는 페이로드 예산입니다."
+    "pt-BR": "O máximo que este casco pode pesar totalmente carregado. Subtraia seu peso vazio e o que sobra é o orçamento de carga para componentes e combustível."
+    ru: "Наибольшая масса, допустимая для этого корпуса при полной загрузке. Вычтите массу пустого корпуса — остаток и есть бюджет полезной нагрузки на компоненты и топливо."
+    zh: "该舰体满载时允许达到的最大重量。减去其空重，余下的就是组件与燃料可用的载荷预算。"
+    "zh-TW": "該艦體滿載時允許達到的最大重量。減去其空重，餘下的就是組件與燃料可用的載荷預算。"
   max_weight:
     de: "Max. Gewicht"
     en: "Max Weight"
@@ -305,11 +329,36 @@ designer:
     ru: "%{count} ошибок"
     zh: "%{count} 错误"
     "zh-TW": "%{count} 錯誤"
+  unknown_chassis_tooltip:
+    de: "Dieser Entwurf lässt sich nicht öffnen: Sein Chassis fehlt im geladenen Katalog. Die Spalte CHASSIS zeigt die angeforderte Kennung; wird die Mod oder Definition, die sie bereitstellt, wiederhergestellt, ist der Entwurf wieder bearbeitbar."
+    en: "This design cannot be opened: its chassis is not in the loaded catalogue. The Chassis column shows the id it asks for; restoring the mod or definition that provides it makes the design editable again."
+    es: "Este diseño no puede abrirse: su chasis no está en el catálogo cargado. La columna Chasis muestra el identificador que solicita; restaurar el mod o la definición que lo aporta vuelve a hacer editable el diseño."
+    fr: "Ce modèle ne peut pas être ouvert : son châssis est absent du catalogue chargé. La colonne Châssis affiche l'identifiant demandé ; rétablir le mod ou la définition qui le fournit rend le modèle à nouveau modifiable."
+    it: "Questo progetto non può essere aperto: il suo telaio non è nel catalogo caricato. La colonna Telaio mostra l'id richiesto; ripristinando la mod o la definizione che lo fornisce il progetto torna modificabile."
+    ja: "この設計は開けない。シャシーが読み込み済みのカタログに存在しない。CHASSIS 列に要求している ID が表示される。それを提供する MOD や定義を戻せば、再び編集できるようになる。"
+    ko: "이 설계는 열 수 없습니다. 섀시가 불러온 카탈로그에 없습니다. CHASSIS 열에 요구하는 id가 표시되며, 이를 제공하는 모드나 정의를 복원하면 다시 편집할 수 있습니다."
+    "pt-BR": "Este projeto não pode ser aberto: seu chassi não está no catálogo carregado. A coluna Chassi mostra o id solicitado; restaurar o mod ou a definição que o fornece torna o projeto editável novamente."
+    ru: "Эту конструкцию нельзя открыть: её шасси отсутствует в загруженном каталоге. В колонке шасси показан запрашиваемый идентификатор; если вернуть мод или определение, которое его даёт, конструкция снова станет редактируемой."
+    zh: "无法打开该设计：其底盘不在已加载的目录中。“底盘”栏显示它所要求的 id；恢复提供该 id 的模组或定义后，设计即可重新编辑。"
+    "zh-TW": "無法開啟該設計：其底盤不在已載入的目錄中。「底盤」欄顯示它所要求的 id；恢復提供該 id 的模組或定義後，設計即可重新編輯。"
+  unresolved_design_tooltip:
+    de: "Dieser Entwurf lässt sich nicht öffnen: Etwas, das er mitführt, verweist auf keinen Entwurf in deiner Bibliothek mehr — meist einen gelöschten oder einen aus einer nicht mehr installierten Mod. Die Datei bleibt auf der Festplatte, und die Zeile bietet keine Aktionen, bis der Verweis wiederhergestellt ist."
+    en: "This design cannot be opened: something it carries no longer points to a design in your library — usually one that was deleted, or one from a mod that is no longer installed. The file is left on disk, and the row offers no actions until the reference is restored."
+    es: "Este diseño no puede abrirse: algo que transporta ya no apunta a ningún diseño de tu biblioteca, normalmente uno eliminado o procedente de un mod que ya no está instalado. El archivo permanece en disco y la fila no ofrece acciones hasta que se restaure la referencia."
+    fr: "Ce modèle ne peut pas être ouvert : un élément qu'il emporte ne renvoie plus à un modèle de votre bibliothèque — généralement un modèle supprimé, ou issu d'un mod désinstallé. Le fichier reste sur le disque et la ligne n'offre aucune action tant que la référence n'est pas rétablie."
+    it: "Questo progetto non può essere aperto: qualcosa che trasporta non rimanda più a un progetto della tua libreria — di solito uno eliminato, o proveniente da una mod non più installata. Il file resta su disco e la riga non offre azioni finché il riferimento non viene ripristinato."
+    ja: "この設計は開けない。搭載しているもののいずれかが、ライブラリ内のどの設計も指していない —— 多くは削除された設計か、アンインストール済みの MOD 由来のものである。ファイルはディスク上に残るが、参照が復旧するまでこの行に操作は用意されない。"
+    ko: "이 설계는 열 수 없습니다. 탑재한 항목 중 하나가 라이브러리의 어떤 설계도 가리키지 않습니다 — 대개 삭제되었거나 제거된 모드에서 온 설계입니다. 파일은 디스크에 그대로 남으며, 참조가 복원될 때까지 이 행은 어떤 동작도 제공하지 않습니다."
+    "pt-BR": "Este projeto não pode ser aberto: algo que ele transporta já não aponta para nenhum projeto da sua biblioteca — normalmente um que foi excluído, ou vindo de um mod que não está mais instalado. O arquivo permanece no disco e a linha não oferece ações até que a referência seja restaurada."
+    ru: "Эту конструкцию нельзя открыть: что-то из перевозимого ею больше не указывает ни на одну конструкцию в вашей библиотеке — обычно на удалённую или пришедшую из уже не установленного мода. Файл остаётся на диске, и строка не предлагает действий, пока ссылка не восстановлена."
+    zh: "无法打开该设计：它所携带的某项内容已不再指向库中的任何设计——通常是被删除的设计，或来自已卸载的模组。文件仍保留在磁盘上；在该引用恢复之前，此行不提供任何操作。"
+    "zh-TW": "無法開啟該設計：它所攜帶的某項內容已不再指向庫中的任何設計——通常是被刪除的設計，或來自已解除安裝的模組。檔案仍保留在磁碟上；在該參照恢復之前，此列不提供任何操作。"
   # Status shown for a user design whose nested blueprint reference does not
   # resolve against the library — typically a design nesting a Workshop
   # blueprint whose mod is uninstalled (#3070). The design is retained but has
   # no materialized recipe, so it cannot be built or edited until the reference
-  # is restored.
+  # is restored. `unresolved_design_tooltip` above is the hover explanation
+  # that sits on the row's name beside this chip.
   unresolvable:
     de: "nicht auflösbar"
     en: "unresolvable"
@@ -749,6 +798,21 @@ designer:
     ru: "%{used} из %{capacity} ячеек %{facility} заняты боекомплектом этого проекта."
     zh: "%{facility} 单元 %{capacity} 中 %{used} 被该设计的挂载占用。"
     "zh-TW": "%{facility} 單元 %{capacity} 中 %{used} 被該設計的掛載佔用。"
+  # Shared tooltip for every named-facility LOADOUT/STORES group heading
+  # (#4659) — generic wording since the heading text already names the
+  # facility (`VLS`, `TORPEDO TUBE`, `FLIGHT DECK`, `HELI PAD`, `WELL DECK`).
+  facility_group_tooltip:
+    de: "Nach der Einrichtung gruppiert, die sie trägt."
+    en: "Rows grouped by the facility that carries them."
+    es: "Filas agrupadas por la instalación que las transporta."
+    fr: "Lignes regroupées par l'installation qui les transporte."
+    it: "Righe raggruppate per l'impianto che le trasporta."
+    ja: "搭載する設備ごとにグループ化されています。"
+    ko: "탑재하는 설비별로 그룹화되었습니다."
+    "pt-BR": "Linhas agrupadas pela instalação que as transporta."
+    ru: "Строки сгруппированы по узлу, который их несёт."
+    zh: "按承载它们的设施分组。"
+    "zh-TW": "依承載它們的設施分組。"
   fuel_capacity:
     de: "Treibstoffkapazität:"
     en: "Fuel Capacity:"
@@ -821,6 +885,18 @@ designer:
     ru: "Масса заправленного топлива, уже включённая в общую массу выше."
     zh: "已装载燃料的质量，已计入上方的总重量。"
     "zh-TW": "已裝載燃料的質量，已計入上方的總重量。"
+  length_tooltip:
+    de: "Rumpflänge, durch das Chassis festgelegt. Feindliche Sensoren werten die Größe bei der Klassifizierung aus, ein längerer Rumpf ist also leichter zu identifizieren — und dies ist die Länge, die ihre Kontakte melden."
+    en: "Hull length, fixed by the chassis. Enemy sensors read size when classifying a contact, so a longer hull is easier to identify — and this is the length their tracks report."
+    es: "Eslora del casco, fijada por el chasis. Los sensores enemigos leen el tamaño al clasificar un contacto, así que un casco más largo es más fácil de identificar, y esta es la eslora que informan sus trazas."
+    fr: "Longueur de la coque, fixée par le châssis. Les capteurs ennemis exploitent la taille pour classifier un contact : une coque plus longue est donc plus facile à identifier — et c'est cette longueur que leurs pistes rapportent."
+    it: "Lunghezza dello scafo, fissata dal telaio. I sensori nemici leggono le dimensioni nel classificare un contatto, quindi uno scafo più lungo è più facile da identificare — ed è questa la lunghezza che le loro tracce riportano."
+    ja: "シャシーで決まる船体長。敵センサーは接触の分類時に大きさを読み取るため、船体が長いほど識別されやすく、敵の航跡が報告する全長もこの値になる。"
+    ko: "섀시가 정하는 선체 길이입니다. 적 센서는 접촉을 분류할 때 크기를 읽으므로 선체가 길수록 식별되기 쉬우며, 적 항적이 보고하는 길이도 이 값입니다."
+    "pt-BR": "Comprimento do casco, fixado pelo chassi. Sensores inimigos leem o tamanho ao classificar um contato, então um casco mais longo é mais fácil de identificar — e é esse o comprimento que suas trilhas informam."
+    ru: "Длина корпуса, задаётся шасси. Вражеские сенсоры учитывают размер при классификации контакта, поэтому более длинный корпус опознать легче — и именно эту длину сообщают их треки."
+    zh: "由底盘决定的舰体长度。敌方传感器在分类接触时会读取尺寸，因此舰体越长越容易被识别——敌方航迹报告的也是这个长度。"
+    "zh-TW": "由底盤決定的艦體長度。敵方感測器在分類接觸時會讀取尺寸，因此艦體越長越容易被識別——敵方航跡回報的也是這個長度。"
   length:
     de: "Länge:"
     en: "Length:"
@@ -1186,6 +1262,18 @@ designer:
     ru: "Макс. высота:"
     zh: "最大高度:"
     "zh-TW": "最大高度:"
+  catalog_tooltip:
+    de: "Komponenten, die dieses Chassis zulässt. Eine, die den Nutzlastraum oder das Leistungsbudget überschreiten würde, wird beim Hinzufügen abgelehnt, statt verbaut und danach beanstandet zu werden."
+    en: "Components this chassis accepts. One that would exceed the payload space or the power budget is refused as you add it, rather than fitted and flagged afterwards."
+    es: "Componentes que este chasis admite. Uno que superaría el espacio de carga o el presupuesto de energía se rechaza al añadirlo, en lugar de instalarse y señalarse después."
+    fr: "Composants que ce châssis accepte. Un composant qui dépasserait l'espace de charge utile ou le budget électrique est refusé au moment de l'ajout, plutôt qu'installé puis signalé après coup."
+    it: "Componenti che questo telaio accetta. Uno che supererebbe lo spazio di carico o il budget di potenza viene rifiutato al momento dell'aggiunta, invece di essere installato e segnalato in seguito."
+    ja: "このシャシーが受け入れるコンポーネント。ペイロード容積や電力予算を超えるものは、搭載してから警告するのではなく、追加する時点で拒否される。"
+    ko: "이 섀시가 허용하는 구성품입니다. 페이로드 공간이나 전력 예산을 초과하는 구성품은 장착한 뒤 경고하는 대신 추가하는 시점에 거부됩니다."
+    "pt-BR": "Componentes que este chassi aceita. Um que ultrapassaria o espaço de carga ou o orçamento de energia é recusado ao ser adicionado, em vez de instalado e sinalizado depois."
+    ru: "Компоненты, которые принимает это шасси. Компонент, выходящий за пределы объёма полезной нагрузки или энергетического бюджета, отклоняется при добавлении, а не устанавливается и помечается после."
+    zh: "该底盘可接受的组件。超出载荷空间或功率预算的组件会在添加时被拒绝，而不是装上之后再标记。"
+    "zh-TW": "該底盤可接受的組件。超出載荷空間或功率預算的組件會在加入時被拒絕，而不是裝上之後再標記。"
   catalog:
     de: "Komponenten"
     en: "Components"
@@ -1198,18 +1286,6 @@ designer:
     ru: "Компоненты"
     zh: "组件"
     "zh-TW": "組件"
-  blueprints:
-    de: "Drohnen"
-    en: "Drones"
-    es: "Drones"
-    fr: "Drones"
-    it: "Droni"
-    ja: "ドローン"
-    ko: "드론"
-    "pt-BR": "Drones"
-    ru: "Дроны"
-    zh: "无人机"
-    "zh-TW": "無人機"
   category_sensors:
     de: "Sensoren"
     en: "Sensors"
@@ -1360,6 +1436,18 @@ designer:
     ru: "Категория:"
     zh: "类别："
     "zh-TW": "類別："
+  chassis_weight_tooltip:
+    de: "Leergewicht des blanken Rumpfs. Verbaute Komponenten und Treibstoff kommen hinzu; das Gesamtgewicht des Entwurfs steht in der Spalte STATS."
+    en: "Empty weight of the bare hull. Fitted components and fuel add to it; the design's total weight appears in the Stats column."
+    es: "Peso en vacío del casco desnudo. Los componentes instalados y el combustible se suman; el peso total del diseño aparece en la columna Estadísticas."
+    fr: "Masse à vide de la coque nue. Les composants installés et le carburant s'y ajoutent ; la masse totale du modèle figure dans la colonne Statistiques."
+    it: "Peso a vuoto dello scafo nudo. I componenti installati e il carburante si sommano; il peso totale del progetto compare nella colonna Statistiche."
+    ja: "素の船体のみの空虚重量。搭載コンポーネントと燃料はこれに加算される。設計全体の重量は STATS 列に表示される。"
+    ko: "구성품이 없는 선체만의 공허 중량입니다. 장착한 구성품과 연료가 여기에 더해지며, 설계 전체 중량은 STATS 열에 표시됩니다."
+    "pt-BR": "Peso vazio do casco nu. Componentes instalados e combustível somam-se a ele; o peso total do projeto aparece na coluna Estatísticas."
+    ru: "Масса пустого корпуса без оснащения. Установленные компоненты и топливо добавляются к ней; полная масса конструкции показана в колонке характеристик."
+    zh: "裸舰体的空重。装上的组件和燃料会在此基础上累加；设计的总重量显示在“数据”栏中。"
+    "zh-TW": "裸艦體的空重。裝上的組件與燃料會在此基礎上累加；設計的總重量顯示在「數據」欄中。"
   tooltip_weight:
     de: "Gewicht:"
     en: "Weight:"
@@ -1372,6 +1460,18 @@ designer:
     ru: "Масса:"
     zh: "重量："
     "zh-TW": "重量："
+  chassis_cost_tooltip:
+    de: "Preis des blanken Rumpfs. Jede verbaute Komponente kommt hinzu; die Gesamtbaukosten des Entwurfs stehen in der Spalte STATS."
+    en: "Price of the bare hull. Every component you fit adds to it; the design's total build cost appears in the Stats column."
+    es: "Precio del casco desnudo. Cada componente que instalas se suma; el coste total de construcción del diseño aparece en la columna Estadísticas."
+    fr: "Prix de la coque nue. Chaque composant installé s'y ajoute ; le coût de construction total du modèle figure dans la colonne Statistiques."
+    it: "Prezzo dello scafo nudo. Ogni componente installato si somma; il costo di costruzione totale del progetto compare nella colonna Statistiche."
+    ja: "素の船体のみの価格。搭載した各コンポーネントの分が加算される。設計全体の建造コストは STATS 列に表示される。"
+    ko: "구성품이 없는 선체만의 가격입니다. 장착하는 구성품마다 여기에 더해지며, 설계 전체의 건조 비용은 STATS 열에 표시됩니다."
+    "pt-BR": "Preço do casco nu. Cada componente instalado soma-se a ele; o custo total de construção do projeto aparece na coluna Estatísticas."
+    ru: "Цена пустого корпуса. Каждый установленный компонент добавляется к ней; полная стоимость постройки конструкции показана в колонке характеристик."
+    zh: "裸舰体的价格。你装上的每个组件都会累加；设计的总建造成本显示在“数据”栏中。"
+    "zh-TW": "裸艦體的價格。你裝上的每個組件都會累加；設計的總建造成本顯示在「數據」欄中。"
   tooltip_cost:
     de: "Kosten:"
     en: "Cost:"
@@ -2068,6 +2168,34 @@ designer:
     ru: "Запасные боеприпасы в грузовом трюме. Не готовы к пуску — палубная команда перезаряжает ими пустые ячейки и перевооружает вернувшиеся дроны."
     zh: "货舱中的备用弹药。不可直接发射 — 由甲板人员装填至空单元，并为返航的无人机重新武装。"
     "zh-TW": "貨艙中的備用彈藥。不可直接發射 — 由甲板人員裝填至空單元，並為返航的無人機重新武裝。"
+  # LOADOUT/STORES catch-all group heading (#4659): items with no
+  # facility-specific stowage on this carrier — an unresolvable design, a
+  # pure-cargo chassis, or a round staged for a facility this hull doesn't
+  # itself provide (e.g. torpedoes carried only to resupply an escort).
+  general_stores:
+    de: "ALLGEMEINE VORRÄTE"
+    en: "GENERAL STORES"
+    es: "ALMACÉN GENERAL"
+    fr: "MAGASIN GÉNÉRAL"
+    it: "MAGAZZINO GENERALE"
+    ja: "一般倉庫"
+    ko: "일반 창고"
+    "pt-BR": "DEPÓSITO GERAL"
+    ru: "ОБЩИЙ СКЛАД"
+    zh: "杂物舱"
+    "zh-TW": "雜物艙"
+  general_stores_tooltip:
+    de: "Gegenstände ohne einrichtungsspezifische Verstauung."
+    en: "Items with no facility-specific stowage."
+    es: "Elementos sin estiba específica de una instalación."
+    fr: "Éléments sans arrimage propre à une installation."
+    it: "Elementi senza stivaggio specifico per un impianto."
+    ja: "特定の設備に紐づかない搭載品。"
+    ko: "특정 설비에 속하지 않는 항목."
+    "pt-BR": "Itens sem estivagem específica de uma instalação."
+    ru: "Предметы без привязки к конкретному узлу размещения."
+    zh: "未与特定设施绑定的物品。"
+    "zh-TW": "未與特定設施綁定的物品。"
   # Payload-row drag handle (#3063 slice 2) — the sole drag source for a
   # draggable row (catalog component/blueprint rows, and installed
   # loadout/stores rows). Shown on hover of the grip glyph.
@@ -2400,6 +2528,18 @@ designer:
     ru: "Тяга не зависит от высоты (ракетный двигатель)"
     zh: "推力与高度无关（火箭推进）"
     "zh-TW": "推力與高度無關（火箭推進）"
+  propulsion_mixed_tooltip:
+    de: "Der Schub fällt mit der Höhe ab, aber flacher als bei einem reinen Luftatmer — dieses Triebwerk liegt zwischen konstantem Schub und voller Luftdichteabhängigkeit."
+    en: "Thrust falls off with altitude, but less steeply than a pure air-breather — this engine sits between constant thrust and full air-density response."
+    es: "El empuje disminuye con la altitud, pero de forma menos pronunciada que en un motor puramente aerobio: se sitúa entre el empuje constante y la respuesta plena a la densidad del aire."
+    fr: "La poussée diminue avec l'altitude, mais moins fortement que pour un moteur purement aérobie — ce moteur se situe entre la poussée constante et une dépendance totale à la densité de l'air."
+    it: "La spinta cala con la quota, ma meno bruscamente di un motore puramente aerobico: si colloca fra spinta costante e piena dipendenza dalla densità dell'aria."
+    ja: "推力は高度とともに低下するが、純粋な空気吸込み式ほど急ではない —— 一定推力と完全な空気密度依存の中間に位置する。"
+    ko: "추력이 고도에 따라 감소하지만 순수 공기흡입식만큼 급격하지는 않습니다 — 일정 추력과 완전한 공기 밀도 의존의 중간에 해당합니다."
+    "pt-BR": "O empuxo cai com a altitude, mas de forma menos acentuada que num motor puramente aeróbio — fica entre empuxo constante e resposta plena à densidade do ar."
+    ru: "Тяга падает с высотой, но не так резко, как у чисто воздушно-реактивного двигателя — этот занимает промежуточное положение между постоянной тягой и полной зависимостью от плотности воздуха."
+    zh: "推力随高度下降，但不像纯吸气式发动机那样陡峭——介于恒定推力与完全依赖空气密度之间。"
+    "zh-TW": "推力隨高度下降，但不像純吸氣式發動機那樣陡峭——介於恆定推力與完全依賴空氣密度之間。"
   propulsion_mixed:
     de: "Gemischter Antrieb"
     en: "Mixed propulsion"
@@ -2694,6 +2834,18 @@ designer:
     zh: "无法删除 — 被以下使用：%{names}"
     "zh-TW": "無法刪除 — 被以下使用：%{names}"
   doctrine:
+    title_tooltip:
+      de: "Die Standardeinstellungen, mit denen jede aus diesem Entwurf gebaute Einheit startet. Es sind Vorgaben, keine Befehle — die Doktrin jeder Einheit lässt sich im Einsatz ändern."
+      en: "The standing settings every unit built from this design starts with. They are defaults, not orders — each unit's doctrine can be changed once it is in play."
+      es: "Los ajustes permanentes con los que arranca cada unidad construida a partir de este diseño. Son valores predeterminados, no órdenes: la doctrina de cada unidad puede cambiarse una vez en juego."
+      fr: "Les réglages permanents avec lesquels démarre chaque unité construite à partir de ce modèle. Ce sont des valeurs par défaut, pas des ordres — la doctrine de chaque unité se modifie une fois celle-ci en jeu."
+      it: "Le impostazioni permanenti con cui parte ogni unità costruita da questo progetto. Sono valori predefiniti, non ordini: la dottrina di ciascuna unità può essere cambiata una volta in gioco."
+      ja: "この設計から建造される各ユニットが初期状態として持つ常設設定。命令ではなく既定値であり、各ユニットのドクトリンは投入後に変更できる。"
+      ko: "이 설계로 건조되는 모든 유닛이 처음에 갖는 상시 설정입니다. 명령이 아니라 기본값이며, 각 유닛의 교리는 투입 후 변경할 수 있습니다."
+      "pt-BR": "As configurações permanentes com que cada unidade construída a partir deste projeto começa. São padrões, não ordens — a doutrina de cada unidade pode ser alterada depois de ela entrar em jogo."
+      ru: "Постоянные настройки, с которыми появляется каждая единица, построенная по этой конструкции. Это значения по умолчанию, а не приказы — доктрину каждой единицы можно изменить уже в бою."
+      zh: "由该设计建造的每个单位初始携带的常设设置。它们是默认值而非命令——单位投入战场后可逐个更改其条令。"
+      "zh-TW": "由該設計建造的每個單位初始攜帶的常設設定。它們是預設值而非命令——單位投入戰場後可逐個更改其準則。"
     title:
       de: "Standarddoktrin"
       en: "Default Doctrine"
@@ -2831,6 +2983,18 @@ designer:
         zh: "该载具无主动传感器；EMCON主动无效。"
         "zh-TW": "該載具無主動感測器；EMCON主動無效。"
   # ── Charts column (DC-459 / #289) ─────────────────────────────────────────
+  charts_tooltip:
+    de: "Leistungsdiagramme für den aktuellen Entwurf. Die Reichweite je Fahrstufe erscheint nur, wenn es mehr als eine Fahrstufe zu vergleichen gibt, und der Flugbahnplot nur, wenn das Chassis mehr als ein Profil unterstützt."
+    en: "Performance charts for the current design. Range by bell appears only when the design has more than one bell to compare, and the trajectory plot only when the chassis supports more than one profile."
+    es: "Gráficos de rendimiento del diseño actual. El alcance por régimen solo aparece cuando el diseño tiene más de un régimen que comparar, y el gráfico de trayectoria solo cuando el chasis admite más de un perfil."
+    fr: "Graphiques de performance du modèle actuel. La portée par allure n'apparaît que si le modèle a plus d'une allure à comparer, et le tracé de trajectoire que si le châssis prend en charge plus d'un profil."
+    it: "Grafici delle prestazioni del progetto attuale. La gittata per regime compare solo quando il progetto ha più di un regime da confrontare, e il grafico di traiettoria solo quando il telaio supporta più di un profilo."
+    ja: "現在の設計の性能グラフ。ベル別射程は比較できるベルが複数ある場合のみ、弾道プロットはシャシーが複数のプロファイルに対応している場合のみ表示される。"
+    ko: "현재 설계의 성능 차트입니다. 벨별 사거리는 비교할 벨이 둘 이상일 때만, 궤적 그래프는 섀시가 둘 이상의 프로파일을 지원할 때만 나타납니다."
+    "pt-BR": "Gráficos de desempenho do projeto atual. O alcance por regime só aparece quando o projeto tem mais de um regime a comparar, e o gráfico de trajetória só quando o chassi admite mais de um perfil."
+    ru: "Графики характеристик текущей конструкции. Дальность по режимам хода появляется, только если сравнивать есть более одного режима, а график траектории — только если шасси поддерживает более одного профиля."
+    zh: "当前设计的性能图表。仅当设计有多个可比较的车钟档位时才显示按档位的航程图，仅当底盘支持多种弹道剖面时才显示弹道图。"
+    "zh-TW": "目前設計的效能圖表。僅當設計有多個可比較的車鐘檔位時才顯示按檔位的航程圖，僅當底盤支援多種彈道剖面時才顯示彈道圖。"
   charts:
     de: "DIAGRAMME"
     en: "CHARTS"
@@ -3482,6 +3646,76 @@ designer:
         ru: "Lofted Range"
         zh: "Lofted Range"
         "zh-TW": "Lofted Range"
+    # #4646: the chart draws where a boost-coast round's flown path actually
+    # stopped, which may disagree with the operational range the rows list —
+    # this line is the warning/tooltip wording naming both figures.
+    flown_short:
+      de: "%{profile}: Flug endet bei %{flown}, Modell sagt %{modelled}"
+      en: "%{profile}: flight ends at %{flown}, model says %{modelled}"
+      es: "%{profile}: el vuelo termina en %{flown}, el modelo indica %{modelled}"
+      fr: "%{profile} : le vol se termine à %{flown}, le modèle indique %{modelled}"
+      it: "%{profile}: il volo termina a %{flown}, il modello indica %{modelled}"
+      ja: "%{profile}：飛行は%{flown}で終了、モデルは%{modelled}と予測"
+      ko: "%{profile}: 비행이 %{flown}에서 종료됨, 모델 예측값은 %{modelled}"
+      "pt-BR": "%{profile}: o voo termina em %{flown}, o modelo indica %{modelled}"
+      ru: "%{profile}: полёт заканчивается на %{flown}, модель показывает %{modelled}"
+      zh: "%{profile}：飞行止于%{flown}，模型预测为%{modelled}"
+      "zh-TW": "%{profile}：飛行止於%{flown}，模型預測為%{modelled}"
+    flown_short_tooltip:
+      de: "Die dargestellte Flugbahn endet dort, wo der Flug tatsächlich aufhörte — sie kann kürzer oder länger als die oben angegebene operative Reichweite ausfallen, wenn der geflogene Pfad sein angepasstes Ziel nicht genau erreicht."
+      en: "The plotted trace ends where the round's flight actually stopped — it can fall short of, or run past, the operational range listed above when the flown path doesn't exactly reach its fitted target."
+      es: "La trayectoria trazada termina donde el vuelo realmente se detuvo — puede quedar corta o superar el alcance operativo indicado arriba cuando la trayectoria volada no alcanza exactamente su objetivo ajustado."
+      fr: "La trajectoire tracée se termine là où le vol s'est réellement arrêté — elle peut être plus courte ou plus longue que la portée opérationnelle indiquée ci-dessus lorsque la trajectoire suivie n'atteint pas exactement sa cible ajustée."
+      it: "La traiettoria tracciata termina dove il volo si è effettivamente fermato — può risultare più corta o più lunga dell'autonomia operativa indicata sopra quando il percorso volato non raggiunge esattamente il bersaglio adattato."
+      ja: "描画される軌跡は、実際の飛行が停止した地点で終わる。飛行経路が適合済みの目標に正確に到達しない場合、上に表示された運用射程より短く、あるいは長くなることがある。"
+      ko: "표시된 궤적은 실제 비행이 멈춘 지점에서 끝납니다. 비행 경로가 적합된 표적에 정확히 도달하지 못하면 위에 표시된 운용 사거리보다 짧거나 길어질 수 있습니다."
+      "pt-BR": "A trajetória traçada termina onde o voo realmente parou — pode ficar aquém ou além do alcance operacional indicado acima quando o trajeto voado não atinge exatamente o alvo ajustado."
+      ru: "Отображаемая траектория заканчивается там, где полёт реально остановился — она может не дотянуть до указанной выше оперативной дальности или превысить её, если пройденный путь не достигает точно подогнанной цели."
+      zh: "绘制的轨迹止于飞行实际停止的位置——当飞行路径未能精确到达其拟合目标时，可能短于或超出上方列出的作战射程。"
+      "zh-TW": "繪製的軌跡止於飛行實際停止的位置——當飛行路徑未能精確到達其擬合目標時，可能短於或超出上方列出的作戰射程。"
+    # #4646: a round that crosses the target's downrange plane while still
+    # high above it — the flown/modelled distances agree (so `flown_short`
+    # doesn't fire), but the hollow marker still isn't a plain arrival.
+    ends_airborne:
+      de: "%{profile}: erreicht die Zielentfernung noch in der Luft, kein Bodenauftreffer"
+      en: "%{profile}: crosses the target range still airborne, not a surface arrival"
+      es: "%{profile}: cruza el alcance del blanco aún en el aire, no es una llegada en superficie"
+      fr: "%{profile} : franchit la portée cible encore en vol, pas une arrivée au sol"
+      it: "%{profile}: supera la portata del bersaglio ancora in volo, non un arrivo al suolo"
+      ja: "%{profile}：目標射程を越えるがまだ空中にあり、地表到達ではない"
+      ko: "%{profile}: 표적 사거리를 통과하지만 아직 공중에 있어 지표 도달이 아님"
+      "pt-BR": "%{profile}: cruza o alcance do alvo ainda no ar, não é uma chegada em superfície"
+      ru: "%{profile}: пересекает дальность цели, оставаясь в воздухе — не достижение поверхности"
+      zh: "%{profile}：越过目标射程时仍在空中，并非到达地面"
+      "zh-TW": "%{profile}：越過目標射程時仍在空中，並非到達地面"
+    # #4646: AC 4's TRAJECTORY RANGE row stating the launch altitude the rows
+    # and chart below are computed at — mirrors `designer.launch_altitude`'s
+    # dropdown wording at stats-row width instead of the chart column's
+    # abbreviation.
+    launch_altitude:
+      de: "Starthöhe"
+      en: "Launch Altitude"
+      es: "Altitud de lanzamiento"
+      fr: "Altitude de lancement"
+      it: "Altitudine di lancio"
+      ja: "発射高度"
+      ko: "발사 고도"
+      "pt-BR": "Altitude de lançamento"
+      ru: "Высота пуска"
+      zh: "发射高度"
+      "zh-TW": "發射高度"
+    launch_altitude_tooltip:
+      de: "Die Starthöhe, für die die untenstehenden Flugbahnzeilen und das Diagramm berechnet werden — entspricht der Auswahl STARTHÖHE im Diagramm."
+      en: "The launch altitude the trajectory rows and chart below are computed at — matches the chart's LAUNCH ALT selector."
+      es: "La altitud de lanzamiento con la que se calculan las filas de trayectoria y el gráfico de abajo — coincide con el selector ALT LANZ del gráfico."
+      fr: "L'altitude de lancement à laquelle les lignes de trajectoire et le graphique ci-dessous sont calculés — correspond au sélecteur ALT LANCEMENT du graphique."
+      it: "L'altitudine di lancio a cui vengono calcolate le righe di traiettoria e il grafico sottostante — corrisponde al selettore ALT LANCIO del grafico."
+      ja: "以下の弾道行とチャートが計算される発射高度。チャートの発射高度セレクターと一致する。"
+      ko: "아래 궤적 행과 차트가 계산되는 발사 고도입니다 — 차트의 발사 고도 선택기와 일치합니다."
+      "pt-BR": "A altitude de lançamento em que as linhas de trajetória e o gráfico abaixo são calculados — corresponde ao seletor ALT LANÇAMENTO do gráfico."
+      ru: "Высота пуска, для которой рассчитаны строки траектории и график ниже — соответствует переключателю ВЫСОТА ПУСКА на графике."
+      zh: "下方弹道行与图表所使用的发射高度——与图表中的发射高度选择器一致。"
+      "zh-TW": "下方彈道行與圖表所使用的發射高度——與圖表中的發射高度選擇器一致。"
   # #3528: a design-time property of a MUNITION — whether an automatic
   # engagement may commit it at a contact held bearing-only (no resolved range
   # at all). Named for what the player already reads on a held launcher

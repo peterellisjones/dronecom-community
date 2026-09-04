@@ -124,6 +124,26 @@ No-broach margin (metres): a submerged submarine keeps its masthead at
 least this far below the sea surface. The submerged no-broach ceiling is
 `-(sail_height + this)` (#1983).
 
+### `submarine_station_clearance_m` : f32
+
+Vertical room (metres) a submarine keeps beneath its own no-broach
+ceiling at a point it comes to **rest** — a station, a hold — over and
+above the `submarine_terrain_clearance` gap already folded into its
+navigability threshold (#4680).
+
+Occupancy alone does not say a station has room: a point whose seabed
+sits exactly at the boat's `max_navigable_terrain` is occupiable and
+pins it at its ceiling, with nothing left for the reactive avoidance
+controller to spend, which is how #4655's boat broached. This is the
+single definition of that room; see
+`StationClearance` for why it is measured
+against RAW seabed relief and why a value of zero means "no rule" rather
+than "no margin".
+
+Submarine-only, deliberately: a surface hull is pinned at the waterline
+so its vertical band is degenerate, and extending the rule to it would
+partially reverse #4433's shallow straits for stationary hulls.
+
 ### `edge_projection_min_size` : f32
 
 Minimum node edge length (`half_size * 2`) for edge-projected waypoints.
@@ -217,6 +237,11 @@ Terminal-homing substep tuning (DC-976).
 ### `patrol_loop` : [`PatrolLoopSection`](#patrolloopsection)
 
 Route-across patrol-loop ring-sampling tuning (#1771 phase 2).
+
+### `anti_beach` : [`AntiBeachSection`](#antibeachsection)
+
+How far ahead the anti-beaching guard tests the line it is given
+(#4705).
 
 ### `lead_velocity_noise_tolerance_rad` : f32
 
@@ -434,6 +459,40 @@ while it waits for a free deck slot.
 Distance (metres) from the carrier within which a well-deck-recovering
 craft is considered to have arrived and is taken aboard; the craft also
 begins decelerating four times this distance out.
+
+### `well_deck_approach_admission_range_m` : f32
+
+Distance (metres) from the carrier within which a well-deck recovery may
+enter the terminal approach and claim the deck's approach slot (#4654).
+
+The well deck's approach airspace is `Serial`, cap 1, and is released
+only by capture — so whatever holds it blocks every recovery behind it.
+Without this gate the slot was claimed the moment the transit LOS test
+cleared, which on open water is the tick the order is issued, from any
+range: a hull ordered home from 6 km delayed a hull 200 m off the carrier
+from 15.8 s to 249 s. This is the well deck's counterpart to the flight
+deck's holding-pattern altitude gate, which exists for the same reason.
+
+### `well_deck_approach_progress_epsilon_m` : f32
+
+How much closer (metres) a craft holding the well-deck approach slot must
+get to its carrier for the #3891 stall clock to re-arm (#4654).
+
+The stall bound measures *failure to close*, not elapsed time. A time
+bound cannot work here: the legitimate hold is set by net closure — hull
+speed minus carrier speed — which tends to zero as a carrier's cruise
+approaches its own craft's. A submarine recovering onto a carrier under
+way legitimately holds the slot 190.5 s on the shipped acceptance
+fixture, and a bound large enough to allow that would let a genuinely
+wedged deck sit for minutes.
+
+So the clock resets whenever the holder improves on its best-so-far range
+by this much: a craft that is closing never trips it however slowly, and
+one that has stopped — the #4594 hold-station case — trips promptly. Big
+enough not to be re-armed by position noise or a carrier's own weave;
+small enough that the slowest shipped hull re-arms several times over
+inside the bound (25 m at ~1.5 m/s net closure is ~17 s against a 66 s
+bound).
 
 ### `well_deck_holding_station_spacing_m` : f32
 
@@ -690,6 +749,17 @@ persist longer on a target it may never be able to range; lowering it
 frees the unit sooner but gives up on recoverable fixes. Retune freely —
 no code assumes a particular magnitude.
 
+### `salvo` : [`SalvoSection`](#salvosection)
+
+#4657: how a launcher under `SalvoSizing::TargetSized` turns an
+identified target into a number of rounds.
+
+### `commit_limits` : [`CommitLimits`](#commitlimits)
+
+#4688: fleet-wide cap on weapons in flight against a single contact —
+moved off `Doctrine` (no player or AI can ever set it, so it is a
+simulation rule, not per-commander intent).
+
 ## `PatrolSection`
 
 Patrol boundary tuning parameters. Loaded from
@@ -894,6 +964,91 @@ unit's `ThreatAlert` to `MissileInbound`. Consumed by the per-unit
 Since #3745 it is also the half-width of the *bearing-only* cone — see
 `bearing_cone_sigma_admission`, which widens it by the track's own
 across-bearing uncertainty.
+
+Since #4866 it is the **ceiling** of a radius that narrows as the weapon
+commits: it is the radius at and beyond `missile_cpa_horizon_secs` to
+closest approach, and the radius wherever no time-to-go was resolved at
+all (the bearing-only cone, and the #3746 unresolved-velocity
+stand-in). See `InboundAlarmRadius`.
+
+### `missile_cpa_floor_radius_m` : f32
+
+Radius (m) a weapon in flight earns at its own closest approach — the
+**floor** of the #4866 ramp, reached when time-to-CPA is zero.
+
+Two measured terms. Twice the largest `blast_radius` in the game
+(`mk_300`, 150 m), because a closest approach is computed from an
+*observed* track and a warhead's lethal edge sitting exactly on the
+predicate boundary would be alarmed or not by track error alone. Plus
+the cross-track excursion the shipped evasive weave itself introduces
+(~104 m at `evade_weave_amplitude_rad` and `evade_weave_period_secs`
+for a 92 m/s drone), without which a unit's own evasion could carry its
+observed closest approach past the floor, clear its own alarm and stop
+evading — a self-cancelling reflex.
+
+Setting it equal to `missile_cpa_radius_m` restores the pre-#4866 flat
+rule. Consumed by the per-unit `ThreatAlerts<TEAM>` rollup
+(`dc_sensors`) and the defensive-fire worthiness gate (`dc_tasking`,
+#4130), which share one predicate.
+
+### `missile_cpa_horizon_secs` : f32
+
+Seconds to closest approach at which the #4866 ramp reaches
+`missile_cpa_radius_m` — how far ahead of a weapon's closest approach a
+unit is still credited with being a plausible target for it.
+
+The ramp is quadratic because a weapon correcting its aim point at a
+sustained lateral acceleration `a` moves its closest approach by
+`½·a·t²`; this field is the time at which that correction covers the
+whole span from `missile_cpa_floor_radius_m` to `missile_cpa_radius_m`,
+so it states an implied turn authority of
+`2·(ceiling − floor)/horizon²`. At the shipped values that is 42 m/s²,
+about 4.3 g — roughly a fifth of an M-250's turn authority at cruise,
+deliberately: what the ramp asserts is not that a maximum-effort
+re-target is *impossible* inside the last few seconds, but that it is
+not credible, the round arriving off-axis and out of energy.
+
+A larger value keeps the whole formation reacting for longer; a
+non-positive one describes no ramp and falls back to the flat ceiling.
+Consumed by the per-unit `ThreatAlerts<TEAM>` rollup (`dc_sensors`) and
+the defensive-fire worthiness gate (`dc_tasking`).
+
+### `missile_cpa_stand_down_margin` : f32
+
+How much wider than the raise radius an ALREADY-RAISED `MissileInbound`
+rung is held before it is released (#4866) — the stand-down hysteresis,
+as a multiplier on the radius that unit's time-to-CPA earns.
+
+The narrowing radius makes a chattering rung reachable in a way the flat
+radius did not. A unit the shrinking radius drops goes back on mission,
+resumes its orbit, drifts back toward the weapon's track and re-alarms —
+and each round trip is a real order change, because #3889's dwell damps
+only the *announced* call while the tasking reflexes read the
+instantaneous rung. A unit that cleared a *fixed* radius was generally
+opening the range and did not come back.
+
+The band applies at every time-to-go and is bounded by construction at
+`missile_cpa_radius_m * missile_cpa_stand_down_margin` — 3125 m at the
+shipped values. That is the widest a held rung can ever reach, and it is
+wider than the ceiling at which a fresh alarm could be raised.
+
+It is deliberately not capped at the ceiling. The closest approach is
+solved in the observing unit's own frame, so a turning unit sees its
+reading swing with its own heading, and beyond the horizon the raise
+radius is already the ceiling — capping there would make the two edges
+equal and leave no dead band in exactly the regime that needs one.
+Measured: capping returns the #4844 formation's flankers to six rung
+toggles and three weave entries against a clean two and one.
+
+Known limit: the band is a fixed multiplier while the heading swing it
+absorbs grows roughly as `range * own_speed / weapon_speed`, so it is
+sized against the geometries the shipped fixtures measure. #4927 is the
+related sensor defect.
+
+1.0 removes the hysteresis; values below 1.0 would release sooner than
+they raise and read as 1.0. Consumed by the per-unit
+`ThreatAlerts<TEAM>` rollup (`dc_sensors`); the #4130 defensive-fire
+worthiness gate has no per-unit rung to hold and uses the raise radius.
 
 ### `bearing_cone_sigma_admission` : f32
 
@@ -1447,15 +1602,20 @@ airframe's turn radius — stays clear of the terrain rather than grazing it.
 
 ### `rim_inset_m` : f32
 
-#2609: inward margin (metres) the on-station ring sampler holds off the
-circular playable boundary (the terrain's `radius()`) for a domain that
-clamps its ring to the circle (fixed-wing — see
-`DomainAdapter::ring_playable_radius`). A ring point within this margin of
-the rim is treated as non-navigable, so the flown navigable **arc** — with
-the loop-follower's corner rounding and the airframe's turn radius — stays
-strictly inside the boundary rather than grazing it (the inward analog of
-`bridge_clearance_margin_m`). Domains without a circle constraint
-(surface/submarine) ignore it.
+#2609/#4698/#4817: inward margin (metres) the on-station ring sampler
+holds off the circular playable boundary (the terrain's `radius()`) for a
+domain that clamps its ring to the circle, which is every shipped domain;
+see `DomainAdapter::ring_playable_radius`. A ring point within this margin
+of the rim is treated as non-navigable, so the flown navigable **arc** —
+with the loop-follower's corner rounding and the platform's turn radius —
+stays strictly inside the boundary rather than grazing it (the inward
+analog of `bridge_clearance_margin_m`).
+
+Holds the same value as `PatrolSection::boundary_buffer`, which is what
+puts a maximally-clamped patrol's outermost ring sample exactly on this
+threshold. `dispatch::orbit::playable_circle` owns that interaction and
+compares inclusively of the limit; changing either constant without
+reading it is how a legal patrol starts being clipped.
 
 ### `recenter_hysteresis_m` : f32
 
@@ -1481,6 +1641,186 @@ the reverse (station-keep → orbit) is position-based on
 Kept low so only a genuinely near-stopped protectee stops the screen; a
 protectee under way orbits, and a slow creeper resumes orbiting via the
 standoff-drift reverse gate.
+
+## `AntiBeachSection`
+
+How far ahead the anti-beaching guard tests the line it is asked about
+(#4705).
+
+The guard is asked "may I steer at this point?", but for every terminal
+controller that point is a **bearing** the controller re-derives each tick —
+projected a fixed constant (formation), one ring radius (orbit), or the
+standoff range (standoff) out, purely because the domains need a point to
+steer at. The hull is not committed that far and never will be: long before
+it arrives it will have recomputed the bearing, and if it ever does commit,
+the guard sees the same terrain from closer in and arrests it then.
+
+The distance it *is* committed to is its own `v²/2a`, which is the horizon
+stated here. Two knobs, both needed:
+
+- `stopping_distance_factor` must be **> 1**. At exactly 1 the guard's line
+  test becomes the same predicate as its own stopping-track test, and the
+  `Hold` / `StopToward` distinction stops meaning anything: the guard would
+  only ever notice at the instant stopping on the present bow stopped being
+  possible. The factor is the margin that lets it fire while a plain stop
+  still suffices.
+- `floor_m` is not padding either. A hull that is stopped has a stopping
+  distance of zero, so without a floor the tested segment degenerates to a
+  point, the guard returns "proceed" for every stationary hull, and it can
+  never refuse a hull that is about to get way on toward a beach.
+
+And one that says how **wide** rather than how far:
+
+- `coastal_standoff_m` is the clearance the guard keeps off a coast it is
+  steering along. See its own docs for why the guard needs one and why it is
+  stated here rather than inherited from the terrain's cell size.
+
+`floor_m` is **conservatism, not soundness**. Until #4813 it could not be set
+below the terrain quadtree's `min_cell_size` (100 m,
+`assets/config/terrain.ron`), because case 2 asked
+`Terrain::is_line_navigable`, whose documented short-segment fast path
+answers from the cell containing the segment's *endpoint* and ignores every
+other leaf the segment crosses — so a horizon under one cell was answered by
+a query that never looked at the terrain in between. #4705's census measured
+the cost: at a 50 m floor the bounded guard let 12 committed hulls proceed
+that the unbounded guard arrested. Case 2 asks
+`Terrain::corridor_max_height_refined` now, which has no fast path and walks
+whatever segment it is given, so the relation is gone and the value is a
+tuning choice rather than a bound.
+`the_guard_tests_further_than_the_hulls_own_coasting_track` pins what is
+left — the coasting-track-coverage invariant is `stopping_distance_factor >
+1` alone, independent of `floor_m` entirely. #4809 measured the retune this
+freed up; see `Self::floor_m`'s own docs for what it found.
+
+The #4526 clamp was never the mechanism behind that bound, and reading it as
+one leads somewhere wrong. A water-centred leaf has its whole stored interval
+— `hi` included — clamped to the navigation water floor, which sits below
+every naval ceiling, so such a cell reads clear to *any* query that consults
+it, walk and fast path alike. What the fast path lost is the leaves it never
+consults (#4735).
+
+`stopping_distance_factor`'s value is the same law as
+`dc_physics::HullKinematics::follow_distance` — `stopping_distance × 2` —
+which exists for the same physical reason ("hulls need space to
+decelerate"). Restated rather than shared: they are two concepts that happen
+to agree, and tying them together would make tuning one retune the other.
+
+### `stopping_distance_factor` : f32
+
+Multiple of the hull's own stopping distance tested ahead of it. Must be
+greater than 1 — see the type docs for why.
+
+**Near-inert on today's content.** Every shipped naval hull stops in
+18-66 m at top speed (`cargo run -p dc_blueprint_stats`), so this
+doubling reaches 35-132 m and `Self::floor_m` decides for all of them
+but the USV-80 near its own top speed. It is kept because it states the
+rule — a hull is committed as far as it cannot change its mind — not
+because it is doing work today. #4809 confirmed it stays inert: the
+guardian's binding moment is near-stationary station-keeping (`sd ≈ 0`),
+where the horizon is `floor_m` regardless of the factor, and no `floor_m`
+below the shipped value survived that guardian either — see
+`Self::floor_m`.
+
+### `floor_m` : f32
+
+Shortest segment (metres) the guard will test, whatever the hull's
+speed. Reached by any hull at or near rest. A conservatism margin rather
+than a soundness bound — see the type docs.
+
+# Why the shipped value
+
+#4809 measured a retune once #4813 freed this from `min_cell_size`,
+against the same two instruments `Self::coastal_standoff_m` was
+calibrated with: the census, and the #4664 clearance guardian
+(`formation_follower_does_not_steer_its_leaders_course_ashore`).
+
+| `floor_m` | census bounded arrests | census bounded false-pos | #4664 closest approach | 670 m gate |
+|---|---|---|---|---|
+| 50 | 4,380 | 2,774 | 658.6 m | FAIL |
+| 60 | 4,416 | 2,810 | 658.6 m | FAIL |
+| 66 | 4,488 | 2,882 | 668.8 m | FAIL |
+| 75 | 4,536 | 2,930 | 668.8 m | FAIL |
+| 80 | 4,536 | 2,930 | 668.8 m | FAIL |
+| 90 | 4,584 | 2,978 | 677.3 m | PASS |
+| 100 (shipped) | 4,584 | 2,978 | 687.8 m | PASS |
+
+**What a lower floor buys and what it costs move together, and they
+cross in the wrong order.** Every value that reduces census cost below
+the shipped level (50-80) fails the guardian's 670 m gate. The one value
+that clears the gate short of 100 (90) has *identical* census counts to
+the shipped value — it gives up 10.5 m of clearance margin for no
+measured benefit, so it is strictly dominated by staying at 100. There is
+no `floor_m` in this bracket that both reduces false-positive cost and
+preserves the guardian: 100 m is not a carry-over from the old
+`min_cell_size` bound, it is independently close to the efficient point
+on this fixture.
+
+`misses_introduced` was 0 at every point swept, and on-station ticks
+stayed 331-334 throughout, never approaching the 325 floor — neither
+constrains the choice. The shipped-100 row and the 90 m row were
+re-verified bit-identical on the pinned `nightly-2026-08-31` toolchain
+(#4913) after the initial sweep straddled a mid-run toolchain change.
+
+### `coastal_standoff_m` : f32
+
+Lateral clearance (metres) the guard keeps between a hull's tested track
+and terrain it cannot cross — **the standoff it holds off a coast it is
+steering along** (#4813).
+
+Applies to the bearing arm only. A bearing is tested as far as the hull
+is committed and no further, and the hull keeps running along it past
+that point; the standoff is what covers the untested remainder, and it is
+why a follower holding station beside a shoreline stays off it rather
+than converging on it a metre at a time. A destination is tested end to
+end, so it has no untested remainder — and widening it would make the
+guard refuse lines the planner it stands in for is entitled to route.
+
+**This exists because the guard already had one and could not say so.**
+Case 2 used to ask `Terrain::is_line_navigable`, whose per-cell bound is
+taken over the disc *circumscribing* a cell and so reads land within
+`half_size·√2` of any coast. At a horizon of one cell that over-reach was
+not merely conservatism — it was the guard's standoff, and #4735 measured
+what removing it costs: the #4664 follower closed from 687 m to 644.3 m
+of a 600 m island against a 670 m gate. Stated here, the same quantity is
+uniform instead of varying with where a cell corner falls, tunable
+instead of implied by `terrain.ron`, and denominated in metres of water
+rather than in quadtree geometry.
+
+A *vertical* margin (`max_navigable_terrain() - margin`) is not the same
+quantity and cannot stand in for it: the disc over-reach is geometric and
+slope-independent, while a depth margin's lateral reach is
+`margin / slope` — unbounded on a shelf, nil against a cliff. It would
+also restate the under-keel clearance `sea_terrain_clearance` and
+`submarine_terrain_clearance` already own, and drift the guard's envelope
+from the planner's (#1974/#1983).
+
+# Why the shipped value
+
+44 m is where both instruments knee at once:
+
+| standoff | #4664 clearance | census arrests | false positives |
+|---|---|---|---|
+| 40 m | 664.0 m | 4,424 | 2,818 |
+| 42 m | 677.3 m | 4,520 | 2,914 |
+| 44 m | 687.8 m | 4,584 | 2,978 |
+| 48 m | 687.8 m | 4,600 | 2,994 |
+| 50 m | 687.8 m | 6,250 | 4,632 |
+
+Clearance saturates at 44 m — the 670 m gate is cleared at 42 m, the
+historic 687 m only at 44 — and the census cost is flat from 44 to 48
+before jumping 36% at 50, so 44 m buys the whole clearance at the bottom
+of the flat with 6 m of guard band before the cliff. Station-keeping is
+330–334 ticks across the whole sweep against a floor of 325 and never
+constrains the choice.
+
+**A uniform standoff is not free, and the sign is the opposite of what
+#4813 predicted.** The shipped cell bound measured 3,316 arrests / 1,760
+false positives / 148 misses; at 44 m the corridor measures 4,584 / 2,978
+/ 98. Arrests rise *and* misses fall, because the cell bound was lumpy in
+both directions — wide where a cell corner caught land, blind where none
+did. Read the arrest rise against
+`Census::bounded_false_positives`' own docs in `dc_autopilot`, which
+state why that control counts standoff work as waste on this arm.
 
 ## `DeckPhaseSection`
 
@@ -1575,6 +1915,27 @@ Tuning for the per-track recursive (Kalman) kinematic filter (DC-36.1).
 
 Horizontal process-noise acceleration σ (m/s²) per tracked-object class
 (#3879).
+
+### `process_noise_correlation_time_secs` : f32
+
+Manoeuvre correlation time `τ` (s): how long a target holds an
+acceleration of scale `σ_a` before drawing a new one. With the per-class
+`σ_a` above it gives the process-noise power spectral density
+`q = σ_a²·τ` — see `ProcessNoiseKernel`.
+
+Global rather than per class: `σ_a` already carries how *hard* each class
+manoeuvres, and this carries how *long* a leg lasts, which is a
+tactical-timescale property the shipped chassis do not distinguish.
+
+1.0 (#4941). `τ` sets the interval at which this model matches the
+displacement of a sustained `σ_a` manoeuvre; below it the model
+overstates position error, above it understates. One second sits at the
+short end deliberately, because the tightest consumer of position σ is
+fire-control acquisition, which gates a beamwidth footprint against a
+sub-second coast. The price is paid at the long end, where this `τ`
+understates: a track's velocity stays `Resolved` across
+`1600/(σ_a²·τ)` seconds of coasting, so a unit keeps leading its shots
+deep into a gap in coverage.
 
 ### `vertical_process_noise_accel_mps2` : f32
 
@@ -2053,6 +2414,147 @@ going `Lost`.
 Seconds after a lock goes `Lost` (eval fails / gate no longer fits) at
 which the designation is released and the track de-designated.
 
+## `SalvoSection`
+
+Target-aware salvo sizing (#4657) — the tuning behind
+`SalvoSizing::TargetSized`.
+
+The reported problem was that salvo size came only from the platform's
+blueprint, so a single number had to serve both a carrier and a picket:
+sized for the carrier it wasted rounds on everything softer, and sized for
+the picket it could never kill the carrier. This section supplies the
+missing term — how much hull the launcher is actually shooting at.
+
+Both values are **balance knobs**; see `Self::required_rounds` for how
+they compose.
+
+### `expected_damage_fraction` : f32
+
+Fraction of a warhead's nominal `damage` a round is assumed to actually
+deliver, covering the two things the sizing arithmetic cannot see: blast
+falloff (damage scales linearly to zero across `blast_radius`, so a round
+that detonates off-centre lands well under its rated number) and
+en-route attrition to the target's point defences.
+
+**Measured (#4690).**
+14 engagements across all five shipped warheads, three target classes and
+four geometry families, attributing damage to individual **detonations**
+(the target's hit-point delta per tick against that tick's
+`WeaponEvent::Hit`) rather than to a measurement window closing — which is
+what made #4657's first reading look like 0.36. Full table and derivation
+in `docs/plans/4690-expected-damage-fraction-calibration.md`.
+
+| statistic | value |
+| --- | --- |
+| pooled delivered ÷ (rounds fired × nominal) | 0.882 |
+| median per engagement | 0.994 |
+| range across engagements | 0.55 – 1.00 |
+| same, under the shipped `Noisy` sensing model | 0.69 – 0.79 |
+
+The 0.55 floor **excludes one outlier**: `mk_40` against a target crossing
+at 90 m/s read 0.35 per hit and 0.04 per round *fired*, because 7 of its 8
+rounds were expended chasing without ever detonating. That is an
+engagement-envelope failure rather than a delivered-damage one, so it is
+tracked as #4721 and deliberately not averaged into the figures above —
+but a derate raised toward the pooled value would be wrong for exactly
+that engagement.
+
+The shipped 0.7 is therefore **not** a measured mean, and is deliberately
+below one. Asking for too few rounds wastes the whole salvo while asking
+for too many wastes only the margin — the same asymmetry
+`Self::required_rounds`' cluster case already resolves in favour of the
+hardest candidate. It also keeps headroom for the one term the
+measurement could not reach: en-route attrition is unquantified, and the
+honest value could sit below the figures above.
+
+The attrition is reportable (#4789): a round shot down in flight
+resolves on its shooter's ledger as a miss carrying
+`MissCause::DestroyedEnRoute`, and
+`acceptance::features::enroute_attrition_reports_a_miss` stages an
+engagement whose point defences do fire, killing the whole salvo.
+Reading `DestroyedEnRoute ÷ fired` across the geometry families is what
+would put a number on this term; the derate stays unchanged until that
+measurement exists.
+
+**Why one flat derate.**
+Not merely because there is no honest per-contact read of how well a
+target is defended (the classifier refuses to infer a loadout from a hull
+and `detected_emitters` is positive-only) — the measurement gives a
+stronger reason. The dominant variable is **target motion relative to the
+round's terminal performance**, not the warhead: `mk_120` alone spans
+0.55 against a target crossing at 90 m/s to 1.00 against a stationary
+one, a wider spread than that *between* warheads at a fixed geometry. A
+per-warhead derate would be actively wrong, and the launcher cannot
+predict the missing variable either — it knows a contact's present speed,
+not whether it will manoeuvre during the round's time of flight.
+
+Raising it toward 1.0 makes every derived salvo smaller (and more likely
+to under-kill); lowering it makes every salvo larger. It will **not** put
+more rounds on a hard target — see `CommitLimits` for why it cannot.
+Must be in `(0, 1]`.
+
+### `max_derived_salvo` : u32
+
+Hard ceiling on the *derived* count, before ready stock and the
+fleet-wide commitment limit bound it further.
+
+Without a ceiling a single identified capital hull sizes a salvo larger
+than any magazine: a `cv_3000` (1500 hp) against the small air warhead
+(`mk_40`, 65 damage) derives 33 rounds at the shipped derate, which would
+drain a launcher's entire magazine into one admission. Capping the
+derivation makes that target take repeated admissions instead, so the
+launcher re-checks range, aspect and the commitment limit between waves
+rather than committing everything on one tick.
+
+Does **not** cap the player's own floor: a commander who sets a
+per-platform salvo above this still gets what they asked for, because
+the floor is applied after this ceiling.
+
+## `CommitLimits`
+
+Fleet-wide cap on weapons in flight against a single contact (#4688).
+
+Moved off `Doctrine::EngagementLimits` because no player and no AI can
+ever set it — every unit is seeded with, and keeps, the same uniform
+value for its whole life (`dc_blueprints::doctrine::build_runtime_doctrine`).
+`max_engagers` (the platform-*count* coordination cap) is the opposite
+case and stays on `Doctrine`: it is genuine per-commander policy, tuned
+per team via `DoctrineCommand::SetDoctrine`.
+
+Mirrors `Doctrine::limits_for`'s
+regular/command-ship split: command ships are the game-ending
+win-condition target, so they get an independent (and typically
+`CommitLimit::Unlimited`) cap.
+
+**Balance knob**, not a retune here: the shipped `regular` value (4) is
+sized off the shipped catalogue — the standard surface combatant
+(`usv_200`, 150 hp) needs `ceil(150 / (65 × 0.7)) = 4` rounds of the small
+warhead (`mk_40`, 65 damage) at the shipped
+`SalvoSection::expected_damage_fraction`, so 4 is exactly the common
+surface-target salvo. Carriers do not route through `regular` at all —
+`command_ship` is already `CommitLimit::Unlimited` (#2638: a carrier's
+defenses may be saturated).
+
+**This cap and that derate do not have to be retuned together**, which
+corrects what #4657 and #4688 both claimed here. #4690 re-checked the
+interaction against the shipped catalogue and found this cap already binds
+wherever the derate would otherwise have mattered: a `cv_3000` (1500 hp)
+saturates `SalvoSection::max_derived_salvo` (8) with *every* shipped
+warhead at the current derate, so lowering the derate cannot add a single
+round against a capital hull. What lowering it does reach is the soft and
+medium hulls, where this cap then truncates most of the increase anyway — at
+a derate of 0.4 the `mk_40` rows derive 5–7 rounds against hulls this cap
+holds at 4. Under-commitment against hard targets is real, but its causes
+are `max_derived_salvo` and magazine depth, not the derate.
+
+### `regular` : [`CommitLimit`](#commitlimit)
+
+Cap for every contact class except `CommandShip`.
+
+### `command_ship` : [`CommitLimit`](#commitlimit)
+
+Cap for `CommandShip` contacts — the game-ending win-condition target.
+
 ## `TrafficTypeSection`
 
 One civilian type the traffic director may spawn, and how often.
@@ -2246,6 +2748,19 @@ unclassified contact could be any of them, and under-modelling a
 manoeuvre costs far more (lag, then divergence) than over-modelling one
 (a higher covariance floor). Checked by a `debug_assert!` in
 `ProcessNoiseModel::resolve`.
+
+## `CommitLimit`
+
+The cap on how many weapons may be in flight against a single contact — or
+`Unlimited` for a target a commander may saturate. Command
+ships (the game-ending win-condition target) are `Unlimited` so their defenses
+can be swamped (#2638); every other class is `Limited`. Modelled as an enum so
+"no cap" is a first-class state rather than a sentinel value.
+
+Variants:
+
+- **`Limited`**(u8) — At most this many weapons may be in flight against the contact.
+- **`Unlimited`** — No committed-attacker cap — the target may be saturated.
 
 ## `TrafficBehavior`
 

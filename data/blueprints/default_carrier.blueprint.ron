@@ -77,10 +77,10 @@
     // Spare munitions for the air wing + VLS/tube reloads (#2995). Weight
     // budget (see `cargo run --bin blueprint-stats`): CV-3000 designed
     // loadout (`Cargo wt`) is 42872 kg against a 237645 kg `Cargo cap` —
-    // 194773 kg of headroom. This stores list totals 16*94.2 (M-100) +
-    // 8*235.0 (M-250) + 6*842.0 (M-500) + 8*260.0 (MK-55) + 4*200.0 (MK-30)
-    // + 4*398.0 (M-400) = 12911.2 kg, comfortably inside budget (~7% of
-    // headroom).
+    // 194773 kg of headroom. This stores list totals 16*79.2 (M-100, #4709
+    // fast-cycle rework: 94.2 -> 79.2 kg) + 8*235.0 (M-250) + 6*842.0 (M-500)
+    // + 8*260.0 (MK-55) + 4*200.0 (MK-30) + 4*398.0 (M-400) = 12671.2 kg,
+    // comfortably inside budget (~7% of headroom).
     stores: [
         // Spare point-defence / area SAMs for VLS reloads + interceptor & AEW rearm
         (blueprint: BlueprintId("00000000-0000-0000-0000-000000000008"), count: 16), // M-100

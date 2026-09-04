@@ -214,6 +214,18 @@ group_panel:
       ru: "%{current}/%{total} · %{status}"
       zh: "%{current}/%{total} · %{status}"
       "zh-TW": "%{current}/%{total} · %{status}"
+    item_summary_tooltip:
+      de: "Munition dieses Typs, die die Gruppe derzeit hält, gegenüber der von den Ladungen ihrer Mitglieder geplanten Menge, sowie ob dieser Plan erfüllt ist."
+      en: "Rounds of this type the group holds now, against the number its members' loadouts plan for, and whether that plan is met."
+      es: "Munición de este tipo que el grupo tiene ahora, frente a la cantidad prevista por las cargas de sus miembros, y si ese plan se cumple."
+      fr: "Munitions de ce type actuellement détenues par le groupe, face au nombre prévu par les emports de ses membres, et si ce plan est satisfait."
+      it: "Munizioni di questo tipo attualmente in dotazione al gruppo, rispetto al numero previsto dagli allestimenti dei suoi membri, e se il piano è soddisfatto."
+      ja: "この編隊が現在保有する当該弾薬数と、隊員の兵装計画が要求する数、そしてその計画が満たされているか。"
+      ko: "이 편대가 현재 보유한 해당 탄약 수와, 대원들의 무장 계획이 요구하는 수, 그리고 그 계획의 충족 여부입니다."
+      "pt-BR": "Munições deste tipo que o grupo tem agora, ante a quantidade prevista pelas cargas de seus membros, e se esse plano está atendido."
+      ru: "Боеприпасы этого типа, имеющиеся у группы сейчас, в сравнении с количеством, заложенным в снаряжение её участников, и выполнен ли этот план."
+      zh: "该编队当前持有的此类弹药数量、其成员挂载计划所要求的数量，以及该计划是否得到满足。"
+      "zh-TW": "該編隊當前持有的此類彈藥數量、其成員掛載計畫所要求的數量，以及該計畫是否得到滿足。"
     member_summary:
       de: "%{member} · %{count} · %{source} · %{status}"
       en: "%{member} · %{count} · %{source} · %{status}"
@@ -226,6 +238,18 @@ group_panel:
       ru: "%{member} · %{count} · %{source} · %{status}"
       zh: "%{member} · %{count} · %{source} · %{status}"
       "zh-TW": "%{member} · %{count} · %{source} · %{status}"
+    member_summary_tooltip:
+      de: "Der Anteil eines Mitglieds: wie viele Schuss es hält, woher sie stammen und ob sein Teil des Plans erfüllt ist."
+      en: "One member's share: how many rounds it holds, where they come from, and whether its part of the plan is met."
+      es: "La parte de un miembro: cuántas municiones tiene, de dónde proceden y si su parte del plan se cumple."
+      fr: "La part d'un membre : combien de munitions il détient, d'où elles proviennent, et si sa part du plan est satisfaite."
+      it: "La quota di un singolo membro: quante munizioni detiene, da dove provengono e se la sua parte del piano è soddisfatta."
+      ja: "個々の隊員の分担。保有弾数、その出所、そして計画上の担当分が満たされているかを示す。"
+      ko: "개별 대원의 몫입니다. 보유 탄약 수, 그 출처, 그리고 계획상 자기 몫의 충족 여부를 보여줍니다."
+      "pt-BR": "A parte de um membro: quantas munições ele tem, de onde vêm e se sua parcela do plano está atendida."
+      ru: "Доля одного участника: сколько боеприпасов у него есть, откуда они и выполнена ли его часть плана."
+      zh: "单个成员的分担：其持有的弹药数量、来源，以及其在计划中的份额是否已满足。"
+      "zh-TW": "單個成員的分擔：其持有的彈藥數量、來源，以及其在計畫中的份額是否已滿足。"
     source:
       loadout:
         de: "AUSRÜSTUNG"
@@ -435,6 +459,18 @@ group_panel:
       ru: "Остаток топлива в процентах от ёмкости этого участника. Янтарный при минимальном запасе."
       zh: "剩余燃料占该成员燃料容量的百分比。达到最低油量时显示为琥珀色。"
       "zh-TW": "剩餘燃料佔該成員燃料容量的百分比。達到最低油量時顯示為琥珀色。"
+    status_tooltip:
+      de: "Was dieses Mitglied tut: seine Auftragsphase in der Luft oder sein Wartungsschritt an Bord."
+      en: "What this member is doing: its mission phase when airborne, or its servicing step while stowed."
+      es: "Qué hace este miembro: su fase de misión en vuelo, o su paso de mantenimiento mientras está estibado."
+      fr: "Ce que fait ce membre : sa phase de mission en vol, ou son étape d'entretien lorsqu'il est arrimé."
+      it: "Che cosa fa questo membro: la fase di missione quando è in volo, o la fase di servizio quando è stivato."
+      ja: "この隊員の現況。飛行中なら任務段階、搭載中なら整備段階を示す。"
+      ko: "이 대원의 현재 상태입니다. 비행 중이면 임무 단계, 탑재 중이면 정비 단계를 나타냅니다."
+      "pt-BR": "O que este membro está fazendo: sua fase de missão em voo, ou sua etapa de manutenção enquanto estivado."
+      ru: "Чем занят этот член группы: этап задачи в воздухе или этап обслуживания на борту."
+      zh: "该成员的当前状态：升空时为任务阶段，舱内时为勤务阶段。"
+      "zh-TW": "該成員的當前狀態：升空時為任務階段，艙內時為勤務階段。"
     # #3338: promote this member to the front of the group's order of battle.
     # Leadership is derived from membership order, so this IS the reassignment;
     # it also moves the member into formation slot 0 (point).

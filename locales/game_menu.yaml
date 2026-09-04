@@ -37,6 +37,18 @@ game_menu:
     ru: "Сохранено!"
     zh: "已保存！"
     "zh-TW": "已儲存！"
+  save_game_tooltip:
+    de: "Schreibt den aktuellen Spielstand in eine Speicherdatei. Nach dem Speichern deaktiviert, bis Sie dieses Menü erneut öffnen."
+    en: "Write the current match to a save file. Disabled after saving until you reopen this menu."
+    es: "Guarda la partida actual en un archivo. Se desactiva tras guardar hasta que vuelvas a abrir este menú."
+    fr: "Écrit la partie en cours dans un fichier de sauvegarde. Désactivé après la sauvegarde jusqu'à la réouverture de ce menu."
+    it: "Scrive la partita in corso in un file di salvataggio. Disattivato dopo il salvataggio finché non riapri questo menu."
+    ja: "現在の対戦をセーブファイルに書き出します。保存後はこのメニューを開き直すまで無効になります。"
+    ko: "현재 전투를 저장 파일로 기록합니다. 저장 후에는 이 메뉴를 다시 열 때까지 비활성화됩니다."
+    "pt-BR": "Grava a partida atual em um arquivo de salvamento. Desativado após salvar até você reabrir este menu."
+    ru: "Записывает текущий бой в файл сохранения. После сохранения недоступно до повторного открытия меню."
+    zh: "将当前对局写入存档文件。保存后将禁用，直到重新打开此菜单。"
+    "zh-TW": "將目前對局寫入存檔檔案。儲存後將停用，直到重新開啟此選單。"
   load_game:
     de: "Spiel laden"
     en: "Load Game"

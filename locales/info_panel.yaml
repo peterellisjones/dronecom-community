@@ -122,6 +122,18 @@ info_panel:
       ru: "ведущий"
       zh: "领队"
       "zh-TW": "領隊"
+    leader_tooltip:
+      de: "Diese Einheit führt ihre Gruppe: Sie hält Auftrag und Doktrin der Gruppe, die übrigen Mitglieder formieren sich auf sie."
+      en: "This unit leads its group: it holds the group's mission and doctrine, and the other members form on it."
+      es: "Esta unidad lidera su grupo: sostiene la misión y la doctrina del grupo, y los demás miembros se forman sobre ella."
+      fr: "Cette unité commande son groupe : elle porte la mission et la doctrine du groupe, et les autres membres se forment sur elle."
+      it: "Questa unità guida il proprio gruppo: ne detiene missione e dottrina, e gli altri membri si formano su di essa."
+      ja: "この機体が編隊を率いる。編隊の任務とドクトリンを保持し、他の隊員はこれに追従して編隊を組む。"
+      ko: "이 유닛이 편대를 이끕니다. 편대의 임무와 교리를 보유하며, 다른 대원들은 이 유닛을 기준으로 대형을 이룹니다."
+      "pt-BR": "Esta unidade lidera seu grupo: detém a missão e a doutrina do grupo, e os demais membros se formam sobre ela."
+      ru: "Этот юнит ведёт свою группу: он держит задачу и доктрину группы, остальные строятся на него."
+      zh: "该单位统领其编队：编队的任务与作战准则由它持有，其余成员以它为基准编队。"
+      "zh-TW": "該單位統領其編隊：編隊的任務與作戰準則由它持有，其餘成員以它為基準編隊。"
     # Now the button's only text (an icon button, #3338), so the wording must
     # stand alone as a self-describing action rather than a hover gloss on a
     # visible "Detach" label.
@@ -1284,6 +1296,31 @@ info_panel:
         ru: Дисциплина огня
         zh: 射击纪律
         "zh-TW": 射擊紀律
+    salvo_sizing:
+      label_tooltip:
+        de: "Wie viele Geschosse eine Salve auf ein Ziel legt — feste Anzahl oder an den identifizierten Rumpf angepasst."
+        en: "How many rounds a salvo puts on a target — a fixed count, or sized to the identified hull."
+        es: "Cuántos proyectiles pone una salva sobre un objetivo: una cantidad fija o ajustada al casco identificado."
+        fr: "Combien de coups une salve place sur une cible — un nombre fixe, ou ajusté à la coque identifiée."
+        it: "Quanti colpi una salva mette sul bersaglio: un numero fisso, o commisurato allo scafo identificato."
+        ja: "1回の斉射で目標に撃ち込む発数。固定数か、識別した船体に応じた数か。"
+        ko: "일제사격이 표적에 투입하는 발수 — 고정 수량이거나, 식별된 선체에 맞춘 수량."
+        "pt-BR": "Quantos disparos uma salva coloca no alvo — uma quantidade fixa ou dimensionada ao casco identificado."
+        ru: "Сколько боеприпасов залп кладёт на цель — фиксированное число или по опознанному корпусу."
+        zh: "一次齐射向目标投放多少发——固定数量，或按已识别的船体确定。"
+        "zh-TW": "一次齊射向目標投放多少發——固定數量，或按已識別的船體確定。"
+      label:
+        de: Salvengröße
+        en: Salvo Size
+        es: Tamaño de salva
+        fr: Taille de salve
+        it: Dimensione salva
+        ja: 斉射規模
+        ko: 일제사격 규모
+        "pt-BR": Tamanho da salva
+        ru: Размер залпа
+        zh: 齐射规模
+        "zh-TW": 齊射規模
     emcon:
       label:
         de: Emissionen
@@ -1946,8 +1983,12 @@ info_panel:
     # Deck pipeline phase names reached via
     # `format!("info_panel.deck_ops.phase.{phase_name}")` in
     # `crates/dc_ui_client/src/info_panel/pipeline_status.rs`. Concrete phase
-    # names come from `PhaseConfig` tables in `crates/dc_core/src/deck_ops/*.rs`
-    # (flight_deck, air_launch, torpedo_tube, well_deck, vls).
+    # names come from the `PHASE_SHAPE` / `RECOVERY_PHASE_SHAPE` / `APPROACH`
+    # consts on every `LaunchMethod` impl in
+    # `crates/dc_vehicle/src/deck_ops/*.rs` (flight_deck, heli_pad, well_deck,
+    # vls, torpedo_tube, air_launch). `tests/locale_parity.rs` sweeps those
+    # consts rather than restating them, so a phase added without a key here
+    # fails there (#4674).
     phase:
       hangar:
         de: Hangar
@@ -1973,6 +2014,22 @@ info_panel:
         ru: Подъёмник
         zh: 升降机
         "zh-TW": 升降機
+      # The helipad's terminal slot (#4629): a helo sits on the spot and lifts
+      # off under its own rotor, so it is named for the pad rather than for a
+      # catapult it does not use. Source: `HeliPad::PHASE_SHAPE` /
+      # `RECOVERY_PHASE_SHAPE` in `crates/dc_vehicle/src/deck_ops/heli_pad.rs`.
+      pad:
+        de: Landeplatz
+        en: Pad
+        es: Plataforma
+        fr: Plateforme
+        it: Piazzola
+        ja: 発着甲板
+        ko: 헬기 갑판
+        "pt-BR": Plataforma
+        ru: Площадка
+        zh: 起降坪
+        "zh-TW": 起降坪
       deck:
         de: Deck
         en: Deck
@@ -2137,6 +2194,30 @@ info_panel:
       ru: Включить/выключить датчик
       zh: 开关传感器
       "zh-TW": 開關感測器
+    kind_off_tooltip:
+      de: "Dieser aktive Sensor ist ausgeschaltet: Er strahlt nicht ab und findet daher nichts. Nur aktive Sensoren lassen sich ausschalten."
+      en: "This active sensor is switched off: it is not radiating, and so it is finding nothing. Only active sensors can be switched off."
+      es: "Este sensor activo está apagado: no irradia y, por tanto, no detecta nada. Solo los sensores activos pueden apagarse."
+      fr: "Ce capteur actif est éteint : il n'émet pas et ne détecte donc rien. Seuls les capteurs actifs peuvent être éteints."
+      it: "Questo sensore attivo è spento: non irradia e quindi non rileva nulla. Solo i sensori attivi possono essere spenti."
+      ja: "この能動センサーはオフになっている。放射していないため何も探知していない。オフにできるのは能動センサーのみ。"
+      ko: "이 능동 센서는 꺼져 있습니다. 방사하지 않으므로 아무것도 탐지하지 못합니다. 끌 수 있는 것은 능동 센서뿐입니다."
+      "pt-BR": "Este sensor ativo está desligado: não irradia e, portanto, não detecta nada. Apenas sensores ativos podem ser desligados."
+      ru: "Этот активный датчик выключен: он не излучает и потому ничего не обнаруживает. Выключать можно только активные датчики."
+      zh: "该主动传感器已关闭：不再辐射，因而什么也发现不了。只有主动传感器可以关闭。"
+      "zh-TW": "該主動感測器已關閉：不再輻射，因而什麼也發現不了。只有主動感測器可以關閉。"
+    emission_silent_tooltip:
+      de: "Dieser Emitter strahlt nicht ab und trägt daher nichts zu dem bei, was feindliche Empfänger aufnehmen können."
+      en: "This emitter is not radiating, so it is adding nothing to what hostile receivers can hear."
+      es: "Este emisor no está irradiando, así que no aporta nada a lo que puedan captar los receptores hostiles."
+      fr: "Cet émetteur n'émet pas ; il n'ajoute donc rien à ce que les récepteurs hostiles peuvent capter."
+      it: "Questo emettitore non sta irradiando, quindi non aggiunge nulla a ciò che i ricevitori nemici possono captare."
+      ja: "このエミッターは放射していないため、敵の受信機が拾えるものに何も加えていない。"
+      ko: "이 방사원은 방사하고 있지 않으므로, 적 수신기가 포착할 수 있는 것에 아무것도 더하지 않습니다."
+      "pt-BR": "Este emissor não está irradiando, portanto não acrescenta nada ao que receptores hostis possam captar."
+      ru: "Этот излучатель не работает, поэтому ничего не добавляет к тому, что могут принять вражеские приёмники."
+      zh: "该辐射源未在辐射，因而不会为敌方接收机增加任何可捕获的信号。"
+      "zh-TW": "該輻射源未在輻射，因而不會為敵方接收機增加任何可捕獲的訊號。"
     group_active:
       de: AKTIV
       en: ACTIVE
@@ -3096,6 +3177,42 @@ info_panel:
       ru: Неопределённость позиции
       zh: 位置不确定性
       "zh-TW": 位置不確定性
+    bearing_only_tooltip:
+      de: "Reine Peilspur: Ein passiver Sensor liefert die Richtung, aber nicht die Entfernung, daher gibt es keine darstellbare Position."
+      en: "Bearing-only track: a passive sensor gives its direction but not its range, so it has no plottable position."
+      es: "Traza solo de marcación: un sensor pasivo da su dirección pero no su distancia, así que no hay posición representable."
+      fr: "Piste au relèvement seul : un capteur passif en donne la direction mais pas la distance, il n'y a donc pas de position traçable."
+      it: "Traccia di solo rilevamento: un sensore passivo ne dà la direzione ma non la distanza, quindi non esiste una posizione tracciabile."
+      ja: "方位のみのトラック。受動センサーは方向を得るが距離は得られないため、標定可能な位置はない。"
+      ko: "방위 전용 항적입니다. 수동 센서는 방향만 알 뿐 거리를 얻지 못하므로 표시할 위치가 없습니다."
+      "pt-BR": "Trilha somente por marcação: um sensor passivo fornece a direção, mas não a distância, portanto não há posição a plotar."
+      ru: "След только по пеленгу: пассивный датчик даёт направление, но не дальность, поэтому наносимой позиции нет."
+      zh: "纯方位航迹：被动传感器只能得到方向而无法测距，因此没有可标绘的位置。"
+      "zh-TW": "純方位航跡：被動感測器只能得到方向而無法測距，因此沒有可標繪的位置。"
+    range_tooltip:
+      de: "Entfernung von dieser Einheit zum Kontakt. Eine reine Peilspur hat keine messbare Entfernung und zeigt --."
+      en: "Range from this unit to the contact. A bearing-only track has no range to measure and reads --."
+      es: "Distancia desde esta unidad hasta el contacto. Una traza solo de marcación no tiene distancia que medir y muestra --."
+      fr: "Distance de cette unité au contact. Une piste au relèvement seul n'a pas de distance mesurable et affiche --."
+      it: "Distanza da questa unità al contatto. Una traccia di solo rilevamento non ha distanza da misurare e mostra --."
+      ja: "この機体から接触目標までの距離。方位のみのトラックは測るべき距離がなく -- と表示される。"
+      ko: "이 유닛에서 접촉까지의 거리입니다. 방위 전용 항적은 측정할 거리가 없어 --로 표시됩니다."
+      "pt-BR": "Distância desta unidade até o contato. Uma trilha somente por marcação não tem distância a medir e exibe --."
+      ru: "Дальность от этого юнита до контакта. У следа только по пеленгу нет измеряемой дальности, и он показывает --."
+      zh: "本单位到该接触目标的距离。纯方位航迹无距离可测，显示为 --。"
+      "zh-TW": "本單位到該接觸目標的距離。純方位航跡無距離可測，顯示為 --。"
+    stale_subtitle_tooltip:
+      de: "Gemeldete Zugehörigkeit und Klasse einer nicht mehr gehaltenen Spur. Ihre Position wird weiterhin vom letzten Fix aus koppelnavigiert und entfernt sich mit dem Alter immer weiter von der Wirklichkeit."
+      en: "Reported affiliation and class of a track no longer held. Its position keeps being dead-reckoned from the last fix, so it drifts further from the truth as it ages."
+      es: "Afiliación y clase informadas de una traza que ya no se mantiene. Su posición se sigue estimando por navegación a estima desde la última fijación, así que se aleja de la realidad conforme envejece."
+      fr: "Appartenance et classe rapportées d'une piste qui n'est plus tenue. Sa position continue d'être extrapolée à l'estime depuis le dernier point, et s'écarte donc de la réalité en vieillissant."
+      it: "Affiliazione e classe riportate di una traccia non più mantenuta. La sua posizione continua a essere estrapolata dall'ultimo punto nave, allontanandosi dal vero man mano che invecchia."
+      ja: "すでに保持していないトラックの報告所属とクラス。位置は最後の測位から推測航法で進め続けられるため、時間が経つほど実際からずれていく。"
+      ko: "더 이상 유지되지 않는 항적의 보고된 소속과 등급입니다. 위치는 마지막 측정값에서 추측 항법으로 계속 진행되므로, 시간이 지날수록 실제와 벌어집니다."
+      "pt-BR": "Afiliação e classe informadas de uma trilha que já não é mantida. Sua posição continua sendo estimada por navegação estimada a partir da última fixação, afastando-se da realidade conforme envelhece."
+      ru: "Заявленная принадлежность и класс следа, который больше не удерживается. Его позиция по-прежнему счисляется от последней обсервации, поэтому с возрастом всё сильнее расходится с истиной."
+      zh: "已不再保持的航迹所报告的归属与类别。其位置仍从最后一次定位起以航位推算推进，因此随时间推移会越来越偏离实际。"
+      "zh-TW": "已不再保持的航跡所報告的歸屬與類別。其位置仍從最後一次定位起以航位推算推進，因此隨時間推移會越來越偏離實際。"
     # #1694: CSE/SPD datablock-cell tooltip when an inline ±° / ± velocity-σ
     # suffix is shown — explains both the abbreviation and the ± figure.
     course_with_uncertainty:
@@ -3221,6 +3338,18 @@ info_panel:
       ru: "сопровождается %{secs} сек."
       zh: "已跟踪%{secs}秒"
       "zh-TW": "已追蹤%{secs}秒"
+    tracking_age_tooltip:
+      de: "Gemeldete Klasse, dann die Zeit seit der letzten Sensoraktualisierung dieser Spur. Je älter sie wird, desto weiter ist die dargestellte Position koppelnavigiert."
+      en: "Reported class, then how long since a sensor last updated this track. The older it gets, the further the plotted position has been dead-reckoned."
+      es: "Clase informada y, a continuación, el tiempo transcurrido desde la última actualización de esta traza por un sensor. Cuanto más envejece, más se estima por navegación a estima la posición mostrada."
+      fr: "Classe rapportée, puis le temps écoulé depuis la dernière mise à jour de cette piste par un capteur. Plus elle vieillit, plus la position affichée est extrapolée à l'estime."
+      it: "Classe riportata, poi da quanto tempo un sensore non aggiorna questa traccia. Più invecchia, più la posizione mostrata è estrapolata per stima."
+      ja: "報告されたクラスと、このトラックがセンサーで最後に更新されてからの経過時間。古くなるほど、表示位置は推測航法による外挿に頼ることになる。"
+      ko: "보고된 등급과, 센서가 이 항적을 마지막으로 갱신한 뒤 지난 시간입니다. 오래될수록 표시된 위치는 추측 항법으로 더 멀리 외삽된 것입니다."
+      "pt-BR": "Classe informada e, em seguida, há quanto tempo um sensor atualizou esta trilha pela última vez. Quanto mais envelhece, mais a posição exibida é estimada por navegação estimada."
+      ru: "Заявленный класс, затем время с последнего обновления этого следа датчиком. Чем он старше, тем дальше показанная позиция экстраполирована счислением."
+      zh: "报告类别，以及自传感器上次更新该航迹以来的时间。时间越久，所标绘的位置就越依赖航位推算外推。"
+      "zh-TW": "報告類別，以及自感測器上次更新該航跡以來的時間。時間越久，所標繪的位置就越依賴航位推算外推。"
     # DC-1133.5: live summary on the DET accordion row header.
     det_summary:
       de: "%{units} EINHEITEN · %{sensors} SENSOREN"
@@ -3397,6 +3526,18 @@ info_panel:
         ru: Излучатели
         zh: 发射器
         "zh-TW": 發射器
+      emitters_tooltip:
+        de: "Von diesem Kontakt abgestrahlte, per Fingerabdruck erfasste Emitter. Der Satz wird getrennt von der Rumpfidentifizierung geführt — derselbe Entwurf kann alles tragen —, doch ein reiner Suchkopf-Emitter weist den Kontakt eindeutig als Waffe aus."
+        en: "Emitters fingerprinted radiating from this contact. The set is tracked separately from the hull identification — the same design can carry anything — though a seeker-only emitter does pin the contact as a weapon."
+        es: "Emisores identificados por su firma radiando desde este contacto. El conjunto se rastrea aparte de la identificación del casco —un mismo diseño puede llevar cualquier cosa—, aunque un emisor exclusivo de buscador sí lo fija como arma."
+        fr: "Émetteurs dont la signature a été relevée sur ce contact. L'ensemble est suivi séparément de l'identification de la coque — un même modèle peut tout emporter —, mais un émetteur d'autodirecteur seul le désigne bien comme une arme."
+        it: "Emettitori identificati per firma che irradiano da questo contatto. L'insieme è tracciato separatamente dall'identificazione dello scafo — lo stesso progetto può portare qualsiasi cosa — anche se un emettitore di solo cercatore lo fissa come arma."
+        ja: "この接触目標から放射され、指紋照合されたエミッター。同じ設計でも搭載は自由なため、この集合は艦型の同定とは別に追跡される。ただしシーカー専用のエミッターは、目標が兵器であることを確定させる。"
+        ko: "이 접촉에서 방사되어 지문처럼 식별된 방사원입니다. 같은 설계도 무엇이든 탑재할 수 있으므로 이 집합은 선체 식별과 별도로 추적됩니다. 다만 탐색기 전용 방사원은 해당 접촉을 무기로 확정합니다."
+        "pt-BR": "Emissores cuja assinatura foi identificada irradiando deste contato. O conjunto é rastreado à parte da identificação do casco — o mesmo projeto pode levar qualquer coisa —, embora um emissor exclusivo de buscador o fixe como arma."
+        ru: "Излучатели, опознанные по «отпечатку» и работающие с этого контакта. Их набор отслеживается отдельно от опознания корпуса — один и тот же проект может нести что угодно, — однако излучатель только головки самонаведения однозначно определяет контакт как оружие."
+        zh: "从该接触目标辐射并经指纹比对识别出的辐射源。同一设计可搭载任意载荷，故该集合与舰型识别分开追踪；不过仅用于导引头的辐射源可确定该目标为武器。"
+        "zh-TW": "從該接觸目標輻射並經指紋比對識別出的輻射源。同一設計可搭載任意載荷，故該集合與艦型識別分開追蹤；不過僅用於導引頭的輻射源可確定該目標為武器。"
       platform_unresolved:
         de: PLATTFORM UNAUFGELÖST
         en: PLATFORM UNRESOLVED
@@ -4035,6 +4176,18 @@ info_panel:
       ru: "%{count} скрыто фильтром"
       zh: "筛选隐藏了%{count}个"
       "zh-TW": "篩選隱藏了%{count}個"
+    filter_hidden_tooltip:
+      de: "Zeilen, die der Klassenfilter ausblendet. Die Klassen-Chips oben in diesem Abschnitt holen sie zurück; ein Rechtsklick auf einen Chip isoliert eine Klasse."
+      en: "Rows the class filter is hiding. The class chips at the top of this section bring them back; right-click a chip to isolate one class."
+      es: "Filas que el filtro de clase está ocultando. Los chips de clase en la parte superior de esta sección las devuelven; haz clic derecho en un chip para aislar una clase."
+      fr: "Lignes masquées par le filtre de classe. Les pastilles de classe en haut de cette section les rétablissent ; un clic droit sur une pastille isole une classe."
+      it: "Righe nascoste dal filtro di classe. I chip di classe in cima a questa sezione le riportano; clic destro su un chip per isolare una classe."
+      ja: "クラスフィルターが隠している行。このセクション上部のクラスチップで再表示でき、チップを右クリックすると1クラスのみに絞れる。"
+      ko: "클래스 필터가 숨기고 있는 행입니다. 이 구역 상단의 클래스 칩으로 다시 표시할 수 있고, 칩을 우클릭하면 한 클래스만 남깁니다."
+      "pt-BR": "Linhas que o filtro de classe está ocultando. Os chips de classe no topo desta seção as trazem de volta; clique com o botão direito em um chip para isolar uma classe."
+      ru: "Строки, скрытые фильтром классов. Значки классов вверху этого раздела возвращают их; правый щелчок по значку оставляет только один класс."
+      zh: "被类别筛选隐藏的行。本区域顶部的类别标签可将其恢复；右键点击某个标签可只保留该类别。"
+      "zh-TW": "被類別篩選隱藏的行。本區域頂部的類別標籤可將其恢復；右鍵點擊某個標籤可只保留該類別。"
     deploy_inventory_hint:
       de: "Rechtsklick auf Karte oder Kontakt, um %{count} auszubringen"
       en: "Right-click the map or a contact to deploy %{count} selected"
@@ -4734,6 +4887,18 @@ info_panel:
     ru: "%{weight} всего"
     zh: "共 %{weight}"
     "zh-TW": "共 %{weight}"
+  stores_weight_tooltip:
+    de: "Gesamtgewicht der losen Fracht in diesem Lager. Die Frachtkapazität des Rumpfes begrenzt die gesamte Zuladung — Magazin, Lager und laufende Transfers zusammen."
+    en: "Combined weight of the loose cargo held in these stores. The hull's cargo capacity limits its whole load — magazine, stores and transfers in flight together."
+    es: "Peso combinado de la carga suelta guardada en este pañol. La capacidad de carga del casco limita el conjunto: santabárbara, pañol y transferencias en curso."
+    fr: "Poids cumulé du fret en vrac de cette soute. La capacité d'emport de la coque limite l'ensemble : soute, magasin et transferts en cours."
+    it: "Peso complessivo del carico sfuso in questi depositi. La capacità di carico dello scafo limita l'intero carico: santabarbara, deposito e trasferimenti in corso."
+    ja: "この倉庫にある非搭載貨物の合計重量。船体の貨物容量は、弾庫・倉庫・輸送中の分を合わせた総積載を制限する。"
+    ko: "이 창고에 있는 산적 화물의 총 중량입니다. 선체의 화물 용량은 탄약고와 창고, 이송 중인 물량을 모두 합한 적재량을 제한합니다."
+    "pt-BR": "Peso somado da carga solta guardada nestes paióis. A capacidade de carga do casco limita o total: santabárbara, paiol e transferências em curso."
+    ru: "Суммарный вес насыпного груза в этих кладовых. Грузоподъёмность корпуса ограничивает всю загрузку: погреб, кладовые и грузы в пути вместе."
+    zh: "该储存舱内散装货物的总重量。舰体的载货容量限制的是全部载荷——弹药舱、储存舱与运输途中的货物之和。"
+    "zh-TW": "該儲存艙內散裝貨物的總重量。艦體的載貨容量限制的是全部載荷——彈藥艙、儲存艙與運輸途中的貨物之和。"
   stores:
     # Glossary tooltip for the STORES section on a stowed drone's panel: the
     # rounds come from the hosting carrier, not the drone itself.
@@ -4764,6 +4929,18 @@ info_panel:
     ru: "На борту"
     zh: "搭载于"
     "zh-TW": "搭載於"
+  stowed_in_tooltip:
+    de: "Die Plattform, an deren Bord sich diese Drohne befindet. Sie wird dort gewartet und muss starten, bevor sie einen Auftrag fliegen kann."
+    en: "The platform this drone is aboard. It is serviced there and must launch before it can fly a mission."
+    es: "La plataforma a bordo de la cual está este dron. Allí recibe mantenimiento y debe lanzarse antes de poder volar una misión."
+    fr: "La plateforme à bord de laquelle se trouve ce drone. Il y est entretenu et doit être lancé avant de pouvoir voler une mission."
+    it: "La piattaforma a bordo della quale si trova questo drone. Lì viene servito e deve essere lanciato prima di poter volare una missione."
+    ja: "このドローンが搭載されているプラットフォーム。ここで整備され、任務に就くには発進が必要。"
+    ko: "이 드론이 탑재된 플랫폼입니다. 여기서 정비를 받으며, 임무를 수행하려면 먼저 발진해야 합니다."
+    "pt-BR": "A plataforma a bordo da qual este drone está. Ele é servido ali e precisa ser lançado antes de voar uma missão."
+    ru: "Платформа, на борту которой находится этот дрон. Здесь он обслуживается и должен стартовать, прежде чем сможет выполнять задачу."
+    zh: "该无人机所在的搭载平台。它在此接受勤务保障，须先发射才能执行任务。"
+    "zh-TW": "該無人機所在的搭載平台。它在此接受勤務保障，須先發射才能執行任務。"
   launched_from:
     de: "Gestartet von"
     en: "Launched from"
@@ -4776,6 +4953,18 @@ info_panel:
     ru: "Запущен с"
     zh: "从…发射"
     "zh-TW": "從…發射"
+  launched_from_tooltip:
+    de: "Die Plattform, von der diese Drohne gestartet ist. Sie ist jetzt in der Luft und wird dort wieder aufgenommen."
+    en: "The platform this drone launched from. It is airborne now and recovers there when it returns."
+    es: "La plataforma desde la que despegó este dron. Ahora está en vuelo y se recuperará allí al regresar."
+    fr: "La plateforme depuis laquelle ce drone a décollé. Il est en vol et y sera récupéré à son retour."
+    it: "La piattaforma da cui questo drone è decollato. Ora è in volo e vi sarà recuperato al rientro."
+    ja: "このドローンが発進したプラットフォーム。現在は飛行中で、帰投時にはここへ収容される。"
+    ko: "이 드론이 발진한 플랫폼입니다. 현재 비행 중이며 귀환 시 이곳에 회수됩니다."
+    "pt-BR": "A plataforma de onde este drone decolou. Ele está em voo e será recolhido ali ao retornar."
+    ru: "Платформа, с которой стартовал этот дрон. Сейчас он в воздухе и вернётся сюда для приёма."
+    zh: "该无人机的起飞平台。它当前正在空中，返航时将在此回收。"
+    "zh-TW": "該無人機的起飛平台。它當前正在空中，返航時將在此回收。"
   platform_lost:
     de: "(Plattform verloren)"
     en: "(platform lost)"
@@ -4788,6 +4977,102 @@ info_panel:
     ru: "(платформа потеряна)"
     zh: "(平台丢失)"
     "zh-TW": "(平台丟失)"
+  platform_lost_tooltip:
+    de: "Die Mutterplattform ist nicht mehr im Lagebild — sie ging verloren oder ihr Zustand hat Sie noch nicht erreicht."
+    en: "The parent platform is no longer in the tracked picture — it was lost, or its state has not reached you yet."
+    es: "La plataforma matriz ya no figura en el cuadro táctico: se perdió o su estado aún no te ha llegado."
+    fr: "La plateforme mère n'est plus dans la situation tactique : elle a été perdue, ou son état ne vous est pas encore parvenu."
+    it: "La piattaforma madre non è più nel quadro tattico: è andata perduta o il suo stato non ti è ancora arrivato."
+    ja: "母機はもはや戦術画面上に存在しない。喪失したか、その状態がまだ届いていない。"
+    ko: "모 플랫폼이 더는 전술 상황도에 없습니다. 상실되었거나 그 상태가 아직 전달되지 않았습니다."
+    "pt-BR": "A plataforma-mãe não está mais no quadro tático: foi perdida ou seu estado ainda não chegou até você."
+    ru: "Носитель больше не отображается в тактической картине: он потерян либо его состояние ещё не дошло до вас."
+    zh: "母平台已不在战术态势中：它已损失，或其状态尚未同步到你这里。"
+    "zh-TW": "母平台已不在戰術態勢中：它已損失，或其狀態尚未同步到你這裡。"
+  stowed_item_line_tooltip:
+    de: "Was dieses Objekt tut und wo es sich befindet: sein Bereitschafts- oder Wartungsschritt, dann die Anlage oder Plattform, die es hält."
+    en: "What this item is doing and where it sits: its readiness or servicing step, then the facility or platform holding it."
+    es: "Qué hace este elemento y dónde está: su estado de alistamiento o paso de mantenimiento, y después la instalación o plataforma que lo aloja."
+    fr: "Ce que fait cet élément et où il se trouve : son état de disponibilité ou son étape d'entretien, puis l'installation ou la plateforme qui l'abrite."
+    it: "Che cosa fa questo elemento e dove si trova: il suo stato di prontezza o la fase di servizio, poi l'impianto o la piattaforma che lo ospita."
+    ja: "この品目の状態と所在。準備状況または整備段階に続き、それを収容している設備またはプラットフォームを示す。"
+    ko: "이 항목이 무엇을 하고 있으며 어디에 있는지: 준비 상태 또는 정비 단계, 그리고 이를 수용한 설비나 플랫폼입니다."
+    "pt-BR": "O que este item está fazendo e onde está: seu estado de prontidão ou etapa de manutenção e, em seguida, a instalação ou plataforma que o abriga."
+    ru: "Что делает этот объект и где он находится: степень готовности или этап обслуживания, затем удерживающий его пост или платформа."
+    zh: "该项目的状态与所在位置：先是其准备状态或勤务阶段，然后是容纳它的设施或平台。"
+    "zh-TW": "該項目的狀態與所在位置：先是其準備狀態或勤務階段，然後是容納它的設施或平台。"
+  transfer_progress_tooltip:
+    de: "Wie weit dieser Transfer fortgeschritten ist; bei 100 % erreicht das Objekt die daneben genannte Plattform."
+    en: "How far this transfer has run; the item reaches the platform named beside it at 100%."
+    es: "Cuánto ha avanzado esta transferencia; al 100 % el elemento llega a la plataforma indicada al lado."
+    fr: "L'avancement de ce transfert ; à 100 %, l'élément atteint la plateforme nommée à côté."
+    it: "A che punto è questo trasferimento; al 100% l'elemento raggiunge la piattaforma indicata accanto."
+    ja: "この移送の進捗。100% で隣に示されたプラットフォームに到達する。"
+    ko: "이 이송의 진행률입니다. 100%가 되면 옆에 표시된 플랫폼에 도착합니다."
+    "pt-BR": "O quanto esta transferência avançou; a 100% o item chega à plataforma indicada ao lado."
+    ru: "Насколько продвинулась эта передача; при 100 % объект достигает указанной рядом платформы."
+    zh: "本次转运的进度；达到 100% 时，该项目抵达旁侧标注的平台。"
+    "zh-TW": "本次轉運的進度；達到 100% 時，該項目抵達旁側標註的平台。"
+  manifest_name_tooltip:
+    de: "Eine Munition, die das Manifest dieser Plattform erwartet, die aber nirgends in Ihrem Bestand vorhanden ist. Es gibt kein Fahrzeug zum Verknüpfen; Abbrechen entfernt sie aus dem Manifest."
+    en: "A round this platform's manifest expects that exists nowhere in your inventory. There is no vehicle to link to; cancelling drops it from the manifest."
+    es: "Una munición que el manifiesto de esta plataforma espera pero que no existe en ningún lugar de tu inventario. No hay vehículo al que enlazar; cancelarla la retira del manifiesto."
+    fr: "Une munition attendue par le manifeste de cette plateforme mais introuvable dans votre inventaire. Aucun véhicule à lier ; l'annuler la retire du manifeste."
+    it: "Una munizione prevista dal manifesto di questa piattaforma ma non presente da nessuna parte nel tuo inventario. Non c'è alcun veicolo da collegare; annullarla la toglie dal manifesto."
+    ja: "このプラットフォームの積載計画が要求しているが、在庫のどこにも存在しない弾薬。リンクする機体はなく、取り消せば計画から外れる。"
+    ko: "이 플랫폼의 적재 계획이 요구하지만 보유 재고 어디에도 없는 탄약입니다. 연결할 기체가 없으며, 취소하면 계획에서 제외됩니다."
+    "pt-BR": "Uma munição que o manifesto desta plataforma prevê, mas que não existe em lugar algum do seu inventário. Não há veículo a vincular; cancelá-la a remove do manifesto."
+    ru: "Боеприпас, предусмотренный ведомостью этой платформы, но отсутствующий во всех ваших запасах. Связывать не с чем; отмена убирает его из ведомости."
+    zh: "该平台的载荷清单要求、但你的库存中任何地方都没有的弹药。没有可链接的载具；取消即可将其从清单中移除。"
+    "zh-TW": "該平台的載荷清單要求、但你的庫存中任何地方都沒有的彈藥。沒有可連結的載具；取消即可將其從清單中移除。"
+  stowed_select_tooltip:
+    de: "Dieses Objekt auswählen, damit ein Rechtsklick-Befehl in der Welt für es gilt. Ausgewählte verstaute Drohnen starten gemeinsam auf diesen Befehl und bilden bei mehr als einer eine Gruppe."
+    en: "Pick this item so a right-click order in the world applies to it. Picked stowed drones launch together onto that order, forming a group when there is more than one."
+    es: "Marca este elemento para que una orden con clic derecho en el mundo se le aplique. Los drones estibados marcados se lanzan juntos con esa orden y forman un grupo si hay más de uno."
+    fr: "Cochez cet élément pour qu'un ordre par clic droit dans le monde s'y applique. Les drones arrimés cochés décollent ensemble sur cet ordre et forment un groupe s'ils sont plusieurs."
+    it: "Seleziona questo elemento perché un ordine col tasto destro nel mondo si applichi a esso. I droni stivati selezionati decollano insieme su quell'ordine, formando un gruppo se sono più di uno."
+    ja: "この品目を選択すると、ワールド上の右クリック命令が適用される。選択した搭載中のドローンはその命令に従って一斉に発進し、複数なら編隊を組む。"
+    ko: "이 항목을 선택하면 월드에서의 우클릭 명령이 여기에 적용됩니다. 선택된 탑재 드론들은 그 명령으로 함께 발진하며, 둘 이상이면 편대를 이룹니다."
+    "pt-BR": "Marque este item para que uma ordem com clique direito no mundo se aplique a ele. Drones estivados marcados decolam juntos com essa ordem, formando um grupo quando há mais de um."
+    ru: "Отметьте этот объект, чтобы приказ правым щелчком в мире применялся к нему. Отмеченные размещённые дроны стартуют вместе по этому приказу и образуют группу, если их больше одного."
+    zh: "勾选该项目，世界中的右键命令即会作用于它。被勾选的舱内无人机将一同按该命令发射，数量多于一架时自动编组。"
+    "zh-TW": "勾選該項目，世界中的右鍵命令即會作用於它。被勾選的艙內無人機將一同按該命令發射，數量多於一架時自動編組。"
+  jump_camera_tooltip:
+    de: "Klicken, um die Karte auf diese Koordinaten zu zentrieren."
+    en: "Click to centre the map on these coordinates."
+    es: "Haz clic para centrar el mapa en estas coordenadas."
+    fr: "Cliquez pour centrer la carte sur ces coordonnées."
+    it: "Fai clic per centrare la mappa su queste coordinate."
+    ja: "クリックすると地図をこの座標に合わせる。"
+    ko: "클릭하면 지도를 이 좌표로 이동합니다."
+    "pt-BR": "Clique para centralizar o mapa nestas coordenadas."
+    ru: "Щёлкните, чтобы отцентрировать карту на этих координатах."
+    zh: "点击可将地图居中到该坐标。"
+    "zh-TW": "點擊可將地圖置中到該座標。"
+  tasking_error_tooltip:
+    de: "Der Auftrag endete mit einem Fehler: Die Einheit fliegt keinen Auftrag mehr und unternimmt nichts von sich aus, nicht einmal zur Selbstverteidigung. Erteilen Sie ihr einen neuen Befehl."
+    en: "Its tasking ended in failure: the unit now flies no mission and takes no action of its own, not even to defend itself. Give it a new order."
+    es: "Su asignación terminó en error: la unidad ya no vuela ninguna misión ni actúa por su cuenta, ni siquiera para defenderse. Dale una orden nueva."
+    fr: "Sa mission s'est soldée par un échec : l'unité ne vole plus aucune mission et n'agit plus d'elle-même, pas même pour se défendre. Donnez-lui un nouvel ordre."
+    it: "L'incarico si è concluso con un errore: l'unità non vola più alcuna missione e non agisce di propria iniziativa, nemmeno per difendersi. Dalle un nuovo ordine."
+    ja: "任務は失敗に終わった。この機体はもはや任務を飛ばず、自衛すら含めて自ら行動しない。新たな命令を与えること。"
+    ko: "임무가 실패로 끝났습니다. 이 유닛은 더 이상 임무를 수행하지 않으며, 자기 방어조차 스스로 하지 않습니다. 새 명령을 내리십시오."
+    "pt-BR": "Sua atribuição terminou em falha: a unidade não voa mais nenhuma missão nem age por conta própria, nem mesmo para se defender. Dê-lhe uma nova ordem."
+    ru: "Задача завершилась ошибкой: юнит больше не выполняет задание и не действует по своей инициативе, даже ради самозащиты. Отдайте ему новый приказ."
+    zh: "其任务以失败告终：该单位不再执行任何任务，也不会自行行动，连自卫都不会。请重新下达命令。"
+    "zh-TW": "其任務以失敗告終：該單位不再執行任何任務，也不會自行行動，連自衛都不會。請重新下達命令。"
+  design_subtitle_tooltip:
+    de: "Der Drohnenentwurf, nach dem dieses Fahrzeug gebaut wurde; Rumpf und verbaute Komponenten stammen aus diesem Entwurf."
+    en: "The drone design this vehicle was built to; its chassis and fitted components come from that design."
+    es: "El diseño de dron con el que se construyó este vehículo; su chasis y sus componentes provienen de ese diseño."
+    fr: "Le modèle de drone selon lequel ce véhicule a été construit ; son châssis et ses composants proviennent de ce modèle."
+    it: "Il progetto di drone su cui è stato costruito questo veicolo; telaio e componenti installati provengono da quel progetto."
+    ja: "この機体が製造された元のドローン設計。シャーシと搭載コンポーネントはこの設計に由来する。"
+    ko: "이 기체가 제작된 드론 설계입니다. 섀시와 장착 부품이 이 설계에서 나옵니다."
+    "pt-BR": "O projeto de drone segundo o qual este veículo foi construído; seu chassi e componentes vêm desse projeto."
+    ru: "Проект дрона, по которому построена эта машина; корпус и установленные компоненты взяты из него."
+    zh: "该载具据以建造的无人机设计；其底盘与所装组件均源自该设计。"
+    "zh-TW": "該載具據以建造的無人機設計；其底盤與所裝組件均源自該設計。"
   # #2560: rows of the lost-unit inspect panel (the map tombstone's detail).
   # The LOST row's *value* is the terse en-only map code (symbol_label.lost.*),
   # so the panel and the map symbol always read identically.
@@ -4865,6 +5150,18 @@ info_panel:
       ru: "Другие единицы (например, убранные дроны), потерянные вместе с этой платформой, вместо наложения перекрывающихся символов в одной точке."
       zh: "随该平台一同损失的其他单位（例如已收纳的无人机），而非在同一点堆叠重叠的符号。"
       "zh-TW": "隨該平台一同損失的其他單位（例如已收納的無人機），而非在同一點堆疊重疊的符號。"
+    subtitle_tooltip:
+      de: "Entwurf und Klasse der verlorenen Einheit, soweit sie je identifiziert wurde. Eine nie beobachtete Einheit zeigt nur ihre Klasse."
+      en: "Design and class of the lost unit, as far as it was ever identified. A unit never observed shows only its class."
+      es: "Diseño y clase de la unidad perdida, hasta donde llegó a identificarse. Una unidad nunca observada muestra solo su clase."
+      fr: "Modèle et classe de l'unité perdue, dans la mesure où elle a été identifiée. Une unité jamais observée n'affiche que sa classe."
+      it: "Progetto e classe dell'unità perduta, per quanto sia stata identificata. Un'unità mai osservata mostra solo la classe."
+      ja: "喪失した機体の設計とクラス（判明していた範囲）。一度も観測されていない機体はクラスのみを示す。"
+      ko: "상실한 유닛의 설계와 등급으로, 식별된 범위까지만 표시됩니다. 한 번도 관측되지 않은 유닛은 등급만 나옵니다."
+      "pt-BR": "Projeto e classe da unidade perdida, até onde chegou a ser identificada. Uma unidade nunca observada mostra apenas sua classe."
+      ru: "Проект и класс потерянного юнита — в той мере, в какой он был опознан. Никогда не наблюдавшийся юнит показывает только класс."
+      zh: "已损失单位的设计与类别，仅限曾经识别出的部分。从未被观测到的单位只显示其类别。"
+      "zh-TW": "已損失單位的設計與類別，僅限曾經識別出的部分。從未被觀測到的單位只顯示其類別。"
   # DC-1090: neutral lost-unit tooltip subtitle for vehicle links whose unit
   # has dropped out of the snapshot (e.g. destroyed between snapshot and render).
   unit:

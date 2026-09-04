@@ -9,14 +9,24 @@
     recovery_requires: [],
     provides: [],
     length: 2.5,
-    weight: 70.0,
-    max_weight: 100.0,
+    // 70.0 -> 55.0 (#4709 fast-cycle rework): a lighter airframe accelerates
+    // harder on the same 4.8 s boost pulse and is the differentiation move
+    // away from the 235 kg M-250 (see `engine` comment below for the full
+    // rework rationale). `max_weight` moves in step so `payload_budget` (the
+    // margin the designer prices) holds at 30 kg -- this is a kinematics
+    // change, not a back-door price change.
+    weight: 55.0,
+    max_weight: 85.0,
     // Boost-then-coast (#2127): ~4.8 s boost (1.2 / 15.0 × 60), then unpowered
     // terminal — a short-range WVR IR shot is a single high-thrust pulse, not a
     // sustained burn. Range recovered via thrust_n (impulse), not burn duration.
     max_fuel: 1.2,
     hit_points: 5.0,
-    drag: 0.020,
+    // 0.020 -> 0.014 (#4709 fast-cycle rework): a slender high-speed dart.
+    // Measured load-bearing in combination with the mass and thrust changes
+    // below for the saturation-salvo result -- reverting drag alone at the
+    // proposed thrust returns a 16-round saturation wave to a total loss.
+    drag: 0.014,
     mast_height: 0.0,
     em_signatures: Some((rcs: 0.01, ir_base: 10.0, visual_cross_section: 0.1)),
     acoustic_signatures: None,
@@ -35,7 +45,46 @@
         terrain_clearance: 15.0,
     ),
     propulsion: Rocket,
-    engine: Powered((thrust_n: 16000.0, fuel_burn_rate: 15.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostCoast)),
+    // History: 16,000 -> 20,500 N (#4645 fix wave, +28%) restored the reach the
+    // post-flip 12 deg glide-angle change cost a Direct-profile design that runs
+    // its motor dry before terminal handoff.
+    //
+    // 20,500 -> 30,000 N (#4709 fast-cycle rework, +46%): #4645's own re-pin of
+    // this scenario family's cold-run bound (3 -> 25) recorded that point
+    // defense is now cycle-time-bound under the realistic glide, not
+    // reach-bound, and named a dedicated fast-cycle interceptor as the real
+    // fix (#4709) rather than a further reach buff. Measured on
+    // `tests/scenarios/acceptance/features/point_defense_salvo`: the shipped
+    // 8-round fixture never reaches the regime where cold run has an outcome
+    // cost (8/8 killed, zero hull damage either way), but a denser 16-round
+    // saturation wave sinks the carrier outright on the shipped chassis (900 ->
+    // 0 HP) even though every inbound is eventually killed -- the defence is
+    // too slow to break the wave far enough out. `thrust_n` is the only
+    // first-order lever on the release gate (`distance > reach`, and only the
+    // powered-range term moves inside the fixed 4.8 s `BoostCoast` pulse); a
+    // sweep of thrust alone from 20,500-34,000 N found a hull-outcome plateau
+    // at 26,000-32,000 N (16-round hull holds at 601 across the whole band,
+    // worse on both sides: 302 at 24,000 N, 2 at 34,000 N), with cold run
+    // falling monotonically across the same sweep (19 -> 17 -> 15 -> 13 -> 12
+    // -> 10 -> 8 -> 5) -- no knife edge on the metric. 30,000 N is the
+    // plateau's midpoint. Reach alone is a trap: pushing thrust to 40,000 N
+    // (cold run 3) or flying the M-100A `Lofted` (cold run 0) both release
+    // earlier and both lose the carrier -- rounds spent on shots that do not
+    // resolve before the magazine runs dry, echoing #4645's "reach-only buffs
+    // mask rather than fix" ruling from the opposite direction. Combined with
+    // the `weight`/`max_weight`/`drag` changes above (each worth only 1-2
+    // ticks of cold run alone but load-bearing together): the 16-round wave
+    // goes from carrier-destroyed to carrier-survives at 601/900 HP, the
+    // 12-round wave from 601 to a clean 900, and the shipped 8-round fixture's
+    // perfect 8/8-zero-damage result is unchanged. `max_fuel`/boost duration
+    // are UNCHANGED (still ~4.8 s, `fuel_tank / fuel_burn_rate * 60`, inside
+    // the #2127 2-5 s short-pulse identity guard) -- a 5.0 s ceiling was swept
+    // and measured to buy nothing (the guard band is already exhausted at 4.8
+    // s). 80 kN+ (~87 g) would be needed to recover the pre-#4645 cold-run
+    // bound of 3, well outside any real short-range interceptor and against
+    // ADR-0018 principle 3, so that bound is not pursued. Full lever table and
+    // measurement provenance: `docs/plans/4709-fast-cycle-m100.md`.
+    engine: Powered((thrust_n: 30_000.0, fuel_burn_rate: 15.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostCoast)),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility)],
     carrier: false,
     availability: PlayerAvailable,
@@ -43,15 +92,18 @@
     target_domains: [Air, SeaSurface, Land],
     guidance_uplink: FromLauncher,
     // Coast reserve sized to outlast the M-100's best-possible-range flight (#2251).
-    // After the ~5 s boost the missile glides on the battery (seeker + electronics),
+    // After the ~4.8 s boost the missile glides on the battery (seeker + electronics),
     // and running it dry mid-coast despawns it (BatteryDepleted) before it reaches
     // the target. Since the #2276 PN-descent re-fit a Direct M-100 air-launched from
-    // the MQ-450 ceiling (8 km) glides to its ~30.5 km credited max reach — coasting
-    // ~76 s. At 0.01 kWh the ~3.5 kW seeker+base draw gave only ~10 s of coast, so
-    // the AEW's self-defence M-100 fired at distant surface contacts and despawned
-    // mid-glide, throwing the shot away. 0.13 kWh gives ~134 s (~1.8× the coast, over
-    // the maintainer's 1.5× floor). Guarded by `dc_autopilot`
-    // `ir_missile_battery_outlasts_best_range_direct`.
+    // the MQ-450 ceiling (8 km) glides to its (pre-#4645) ~30.5 km credited max reach
+    // — coasting ~76 s. At 0.01 kWh the ~3.5 kW seeker+base draw gave only ~10 s of
+    // coast, so the AEW's self-defence M-100 fired at distant surface contacts and
+    // despawned mid-glide, throwing the shot away. 0.13 kWh gives ~134 s (~1.8× the
+    // coast, over the maintainer's 1.5× floor). The #4645 fix wave's post-flip glide
+    // and thrust changes move the credited max reach and coast time again, but not
+    // the conclusion — `ir_missile_battery_outlasts_best_range_direct` (`dc_autopilot`)
+    // still asserts the same 1.5× floor dynamically and remains green; the absolute
+    // figures above are historical (why 0.13 kWh was chosen), not re-derived here.
     battery_capacity_kwh: 0.13,
     base_power_draw_kw: 0.5,
     power_supply_kw: 1.0,

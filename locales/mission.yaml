@@ -89,6 +89,37 @@ mission:
       ru: "Число различных угроз, с которыми группа сражается одновременно. Участники распределяют огонь, а не атакуют все одну цель."
       zh: "该编组同时交战的不同威胁数量。成员会分配火力，而不是全部攻击同一目标。"
       "zh-TW": "該編組同時交戰的不同威脅數量。成員會分配火力，而不是全部攻擊同一目標。"
+  # #4665: a warning chip shown on any hull that was built to launch weapons and
+  # has no ready round left, whatever it is doing. The badge answers "why is this
+  # hull still out there / why did it turn for home" at a glance; the tooltip
+  # names WINCHESTER (the brevity word the event log uses for the same fact) and
+  # states the consequence, which is a doctrine setting rather than a fixed rule.
+  # Never shown for a hull that was never armed — that is not exhaustion.
+  exhausted:
+    badge:
+      de: "Leer"
+      en: "Exhausted"
+      es: "Sin munición"
+      fr: "À sec"
+      it: "Esaurito"
+      ja: "弾切れ"
+      ko: "탄약 소진"
+      "pt-BR": "Sem munição"
+      ru: "Боезапас пуст"
+      zh: "弹药耗尽"
+      "zh-TW": "彈藥耗盡"
+    tooltip:
+      de: "WINCHESTER — diese Einheit hat ihre gesamte Munition verschossen. Sie behält ihren Auftrag bei (eine Beschattung liefert weiterhin Aufklärung), sofern ihre Auto-RTB-Doktrin nicht bei Winchester heimkehrt."
+      en: "WINCHESTER — this unit has expended all of its ordnance. It keeps its current mission (a shadow still holds the track) unless its auto-RTB doctrine returns on Winchester."
+      es: "WINCHESTER: esta unidad ha agotado toda su munición. Mantiene su misión actual (un seguimiento sigue conservando el rastro) salvo que su doctrina de regreso automático regrese al quedarse sin munición."
+      fr: "WINCHESTER — cette unité a épuisé toutes ses munitions. Elle conserve sa mission (une filature garde le contact) sauf si sa doctrine de retour automatique rentre à sec."
+      it: "WINCHESTER — questa unità ha esaurito tutte le munizioni. Mantiene la missione corrente (un pedinamento conserva comunque la traccia) a meno che la dottrina di rientro automatico non preveda il rientro a munizioni esaurite."
+      ja: "WINCHESTER — この機体は搭載兵装をすべて撃ち尽くしました。自動帰投ドクトリンが弾切れで帰投する設定でない限り、現在の任務を継続します（追尾は目標の捕捉を維持できます）。"
+      ko: "WINCHESTER — 이 유닛은 탄약을 모두 소모했습니다. 자동 귀환 교리가 탄약 소진 시 귀환하도록 설정되어 있지 않으면 현재 임무를 계속 수행합니다(추적 임무는 여전히 표적을 유지합니다)."
+      "pt-BR": "WINCHESTER — esta unidade gastou toda a sua munição. Ela mantém a missão atual (uma sombra continua mantendo o rastro), a menos que sua doutrina de retorno automático mande voltar sem munição."
+      ru: "WINCHESTER — этот юнит израсходовал весь боезапас. Он продолжает текущую задачу (слежение по-прежнему удерживает контакт), если его доктрина автовозврата не предписывает возвращение при пустом боезапасе."
+      zh: "WINCHESTER——该单位已耗尽全部弹药。除非其自动返航条令设定为弹药耗尽即返航，否则它会继续当前任务（跟踪任务仍能保持接触）。"
+      "zh-TW": "WINCHESTER——該單位已耗盡全部彈藥。除非其自動返航準則設定為彈藥耗盡即返航，否則它會繼續當前任務（跟蹤任務仍能保持接觸）。"
   abort:
     de: "ABBRECHEN"
     en: "ABORT"
@@ -530,6 +561,18 @@ mission:
       ru: "%{count} ТЧК · цикл"
       zh: "%{count} 航点 · 循环"
       "zh-TW": "%{count} 航點 · 循環"
+    tooltip:
+      de: "Die festen Parameter, nach denen dieser Auftrag geflogen wird — Stationsabstand und -höhe, Halteposition oder Anzahl der Abschnitte."
+      en: "The standing parameters this mission is flown to — its station distance and altitude, hold position, or number of legs."
+      es: "Los parámetros fijos con los que se vuela esta misión: distancia y altitud de estación, posición de espera o número de tramos."
+      fr: "Les paramètres permanents selon lesquels cette mission est volée : distance et altitude de station, position de maintien, ou nombre de branches."
+      it: "I parametri fissi con cui questa missione viene volata: distanza e quota di stazione, posizione di attesa o numero di tratte."
+      ja: "この任務を遂行する際の恒常パラメータ。ステーションの距離と高度、保持位置、または区間数を示す。"
+      ko: "이 임무를 수행하는 고정 매개변수입니다. 스테이션 거리와 고도, 대기 위치, 또는 구간 수를 나타냅니다."
+      "pt-BR": "Os parâmetros fixos com que esta missão é voada: distância e altitude de estação, posição de espera ou número de trechos."
+      ru: "Постоянные параметры, по которым выполняется эта задача: дистанция и высота станции, точка удержания или число участков."
+      zh: "执行该任务所依据的固定参数：站位距离与高度、保持位置，或航段数量。"
+      "zh-TW": "執行該任務所依據的固定參數：站位距離與高度、保持位置，或航段數量。"
   # DC-1133.4: NOW line — the active order distilled to one line inside the
   # MISSION block. The only place the internal order layer surfaces in UI.
   # Terse caps style in Latin scripts (console data line, mono font);
@@ -682,6 +725,18 @@ mission:
       ru: "Нажмите, чтобы центрировать карту здесь."
       zh: "单击将地图居中于此。"
       "zh-TW": "點擊將地圖置中於此。"
+    standoff_range_tooltip:
+      de: "Die Entfernung, die der Autopilot zu diesem Kontakt hält; solange der Abstandsbefehl gilt, wird nicht weiter aufgeschlossen."
+      en: "The range the autopilot is holding off this contact; it closes no further while the standoff stands."
+      es: "La distancia que el piloto automático mantiene respecto a este contacto; no se acercará más mientras siga vigente el standoff."
+      fr: "La distance que le pilote automatique conserve vis-à-vis de ce contact ; il ne se rapprochera pas davantage tant que la consigne de standoff tient."
+      it: "La distanza che l'autopilota mantiene da questo contatto; non si avvicinerà oltre finché resta in vigore lo standoff."
+      ja: "オートパイロットがこの接触目標に対して保つ距離。スタンドオフ指示が有効な間、これ以上は接近しない。"
+      ko: "자동조종이 이 접촉으로부터 유지하는 거리입니다. 스탠드오프 지시가 유효한 동안에는 더 접근하지 않습니다."
+      "pt-BR": "A distância que o piloto automático mantém deste contato; não se aproximará mais enquanto o standoff valer."
+      ru: "Дистанция, которую автопилот выдерживает до этого контакта; пока действует приказ на дистанционное удержание, ближе он не подойдёт."
+      zh: "自动驾驶对该接触目标保持的距离；只要防区外指令有效，就不会再进一步接近。"
+      "zh-TW": "自動駕駛對該接觸目標保持的距離；只要防區外指令有效，就不會再進一步接近。"
   # S-D (#1851 / epic #1847 §3.2): rich computed mission verbs = label(anchor ×
   # posture). The displayed MISSION name is one of these — `dc_types`
   # `MissionAnchor::verb_key` maps each (anchor, posture) cell to one of these

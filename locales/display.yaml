@@ -162,6 +162,30 @@ list_shared:
       ru: "Показать всё: фильтр не применён."
       zh: "显示全部：未应用筛选。"
       "zh-TW": "顯示全部：未套用篩選。"
+    domain_row_tooltip:
+      de: "Auf eine einzelne Domäne einschränken. Rechtsklick auf einen Chip zeigt nur diesen; erneuter Rechtsklick hebt den Filter auf."
+      en: "Narrow this list to one domain. Right-click a chip to show only that one; right-click it again to clear the filter."
+      es: "Restringe esta lista a un dominio. Haz clic derecho en un chip para mostrar solo ese; vuelve a hacerlo para quitar el filtro."
+      fr: "Restreint cette liste à un seul domaine. Clic droit sur une puce pour n'afficher que celle-ci ; clic droit à nouveau pour lever le filtre."
+      it: "Restringe l'elenco a un solo dominio. Clic destro su un chip per mostrare solo quello; di nuovo per rimuovere il filtro."
+      ja: "この一覧を一つの領域に絞り込みます。チップを右クリックするとそれだけを表示し、もう一度右クリックで解除します。"
+      ko: "이 목록을 한 영역으로 좁힙니다. 칩을 오른쪽 클릭하면 그것만 표시되고, 다시 오른쪽 클릭하면 필터가 해제됩니다."
+      "pt-BR": "Restringe esta lista a um domínio. Clique com o botão direito em um chip para mostrar só ele; clique de novo para limpar o filtro."
+      ru: "Ограничить список одной средой. Правый щелчок по чипу оставит только его, повторный — снимет фильтр."
+      zh: "将此列表限定为单一域。右键点击某个标签只显示该项，再次右键点击即可清除筛选。"
+      "zh-TW": "將此清單限定為單一領域。右鍵點擊某個標籤只顯示該項，再次右鍵點擊即可清除篩選。"
+    class_row_tooltip:
+      de: "Auf eine einzelne Klasse einschränken. Rechtsklick auf einen Chip zeigt nur diesen; erneuter Rechtsklick hebt den Filter auf."
+      en: "Narrow this list to one class. Right-click a chip to show only that one; right-click it again to clear the filter."
+      es: "Restringe esta lista a una clase. Haz clic derecho en un chip para mostrar solo esa; vuelve a hacerlo para quitar el filtro."
+      fr: "Restreint cette liste à une seule classe. Clic droit sur une puce pour n'afficher que celle-ci ; clic droit à nouveau pour lever le filtre."
+      it: "Restringe l'elenco a una sola classe. Clic destro su un chip per mostrare solo quella; di nuovo per rimuovere il filtro."
+      ja: "この一覧を一つの艦種に絞り込みます。チップを右クリックするとそれだけを表示し、もう一度右クリックで解除します。"
+      ko: "이 목록을 한 등급으로 좁힙니다. 칩을 오른쪽 클릭하면 그것만 표시되고, 다시 오른쪽 클릭하면 필터가 해제됩니다."
+      "pt-BR": "Restringe esta lista a uma classe. Clique com o botão direito em um chip para mostrar só ela; clique de novo para limpar o filtro."
+      ru: "Ограничить список одним классом. Правый щелчок по чипу оставит только его, повторный — снимет фильтр."
+      zh: "将此列表限定为单一舰种。右键点击某个标签只显示该项，再次右键点击即可清除筛选。"
+      "zh-TW": "將此清單限定為單一艦種。右鍵點擊某個標籤只顯示該項，再次右鍵點擊即可清除篩選。"
   # Affiliation chips for the contact-list affiliation filter (#1408). The
   # contact list never shows Own contacts, but every variant is mapped so the
   # filter can name any affiliation it encounters.
@@ -651,6 +675,55 @@ doctrine:
       ru: "Атаковать враждебные и неопознанные контакты. Уклоняющаяся единица бежит от врагов и неизвестных."
       zh: "与敌方及未识别目标交战。规避中的单位会从敌方及未识别目标处逃离。"
       "zh-TW": "與敵方及未識別目標交戰。規避中的單位會從敵方及未識別目標處逃離。"
+  salvo_sizing:
+    fixed:
+      de: "Feste Salve"
+      en: "Fixed Salvo"
+      es: "Salva fija"
+      fr: "Salve fixe"
+      it: "Salva fissa"
+      ja: "固定斉射"
+      ko: "고정 일제사격"
+      "pt-BR": "Salva fixa"
+      ru: "Фиксированный залп"
+      zh: "固定齐射"
+      "zh-TW": "固定齊射"
+    fixed_tooltip:
+      de: "Immer genau die eingestellte Rundenzahl pro Waffe abfeuern, unabhängig vom Ziel. Strikte Munitionsdisziplin."
+      en: "Always fire exactly the configured number of rounds per weapon, whatever the target is. Strict ammunition discipline."
+      es: "Disparar siempre exactamente el número de proyectiles configurado por arma, sea cual sea el objetivo. Disciplina estricta de munición."
+      fr: "Toujours tirer exactement le nombre de coups configuré par arme, quelle que soit la cible. Discipline stricte des munitions."
+      it: "Spara sempre esattamente il numero di colpi configurato per arma, qualunque sia il bersaglio. Disciplina rigorosa delle munizioni."
+      ja: "目標にかかわらず、兵器ごとに設定された発数を必ず発射する。厳格な弾薬管理。"
+      ko: "표적과 무관하게 무기별로 설정된 발수를 정확히 발사합니다. 엄격한 탄약 통제."
+      "pt-BR": "Disparar sempre exatamente o número de disparos configurado por arma, seja qual for o alvo. Disciplina rigorosa de munição."
+      ru: "Всегда выпускать ровно заданное число боеприпасов на оружие, независимо от цели. Строгая дисциплина расхода."
+      zh: "无论目标为何，始终按每件武器设定的发数开火。严格的弹药纪律。"
+      "zh-TW": "無論目標為何，始終按每件武器設定的發數開火。嚴格的彈藥紀律。"
+    target_sized:
+      de: "Zielabhängig"
+      en: "Target-Sized"
+      es: "Según el objetivo"
+      fr: "Selon la cible"
+      it: "In base al bersaglio"
+      ja: "目標対応"
+      ko: "표적 대응"
+      "pt-BR": "Conforme o alvo"
+      ru: "По цели"
+      zh: "按目标"
+      "zh-TW": "按目標"
+    target_sized_tooltip:
+      de: "Die eingestellte Rundenzahl auf das anheben, was der Rumpf eines IDENTIFIZIERTEN Ziels erfordert. Ein nicht identifizierter Kontakt erhält weiterhin die eingestellte Zahl; das Flottenlimit gilt unverändert."
+      en: "Raise the configured number of rounds to what an IDENTIFIED target's hull requires. An unidentified contact still draws the configured number, and the fleet commitment limit still applies."
+      es: "Elevar el número de proyectiles configurado a lo que exige el casco de un objetivo IDENTIFICADO. Un contacto no identificado sigue recibiendo el número configurado y el límite de compromiso de la flota sigue vigente."
+      fr: "Porter le nombre de coups configuré à ce qu'exige la coque d'une cible IDENTIFIÉE. Un contact non identifié reçoit toujours le nombre configuré, et la limite d'engagement de la flotte s'applique toujours."
+      it: "Alza il numero di colpi configurato a quanto richiede lo scafo di un bersaglio IDENTIFICATO. Un contatto non identificato riceve comunque il numero configurato e il limite d'impegno della flotta resta valido."
+      ja: "識別済みの目標の船体が必要とする発数まで、設定値を引き上げる。未識別のコンタクトは設定値のまま、艦隊の投入上限も従来どおり適用される。"
+      ko: "식별된 표적의 선체가 요구하는 만큼 설정 발수를 상향합니다. 미식별 접촉은 설정값 그대로이며, 함대 투입 한계도 그대로 적용됩니다."
+      "pt-BR": "Elevar o número de disparos configurado ao que o casco de um alvo IDENTIFICADO exige. Um contato não identificado ainda recebe o número configurado, e o limite de empenho da frota continua valendo."
+      ru: "Поднять заданное число боеприпасов до того, что требует корпус ОПОЗНАННОЙ цели. Неопознанный контакт по-прежнему получает заданное число, лимит задействования флота действует как прежде."
+      zh: "将设定发数提升至已识别目标船体所需的数量。未识别目标仍按设定发数，舰队投入上限照常生效。"
+      "zh-TW": "將設定發數提升至已識別目標船體所需的數量。未識別目標仍按設定發數，艦隊投入上限照常生效。"
   firing_discipline:
     rmax:
       de: "Maximale Reichweite"
@@ -961,6 +1034,13 @@ doctrine:
       en: TIGHT
     engage_unknown:
       en: FREE
+  salvo_sizing_short:
+    # FIXED is the plain word; AUTO is the universal console token for an
+    # automatically-derived setting, matching the ON/OFF tier below.
+    fixed:
+      en: FIXED
+    target_sized:
+      en: AUTO
   firing_discipline_short:
     # Both are the real terms, not truncations: R-max (maximum-range release)
     # and NEZ (No-Escape Zone).

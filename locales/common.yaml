@@ -44,6 +44,22 @@ common:
     ru: "Нажмите, чтобы выбрать. Shift+клик, чтобы добавить к выделению."
     zh: "单击选择。Shift+单击添加到选择。"
     "zh-TW": "點擊選取。Shift+點擊加入選取。"
+  # #4661: the right-click isolate/restore-all hint appended to every filter
+  # chip's hover tooltip (domain/class/source chips, ...). Guidance prose, so
+  # sentence case, composed in by the toolkit widget itself so no panel call
+  # site can forget it.
+  filter_chip_interaction_hint:
+    de: "Rechtsklick zeigt nur dieses an. Erneuter Rechtsklick zeigt wieder alles an."
+    en: "Right-click to show only this. Right-click it again to show everything."
+    es: "Haz clic derecho para mostrar solo este. Vuelve a hacer clic derecho para mostrar todo de nuevo."
+    fr: "Clic droit pour n'afficher que celui-ci. Un second clic droit réaffiche tout."
+    it: "Clic destro per mostrare solo questo. Un altro clic destro per mostrare di nuovo tutto."
+    ja: "右クリックでこれだけを表示します。もう一度右クリックするとすべて表示されます。"
+    ko: "우클릭하면 이것만 표시됩니다. 다시 우클릭하면 전체가 다시 표시됩니다."
+    "pt-BR": "Clique com o direito para mostrar somente este. Clique com o direito novamente para mostrar tudo de novo."
+    ru: "Щёлкните правой кнопкой, чтобы показать только это. Щёлкните правой кнопкой ещё раз, чтобы показать всё."
+    zh: "右键点击以仅显示此项。再次右键点击可显示全部。"
+    "zh-TW": "右鍵點擊以僅顯示此項。再次右鍵點擊可顯示全部。"
   remove:
     de: "Entfernen"
     en: "Remove"

@@ -3,16 +3,26 @@
 // terrain-follow hold, terminal handoff. Consumed by dc_autopilot::trajectory.
 TrajectoryConfig(
     // Proportional loft (#2183): loft above the target's altitude scales with
-    // ground range (0 + 0.08·d) instead of a 2 km absolute floor, so a lofted
+    // ground range (0 + k·d) instead of a 2 km absolute floor, so a lofted
     // munition stays near a co-altitude air target at medium range (shallow PN
-    // handoff) yet still climbs to the apex a long shot needs. Currently DORMANT —
-    // no shipped blueprint flies Lofted (the M-250 boost-coast conversion that
-    // motivated this is deferred to the boost-sustain thrust model, #2185); the
-    // values will be re-validated against live content there. Pinned to
-    // LoftGeometry::STANDARD by default_matches_shipped_ron.
+    // handoff) yet still climbs to the apex a long shot needs. Three shipped
+    // designs fly Lofted: the M-250A Radar Missile, the M-400A Area SAM, and
+    // the AQ-10A Loitering Munition (#4644). Pinned to LoftGeometry::STANDARD
+    // by default_matches_shipped_ron.
+    //
+    // cruise_k and glide_descent_rad are coupled, not independent (#4644): a
+    // loft's only job is to bank altitude the post-burnout glide spends back
+    // as downrange, so operational range is the fixed point
+    // D = powered_range / (1 − cruise_k · cot(glide_descent_rad)), which
+    // diverges (this law no longer bounds range at all) once cruise_k reaches
+    // tan(glide_descent_rad).
     cruise_base: 0.0,
-    cruise_k: 0.08,
+    cruise_k: 0.15,
+    // Assumed fraction of ground range where the loft apex sits — a predictor
+    // input for the FOV cap's handoff-altitude prediction, not a commanded
+    // value (#4644). See `loft_fov_cap`.
+    loft_apex_ground_fraction: 0.15,
     cruise_reached_tolerance: 150.0,
     terminal_handoff_range: 4000.0,
-    glide_descent_rad: 0.105, // ≈ 6° below horizon
+    glide_descent_rad: 0.209, // ≈ 12° below horizon (~4.7:1 glide)
 )

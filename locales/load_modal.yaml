@@ -73,6 +73,18 @@ load_modal:
     ru: "Автосохранение"
     zh: "自动保存"
     "zh-TW": "自動儲存"
+  save_entry_tooltip:
+    de: "Diesen Speicherstand auswählen; anschließend auf Laden klicken, um ihn wiederherzustellen."
+    en: "Select this save; press Load to restore it."
+    es: "Selecciona esta partida guardada; pulsa Cargar para restaurarla."
+    fr: "Sélectionnez cette sauvegarde ; appuyez sur Charger pour la restaurer."
+    it: "Seleziona questo salvataggio; premi Carica per ripristinarlo."
+    ja: "このセーブを選択し、ロードを押すと復元します。"
+    ko: "이 저장 파일을 선택한 뒤 불러오기를 누르면 복원됩니다."
+    "pt-BR": "Selecione este salvamento; pressione Carregar para restaurá-lo."
+    ru: "Выберите это сохранение и нажмите «Загрузить», чтобы восстановить его."
+    zh: "选择此存档，然后按“加载”将其恢复。"
+    "zh-TW": "選擇此存檔，然後按「載入」將其還原。"
   load_disabled_tooltip:
     de: "Speicherstand zum Laden auswählen"
     en: "Select a save to load"

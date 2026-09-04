@@ -874,6 +874,21 @@ glossary:
       ru: "Топливо: остаток топлива и дальность."
       zh: "剩余燃料与航程。"
       "zh-TW": "剩餘燃料與航程。"
+    # #4892: the FUEL row's tooltip when the hull is at bingo with no compatible
+    # deck anywhere. The player's lever is a deck, not the hull's tasking, so it
+    # says something the ordinary bingo tooltip does not.
+    no_deck_tooltip:
+      de: "Kraftstoff: Bingo erreicht, kein kompatibles Deck vorhanden – dieser Rumpf kann nicht landen und wird notwassern."
+      en: "Fuel: at bingo with no compatible deck anywhere — this hull cannot recover and will ditch."
+      es: "Combustible: en bingo y sin cubierta compatible en ninguna parte: este casco no puede recuperarse y amerizará."
+      fr: "Carburant : bingo atteint, aucun pont compatible — cet appareil ne peut pas se poser et amerrira."
+      it: "Carburante: bingo raggiunto, nessun ponte compatibile — questo scafo non può rientrare e ammarerà."
+      ja: "燃料：ビンゴ到達、対応する甲板がありません。この機体は回収できず不時着水します。"
+      ko: "연료: 빙고 도달, 호환되는 갑판 없음 — 이 기체는 회수할 수 없으며 불시착수합니다."
+      "pt-BR": "Combustível: em bingo e sem convés compatível: este casco não pode ser recuperado e amerissará."
+      ru: "Топливо: достигнут бинго, совместимой палубы нет — этот корпус не сможет сесть и совершит вынужденную посадку на воду."
+      zh: "燃料：已达最低油量且无任何可用甲板——该单位无法回收，将迫降水面。"
+      "zh-TW": "燃料：已達最低油量且無任何可用甲板——該單位無法回收，將迫降水面。"
     # #2896: Shift-held gloss — the FUEL value is a composite (%· range ·
     # endurance · BINGO tag) the terse label glossary alone doesn't cover.
   cond:

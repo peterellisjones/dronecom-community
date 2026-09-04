@@ -21,6 +21,14 @@ Lofted cruise altitude base term (metres): `cruise = base + k * ground_range`.
 
 Lofted cruise altitude per-metre-of-ground-range coefficient (dimensionless).
 
+### `loft_apex_ground_fraction` : f32
+
+Fraction of the ground range down which the loft's apex is assumed to
+sit, for the FOV cap's handoff-altitude prediction (#4644). A predictor
+input, not a commanded value — the flown apex is wherever the climb
+finishes; this only bounds how much glide-descent ground the cap credits
+between apex and the terminal handoff. See `loft_fov_cap`.
+
 ### `cruise_reached_tolerance` : f32
 
 Altitude tolerance (metres) within which the Launch climb/descent is
