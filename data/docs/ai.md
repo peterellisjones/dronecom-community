@@ -18,12 +18,13 @@ How often the commander re-evaluates advisors (seconds).
 
 Maximum seconds a goal may wait in `AwaitingLaunch` for its launched
 unit to become airborne before the launch is declared failed and the
-goal abandoned (releasing its claimed units). Backstop for launch
-commands the deck-ops handler rejects — every rejection path is
-warn-and-return with no feedback signal, leaving the unit stowed
-`Ready` forever (DC-1073). Generous: must exceed the worst-case deck
-launch pipeline duration for a full squad queued behind other
-launches.
+goal abandoned (releasing its claimed units).
+
+Backstop when rejection feedback is not observed: `launch_progress`
+first matches reported `LaunchFailed` subjects against the goal's
+claimed batch. The timeout also covers stalls without an event and
+must exceed the worst-case deck pipeline duration for a full squad
+queued behind other launches.
 
 ### `procurement_interval_secs` : f32
 

@@ -751,8 +751,10 @@ no code assumes a particular magnitude.
 
 ### `salvo` : [`SalvoSection`](#salvosection)
 
-#4657: how a launcher under `SalvoSizing::TargetSized` turns an
-identified target into a number of rounds.
+#4657/#5020: how the automatic launch gate turns an identified
+target's believed hull into a number of rounds
+(`automatic_pair_request`, which composes this section's
+`SalvoSection::required_rounds`).
 
 ### `commit_limits` : [`CommitLimits`](#commitlimits)
 
@@ -1042,8 +1044,12 @@ toggles and three weave entries against a clean two and one.
 
 Known limit: the band is a fixed multiplier while the heading swing it
 absorbs grows roughly as `range * own_speed / weapon_speed`, so it is
-sized against the geometries the shipped fixtures measure. #4927 is the
-related sensor defect.
+sized against the geometries the shipped fixtures measure. The band is
+solved from a read-time velocity fix that holds across a scan gap — the
+#4941 kernel gives an air-class track a 16 s coast horizon against a 4 s
+air-search revisit — so a held rung is continuous across the revisits it
+spans. Whether that gate should be speed-relative for a fast contact is
+#4956.
 
 1.0 removes the hysteresis; values below 1.0 would release sooner than
 they raise and read as 1.0. Consumed by the per-unit
@@ -1159,6 +1165,43 @@ indefinitely. Sizing the dwell at one window rather than at a field of its
 own bounds the weave against any one track to half the time, whatever its
 covariance does. Consumed by the per-unit `ThreatAlerts<TEAM>` rollup in
 `dc_sensors` (`manage_contacts`).
+
+### `snr_trend_tau_secs` : f32
+
+Time constant τ (seconds) of the #3739 per-track SNR-rate estimator that
+gates the bearing-only inbound arm's admission — the range-free
+discriminant between a closing bearing-only munition track and a
+crossing/receding one.
+
+Doubles as the minimum elapsed span before the trend is credited either
+way (below it the verdict is the named `Indeterminate`, which admits —
+the #3713 fail-toward-caution default). Sized as a multiple of the
+shipped passive sonars' revisit rate (`an_sqs_40`/`an_sqr_70`, both
+`scan_interval: 3.0`) rather than as an independent number, the same
+discipline `BearingOnlyReflex::REARM_ABSENCE_WINDOWS` uses. A larger
+value smooths more but credits more slowly; it must stay positive (a
+zero τ degenerates the dt-derived Kalata gains). Consumed by the
+per-unit `ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+
+### `snr_closing_min_db_per_sec` : f32
+
+SNR rate (dB/s) at or above which the #3739 trend estimator's Schmitt
+latch sets `closing = true`, and at or below whose negation the latch
+resets `closing = false` (a dead band around zero, avoiding threshold
+flapping on a near-constant range). The latch starts `false`, so a
+trend that never once reaches this threshold reads the same latch
+state as one that fell through its negation — both surface as
+`ClosingEvidence::NotClosing` once enough samples and elapsed span
+exist, not only a trend that actually crossed the negative side.
+
+Derived from passive propagation (`SNR_dB = C - 10·n·log10(r)`,
+`n = spreading_exponent`): `dSNR/dt = 4.343·n·(v_radial/r)`, so this
+threshold states a minimum closing fraction of range per second, not an
+absolute speed — a slow weapon closing from far out credits exactly as
+readily as a fast one closing from near, at the same `v_radial/r`. Must
+not be negative (a negative threshold would latch `Closing` on a
+FALLING signal, inverting the gate). Consumed by the per-unit
+`ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
 
 ### `engagement_commitment_max_secs` : f32
 
@@ -1605,7 +1648,7 @@ airframe's turn radius — stays clear of the terrain rather than grazing it.
 #2609/#4698/#4817: inward margin (metres) the on-station ring sampler
 holds off the circular playable boundary (the terrain's `radius()`) for a
 domain that clamps its ring to the circle, which is every shipped domain;
-see `DomainAdapter::ring_playable_radius`. A ring point within this margin
+see `DomainRouting::ring_playable_radius`. A ring point within this margin
 of the rim is treated as non-navigable, so the flown navigable **arc** —
 with the loop-follower's corner rounding and the platform's turn radius —
 stays strictly inside the boundary rather than grazing it (the inward
@@ -1684,7 +1727,7 @@ other leaf the segment crosses — so a horizon under one cell was answered by
 a query that never looked at the terrain in between. #4705's census measured
 the cost: at a 50 m floor the bounded guard let 12 committed hulls proceed
 that the unbounded guard arrested. Case 2 asks
-`Terrain::corridor_max_height_refined` now, which has no fast path and walks
+`Terrain::corridor_max_height` now, which has no fast path and walks
 whatever segment it is given, so the relation is gone and the value is a
 tuning choice rather than a bound.
 `the_guard_tests_further_than_the_hulls_own_coasting_track` pins what is
@@ -1873,21 +1916,27 @@ protected until its BDA deadline resolves regardless of these bounds
 (#2402): purging it early would erase the track before the kill-
 confirmation check ever runs.
 
-Dead-reckoned position σ grows as `σ_a · dt² / 2`, so `max_position_sigma_m`
-is normally the bound that fires — well before `max_age_secs`, which is a
-backstop for contacts whose position fix never resolves numerically (e.g. a
-persistently unresolved fix) rather than the common case.
+Dead-reckoned position σ grows as `√(q · dt³ / 3)` for `q = σ_a² · τ`
+(`ProcessNoiseKernel`), so `max_position_sigma_m` is normally the bound
+that fires — well before `max_age_secs`, which is a backstop for contacts
+whose position fix never resolves numerically (e.g. a persistently unresolved
+fix) rather than the common case.
 
 **Time-to-purge is therefore per class** since #3879 made `σ_a` per class
-(`ProcessNoiseSection`): it scales as `1/√σ_a`, so at the shipped table a
-`Lost` aircraft is purged around 100 s after its last look, a ship around
-120 s, and a submarine around 240 s. (Under the single global 2.0 m/s² this
-section was originally tuned against, every class took the submarine's
-~224 s.) That is the honest consequence of an honest `σ_a` — a lost aircraft's
-position genuinely does become unknowable far sooner than a lost submarine's
-— and this bound is expressed in metres of uncertainty, not seconds, so it
-keeps meaning the same thing. Re-deriving the 50 km itself is deliberately
-left alone: it is a picture-quality decision, not a filter one.
+(`ProcessNoiseSection`): it scales as `σ_a^(−2/3)`, so at the shipped table
+a `Lost` aircraft is purged around 100 s after its last look, a ship around
+127 s, and a submarine around 326 s. That is the honest consequence of an
+honest `σ_a` — a lost aircraft's position genuinely does become unknowable
+far sooner than a lost submarine's — and this bound is expressed in metres of
+uncertainty, not seconds, so it keeps meaning the same thing.
+
+The shipped `max_position_sigma_m` is calibrated to hold that retention band
+rather than to any geometric bound such as the world radius: it is the σ that
+puts an aircraft at 100 s, the class the band is anchored on because stale
+air tracks are what crowd a capacity-limited picture. Retune it against the
+band, not against the map.
+
+`ProcessNoiseKernel`: crate::sim_config::ProcessNoiseKernel
 
 ### `max_age_secs` : f32
 
@@ -2416,8 +2465,8 @@ which the designation is released and the track de-designated.
 
 ## `SalvoSection`
 
-Target-aware salvo sizing (#4657) — the tuning behind
-`SalvoSizing::TargetSized`.
+Target-aware salvo sizing (#4657/#5020) — the tuning behind
+`automatic_pair_request`'s target-aware term.
 
 The reported problem was that salvo size came only from the platform's
 blueprint, so a single number had to serve both a carrier and a picket:
@@ -2506,9 +2555,8 @@ derivation makes that target take repeated admissions instead, so the
 launcher re-checks range, aspect and the commitment limit between waves
 rather than committing everything on one tick.
 
-Does **not** cap the player's own floor: a commander who sets a
-per-platform salvo above this still gets what they asked for, because
-the floor is applied after this ceiling.
+Applies only to automatic attacks. An explicit inventory-selected attack
+spends its named physical rounds without this economy ceiling.
 
 ## `CommitLimits`
 
@@ -2699,8 +2747,20 @@ Flooding the well deck and floating the craft out.
 
 Horizontal process-noise acceleration σ (m/s²) per tracked-object class
 (#3879) — the unmodelled acceleration the constant-velocity model tolerates
-between updates. Larger values track manoeuvres faster but settle at a
-higher covariance floor, and grow every published uncertainty faster.
+between updates.
+
+This sets no horizontal Kalman gain. Both writers of the horizontal blocks —
+the synthesized direct fix and the batch-TMA solve — replace them outright
+rather than fusing against the prior, so a larger `σ_a` cannot make the filter
+track a manoeuvre faster. What it governs is the honesty of a coast: how
+fast uncertainty grows between fixes, and therefore the velocity gate, the
+fire-control acquisition gate, time-to-purge and every published ellipse.
+Larger values widen all of those together, and the tightest of them — the
+acquisition gate, which reads a dead-reckoned position σ against a beamwidth
+footprint at sub-second `dt` — is what bounds the table's fastest entries.
+See `ProcessNoiseKernel` for the kernel these feed.
+
+`ProcessNoiseKernel`: crate::sim_config::ProcessNoiseKernel
 
 One global value used to serve everything from a cargo ship to an IR
 missile — roughly three orders of magnitude of real spread — so it was
@@ -2744,9 +2804,10 @@ and the speed floor (see `ProcessNoiseModel`) covers the flip.
 
 `σ_a` (m/s²) for a contact with no class evidence yet
 (`NtdsClass::Unknown`). Must be at or above every other entry: an
-unclassified contact could be any of them, and under-modelling a
-manoeuvre costs far more (lag, then divergence) than over-modelling one
-(a higher covariance floor). Checked by a `debug_assert!` in
+unclassified contact could be any of them, so its coast is only honest
+at the widest of their uncertainties — claiming to know an unidentified
+contact's position as precisely as a submarine's is the error that
+cannot be recovered from downstream. Checked by a `debug_assert!` in
 `ProcessNoiseModel::resolve`.
 
 ## `CommitLimit`

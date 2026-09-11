@@ -1,0 +1,17 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+(
+    id: BlueprintId("6d4b5526-4bb3-47ff-8820-912c3a1a9841"),
+    codename: "Command Missile",
+    designator: "M-250B",
+    chassis_id: "m_250",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Warhead. This missile takes guidance from its launcher; it has no onboard seeker.
+        (kind: Component(component_id: "mk_120")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Lofted,
+    default_altitude: Chassis,
+    unknown_range_launch: Withhold,
+    stores: [],
+)

@@ -2,42 +2,42 @@ _version: 2
 
 list_shared:
   search:
-    label:
-      de: "Suche"
-      en: "Search"
-      es: "Buscar"
-      fr: "Rechercher"
-      it: "Cerca"
-      ja: "検索"
-      ko: "검색"
-      "pt-BR": "Buscar"
-      ru: "Поиск"
-      zh: "搜索"
-      "zh-TW": "搜尋"
     hint:
-      de: "Liste durchsuchen"
-      en: "Search this list"
-      es: "Buscar en esta lista"
-      fr: "Rechercher dans cette liste"
-      it: "Cerca in questo elenco"
-      ja: "この一覧を検索"
-      ko: "이 목록 검색"
-      "pt-BR": "Buscar nesta lista"
-      ru: "Поиск по списку"
-      zh: "搜索此列表"
-      "zh-TW": "搜尋此清單"
+      de: "FILTER"
+      en: "FILTER"
+      es: "FILTRO"
+      fr: "FILTRE"
+      it: "FILTRO"
+      ja: "フィルター"
+      ko: "필터"
+      "pt-BR": "FILTRO"
+      ru: "ФИЛЬТР"
+      zh: "筛选"
+      "zh-TW": "篩選"
     clear_tooltip:
-      de: "Suche löschen, um die vollständige Liste wiederherzustellen."
-      en: "Clear search to restore the full list."
-      es: "Borra la búsqueda para restaurar la lista completa."
-      fr: "Effacez la recherche pour restaurer la liste complète."
-      it: "Cancella la ricerca per ripristinare l'elenco completo."
-      ja: "検索をクリアして一覧全体を復元します。"
-      ko: "검색을 지우면 전체 목록이 복원됩니다."
-      "pt-BR": "Limpe a busca para restaurar a lista completa."
-      ru: "Очистите поиск, чтобы восстановить полный список."
-      zh: "清除搜索以恢复完整列表。"
-      "zh-TW": "清除搜尋以還原完整清單。"
+      de: "Filter löschen, um die vollständige Liste wiederherzustellen."
+      en: "Clear the filter to restore the full list."
+      es: "Borra el filtro para restaurar la lista completa."
+      fr: "Effacez le filtre pour restaurer la liste complète."
+      it: "Cancella il filtro per ripristinare l'elenco completo."
+      ja: "フィルターをクリアして一覧全体を復元します。"
+      ko: "필터를 지우면 전체 목록이 복원됩니다."
+      "pt-BR": "Limpe o filtro para restaurar a lista completa."
+      ru: "Очистите фильтр, чтобы восстановить полный список."
+      zh: "清除筛选以恢复完整列表。"
+      "zh-TW": "清除篩選以還原完整清單。"
+    tooltip:
+      de: "Filtert diese Liste während der Eingabe nach Namen."
+      en: "Filter this list by name as you type."
+      es: "Filtra esta lista por nombre mientras escribes."
+      fr: "Filtre cette liste par nom au fur et à mesure de la saisie."
+      it: "Filtra questo elenco per nome man mano che digiti."
+      ja: "入力に応じて名前でこの一覧を絞り込みます。"
+      ko: "입력하는 대로 이름으로 이 목록을 필터링합니다."
+      "pt-BR": "Filtra esta lista por nome enquanto você digita."
+      ru: "Фильтрует этот список по названию по мере ввода."
+      zh: "输入时按名称筛选此列表。"
+      "zh-TW": "輸入時依名稱篩選此清單。"
   domain:
     air:
       de: "Luft"
@@ -675,55 +675,6 @@ doctrine:
       ru: "Атаковать враждебные и неопознанные контакты. Уклоняющаяся единица бежит от врагов и неизвестных."
       zh: "与敌方及未识别目标交战。规避中的单位会从敌方及未识别目标处逃离。"
       "zh-TW": "與敵方及未識別目標交戰。規避中的單位會從敵方及未識別目標處逃離。"
-  salvo_sizing:
-    fixed:
-      de: "Feste Salve"
-      en: "Fixed Salvo"
-      es: "Salva fija"
-      fr: "Salve fixe"
-      it: "Salva fissa"
-      ja: "固定斉射"
-      ko: "고정 일제사격"
-      "pt-BR": "Salva fixa"
-      ru: "Фиксированный залп"
-      zh: "固定齐射"
-      "zh-TW": "固定齊射"
-    fixed_tooltip:
-      de: "Immer genau die eingestellte Rundenzahl pro Waffe abfeuern, unabhängig vom Ziel. Strikte Munitionsdisziplin."
-      en: "Always fire exactly the configured number of rounds per weapon, whatever the target is. Strict ammunition discipline."
-      es: "Disparar siempre exactamente el número de proyectiles configurado por arma, sea cual sea el objetivo. Disciplina estricta de munición."
-      fr: "Toujours tirer exactement le nombre de coups configuré par arme, quelle que soit la cible. Discipline stricte des munitions."
-      it: "Spara sempre esattamente il numero di colpi configurato per arma, qualunque sia il bersaglio. Disciplina rigorosa delle munizioni."
-      ja: "目標にかかわらず、兵器ごとに設定された発数を必ず発射する。厳格な弾薬管理。"
-      ko: "표적과 무관하게 무기별로 설정된 발수를 정확히 발사합니다. 엄격한 탄약 통제."
-      "pt-BR": "Disparar sempre exatamente o número de disparos configurado por arma, seja qual for o alvo. Disciplina rigorosa de munição."
-      ru: "Всегда выпускать ровно заданное число боеприпасов на оружие, независимо от цели. Строгая дисциплина расхода."
-      zh: "无论目标为何，始终按每件武器设定的发数开火。严格的弹药纪律。"
-      "zh-TW": "無論目標為何，始終按每件武器設定的發數開火。嚴格的彈藥紀律。"
-    target_sized:
-      de: "Zielabhängig"
-      en: "Target-Sized"
-      es: "Según el objetivo"
-      fr: "Selon la cible"
-      it: "In base al bersaglio"
-      ja: "目標対応"
-      ko: "표적 대응"
-      "pt-BR": "Conforme o alvo"
-      ru: "По цели"
-      zh: "按目标"
-      "zh-TW": "按目標"
-    target_sized_tooltip:
-      de: "Die eingestellte Rundenzahl auf das anheben, was der Rumpf eines IDENTIFIZIERTEN Ziels erfordert. Ein nicht identifizierter Kontakt erhält weiterhin die eingestellte Zahl; das Flottenlimit gilt unverändert."
-      en: "Raise the configured number of rounds to what an IDENTIFIED target's hull requires. An unidentified contact still draws the configured number, and the fleet commitment limit still applies."
-      es: "Elevar el número de proyectiles configurado a lo que exige el casco de un objetivo IDENTIFICADO. Un contacto no identificado sigue recibiendo el número configurado y el límite de compromiso de la flota sigue vigente."
-      fr: "Porter le nombre de coups configuré à ce qu'exige la coque d'une cible IDENTIFIÉE. Un contact non identifié reçoit toujours le nombre configuré, et la limite d'engagement de la flotte s'applique toujours."
-      it: "Alza il numero di colpi configurato a quanto richiede lo scafo di un bersaglio IDENTIFICATO. Un contatto non identificato riceve comunque il numero configurato e il limite d'impegno della flotta resta valido."
-      ja: "識別済みの目標の船体が必要とする発数まで、設定値を引き上げる。未識別のコンタクトは設定値のまま、艦隊の投入上限も従来どおり適用される。"
-      ko: "식별된 표적의 선체가 요구하는 만큼 설정 발수를 상향합니다. 미식별 접촉은 설정값 그대로이며, 함대 투입 한계도 그대로 적용됩니다."
-      "pt-BR": "Elevar o número de disparos configurado ao que o casco de um alvo IDENTIFICADO exige. Um contato não identificado ainda recebe o número configurado, e o limite de empenho da frota continua valendo."
-      ru: "Поднять заданное число боеприпасов до того, что требует корпус ОПОЗНАННОЙ цели. Неопознанный контакт по-прежнему получает заданное число, лимит задействования флота действует как прежде."
-      zh: "将设定发数提升至已识别目标船体所需的数量。未识别目标仍按设定发数，舰队投入上限照常生效。"
-      "zh-TW": "將設定發數提升至已識別目標船體所需的數量。未識別目標仍按設定發數，艦隊投入上限照常生效。"
   firing_discipline:
     rmax:
       de: "Maximale Reichweite"
@@ -1011,36 +962,97 @@ doctrine:
   # ── Short-form doctrine tokens (#3254) ──────────────────────────────────────
   # Mil-console abbreviations for density-constrained surfaces: the doctrine
   # editor's segmented controls and the accordion row-header summary, where the
-  # full labels above do not fit a value column. Same in all languages, like the
-  # NTDS map codes (`symbol_label.mission_code.*`) and the sensor short-codes
-  # (`info_panel.sensors.sensor_kind_short.*`) — see UNIVERSAL_KEYS in
-  # tests/locale_parity.rs. Surfaces with room keep the full labels above.
+  # full labels above do not fit a value column. Surfaces with room keep the
+  # full labels above.
+  #
+  # Posture, ROE, and automatic evasion use localized tokens (#4650).
+  # RMAX/NEZ are international air-combat terms; language-neutral exceptions
+  # are enumerated in tests/locale_parity.rs UNIVERSAL_KEYS.
   posture_short:
-    # 3-letter prefix truncations. NOT ATK/EVD: those are live mission map-codes
-    # (`mission_code.atk` / `.evd`), and posture is orthogonal to mission.
+    # Short console tokens, one per language — not literal 3-letter English
+    # truncations once translated (German Verfolgen/Verteidigen/Ausweichen
+    # would truncate to a colliding VER/VER/AUS). NOT ATK/EVD in any language:
+    # those are live mission map-codes (`mission_code.atk` / `.evd`, English
+    # in every locale), and posture is orthogonal to mission.
     pursue:
+      de: "FOLG"
       en: PUR
+      es: "PER"
+      fr: "POURS"
+      it: "INS"
+      ja: "追撃"
+      ko: "추격"
+      "pt-BR": "PER"
+      ru: "ПРЕ"
+      zh: "追击"
+      "zh-TW": "追擊"
     defend:
+      de: "VERT"
       en: DEF
+      es: "DEF"
+      fr: "DÉF"
+      it: "DIF"
+      ja: "防御"
+      ko: "방어"
+      "pt-BR": "DEF"
+      ru: "ОБО"
+      zh: "防御"
+      "zh-TW": "防禦"
     evade:
+      de: "AUSW"
       en: EVA
+      es: "EVA"
+      fr: "ÉVA"
+      it: "ELU"
+      ja: "回避"
+      ko: "회피"
+      "pt-BR": "EVA"
+      ru: "УКЛ"
+      zh: "规避"
+      "zh-TW": "規避"
   roe_short:
     # The real weapons-control ladder: HOLD (fire at nothing) / TIGHT (fire at
     # positively-identified enemies) / FREE (fire at enemy and unidentified) —
-    # one-for-one with RulesOfEngagement::permits.
+    # one-for-one with RulesOfEngagement::permits. Each non-English token
+    # below is drawn from that language's own `doctrine.roe.*` full label (a
+    # stop/hold word, that language's word for "known", and its word for
+    # "free") rather than a truncation of the English letters.
     hold_fire:
+      de: "HALT"
       en: HOLD
+      es: "ALTO"
+      fr: "CESSEZ"
+      it: "ALT"
+      ja: "禁止"
+      ko: "금지"
+      "pt-BR": "PARE"
+      ru: "СТОП"
+      zh: "禁止"
+      "zh-TW": "禁止"
     engage_known:
+      de: "BEK"
       en: TIGHT
+      es: "CONO"
+      fr: "CONNU"
+      it: "NOTI"
+      ja: "識別"
+      ko: "식별"
+      "pt-BR": "CON"
+      ru: "ИЗВ"
+      zh: "已知"
+      "zh-TW": "已知"
     engage_unknown:
+      de: "FREI"
       en: FREE
-  salvo_sizing_short:
-    # FIXED is the plain word; AUTO is the universal console token for an
-    # automatically-derived setting, matching the ON/OFF tier below.
-    fixed:
-      en: FIXED
-    target_sized:
-      en: AUTO
+      es: "LIBRE"
+      fr: "LIBRE"
+      it: "LIBERO"
+      ja: "自由"
+      ko: "자유"
+      "pt-BR": "LIVRE"
+      ru: "СВОБ"
+      zh: "自由"
+      "zh-TW": "自由"
   firing_discipline_short:
     # Both are the real terms, not truncations: R-max (maximum-range release)
     # and NEZ (No-Escape Zone).
@@ -1055,9 +1067,28 @@ doctrine:
     active:
       en: RAD
   automatic_evasion_short:
-    # ON/OFF are universal console switch tokens, like the other doctrine
-    # compact forms above; full value labels remain translated.
+    # Each locale uses its own on/off switch words.
     on:
+      de: "EIN"
       en: ON
+      es: "ACT"
+      fr: "ACT"
+      it: "ATT"
+      ja: "オン"
+      ko: "켜기"
+      "pt-BR": "LIG"
+      ru: "Вкл."
+      zh: "开启"
+      "zh-TW": "開啟"
     off:
+      de: "AUS"
       en: OFF
+      es: "DES"
+      fr: "DÉS"
+      it: "DIS"
+      ja: "オフ"
+      ko: "끄기"
+      "pt-BR": "DESL"
+      ru: "Выкл."
+      zh: "关闭"
+      "zh-TW": "關閉"

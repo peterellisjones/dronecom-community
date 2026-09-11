@@ -15,6 +15,12 @@ symbol_label:
       en: LOCKED
     lk:
       en: LK
+    mid:
+      en: MID
+    term:
+      en: TERM
+    cst:
+      en: CST
   # #2560: why an own unit was lost, shown under the tombstone's name.
   #
   # Unlike `status` and `mission_code` above, these are NOT en-only: they are
@@ -62,6 +68,20 @@ symbol_label:
       ru: ИЗРАСХОДОВАНА
       zh: 耗尽
       "zh-TW": 耗盡
+    # #4999: the round had nothing left to prosecute. NO TARGET rather than
+    # anything naming the contact's fate — the label is about the weapon.
+    no_target:
+      de: KEIN ZIEL
+      en: NO TARGET
+      es: SIN OBJETIVO
+      fr: SANS CIBLE
+      it: NESSUN BERSAGLIO
+      ja: 目標なし
+      ko: 목표 없음
+      "pt-BR": SEM ALVO
+      ru: НЕТ ЦЕЛИ
+      zh: 无目标
+      "zh-TW": 無目標
     crashed:
       de: ABGESTÜRZT
       en: CRASHED
@@ -86,6 +106,26 @@ symbol_label:
       ru: ЗАТОПЛЕНА
       zh: 自毁
       "zh-TW": 自毀
+  # #2571: the enemy track credited with a kill, shown as a label row above
+  # the victim's name (`T-004` / `KILLED` / `MQ-220-3`). Unlike `status` and
+  # `mission_code` below, this is NOT en-only — same policy as `lost.*`
+  # above: an ordinary word, not a NATO abbreviation, ALL CAPS (CJK has no
+  # case). A sibling of `lost` rather than nested inside it:
+  # `lost_reason_label_key` (`lost_units.rs`) is an exhaustive
+  # `UnitLostReason` table, and this key names what the ENEMY track did, not
+  # a loss reason.
+  killed:
+    de: VERNICHTET
+    en: KILLED
+    es: DESTRUYÓ
+    fr: A DÉTRUIT
+    it: HA DISTRUTTO
+    ja: 撃破
+    ko: 격파
+    "pt-BR": DESTRUIU
+    ru: УНИЧТОЖИЛ
+    zh: 击毁
+    "zh-TW": 擊毀
   # Mission / mission-state map-symbol codes. Abbreviated map-symbol forms of
   # the computed mission verbs (`MissionAnchor::symbol_code`, the short form of
   # mission.verb.*) plus the runtime mission-state codes (RTB / EVD / FORM).
@@ -103,6 +143,8 @@ symbol_label:
       en: RCN
     evd:
       en: EVD
+    evd_missile:
+      en: EVDM
     nav:
       en: GOTO
     flw:

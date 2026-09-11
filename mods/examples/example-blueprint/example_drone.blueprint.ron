@@ -21,5 +21,4 @@
     default_altitude: Chassis,
     unknown_range_launch: Withhold,
     stores: [],
-    munition_salvos: [],
 )

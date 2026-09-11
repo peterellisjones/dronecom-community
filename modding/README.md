@@ -209,11 +209,14 @@ publishing) to point at the mod(s) it depends on. Steam then makes sure
 subscribing to yours pulls theirs in too. Skip this and a subscriber without
 the dependency will see a missing-reference error instead of your content.
 
-One current limitation: publishing a design that nests another one of your
-own designs (for example, a drone carrying a custom missile you also
-designed) isn't supported yet — only the top-level design is included, so a
-subscriber sees a missing-reference error for the nested one. Keep a
-published design to a single, self-contained blueprint for now.
+Publishing a design that nests another one of your own designs (for example,
+a drone carrying a custom missile you also designed) bundles the whole
+family: every one of your own designs it carries, however deeply nested, is
+staged into the same upload, so a subscriber's install resolves them without
+needing your local library. A shipped default nested the same way needs
+nothing extra — subscribers already have it — and a design nested from
+another mod is an external dependency like any other: see Required Items
+above, since it is never copied into your upload.
 
 ## Publishing
 
@@ -241,10 +244,16 @@ unavailable, another publish is running, or the design itself doesn't
 validate (weight, category limits, and so on) — but a design that uses
 modded parts, or nests another design, is otherwise publishable; see
 [Using another mod's parts](#using-another-mods-parts) above for what that
-means in practice. Publishing stages your design as a small one-blueprint mod
-behind the scenes: the item's title is your design's codename, the author is
-your Steam persona name, and the description is your design's designator and
-chassis name.
+means in practice. Publishing stages your design — plus every one of your
+own designs it nests, however deeply — as a small mod behind the scenes: the
+item's title is your design's codename, the author is your Steam persona
+name, and the description is your design's designator and chassis name.
+
+The Workshop thumbnail is generated for you from the design itself — its
+classification icon (in your designer's per-class color) over its name and
+chassis — so it always matches what's actually in the upload. Unlike a mod
+folder (above), a design has no `preview.png` of its own to override this
+with.
 
 ### First publish: accept the legal agreement
 
@@ -279,8 +288,8 @@ single-player-only, only the specific designs built from its parts.
 RE-CHECK never removes a mod's content from the running game — restart to
 pick up an update, exactly as when installing one for the first time.
 
-Removing or unsubscribing from a mod can invalidate single-player saves that
-used its content — a save that references a design, chassis, or component
-the mod provided has nothing to load in its place once the mod is gone. Keep
-a mod installed for as long as you want to keep loading saves that depend on
-it.
+Removing or unsubscribing from a mod does not stop a single-player save from
+loading. Units built from that mod's chassis or components are dropped from
+the save; everything else — groups, deck queues, bookmarks and the contact
+picture — loads without them. Keep a mod installed for as long as you want to
+keep those units.

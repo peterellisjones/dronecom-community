@@ -326,20 +326,36 @@ SimConfig(
             // 2.0 that served a cargo ship and an IR missile alike. Derived from
             // the shipped chassis — a_max = min(max_lateral_g·9.81, max_speed ×
             // turn_rate), maxed over the class, then σ_a = a_max/√3 (uniform
-            // manoeuvre). The three fastest entries are held at a CEILING of
-            // 10.0, which is what keeps a tracked target's course and speed
-            // readable between scans: the AI stops leading its shots once the
-            // read-time velocity gate reads Unresolved.
+            // manoeuvre). The four fastest entries are held at a CEILING of
+            // 10.0, bounded by the fire-control acquisition gate.
             //
-            // The gate is not what binds at 10.0. Coasted
-            // velocity variance is q·dt = σ_a²·τ·dt, so staying inside
-            // velocity_resolved_var_threshold across the slowest air-search
-            // revisit allows σ_a up to √(1600/(τ·4)) = 20 at the τ below. The
-            // ceiling is the more conservative of the two and is what actually
-            // caps modelled agility — a real missile's 340 m/s² is 34x it.
-            // Whether to spend that headroom is a balance question, separate
-            // from making the gate fractional rather than an absolute 40 m/s σ
-            // (#4927).
+            // That gate is the binding constraint, not the velocity gate. It
+            // measures a dead-reckoned position σ, which carries q·dt³/3, against
+            // a beamwidth footprint at sub-second dt; the velocity gate measures
+            // q·dt against velocity_resolved_var_threshold across a 4 s revisit
+            // and is the looser of the two. Moving all four entries together
+            // (they cannot move apart: floor_for_speed reads the air and missile
+            // entries for any fast contact whatever its class, and unknown_mps2
+            // must stay at or above the rest), the shipped scenarios hold at 13.0
+            // and fail at 16.0 — multi_emitter_warship_lock on the acquisition
+            // gate and stale_track_retention on time-to-purge, with
+            // missile_evade_stability joining them at 20.0 as the air-class
+            // velocity horizon narrows to one revisit. That bracket is measured
+            // against one shipped geometry (0.5° at 900 m); a narrower beam or a
+            // shorter engagement range tightens it further, so it bounds those
+            // tests rather than the game.
+            //
+            // Raising σ_a does not buy responsiveness. σ_a sets no horizontal
+            // Kalman gain: both writers of the horizontal blocks — the
+            // synthesized direct fix and the batch-TMA solve — replace them
+            // outright rather than fusing against the prior, and the synthesized
+            // refresh arm does not resolve σ_a at all. What σ_a governs
+            // horizontally is the honesty of a coast, and every consumer that
+            // reads it (the two gates above, time-to-purge, and every published
+            // ellipse) is calibrated against 10.0. A missile is therefore
+            // modelled as less agile than its 340 m/s² airframe allows; #4977
+            // holds that over-confidence, and #4956 the speed-relative velocity
+            // gate that would make a raise affordable.
             process_noise: (
                 // ss_400: 8.6 m/s × 0.343 rad/s = 3.0 m/s².
                 subsurface_mps2: 1.7,
@@ -844,6 +860,18 @@ SimConfig(
         // exists to stop a permanently-frozen track holding a unit off its
         // assignment forever, not to cut a live reaction short.
         bearing_only_reflex_max_secs: 60.0,
+        // #3739: two revisits of the shipped 3 s passive sonars
+        // (an_sqs_40/an_sqr_70). Both the SNR-rate estimator's time constant
+        // and the minimum elapsed span before its verdict is credited either
+        // way — below it the bearing-only arm stays admitted (Indeterminate).
+        snr_trend_tau_secs: 6.0,
+        // Passive propagation gives dSNR/dt = 4.343*n*(v_radial/r), with
+        // spreading exponent n = 1.2 for shipped sonars. Thus 0.005 dB/s
+        // corresponds to range shrinking ~0.1%/s under steady source/channel
+        // conditions. The #3739 closing/receding acceptance fixture measures
+        // +0.128121/-0.063820 dB/s at first credit; this is not an all-range
+        // calibration. Acoustic changes can also change observed SNR.
+        snr_closing_min_db_per_sec: 0.005,
         engagement_commitment_max_secs: 90.0,
     ),
     traffic: (

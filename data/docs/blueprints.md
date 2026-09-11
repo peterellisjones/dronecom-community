@@ -77,13 +77,6 @@ Spare munitions seeded into cargo at spawn — distinct from `inventory`
 (the mounted loadout + stowed drones). Persisted in the RON; threaded
 onto the spawn `BlueprintRecipe` via `materialize_recipe`.
 
-### `munition_salvos` : `Vec`<[`BlueprintMunitionSalvo`](#blueprintmunitionsalvo)>
-
-Requested launch count for each distinct carried warhead blueprint.
-
-Separate from physical inventory: repeated carried rounds share one
-pair-level request while retaining their individual slots.
-
 ## `BlueprintId`
 
 Unique identifier for a blueprint (UUID v4).
@@ -202,18 +195,6 @@ Library `BlueprintId` of the spare munition stocked in cargo.
 ### `count` : u32
 
 How many spare rounds to seed.
-
-## `BlueprintMunitionSalvo`
-
-Requested launch count for one distinct carried warhead blueprint.
-
-### `munition` : [`BlueprintId`](#blueprintid)
-
-Library `BlueprintId` of the carried warhead this salvo controls.
-
-### `requested` : `NonZeroU32`
-
-Number of matching rounds requested per launch command.
 
 ## `InventoryItemKind`
 

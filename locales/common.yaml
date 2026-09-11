@@ -18,17 +18,17 @@ common:
     zh: "预设设计"
     "zh-TW": "預設設計"
   default_design_badge_tooltip:
-    de: "Ein mitgelieferter Standardentwurf, kein eigener. Im Drohnen-Designer lässt sich eine bearbeitbare Kopie anlegen."
-    en: "A design that ships with the game, not one of your own. Make an editable copy of it in the Drone Designer."
-    es: "Un diseño que viene con el juego, no uno propio. Puedes hacer una copia editable en el Diseñador de Drones."
-    fr: "Un modèle fourni avec le jeu, et non l'un des vôtres. Vous pouvez en faire une copie modifiable dans le Concepteur de drones."
-    it: "Un progetto incluso nel gioco, non uno tuo. Puoi crearne una copia modificabile nel Progettista di droni."
-    ja: "自分で作成した設計ではなく、ゲームに付属する標準設計。ドローン設計室で編集可能な複製を作成できる。"
-    ko: "직접 만든 설계가 아니라 게임에 기본 포함된 설계입니다. 드론 설계실에서 편집 가능한 사본을 만들 수 있습니다."
-    "pt-BR": "Um projeto que acompanha o jogo, não um seu. Você pode fazer uma cópia editável no Projetista de Drones."
-    ru: "Штатный проект из комплекта игры, а не ваш собственный. В конструкторе дронов можно создать редактируемую копию."
-    zh: "游戏自带的预设设计，而非你自己的设计。可在无人机设计室中创建可编辑的副本。"
-    "zh-TW": "遊戲內建的預設設計，而非你自己的設計。可在無人機設計室中建立可編輯的副本。"
+    de: "Mitgelieferter Entwurf. Kopiere ihn im Drohnen-Designer, um ihn zu bearbeiten."
+    en: "Shipped design. Copy it in the Drone Designer to edit."
+    es: "Diseño incluido. Cópialo en el Diseñador de Drones para editarlo."
+    fr: "Modèle fourni. Copiez-le dans le Concepteur de drones pour le modifier."
+    it: "Progetto incluso. Copialo nel Progettista di droni per modificarlo."
+    ja: "ゲーム付属の標準設計。ドローン設計室でコピーすれば編集できる。"
+    ko: "게임에 기본 포함된 설계입니다. 드론 설계실에서 복사하면 편집할 수 있습니다."
+    "pt-BR": "Acompanha o jogo. Copie-o no Projetista de Drones para editá-lo."
+    ru: "Входит в комплект игры. Скопируйте его в конструкторе дронов, чтобы редактировать."
+    zh: "游戏自带设计。可在无人机设计室中复制以编辑。"
+    "zh-TW": "遊戲內建設計。可在無人機設計室中複製以編輯。"
   # #2717: the click / shift-click interaction hint appended to every vehicle
   # entity link's hover tooltip. Guidance prose, so sentence case — the tooltip
   # body above it is the ALL-CAPS tactical readout.
