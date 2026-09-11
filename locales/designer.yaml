@@ -14,18 +14,6 @@ designer:
       ru: "×%{count}"
       zh: "×%{count}"
       "zh-TW": "×%{count}"
-    quantity_with_detail:
-      de: "×%{count} · %{detail}"
-      en: "×%{count} · %{detail}"
-      es: "×%{count} · %{detail}"
-      fr: "×%{count} · %{detail}"
-      it: "×%{count} · %{detail}"
-      ja: "×%{count} · %{detail}"
-      ko: "×%{count} · %{detail}"
-      "pt-BR": "×%{count} · %{detail}"
-      ru: "×%{count} · %{detail}"
-      zh: "×%{count} · %{detail}"
-      "zh-TW": "×%{count} · %{detail}"
     quantity_decrease:
       de: "Eins entfernen"
       en: "Remove one"
