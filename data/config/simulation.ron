@@ -296,14 +296,20 @@ SimConfig(
         sub_terrain_clearance: 10.0,
     ),
     sensors: (
-        // #2375: a Lost contact is purged once EITHER bound below is crossed
+        // #2375: a Lost contact is purged once ANY retention bound is crossed
         // (whichever comes first) — except while AwaitingBda, which is
         // protected until its BDA deadline resolves (#2402).
-        // max_position_sigma_m is normally the bound that fires; max_age_secs
-        // is a backstop for contacts whose position fix never resolves
-        // numerically. Since #3879 made filter.process_noise below per class,
-        // time-to-purge is per class too: ~100 s for an aircraft, ~127 s for a
-        // ship, ~326 s for a submarine.
+        //
+        // The third bound, the age window, is NOT here: since #5131 it is a
+        // player setting (dc_app_state::StaleContactSettings — 60 s shipped,
+        // adjustable 10–600 s), and this file deliberately carries no second
+        // copy of it for the two to drift apart. At the 60 s default that
+        // window is below every σ crossing below, so it is the bound that
+        // fires; σ takes over once the player widens it past ~100 s.
+        //
+        // Since #3879 made filter.process_noise below per class, time-to-purge
+        // under max_position_sigma_m is per class too: ~100 s for an aircraft,
+        // ~127 s for a ship, ~326 s for a submarine.
         //
         // max_position_sigma_m is calibrated to hold that retention band, NOT
         // to any geometric bound such as the world radius (#4941). A
@@ -315,8 +321,9 @@ SimConfig(
         // is the one whose stale tracks crowd a capacity-limited picture.
         // Retune this against the band above, not against the map.
         stale_retention: (
-            max_age_secs: 600.0,
             max_position_sigma_m: 5774.0,
+            // Narrow player windows scale this down (max_age/4), so it stays
+            // able to resolve a 10 s window — see StaleRetentionPolicy.
             recheck_interval_secs: 15.0,
         ),
         contact_capacity_hysteresis: 0.10,
@@ -923,6 +930,27 @@ SimConfig(
             // at random — a fresh wreck, then a launch, then a command ship.
             (blueprint: "Peacekeeping Observation Drone", weight: 1.0, behavior: ActionHop),
             (blueprint: "Press War Correspondent Drone", weight: 1.0, behavior: ActionHop),
+        ],
+        // #5125: what a confirmed-neutral hull on each chassis reads as, once
+        // the chassis classifier has converged on it. Every blueprint in `mix`
+        // above must appear here exactly once, by its chassis — enforced by
+        // `crates/dc_types/tests/traffic_roles.rs`.
+        //
+        // Read each line as "a NEUTRAL hull on this chassis is this", not "this
+        // chassis is civilian". `evidence` is what it takes before the role may
+        // be shown, and it tracks the chassis's own availability: a
+        // `CivilianOnly` hull settles its purpose by identity alone
+        // (ChassisAlone), while the last two are dual-use airframes the armed
+        // MQ-450A AEW and MQ-220A Strike Drone also fly, so converging on
+        // `mq_220` says nothing about allegiance until IFF has confirmed the
+        // contact neutral (ChassisAndIff).
+        neutral_roles: [
+            (chassis: "autonomous_cargo_ship", role: CargoShip, evidence: ChassisAlone),
+            (chassis: "autonomous_lng_tanker", role: LngTanker, evidence: ChassisAlone),
+            (chassis: "autonomous_fishing_vessel", role: FishingVessel, evidence: ChassisAlone),
+            (chassis: "autonomous_factory_trawler", role: FactoryTrawler, evidence: ChassisAlone),
+            (chassis: "mq_450", role: PeacekeepingObserver, evidence: ChassisAndIff),
+            (chassis: "mq_220", role: Press, evidence: ChassisAndIff),
         ],
         // #3707: orbit-hop / cluster tuning. `orbit_radius_m` is shared by
         // every hop's ring and by a `ClusterAnchor`'s own stationary loiter;

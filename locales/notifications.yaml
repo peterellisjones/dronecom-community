@@ -220,6 +220,18 @@ notifications:
       ru: "ПОТЕРЯНА ПОСЛЕДНЯЯ ПАЛУБА"
       zh: "最后一座甲板损失"
       "zh-TW": "最後一座甲板損失"
+    auto_rtb_overridden:
+      de: "AUTO-RTB ABGEBROCHEN"
+      en: "AUTO-RTB CANCELLED"
+      es: "RTB AUTOMÁTICO CANCELADO"
+      fr: "RTB AUTO ANNULÉ"
+      it: "RTB AUTOMATICO ANNULLATO"
+      ja: "自動帰還取消"
+      ko: "자동 귀환 취소"
+      "pt-BR": "RTB AUTOMÁTICO CANCELADO"
+      ru: "АВТОВОЗВРАТ ОТМЕНЁН"
+      zh: "自动返航已取消"
+      "zh-TW": "自動返航已取消"
     bingo_fuel_rtb:
       de: "TREIBSTOFF KNAPP RTB"
       en: "BINGO FUEL RTB"

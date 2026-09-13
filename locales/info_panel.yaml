@@ -1452,6 +1452,43 @@ info_panel:
     # guidance explaining why the row is no longer editable, not a tactical
     # data value) — there is no per-unit numeric wire field yet to show a
     # real distance.
+    auto_rtb_override:
+      label:
+        de: "Auto-RTB abgebrochen"
+        en: "Auto-RTB cancelled"
+        es: "RTB automático cancelado"
+        fr: "RTB auto annulé"
+        it: "RTB automatico annullato"
+        ja: "自動帰還の取消"
+        ko: "자동 귀환 취소"
+        "pt-BR": "RTB automático cancelado"
+        ru: "Автовозврат отменён"
+        zh: "自动返航已取消"
+        "zh-TW": "自動返航已取消"
+      label_tooltip:
+        de: "Automatische Rückkehr-Auslöser, die du für diese Einheit durch einen neuen Auftrag abgebrochen hast. Die übrigen Auslöser gelten weiter; ein abgebrochener wird wieder scharf, sobald seine Ursache behoben ist."
+        en: "Automatic return-to-base triggers you have cancelled for this unit by giving it another mission. The remaining triggers still apply, and a cancelled one re-arms once its cause clears."
+        es: "Disparadores de regreso automático que has cancelado para esta unidad al asignarle otra misión. Los demás siguen vigentes, y uno cancelado se rearma cuando su causa se resuelve."
+        fr: "Déclencheurs de retour automatique que vous avez annulés pour cette unité en lui donnant une autre mission. Les autres restent actifs, et un déclencheur annulé se réarme dès que sa cause disparaît."
+        it: "Attivatori di rientro automatico che hai annullato per questa unità assegnandole un'altra missione. Gli altri restano attivi e uno annullato si riarma quando la sua causa si risolve."
+        ja: "別の任務を与えて取り消した自動帰還の条件。残りの条件は有効のままで、取り消した条件も原因が解消すれば再び有効になる。"
+        ko: "다른 임무를 부여해 취소한 자동 귀환 조건. 나머지 조건은 그대로 적용되며, 취소된 조건도 원인이 해소되면 다시 활성화된다."
+        "pt-BR": "Gatilhos de retorno automático que você cancelou para esta unidade ao dar-lhe outra missão. Os demais continuam valendo, e um cancelado se rearma assim que sua causa se resolve."
+        ru: "Условия автоматического возврата, отменённые вами для этого юнита новым приказом. Остальные условия продолжают действовать, а отменённое снова включается, как только его причина устранена."
+        zh: "你通过下达新任务为该单位取消的自动返航条件。其余条件仍然有效，已取消的条件在其原因解除后会重新生效。"
+        "zh-TW": "你透過下達新任務為該單位取消的自動返航條件。其餘條件仍然有效，已取消的條件在其原因解除後會重新生效。"
+      value_tooltip:
+        de: "Diese Einheit kehrt wegen dieser Bedingungen nicht zur Basis zurück, bis jede behoben ist — Betanken, Bewaffnen oder Instandsetzen."
+        en: "This unit will not return to base for these conditions until each one clears — refuelling, rearming, or being serviced."
+        es: "Esta unidad no regresará a la base por estas condiciones hasta que cada una se resuelva: repostar, rearmar o ser reparada."
+        fr: "Cette unité ne rentrera pas à la base pour ces conditions tant que chacune n'aura pas disparu — ravitaillement, réarmement ou remise en état."
+        it: "Questa unità non rientrerà alla base per queste condizioni finché ciascuna non si risolve: rifornimento, riarmo o manutenzione."
+        ja: "これらの条件では、給油・再武装・整備によって解消されるまで帰投しない。"
+        ko: "이 조건들로는 급유·재무장·정비로 해소될 때까지 기지로 돌아가지 않는다."
+        "pt-BR": "Esta unidade não retornará à base por estas condições até que cada uma se resolva — reabastecimento, rearme ou manutenção."
+        ru: "По этим условиям юнит не вернётся на базу, пока каждое из них не будет устранено — дозаправка, перевооружение или ремонт."
+        zh: "在这些条件下，该单位不会返航，直至各条件分别通过加油、再武装或维修解除。"
+        "zh-TW": "在這些條件下，該單位不會返航，直至各條件分別透過加油、再武裝或維修解除。"
     auto_rtb_policy:
       label:
         de: "Auto-RTB"
@@ -1810,6 +1847,83 @@ info_panel:
     ru: "%{affiliation} %{class}"
     zh: "%{affiliation}%{class}"
     "zh-TW": "%{affiliation}%{class}"
+  # #5125: what a positively-identified neutral hull is, shown beside its
+  # chassis line once the classifier has converged (and, for the two dual-use
+  # airframes, once IFF has confirmed it neutral). Short noun phrases in the
+  # same register as `contact_affiliation` above — a scope label, not prose.
+  civilian_role:
+    cargo_ship:
+      de: Frachtschiff
+      en: Cargo ship
+      es: Buque de carga
+      fr: Cargo
+      it: Nave da carico
+      ja: 貨物船
+      ko: 화물선
+      "pt-BR": Navio de carga
+      ru: Грузовое судно
+      zh: 货船
+      "zh-TW": 貨船
+    lng_tanker:
+      de: LNG-Tanker
+      en: LNG tanker
+      es: Metanero
+      fr: Méthanier
+      it: Metaniera
+      ja: LNGタンカー
+      ko: LNG 운반선
+      "pt-BR": Navio metaneiro
+      ru: Газовоз СПГ
+      zh: LNG 运输船
+      "zh-TW": LNG 運輸船
+    fishing_vessel:
+      de: Fischereifahrzeug
+      en: Fishing vessel
+      es: Pesquero
+      fr: Navire de pêche
+      it: Peschereccio
+      ja: 漁船
+      ko: 어선
+      "pt-BR": Embarcação de pesca
+      ru: Рыболовное судно
+      zh: 渔船
+      "zh-TW": 漁船
+    factory_trawler:
+      de: Fabriktrawler
+      en: Factory trawler
+      es: Arrastrero factoría
+      fr: Chalutier-usine
+      it: Peschereccio fattoria
+      ja: 工船トロール船
+      ko: 공선형 트롤선
+      "pt-BR": Arrastão-fábrica
+      ru: Траулер-завод
+      zh: 加工拖网船
+      "zh-TW": 加工拖網船
+    peacekeeping_observer:
+      de: Friedensbeobachter
+      en: Peacekeeping observer
+      es: Observador de paz
+      fr: Observateur de paix
+      it: Osservatore di pace
+      ja: 平和維持監視機
+      ko: 평화유지 감시기
+      "pt-BR": Observador de paz
+      ru: Миротворческий наблюдатель
+      zh: 维和观察机
+      "zh-TW": 維和觀察機
+    press:
+      de: Presse
+      en: Press
+      es: Prensa
+      fr: Presse
+      it: Stampa
+      ja: 報道
+      ko: 언론
+      "pt-BR": Imprensa
+      ru: Пресса
+      zh: 媒体
+      "zh-TW": 媒體
   contact_affiliation:
     enemy:
       de: Feindlich
@@ -3587,6 +3701,30 @@ info_panel:
         ru: "Наиболее вероятная конкретная платформа, установленная по накопленным данным датчиков, с уровнем достоверности."
         zh: "根据目前收集到的传感器证据识别出的最可能具体平台，及其置信度。"
         "zh-TW": "根據目前收集到的感測器證據識別出的最可能具體平台，及其信賴度。"
+      role:
+        de: Rolle
+        en: Role
+        es: Función
+        fr: Rôle
+        it: Ruolo
+        ja: 役割
+        ko: 역할
+        "pt-BR": Função
+        ru: Назначение
+        zh: 用途
+        "zh-TW": 用途
+      role_tooltip:
+        de: "Wofür dieses zivile Fahrzeug da ist. Erscheint erst, wenn die Plattform eindeutig bestimmt ist — bei den beiden doppelt genutzten Luftfahrzeugzellen zusätzlich erst nach einer IFF-Abfrage, die den Kontakt als neutral bestätigt."
+        en: "What this civilian vehicle is for. Appears only once the platform is positively identified — and, for the two dual-use airframes, only after an IFF interrogation confirms the contact as neutral."
+        es: "Para qué sirve este vehículo civil. Solo aparece cuando la plataforma está identificada con certeza y, en las dos células de doble uso, solo tras una interrogación IFF que confirme el contacto como neutral."
+        fr: "À quoi sert ce véhicule civil. N'apparaît qu'une fois la plateforme formellement identifiée — et, pour les deux cellules à double usage, seulement après une interrogation IFF confirmant le contact comme neutre."
+        it: "A cosa serve questo veicolo civile. Compare solo quando la piattaforma è identificata con certezza e, per le due cellule a duplice uso, solo dopo un'interrogazione IFF che conferma il contatto come neutrale."
+        ja: "この民間機体の用途。プラットフォームが確定識別された場合にのみ表示され、二つの軍民両用機体については、IFF 照会で中立と確認された後にのみ表示される。"
+        ko: "이 민간 기체의 용도. 플랫폼이 확정 식별된 경우에만 표시되며, 이중 용도 기체 두 종은 IFF 조회로 중립임이 확인된 뒤에만 표시됩니다."
+        "pt-BR": "Para que serve este veículo civil. Só aparece quando a plataforma é identificada com certeza e, nas duas células de uso duplo, apenas após uma interrogação IFF confirmar o contato como neutro."
+        ru: "Для чего предназначен этот гражданский аппарат. Появляется только после точного опознания платформы, а для двух планеров двойного назначения — лишь после запроса IFF, подтвердившего нейтральность контакта."
+        zh: "该民用载具的用途。仅在平台被确定识别后显示；对两种军民两用机体，还需 IFF 询问确认该目标为中立后才会显示。"
+        "zh-TW": "該民用載具的用途。僅在平台被確定識別後顯示；對兩種軍民兩用機體，還需 IFF 詢問確認該目標為中立後才會顯示。"
       basis:
         de: Basis
         en: Basis

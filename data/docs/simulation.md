@@ -1323,6 +1323,17 @@ following the fleet around the map.
 The civilian types the director draws from, with their relative weights.
 An empty mix means no traffic however the population band is set.
 
+### `neutral_roles` : [`NeutralRoleTable`](#neutralroletable)
+
+Chassis → civilian role, for identifying a neutral once its chassis has
+converged (#5125).
+
+Lives here beside `Self::mix` rather than in its own config file
+because this is the same roster described twice — the mix says what
+spawns, this says what it reads as once identified. Keyed by chassis,
+not designator (which is how `neutral_fines.ron` keys the same roster),
+because the chassis is what the classifier actually resolves.
+
 ### `orbit_radius_m` : f32
 
 Radius of the ring an `TrafficBehavior::OrbitHop`,
@@ -1908,27 +1919,27 @@ Flooded well deck — surface craft and submarines.
 
 ## `StaleRetentionSection`
 
-Retention policy for a `Lost` contact before it is purged from the
-commander's contact picture (#2375). A contact is purged the first time
-EITHER bound below is crossed, whichever comes first — except a contact
-under active battle-damage assessment (`BdaStatus::AwaitingBda`), which is
-protected until its BDA deadline resolves regardless of these bounds
-(#2402): purging it early would erase the track before the kill-
-confirmation check ever runs.
+The *tuning* half of the retention policy for a `Lost` contact (#2375) —
+the two bounds that describe sensor physics rather than player taste. The
+third bound, the age ceiling, is a player setting
+(`dc_app_state::StaleContactSettings`, #5131), so this section alone cannot
+decide a purge: compose it with the setting via
+`Self::policy` to get the `StaleRetentionPolicy` `decay_stale` acts on.
 
 Dead-reckoned position σ grows as `√(q · dt³ / 3)` for `q = σ_a² · τ`
-(`ProcessNoiseKernel`), so `max_position_sigma_m` is normally the bound
-that fires — well before `max_age_secs`, which is a backstop for contacts
-whose position fix never resolves numerically (e.g. a persistently unresolved
-fix) rather than the common case.
+(`ProcessNoiseKernel`), so `max_position_sigma_m` fires whenever the
+player's age window is wide enough to let it: **time-to-purge is per class**
+since #3879 made `σ_a` per class (`ProcessNoiseSection`), scaling as
+`σ_a^(−2/3)`, so at the shipped table a `Lost` aircraft crosses σ around
+100 s after its last look, a ship around 127 s, and a submarine around
+326 s. That is the honest consequence of an honest `σ_a` — a lost aircraft's
+position genuinely does become unknowable far sooner than a lost
+submarine's — and the bound is expressed in metres of uncertainty, not
+seconds, so it keeps meaning the same thing as the player moves the window.
 
-**Time-to-purge is therefore per class** since #3879 made `σ_a` per class
-(`ProcessNoiseSection`): it scales as `σ_a^(−2/3)`, so at the shipped table
-a `Lost` aircraft is purged around 100 s after its last look, a ship around
-127 s, and a submarine around 326 s. That is the honest consequence of an
-honest `σ_a` — a lost aircraft's position genuinely does become unknowable
-far sooner than a lost submarine's — and this bound is expressed in metres of
-uncertainty, not seconds, so it keeps meaning the same thing.
+At the shipped 60 s default window the age ceiling is below every one of
+those crossings, so it is the bound that fires for every class; the per-class
+band becomes observable again once the player widens the window past ~100 s.
 
 The shipped `max_position_sigma_m` is calibrated to hold that retention band
 rather than to any geometric bound such as the world radius: it is the σ that
@@ -1938,23 +1949,18 @@ band, not against the map.
 
 `ProcessNoiseKernel`: crate::sim_config::ProcessNoiseKernel
 
-### `max_age_secs` : f32
-
-Hard ceiling (seconds since last observation) after which a `Lost`
-contact is purged regardless of its position uncertainty.
-
 ### `max_position_sigma_m` : f32
 
 Position 1σ uncertainty (m) beyond which a `Lost` contact's dead-
-reckoned fix is no longer tactically actionable and is purged early,
-even under `max_age_secs`. Bearing-only (range-unresolved) contacts
-have no scalar position σ and are governed by `max_age_secs` alone.
+reckoned fix is no longer tactically actionable and is purged, even
+though the player's age window has not run out.
 
 ### `recheck_interval_secs` : f32
 
-How often a `Lost` contact that hasn't yet crossed either bound above
-is re-checked (seconds). Bounds how far a purge can overshoot past the
-instant a bound is actually crossed.
+How often a `Lost` contact that hasn't yet crossed a bound is
+re-checked (seconds). Bounds how far a purge can overshoot past the
+instant a bound is actually crossed. Narrow age windows shorten it —
+see `StaleRetentionPolicy::recheck_interval_secs`.
 
 ## `TrackFilterSection`
 
@@ -2623,6 +2629,26 @@ entry weighted 0.0 never spawns.
 
 What this type does on the map.
 
+## `NeutralRoleTable`
+
+Chassis → `CivilianRole` lookup for identified neutral traffic (#5125).
+
+Small and linear by design: the civilian roster is six hulls, so a scan
+costs less than a map would, on the rare frame a neutral's identity is
+actually resolved. Mirrors `crate::NtdsClass`-style plain-data config —
+the derivation that consumes it lives at `dc_sensors`' sim→wire seam.
+
+Only injective because every civilian *design* sits on a chassis no other
+civilian design uses; `civilian_blueprints_validation.rs` holds that, and
+`traffic_roles.rs` holds this table against the roster in both directions.
+
+### `0` : `Vec`<[`NeutralRoleEntry`](#neutralroleentry)>
+
+One entry per civilian chassis, in roster order. Order is presentational
+only — `Self::entry_for` matches on the chassis, and
+`every_civilian_chassis_has_exactly_one_role_entry` rejects duplicates,
+so no entry can shadow another.
+
 ## `VlsPhases`
 
 `Facility::VLS` phase durations, in seconds.
@@ -2837,3 +2863,79 @@ Variants:
 - **`ClusterAnchor`** — Anchors a cluster: enters from the rim, holds a single long-parked orbit (many more dwell periods than an `OrbitHop` visit), then heads out and leaves, same as any other civilian. `ClusterEscort` mix entries hop around whichever `ClusterAnchor` hull is currently alive and nearest.
 - **`ClusterEscort`** — Like `OrbitHop`, but every point it visits — its spawn point included — is drawn near the nearest live `ClusterAnchor` hull rather than near its own last position, so it reads as escorting that hull instead of wandering independently. Falls back to a plain `OrbitHop`-style local hop if no anchor is currently alive (its trawler has retired or been destroyed).
 - **`ActionHop`** — Like `OrbitHop`, but each point it visits — its spawn station included — is the **nearest recent combat site** rather than a point drawn at random: a fresh wreck first, then a missile launch, then a command ship or carrier, and only if none of those is within `TrafficSection::action_search_radius_m` does it hop at random like a plain `OrbitHop`. The press and peacekeeping-observer drones — war correspondents go where the story is.  Only where the hull *goes* changes. It still carries no tasking, doctrine or threat evaluation of its own: it flies **toward** combat and never away from it, and the damage reaction (`abandon_and_flee_when_damaged`) remains the only thing that overrides a station.
+
+## `NeutralRoleEntry`
+
+One chassis and the civilian role a **neutral** hull on it serves (#5125).
+
+Read as "if a contact on this chassis is confirmed neutral, it is this", not
+"this chassis is civilian". The distinction is the whole point for the two
+dual-use airframes: `mq_220` carries both the Press War Correspondent Drone
+and the armed MQ-220A Strike Drone, so the role applies only once IFF has
+settled allegiance. A `CivilianOnly` chassis needs no such gate, because
+nothing but a neutral can ever be on one.
+
+### `chassis` : [`ChassisId`](#chassisid)
+
+The chassis this entry speaks for.
+
+### `role` : [`CivilianRole`](#civilianrole)
+
+What a neutral hull on that chassis is.
+
+### `evidence` : [`RoleEvidence`](#roleevidence)
+
+What it takes before that role may be shown.
+
+## `ChassisId`
+
+Identifier for a chassis definition, used as a registry lookup key.
+
+### `0` : `String`
+
+The chassis definition's registry key string.
+
+## `CivilianRole`
+
+The purpose of an identified neutral hull — one variant per design on the
+civilian roster (`assets/civilian_blueprints/`).
+
+Keyed to the roster's *designs*, not its chassis: the chassis→role mapping
+lives in `assets/config/neutral_roles.ron`, and is only injective because
+every civilian design sits on a chassis no other civilian design uses (held
+by `civilian_blueprints_validation.rs`).
+
+Deliberately not the blueprint `codename`: that is an authored, unlocalized
+string, and a role crosses the wire to be shown to a player in their own
+language. `Self::locale_key` is the single source of truth for the keys,
+exactly as `Affiliation::locale_key` is
+for affiliations.
+
+Variants:
+
+- **`CargoShip`** — Autonomous Cargo Ship — bulk freight crossing the map.
+- **`LngTanker`** — Autonomous LNG Tanker — the second big merchant silhouette.
+- **`FishingVessel`** — Autonomous Fishing Vessel — small, slow, clustered loiterer.
+- **`FactoryTrawler`** — Autonomous Factory Trawler — anchors a fishing cluster and runs a fish-finder active sonar, which is why "active sonar" never implies hostile.
+- **`PeacekeepingObserver`** — Peacekeeping Observation Drone — the ruinously expensive one to shoot.
+- **`Press`** — Press War Correspondent Drone — flies toward the story.
+
+## `RoleEvidence`
+
+What it takes to pin a civilian role on a contact (#5125).
+
+Named rather than a bare `requires_iff: bool` so the config reads as the
+two genuinely different situations it describes, and so a third one (were a
+hull ever to need, say, a visual identification) is an added variant rather
+than a second boolean.
+
+Mirrors `ChassisAvailability` exactly — `CivilianOnly` chassis are
+`ChassisAlone`, `PlayerAvailable` ones are
+`ChassisAndIff` — and
+`civilian_blueprints_validation.rs` holds the two in lockstep so this stays
+a restatement of the definitions rather than a second opinion about them.
+
+Variants:
+
+- **`ChassisAlone`** — A converged chassis is enough. Nothing but a neutral can fly a `CivilianOnly` hull, so its identity settles its purpose.
+- **`ChassisAndIff`** — A converged chassis **and** IFF confirmation that the contact is neutral. The dual-use airframes: converging on `mq_220` says nothing about allegiance while the armed MQ-220A Strike Drone flies the same hull.
