@@ -1730,8 +1730,8 @@ And one that says how **wide** rather than how far:
   stated here rather than inherited from the terrain's cell size.
 
 `floor_m` is **conservatism, not soundness**. Until #4813 it could not be set
-below the terrain quadtree's `min_cell_size` (100 m,
-`assets/config/terrain.ron`), because case 2 asked
+below the terrain quadtree's `min_cell_size`, which was then also 100 m,
+because case 2 asked
 `Terrain::is_line_navigable`, whose documented short-segment fast path
 answers from the cell containing the segment's *endpoint* and ignores every
 other leaf the segment crosses — so a horizon under one cell was answered by
