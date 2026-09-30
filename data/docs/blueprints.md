@@ -51,8 +51,8 @@ capabilities via `dc_blueprints::doctrine::suggested_blueprint_doctrine`;
 ### `trajectory` : [`TrajectoryProfile`](#trajectoryprofile)
 
 Default trajectory profile the vehicle launches with. Must be a member
-of the chassis's `supported_trajectories` (validated in `validate_recipe`
-for `FixedWing` chassis). Persisted in the RON; threaded onto the spawn
+of the chassis's `supported_trajectories` (validated in
+`validate_spawn_defaults` for `FixedWing` chassis). Persisted in the RON; threaded onto the spawn
 `BlueprintRecipe` via `materialize_recipe`.
 
 ### `default_altitude` : [`DefaultAltitude`](#defaultaltitude)
@@ -243,9 +243,47 @@ Runtime changes are tactical overrides on `Doctrine` only.
 
 Whether the vehicle automatically enters evasion when threatened.
 
+### `automatic_emcon_policy` : [`ThreatReactionThreshold`](#threatreactionthreshold)
+
+From which threat-ladder rung the vehicle automatically goes EMCON-quiet
+(#2997). `Never` is what every shipped definition authors, reproducing
+pre-#2997 behaviour.
+
+Authorable in a chassis definition or a design file, but deliberately not
+offered by either doctrine editor — see `ThreatReactionThreshold`.
+
 ### `auto_rtb_policy` : [`AutoRtbPolicy`](#autortbpolicy)
 
 Fuel/ammunition conditions under which the vehicle returns to base.
+
+### `emulated_chassis` : `Option`<[`ChassisId`](#chassisid)>
+
+Which chassis a fitted active radar repeater portrays (#5173).
+See `Doctrine::emulated_chassis` for what `None` means.
+
+### `spoofed_emitter` : `Option`<[`ComponentId`](#componentid)>
+
+Which radar a fitted RWR spoofer imitates (#5173).
+See `Doctrine::spoofed_emitter` for what `None` means.
+
+### `repeater_off` : `Option`<[`DecoyChannelOff`](#decoychanneloff)>
+
+Set when the design authors its fitted active repeater as switched off
+(#5236). Absent means it radiates. Read through
+`Self::repeater_enabled`, never directly.
+
+### `spoofer_off` : `Option`<[`DecoyChannelOff`](#decoychanneloff)>
+
+Set when the design authors its fitted RWR spoofer as switched off
+(#5236). Absent means it radiates, subject to EMCON. Read through
+`Self::spoofer_enabled`, never directly.
+
+### `envelope_matching_off` : `Option`<[`EnvelopeMatchingOff`](#envelopematchingoff)>
+
+Set when the design authors portrayal envelope matching as switched off
+(#5237). Absent means a portraying platform flies the portrayed hull's
+window. Read through `Self::envelope_matching_enabled`, never
+directly.
 
 ## `ComponentId`
 
@@ -308,8 +346,29 @@ policy.
 
 Variants:
 
-- **`On`** — Permit tasking to begin every otherwise-eligible tactical evade.
+- **`On`** — Permit tasking to begin every otherwise-eligible tactical evade, at `Targeted` or worse — a weapons-grade lock on this unit.
 - **`Off`** — Suppress every new tactical evade; physical safety remains automatic.
+- **`OnTracked`** — Evade from the lower `Tracked` rung too — pre-lock illumination (#2999).  A third variant rather than renaming `Self::On` to say which rung it means: this enum is authored in chassis definitions and mirrored in `.blueprint.ron`, which is a stated compatibility contract, so a rename would orphan every design a player already holds. `On` keeps its spelling and its meaning; this adds the rung below it.  Not offered by either doctrine editor yet — both build their segments from explicit arrays, so this is reachable by editing a definition or a design file. #2999 owns the player-facing control.
+
+## `ThreatReactionThreshold`
+
+The lowest threat-ladder rung (`ThreatAlert`) at which
+an automatic reaction fires (#2997/#2999).
+
+One type for every doctrine policy keyed off the #2863 ladder, so the rung
+comparison is written once. Today that is the EMCON reaction
+(`Doctrine::automatic_emcon_policy`) and tier-1 lock-evade
+(`AutomaticEvasionPolicy`, which resolves into this).
+
+A threshold rather than a `bool`: "react when merely tracked" and "react only
+on a weapons-grade lock" are different doctrines, and `Never` names the off
+state that a `false` would leave unexplained.
+
+Variants:
+
+- **`Never`** — No automatic reaction. Physical safety reactions are unaffected.
+- **`WhenTargeted`** — React at `Targeted` or worse — an enemy fire-control sensor holds a weapons-grade lock on this unit.
+- **`WhenTracked`** — React at `Tracked` or worse — pre-lock illumination counts too. Earlier warning, and more false starts: `Tracked` is an FC sensor working the unit without a solution yet, which may never become one.
 
 ## `AutoRtbPolicy`
 
@@ -321,3 +380,29 @@ Variants:
 - **`Bingo`** — Return when fuel reaches the bingo reserve.
 - **`Winchester`** — Return when a design-capable platform has no recoverable combat contribution left.
 - **`BingoOrWinchester`** — Return for either bingo fuel or Winchester.
+
+## `DecoyChannelOff`
+
+A decoy channel the commander has switched off (#5236).
+
+One inhabitant, deliberately: the only fact worth recording is the
+non-default one. `None` — equivalently, the key left out of the file —
+means nothing has switched this channel off, so a fitted decoy radiates.
+
+## `EnvelopeMatchingOff`
+
+Portrayal envelope matching the commander has switched off (#5237).
+
+One inhabitant, deliberately: the only fact worth recording is the
+non-default one. `None` — equivalently, the key left out of the file —
+means nothing has switched matching off, so a portraying platform is held
+inside the intersection of its own manoeuvre window and the portrayed
+hull's.
+
+**A design authored before this axis existed therefore matches.** That is a
+deliberate departure from the usual rule that a filled axis takes the value
+the engine behaved with before the axis existed: matching is a safety
+feature whose default must be uniform across designs, and a design flying an
+unrestricted envelope purely because of its file's age would be an invisible
+difference between two identical-looking hulls. Switching it off is a
+per-design choice a player makes explicitly.

@@ -13,6 +13,8 @@
     max_weight: 320.0,
     max_fuel: 7.5,
     hit_points: 10.0,
+    // Estimated: half the ~0.25 m missile body diameter (#5193).
+    full_damage_radius_m: 0.13,
     drag: 0.025,
     mast_height: 0.0,
     em_signatures: Some((rcs: 0.05, ir_base: 15.0, visual_cross_section: 0.15)),

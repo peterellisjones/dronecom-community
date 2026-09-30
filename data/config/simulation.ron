@@ -15,7 +15,7 @@ SimConfig(
         submarine_station_clearance_m: 10.0,
         edge_projection_min_size: 400.0,
         submarine_max_depth_change_m: 50.0,
-        air_climb_rate_fraction: 0.3,
+        air_climb_above_command_cost: 5.0,
         terrain_avoidance: (
             look_ahead_seconds: 3.0,
             avoidance_angles: [10.0, 20.0, 30.0, 40.0, 50.0, 70.0, 90.0, 120.0, 150.0, 180.0],
@@ -558,6 +558,12 @@ SimConfig(
             // Split cell = merge cell × this. The dead band stops formations
             // flickering between one merged track and several split tracks.
             split_hysteresis: 1.5,
+            // #5264: a merged track's member whose return sits at least this far
+            // (dB) below the track's strongest member return is masked by it and
+            // adds no classification evidence. An M-250 (0.05 m² RCS) sits 13 dB
+            // under an MQ-220 (1.0 m²) and 53 dB under a CV-3000, so a round is
+            // read as its launcher's blob; two hulls within 10 dB stay mixed.
+            return_masking_db: 10.0,
         ),
         // DC-36.5 contact classification (used only when noisy sensing is on).
         classification: (
@@ -623,6 +629,34 @@ SimConfig(
             signature_match_weight: 1.0,
         ),
         // DC-946.1 fire-control lock tuning (cued-lock pass in run_detection).
+        // #5169 signature emulation: the thresholds the objective decoy
+        // discrimination rules compare against. Not weights -- both sides'
+        // sensing reads them identically (ADR-0009).
+        emulation: (
+            // 6 dB of excess brightness is where a capable radar calls a
+            // repeated return anomalous: a repeater calibrated for 40 km is
+            // unmasked from 20 km in.
+            repeater_anomaly_tolerance_db: 6.0,
+            // A spoofer whose radiated power differs by more than 12 dB (~16x)
+            // in EITHER direction from the set it claims to be is rejected by an
+            // ESM-class receiver. A plain RWR never checks.
+            spoof_power_tolerance_db: 12.0,
+            // A contact loitering below 90% of the stall speed of the hull it
+            // claims to be is flying a profile that hull could not.
+            kinematic_stall_margin_frac: 0.9,
+            // #5222: and one sprinting above 115% of that hull's class maximum
+            // is flying a profile it could not either. Wider than the floor
+            // because a ceiling absorbs fused-speed noise at portrayal ranges
+            // AND a clamped platform's overshoot above its commanded speed.
+            // Above 1.0 by construction, so the #5237 cap sits inside it.
+            kinematic_ceiling_margin_frac: 1.15,
+            // Metres, not a fraction: a surface hull's authored window is
+            // [0, 0], so any fraction of it is zero and elevation noise alone
+            // would unmask every surface portrayal. 500 m clears resolved-
+            // elevation error and altitude-hold overshoot while staying well
+            // inside the bands that separate the hull classes.
+            kinematic_ceiling_margin_m: 500.0,
+        ),
         fire_control: (
             // Seconds after a lock goes Lost at which the designation is dropped.
             // (The acquisition dwell is per-sensor: SensorDef.acquire_dwell_secs.)
@@ -632,6 +666,13 @@ SimConfig(
     sectors: (
         access_fraction: 0.667,
         min_carrier_separation_deg: 5.0,
+        // #5426: how far inside the playable circle purchased units arrive.
+        // The delivery arc is the map border; carriers spawn on the terrain
+        // falloff midpoint well inside it (90 km of 100 km on the shipped
+        // map), and the gap between the two is the transit a delivery flies.
+        // The inset keeps the arrival point off the boundary itself, matching
+        // patrol's boundary_buffer.
+        delivery_inset_m: 100.0,
     ),
     intercept: (
         fallback_standoff_range: 3000.0,
@@ -655,6 +696,10 @@ SimConfig(
         search_duration_seconds: 240.0,
         search_spiral_start_radius_m: 500.0,
         bda_orbit_radius: 1500.0,
+        // #5290: slack required before holding a long round for a shorter one.
+        // Absorbs the feasibility estimate's assumption that the inbound keeps
+        // closing at its current rate.
+        point_defence_hold_buffer_seconds: 0.5,
         // #2604: while pressing an Engage, the shooter climbs toward a target
         // more than this many metres ABOVE it (raise-only, capped at its own
         // ceiling) so it closes the vertical geometry — the slant range shrinks
@@ -821,20 +866,43 @@ SimConfig(
         warning_thresholds_secs: [600, 300, 60],
     ),
     threat_reaction: (
-        // #4866: the CEILING of the inbound-alarm radius — what a weapon earns
-        // while it is still far enough from its closest approach to turn onto
-        // anyone, and the radius wherever no time-to-go was resolved at all.
-        missile_cpa_radius_m: 2500.0,
+        // #4866/#5295: the CEILING of the inbound-alarm radius — what a weapon
+        // earns while it is still far enough from its closest approach to turn
+        // onto anyone, and the radius wherever no time-to-go was resolved at
+        // all. Sized against a real failure mode (#5295): a linear
+        // extrapolation of a STILL-CORRECTING round's current velocity — one
+        // still homing onto a cued or bearing-only aimpoint, not yet its own
+        // resolved lock — can read several km wide of its eventual true
+        // closest approach. Swept across a dozen shipped M-300A engagement
+        // geometries (12-30 km spawn range, 0-45 deg off-axis), the worst
+        // observed straight-line overshoot was 5,548 m; this carries real
+        // margin above that rather than barely clearing it.
+        // `defend_anchor_declines_a_crossing_munition_passing_wide_of_the_
+        // anchor` (`dc_tasking`) states its own "obviously not for me" fixture
+        // well outside this radius, for the same reason: that distance is
+        // derived FROM this ceiling, not chosen independently, so the two move
+        // together.
+        missile_cpa_radius_m: 7500.0,
         // #4866: the FLOOR, at closest approach itself. Twice the largest
         // warhead's 150 m blast radius, so track error alone cannot decide the
         // call, plus the ~104 m cross-track excursion the shipped weave makes,
         // so a unit's own evasion cannot clear its own alarm.
         missile_cpa_floor_radius_m: 400.0,
         // #4866: time-to-closest-approach at which the ceiling is reached. The
-        // ramp is quadratic (turn authority x time remaining), so this states
-        // an implied 42 m/s² of lateral correction — about a fifth of an
-        // M-250's turn authority at cruise. Larger keeps the whole formation
-        // reacting for longer; the balance knob of the rule.
+        // ramp only narrows the LATE-flight radius — the #5295 guidance-lag
+        // overshoot the ceiling above is sized against is a far-out,
+        // flat-ceiling-regime read (first resolution on a shipped ARM engagement
+        // lands at 12-20 s to go, already past this horizon), so this field is
+        // not the lever for it: widening it would narrow the far-out radius at
+        // exactly the range that needs to stay wide. Read as a maximum-effort
+        // closing maneuver, the ramp's own quadratic shape states an implied
+        // lateral correction of `2*(ceiling-floor)/horizon²`; at the shipped
+        // ceiling above that reads as an unrealistically hard turn, which is
+        // the tell that the ceiling's true job here is bounding a *current*
+        // guidance-correction error, not a *future* maneuver capacity — a
+        // reading this field does not have to justify. Larger keeps the whole
+        // formation reacting for longer, once the round is close enough for
+        // this to be the active regime.
         missile_cpa_horizon_secs: 10.0,
         // #4866: how much wider an already-raised inbound rung is held before
         // it is released. Without it a unit the shrinking radius drops goes
@@ -843,7 +911,7 @@ SimConfig(
         // approach is solved in the unit's own frame, so a turning unit's
         // reading swings with its heading and the band is needed at every
         // time-to-go, not only inside the ramp. Bounded by construction at
-        // `missile_cpa_radius_m * missile_cpa_stand_down_margin` (3125 m here),
+        // `missile_cpa_radius_m * missile_cpa_stand_down_margin` (9,375 m here),
         // which is the widest a held rung ever reaches. Not capped at the
         // ceiling: beyond the horizon the raise radius is already the ceiling,
         // so a cap would leave no dead band where one is most needed.
@@ -855,6 +923,30 @@ SimConfig(
         // over-wide one only weaves a unit that was never in danger.
         bearing_cone_sigma_admission: 3.0,
         missile_speed_sigma_admission: 2.0,
+        // #5202: posterior munition probability that admits an inbound weapon
+        // whose projected node converged onto a non-munition leaf (a boost-phase
+        // round read as a small drone). Alarm-biased: a false admission costs one
+        // manoeuvre, a missed one costs the hull. Measured with a 3.2 m drone
+        // hull: the boost-phase look that raises the warning holds 0.34, while a
+        // genuine 3.2 m drone holds 0.50 / 0.33 / 0.19 / 0.10 over its first four
+        // looks — so such a drone closing on a unit is treated as a possible
+        // weapon for about three looks. That is the accepted cost.
+        munition_mass_admission: 0.15,
+        // #5425: longest time-to-closest-approach at which a track admitted only
+        // on INFERRED munition evidence (generic air/subsurface node, posterior
+        // mass, or a speed that reaches the missile floor only through its σ)
+        // may raise a weapon rung. Its point speed is below the missile floor,
+        // so this bounds its alarm reach (~17 km for a stationary unit) however
+        // wide the fix. Above #3392's ~17 s boost-phase warning and #3883's 5 s
+        // flight; an AEW 68 km out (~880 s) no longer alarms the fleet.
+        inferred_munition_lookahead_secs: 30.0,
+        // The one trailing window every reflex on the threat ladder shares — the
+        // tier-1 lock-evade (#2863) and the automatic-EMCON go-quiet (#2997).
+        // Sized against SENSOR FLICKER (an emitter that drops and re-acquires
+        // between sweeps must not bounce a unit in and out of its reaction), not
+        // against a weapon's time of flight: a reaction outliving its evidence
+        // is #5294's job, which keeps the RUNG asserted off the lost weapon's
+        // extrapolated track so this window has something to trail.
         lock_clear_hysteresis_secs: 5.0,
         // #3889: how long a raised RWR call is held before it may announce a
         // clear. Matched to `lock_clear_hysteresis_secs` so the announced call
@@ -1003,5 +1095,20 @@ SimConfig(
         // expense of the zone-free water outside it.
         inner_radius_fraction: 0.3333333,
         outer_radius_fraction: 0.75,
+    ),
+    envelope_matching: (
+        // #5237: when to tell the player their matched window is barely
+        // flyable. Warn-only — the clamp applies whether or not these fire.
+        //
+        // A matched speed band under 15% of the platform's own band means
+        // almost nothing is left to manoeuvre with. Relative, because "barely
+        // any room" is a different number of m/s for a 10 m/s USV and a
+        // 200 m/s interceptor.
+        narrow_speed_band_frac: 0.15,
+        // Metres, because what it measures is absolute: the gap between the
+        // terrain floor a route must clear and the ceiling the window imposes.
+        // Roughly 2x air_terrain_clearance (100 m), below which there is no
+        // room to route between the two.
+        narrow_altitude_band_m: 200.0,
     ),
 )

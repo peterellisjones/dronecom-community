@@ -20,6 +20,8 @@
     max_weight: 6000.0,
     max_fuel: 900.0,
     hit_points: 60.0,
+    // Estimated: half the ~5 m beam of a small fishing boat (L/B ~3.5) (#5193).
+    full_damage_radius_m: 2.5,
     drag: 0.09,
     mast_height: 5.0,
     em_signatures: Some((rcs: 40.0, ir_base: 9.0, visual_cross_section: 6.0)),

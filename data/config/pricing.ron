@@ -75,6 +75,29 @@
         fuze_credit_max: 0.5,
         blast_credit_max: 0.5,
     ),
+    // #5172 decoys: priced as the transmit-only hardware they are -- a box, its
+    // mass, and the amplifier it is rated for -- NOT as deception reach.
+    //
+    // Radiated power is deliberately absent. Pricing `emission_strength` on a
+    // sensing-grade footprint curve (#5169) made a spoofer cost several times
+    // the radar it imitated, which substitution kills: on any hull that can
+    // power the real set, the real set is a better fake AND detects. Emission
+    // stays a discrimination input (the +/-12 dB plausibility band); wattage
+    // reaches the price only through `power_draw`, the amplifier that makes it.
+    //
+    // Calibration, anchored on real expendable decoys costing a fraction of the
+    // sets they seduce (ADM-160 MALD, Nulka). The air class lands at ~59% of the
+    // cheapest radar it imitates and the surface class at ~46% of its own, so
+    // fitting the real article is never the cheaper lie. `cost_per_kw` is what
+    // separates the classes in dollars: a surface transmitter needs a ship's
+    // generator, and pays for the amplifier that draws it.
+    decoy: (
+        base_cost: 40000.0,
+        cost_per_kg: 800.0,
+        cost_per_kw: 3000.0,
+        breadth_credit_max: 0.6,
+        reference_breadth: 3.0,
+    ),
     chassis: (
         speed_exponent: 1.0,
         munition_speed_exponent: 1.5,

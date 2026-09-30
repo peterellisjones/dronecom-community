@@ -13,34 +13,40 @@ production `register::<TrajectoryConfig>` call in `src/config.rs`. The
 `Default` impl matches the RON so test apps can insert it directly via
 `app.init_resource::<TrajectoryConfig>()`.
 
-### `cruise_base` : f32
-
-Lofted cruise altitude base term (metres): `cruise = base + k * ground_range`.
-
-### `cruise_k` : f32
-
-Lofted cruise altitude per-metre-of-ground-range coefficient (dimensionless).
-
-### `loft_apex_ground_fraction` : f32
-
-Fraction of the ground range down which the loft's apex is assumed to
-sit, for the FOV cap's handoff-altitude prediction (#4644). A predictor
-input, not a commanded value — the flown apex is wherever the climb
-finishes; this only bounds how much glide-descent ground the cap credits
-between apex and the terminal handoff. See `loft_fov_cap`.
-
 ### `cruise_reached_tolerance` : f32
 
-Altitude tolerance (metres) within which the Launch climb/descent is
-considered "established" → advance Launch→Midcourse.
+Altitude tolerance (metres) for Launch→Midcourse when a profile holds
+a local altitude reference: Direct's deck floor or `TerrainFollow`'s skim
+and pop-up altitude.
 
-### `terminal_handoff_range` : f32
+### `terrain_commitment_range` : f32
 
-Slant range (metres) below which Midcourse→Terminal fires (direct pursuit).
+Slant range (metres) for Midcourse→Terminal terrain/presentation
+commitment (#3409/#3449). The impact objective applies on both sides.
 
 ### `glide_descent_rad` : f32
 
-Best-glide descent angle below the horizon (radians) commanded after
-burnout. Shallow enough that the missile maintains airspeed and converts
-banked altitude into downrange instead of mushing/diving. Applies to any
-profile that runs its motor dry before terminal handoff (Lofted, Direct).
+Nominal best-glide descent angle below the horizon (radians) after
+burnout. An observed impact-angle residual can relax the coast pitch
+ceiling toward level flight; it cannot authorize an unpowered climb.
+
+### `lofted_impact_angle_rad` : f32
+
+Lofted's terminal flight-path elevation (radians; negative is downward).
+
+### `lofted_impact_tolerance_rad` : f32
+
+Acceptance tolerance (radians) around `lofted_impact_angle_rad`.
+
+### `skim_impact_angle_rad` : f32
+
+`TerrainFollow`'s terminal flight-path elevation (radians).
+
+### `skim_impact_tolerance_rad` : f32
+
+Acceptance tolerance (radians) around `skim_impact_angle_rad`.
+
+### `impact_angle_gain_per_s` : f32
+
+Error-gain coefficient (per second) scaling the impact-angle bias,
+shared by every profile that authors an angle.

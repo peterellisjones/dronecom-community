@@ -30,6 +30,8 @@
     max_weight: 260000.0,
     max_fuel: 20000.0,
     hit_points: 400.0,
+    // Estimated: half the ~23 m beam of a cargo ship (L/B ~6.5) (#5193).
+    full_damage_radius_m: 11.5,
     drag: 0.05,
     mast_height: 18.0,
     // A large unstealthed steel hull returns a big radar contact — deliberately

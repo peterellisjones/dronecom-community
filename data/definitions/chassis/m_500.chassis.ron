@@ -16,6 +16,8 @@
     // sit at ~1-3x theatre diameter (on-map ceiling ~100 km).
     max_fuel: 40.0,
     hit_points: 8.0,
+    // Estimated: half the ~0.34 m cruise-missile body diameter (#5193).
+    full_damage_radius_m: 0.17,
     drag: 0.080,
     mast_height: 0.0,
     em_signatures: Some((rcs: 0.05, ir_base: 20.0, visual_cross_section: 0.2)),

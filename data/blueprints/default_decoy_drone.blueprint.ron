@@ -1,0 +1,28 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+(
+    id: BlueprintId("21bbea9a-01c6-4c25-91af-32f608a909a4"),
+    codename: "Mirage",
+    designator: "MQ-60B",
+    chassis_id: "mq_60",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Air-class active repeater — the whole payload, in the #2524
+        // one-payload pattern. Out of the box this presents an MQ-450's radar
+        // cross-section, because `resolve_repeater` portrays `emulates.first()`
+        // until #5173 ships the doctrine picker. The MQ-60A ESM Scout listens;
+        // this one lies.
+        //
+        // The two-payload fit (this plus the AN/ALQ-50, returning a Panther's
+        // cross-section AND broadcasting an airborne search radar's fingerprint)
+        // is buildable in the designer and lands exactly on the Swift's power
+        // budget. It is deliberately not shipped here: choosing to pay for a
+        // second deception channel is the mix-and-match decision the designer
+        // exists for, and the standard library stays a starting point.
+        (kind: Component(component_id: "an_ale_35")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+    unknown_range_launch: Withhold,
+    stores: [],
+)

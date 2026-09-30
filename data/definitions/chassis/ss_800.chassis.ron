@@ -13,6 +13,8 @@
     max_weight: 10300.0,
     max_fuel: 2500.0,
     hit_points: 180.0,
+    // Estimated: half the ~2 m hull diameter (L/D ~8) (#5193).
+    full_damage_radius_m: 1.0,
     drag: 0.10,
     mast_height: 0.0,
     em_signatures: Some((rcs: 0.0, ir_base: 5.0, visual_cross_section: 6.0)),

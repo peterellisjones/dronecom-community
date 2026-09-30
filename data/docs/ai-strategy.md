@@ -83,13 +83,6 @@ the air wing's strike envelope (with margin) so a launched strike
 reliably reaches the focus, rather than parking at the envelope edge where
 the focus is marginally out of reach.
 
-### `probe_scout_forward_bias` : f32
-
-Extra weight on the forward (toward-objective) geometric bias when the
-patrol advisor orders stale cells under `Probe`/`ControlMap`. Added to
-the existing threat + home-axis prior so scouting pushes toward the
-enemy axis, not just home sectors (folds #316).
-
 ### `press_offense_mult` : f32
 
 Multiplier on offensive task value (Engage, strike-carrier `MoveCarrier`)

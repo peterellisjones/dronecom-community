@@ -1,28 +1,20 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/trajectory.md
-// Missile trajectory controller tuning — lofted cruise, post-burnout glide,
-// terrain-follow hold, terminal handoff. Consumed by dc_autopilot::trajectory.
+// Missile trajectory controller tuning — terminal impact-angle guidance,
+// post-burnout glide, terrain-follow hold, terrain commitment. Consumed by
+// dc_autopilot::trajectory (#5196).
 TrajectoryConfig(
-    // Proportional loft (#2183): loft above the target's altitude scales with
-    // ground range (0 + k·d) instead of a 2 km absolute floor, so a lofted
-    // munition stays near a co-altitude air target at medium range (shallow PN
-    // handoff) yet still climbs to the apex a long shot needs. Three shipped
-    // designs fly Lofted: the M-250A Radar Missile, the M-400A Area SAM, and
-    // the AQ-10A Loitering Munition (#4644). Pinned to LoftGeometry::STANDARD
-    // by default_matches_shipped_ron.
-    //
-    // cruise_k and glide_descent_rad are coupled, not independent (#4644): a
-    // loft's only job is to bank altitude the post-burnout glide spends back
-    // as downrange, so operational range is the fixed point
-    // D = powered_range / (1 − cruise_k · cot(glide_descent_rad)), which
-    // diverges (this law no longer bounds range at all) once cruise_k reaches
-    // tan(glide_descent_rad).
-    cruise_base: 0.0,
-    cruise_k: 0.15,
-    // Assumed fraction of ground range where the loft apex sits — a predictor
-    // input for the FOV cap's handoff-altitude prediction, not a commanded
-    // value (#4644). See `loft_fov_cap`.
-    loft_apex_ground_fraction: 0.15,
     cruise_reached_tolerance: 150.0,
-    terminal_handoff_range: 4000.0,
+    // Standing terrain/presentation safety-commitment slant (#3409/#3449),
+    // not a loft/reach handoff — no impact-law switch depends on it.
+    terrain_commitment_range: 4000.0,
     glide_descent_rad: 0.209, // ≈ 12° below horizon (~4.7:1 glide)
+    // Impact-angle guidance (#5196): a Lofted round's terminal-elevation bias
+    // steers toward this angle continuously from launch, replacing the
+    // former geometric loft cruise/FOV-height cap.
+    lofted_impact_angle_rad: -1.04719755, // -pi/3, 60° below horizon
+    lofted_impact_tolerance_rad: 0.0872664626, // 5°
+    // A TerrainFollow round's shallow skim-angle terminal objective.
+    skim_impact_angle_rad: -0.0872664626, // 5° below horizon
+    skim_impact_tolerance_rad: 0.0523598776, // 3°
+    impact_angle_gain_per_s: 0.30,
 )

@@ -13,6 +13,8 @@
     max_weight: 3500.0,
     max_fuel: 615.0,
     hit_points: 80.0,
+    // Estimated: half the ~2.5 m beam of a USV (L/B ~4) (#5193).
+    full_damage_radius_m: 1.25,
     drag: 0.06,
     mast_height: 3.0,
     em_signatures: Some((rcs: 30.0, ir_base: 8.0, visual_cross_section: 5.0)),
@@ -23,7 +25,7 @@
     ),
     propulsion: Screw,
     engine: Powered((thrust_n: 44100.0, fuel_burn_rate: 8.0, idle_burn_fraction: 0.15, thrust_response: Constant, thrust_schedule: BoostCoast)),
-    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Decoys), Category(Utility), Category(CarriedEntities)],
     carrier: false,
     availability: PlayerAvailable,
     ntds_classification: DeriveFromDomain,

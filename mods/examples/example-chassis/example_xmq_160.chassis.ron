@@ -19,6 +19,7 @@
     max_weight: 1250.0,
     max_fuel: 200.0,
     hit_points: 38.0,
+    full_damage_radius_m: 0.35,
     drag: 0.40,
     mast_height: 0.0,
     em_signatures: Some((rcs: 1.0, ir_base: 6.0, visual_cross_section: 0.5)),

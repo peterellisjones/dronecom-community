@@ -35,10 +35,6 @@
     // fraction of max_engage_distance. < 1.0 closes the carrier INSIDE the
     // strike envelope (with margin) so a launched strike reliably reaches.
     advance_standoff_mult: 0.6,
-    // Extra weight on the forward (toward-objective) geometric bias when the
-    // patrol advisor orders stale cells under Probe/ControlMap, so scouting
-    // pushes toward the enemy axis rather than only home sectors.
-    probe_scout_forward_bias: 1.0,
 
     // ── Phase 3.5: (objective, posture) task-value category multipliers ────
     // Raise offensive task value under Press, defensive under Hold, scouting

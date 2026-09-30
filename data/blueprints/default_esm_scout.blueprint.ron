@@ -1,0 +1,20 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+(
+    id: BlueprintId("a641c08d-3d48-493d-8517-526fa86783c7"),
+    codename: "ESM Scout",
+    designator: "MQ-60A",
+    chassis_id: "mq_60",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Search RWR — the whole payload. An expendable passive picket a
+        // flight-deck-less VLS hull can put 100 km downrange, paying the full
+        // sensor price every sortie (#5170). The RQ-10B Radar Scout keeps the
+        // active-illuminator role and comes home.
+        (kind: Component(component_id: "an_alr_20")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+    unknown_range_launch: Withhold,
+    stores: [],
+)

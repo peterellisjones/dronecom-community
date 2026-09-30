@@ -21,6 +21,8 @@
     max_weight: 245000.0,
     max_fuel: 19000.0,
     hit_points: 350.0,
+    // Estimated: half the ~24 m beam of a tanker (L/B ~6) (#5193).
+    full_damage_radius_m: 12.0,
     drag: 0.05,
     mast_height: 17.0,
     em_signatures: Some((rcs: 5500.0, ir_base: 35.0, visual_cross_section: 280.0)),

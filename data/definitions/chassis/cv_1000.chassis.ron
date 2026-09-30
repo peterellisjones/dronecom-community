@@ -13,6 +13,8 @@
     max_weight: 300000.0,
     max_fuel: 56175.0,
     hit_points: 900.0,
+    // Estimated: half the ~15 m beam of a carrier (L/B ~6) (#5193).
+    full_damage_radius_m: 7.5,
     drag: 0.05,
     mast_height: 20.0,
     em_signatures: Some((rcs: 3000.0, ir_base: 50.0, visual_cross_section: 200.0)),

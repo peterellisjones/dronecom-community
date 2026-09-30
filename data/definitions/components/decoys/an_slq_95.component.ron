@@ -1,0 +1,71 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+//
+// Surface-class active repeater (#5171) — the in-game Nulka, and the epic's
+// phantom-fleet payload: a cheap boat returning a warship's cross-section. Like
+// every repeater it is silent until painted, so the fleet that lights it up is
+// the fleet that believes it.
+//
+// The 40 kW draw is what makes this a *surface* class, structurally rather than
+// by declaration: it exceeds the largest air chassis's spare supply
+// (`power_supply_kw - base_power_draw_kw`; the MQ-450's 29.0 kW is the ceiling)
+// by 1.38x, so `Blueprint::validate` rejects it on every air hull with
+// `OverPowerBudget`. That exclusion is asserted over the whole shipped chassis
+// registry, so a new airframe is covered the moment it lands.
+//
+// Unlike the 60 kW AN/SLQ-80, this class deliberately fits the USV-80 (45.0 kW
+// spare), because a cheap hull radiating a warship's return is the entire play —
+// on the USV-200 the arithmetic is far less interesting. It leaves that boat
+// exactly 5.0 kW, which buys an AN/ALR-20 threat receiver and nothing else: a
+// phantom that knows when it is being painted is buildable, a phantom that is
+// also a warship is not.
+//
+// `calibration_range_m` of 40 km puts the signature-capable unmask range at
+// 20047 m (see the AN/ALE-35 for the arithmetic). That is chosen against sea
+// engagement geometry: an an_sps_90 classifies a portrayed CV-1000 as a carrier
+// from 65.8 km and an an_spy_310 from 86.9 km, both comfortably outside
+// anti-ship release ranges, so the lie survives the LAUNCH DECISION — which is
+// what the payload is for — and dies at 20 km, where an an_spy_310 can also
+// identify the true USV-80 (27.5 km). It is 4x the air class's value, which is
+// also what keeps the two classes mutually non-dominated in the decoy dominance
+// scan; a retune has to preserve that ordering.
+//
+// Every shipped sea hull is Screw, so propulsion plausibility is automatic here.
+// The portrayal survives the kinematic channels too, and deliberately:
+// `NtdsClass::CommandShip` shares `BUCKET_SURFACE` with `NtdsClass::Surface`, so
+// a USV portraying a carrier is not penalised on kin bucket, and the stall-speed
+// floor is inert for non-FixedWing portrayals. The surface lie is therefore
+// broken only by the repeater anomaly above or by EO/visual truth up close.
+//
+// cv_3000 is deliberately absent: one carrier rung. Letting an ~$8M delivered
+// phantom conjure the most valuable hull class in the game leaves no rung above
+// it to make the choice interesting. Nothing in the sim would object — this is
+// an authoring decision, and a reversible one.
+//
+// ORDER IS LIVE GAMEPLAY: the first entry is what this payload portrays with no
+// doctrine selection. cv_1000 leads because the phantom carrier is the play.
+// usv_200 is the second rung and the cheapest entry, so it is the one that binds
+// the substitution guard.
+(
+    id: "an_slq_95",
+    designator: "AN/SLQ-95",
+    codename: "Leviathan",
+    category: Decoys,
+    mount_rule: Single,
+    // Heavier than the 150 kg AN/SLQ-80 while drawing less, and both for the
+    // same reason: a repeater adds a receiver front-end to the transmit chain,
+    // but only has to amplify a pulse the victim radar delivered, where a
+    // spoofer must shout a shipboard array's rated power into the band unaided.
+    weight: 200.0,
+    // See the class-gate note above. Authored, never derived.
+    power_draw: Fixed(40.0),
+    // Unrestricted on purpose: the power budget does the excluding, which is
+    // what the issue asks for. `[Domain(Sea)]` is the documented backstop if an
+    // air chassis ever fields a 40 kW supply — nothing close exists today.
+    allowed: [],
+    payload: Decoy((
+        channel: RadarRepeater(
+            emulates: ["cv_1000", "usv_200"],
+            calibration_range_m: 40000.0,
+        ),
+    )),
+)

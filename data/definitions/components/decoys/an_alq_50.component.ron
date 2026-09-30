@@ -1,0 +1,47 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+//
+// Air-class RWR spoofer (#5172). Radiates a fake search-radar fingerprint at
+// 45 MW — enough to be believed as one of the mid-ladder airborne search sets,
+// and objectively too weak to be believed as an AN/SPY-310. A spoofer's claim
+// is checked against its real radiated power by any ESM-class (FDOA-capable)
+// receiver: `|20*log10(emission_strength / claimed)| > spoof_power_tolerance_db`
+// (12 dB, i.e. a power ratio of x/ 3.98) and the claim is rejected in favour of
+// this component's own id. Every entry in `emulates` below sits inside that band
+// at 45 MW; an_aps_660 (200 MW) and an_spy_310 (300 MW) do not, which is why
+// they are absent and why selling the big-array lie needs the AN/SLQ-80's
+// generator instead. The pairing is pinned by the plausibility sweep in
+// `dc_sim::ops::portrayed_signature`, so this list cannot drift out of band
+// unnoticed.
+//
+// `emulates` is kept domain-coherent by authoring discipline, not by a sim
+// rule: nothing ties a portrayed emitter's domain to the hull portraying it.
+// Lead with airborne search sets, and include a surface set only where the
+// class's power can honestly reach it (an_sps_90, the one a USV-80 carrying
+// this payload would claim). Keep new entries coherent the same way.
+//
+// ORDER IS LIVE GAMEPLAY: the first entry is what this payload claims with no
+// doctrine selection. an_aps_440 leads because a mid-ladder airborne search
+// radar is the most useful default lie.
+(
+    id: "an_alq_50",
+    designator: "AN/ALQ-50",
+    codename: "Mockingbird",
+    category: Decoys,
+    mount_rule: Single,
+    weight: 25.0,
+    // Fits every air drone from the RQ-10 (2.5 kW headroom) upward with room
+    // for a receiver. Decoy draw is authored, never derived: it is the epic's
+    // class gate against `power_supply_kw`, not a function of capability.
+    power_draw: Fixed(1.5),
+    // Unrestricted on purpose. Which hulls may carry a deception payload is
+    // the chassis's `Category(Decoys)` grant; which payload they can afford is
+    // the weight and power budget. No domain fiat.
+    allowed: [],
+    payload: Decoy((
+        channel: EmitterSpoofer(
+            emulates: ["an_aps_440", "an_aps_150", "an_aps_320", "an_sps_90"],
+            emission_strength: 45000000.0,
+            mounting: Hull,
+        ),
+    )),
+)

@@ -13,6 +13,8 @@
     max_weight: 260.0,
     max_fuel: 5.0,
     hit_points: 8.0,
+    // Estimated: half the 0.53 m heavy-torpedo diameter (#5193).
+    full_damage_radius_m: 0.27,
     drag: 0.05,
     mast_height: 0.0,
     em_signatures: None,

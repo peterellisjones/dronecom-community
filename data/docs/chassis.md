@@ -85,6 +85,16 @@ components + carried + fuel) must stay within `max_weight` (MTOW).
 Structural health. Warhead damage subtracts from it; the vehicle is
 destroyed when it reaches zero.
 
+### `full_damage_radius_m` : f32
+
+Full-damage radius (m) around the hull's centre (#5193). A warhead that
+detonates within it deals its full damage. Blast falloff starts at this
+radius rather than at the hull's centre, so a hit on a large ship's bow
+or deck counts as a hit instead of a near miss. Proximity fuzes also
+measure their trigger distance from this radius. Roughly half the
+hull's beam (body diameter for torpedoes and missiles). Must be finite
+and non-negative.
+
 ### `drag` : f32
 
 Lumped horizontal drag area — drag coefficient × reference area (m²).
@@ -229,12 +239,16 @@ policy.
 
 Variants:
 
-- **`On`** — Permit tasking to begin every otherwise-eligible tactical evade.
+- **`On`** — Permit tasking to begin every otherwise-eligible tactical evade, at `Targeted` or worse — a weapons-grade lock on this unit.
 - **`Off`** — Suppress every new tactical evade; physical safety remains automatic.
+- **`OnTracked`** — Evade from the lower `Tracked` rung too — pre-lock illumination (#2999).  A third variant rather than renaming `Self::On` to say which rung it means: this enum is authored in chassis definitions and mirrored in `.blueprint.ron`, which is a stated compatibility contract, so a rename would orphan every design a player already holds. `On` keeps its spelling and its meaning; this adds the rung below it.  Not offered by either doctrine editor yet — both build their segments from explicit arrays, so this is reachable by editing a definition or a design file. #2999 owns the player-facing control.
 
 ## `Facility`
 
 Launch/recovery facility type on a carrier.
+
+Ordered by declaration so a set of facilities has one canonical spelling
+(the design search's `SpecContext` carries a sorted, deduplicated `Vec`).
 
 Variants:
 
@@ -554,6 +568,7 @@ Variants:
 - **`Warheads`** — Weapon payloads (warheads); at most one per vehicle.
 - **`Utility`** — Support equipment with no sensor or warhead payload.
 - **`CarriedEntities`** — Carried sub-vehicles / munitions — blueprints stowed aboard for launch.
+- **`Decoys`** — Signature-emulation payloads: active repeaters and RWR spoofers that make a hull portray a signature that is not its own.
 
 ## `NtdsClass`
 

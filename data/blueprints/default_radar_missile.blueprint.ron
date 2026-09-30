@@ -13,9 +13,10 @@
     ],
     doctrine_setting: Suggested,
     // Boost-sustain BVR loft (#2185): the M-250 lofts so the sustain motor's
-    // energy buys long reach. At medium range the loft cruise is shallow
-    // (LoftGeometry ~0.15·d, #4644) and the close-range terminal handoff flies
-    // it nearly flat onto the target; only a genuine BVR shot lofts high.
+    // energy buys long reach. The mandated terminal dive angle (#5196) applies
+    // uniformly regardless of range, so a short shot pays the same steep-dive
+    // cost as a genuine BVR one — reach at close range is traded for the
+    // authored impact angle, not preserved by a range-adaptive shallow cruise.
     trajectory: Lofted,
     default_altitude: Chassis,
     unknown_range_launch: Withhold,

@@ -572,6 +572,31 @@ glossary:
       "zh-TW": "該載具的性能參數。"
     # #2896: Shift-held gloss — the SPC value combines weight, top speed, and the
     # vertical envelope (ceiling or max depth).
+  dcy:
+    label:
+      "de": "DCY"
+      "en": "DCY"
+      "es": "DCY"
+      "fr": "DCY"
+      "it": "DCY"
+      "ja": "DCY"
+      "ko": "DCY"
+      "pt-BR": "DCY"
+      "ru": "DCY"
+      "zh": "DCY"
+      "zh-TW": "DCY"
+    tooltip:
+      "de": "Täuschkörper. Schaltet jeden montierten Täuschkörper-Kanal ein oder aus und wählt, was er vorspiegelt."
+      "en": "Decoys. Switch each fitted decoy channel on or off, and choose what it portrays."
+      "es": "Señuelos. Activa o desactiva cada canal señuelo instalado y elige lo que simula."
+      "fr": "Leurres. Activez ou désactivez chaque canal de leurre installé et choisissez ce qu'il simule."
+      "it": "Esche. Attiva o disattiva ciascun canale esca installato e scegli cosa simula."
+      "ja": "デコイ。搭載中の各デコイ系統を作動・停止させ、何を偽装するかを選びます。"
+      "ko": "디코이. 장착된 각 디코이 채널을 켜거나 끄고, 무엇으로 위장할지 선택합니다."
+      "pt-BR": "Chamarizes. Ligue ou desligue cada canal chamariz instalado e escolha o que ele simula."
+      "ru": "Ложные цели. Включайте или выключайте каждый установленный канал и выбирайте, что он изображает."
+      "zh": "诱饵。开启或关闭每个已装配的诱饵通道，并选择它伪装的对象。"
+      "zh-TW": "誘餌。開啟或關閉每個已裝配的誘餌通道，並選擇它偽裝的對象。"
   dck:
     label:
       "de": "DCK"

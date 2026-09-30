@@ -280,6 +280,18 @@ notifications:
       ru: "ДОВООРУЖЕНИЕ ПРОПУЩЕНО: НЕТ ЗАПАСОВ"
       zh: "跳过再武装：无库存"
       "zh-TW": "跳過再武裝：無庫存"
+    loadout_set:
+      de: "LADUNG FESTGELEGT"
+      en: "LOADOUT SET"
+      es: "CARGA ESTABLECIDA"
+      fr: "ARMEMENT DÉFINI"
+      it: "CARICO IMPOSTATO"
+      ja: "装備設定"
+      ko: "무장 편성 설정"
+      "pt-BR": "CARGA DEFINIDA"
+      ru: "ЗАГРУЗКА ЗАДАНА"
+      zh: "装载已设定"
+      "zh-TW": "裝載已設定"
     set_loadout_rejected:
       de: "LADUNG ABGELEHNT"
       en: "LOADOUT REJECTED"

@@ -1,0 +1,47 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+//
+// Surface-class RWR spoofer (#5172) — the phantom-fleet payload. Radiates at
+// 135 MW, the geometric mean of the two shipped surface search sets, so it sits
+// symmetrically inside the 12 dB plausibility band for both: an_spy_310
+// (300 MW) at -6.9 dB and an_sps_90 (60 MW) at +7.0 dB. The band is absolute,
+// so over-radiating is caught exactly as under-radiating is.
+//
+// The 60 kW draw is what makes this a *surface* class, structurally rather than
+// by declaration: it exceeds the largest air chassis's spare supply
+// (`power_supply_kw - base_power_draw_kw`; the MQ-450's 29.0 kW is the ceiling)
+// by 2.07x, so `Blueprint::validate` rejects it on every air hull with
+// `OverPowerBudget`. That exclusion is asserted over the whole shipped chassis
+// registry, so a new airframe is covered the moment it lands. It also excludes
+// the USV-80 (45.0 kW spare): a 2500 kg boat has not got the generator to
+// broadcast at ship-array power, so the phantom-destroyer play costs a real
+// hull. A USV-80's deception play is the AN/ALQ-50 portraying an an_sps_90 —
+// the lie its power plant can actually support.
+//
+// `emulates` is kept domain-coherent by authoring discipline, not by a sim
+// rule: at 135 MW this class is within tolerance of every emitter on the
+// ladder, including the airborne ones, and nothing in the sim would object to a
+// USV squawking an AEW radar. Name surface sets only, and keep it that way.
+//
+// ORDER IS LIVE GAMEPLAY: the first entry is what this payload claims with no
+// doctrine selection.
+(
+    id: "an_slq_80",
+    designator: "AN/SLQ-80",
+    codename: "Siren",
+    category: Decoys,
+    mount_rule: Single,
+    weight: 150.0,
+    // See the class-gate note above. Authored, never derived.
+    power_draw: Fixed(60.0),
+    // Unrestricted on purpose: the power budget does the excluding, which is
+    // what the issue asks for. `[Domain(Sea)]` is the documented backstop if an
+    // air chassis ever fields a 60 kW supply — nothing close exists today.
+    allowed: [],
+    payload: Decoy((
+        channel: EmitterSpoofer(
+            emulates: ["an_spy_310", "an_sps_90"],
+            emission_strength: 135000000.0,
+            mounting: MastEmitter,
+        ),
+    )),
+)

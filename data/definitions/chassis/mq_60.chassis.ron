@@ -1,0 +1,114 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
+(
+    id: "mq_60",
+    designator: "MQ-60",
+    codename: "Swift",
+    domain: Air,
+    // A decoy must not evade. Evasion defeats the mission — the Swift exists to
+    // draw the shot — and betrays it: a contact that jinks under fire is not
+    // behaving like the platform it claims to be.
+    automatic_evasion_policy: Off,
+    launch_requires: [VLS, AirLaunch],
+    recovery_requires: [],
+    provides: [],
+    // Sized by density rather than by the MALD's 2.84 m airframe. At 145 kg this
+    // hull sits at length/mass^(1/3) = 0.838, inside the 0.783-1.267 band the
+    // catalog's drones occupy (RQ-10 at 0.783 through MQ-450 at 1.267). Anything
+    // near 3 m at this mass is denser than a solid-motor round — the M-100 is
+    // 0.657 — which is the wrong build for an airframe that is 38% fuel by mass.
+    // 4.4 also clears the M-300's and MK-55's 4.5 m: length is the classifier's
+    // size channel, so a collision there blurs the hypothesis set.
+    length: 4.4,
+    weight: 145.0,
+    max_weight: 310.0,
+    // ~300 km / ~42 min at the cruise bell. Endurance, not range, is the anchored
+    // quantity: the ~45 minutes an ADM-160 MALD spends inside the victim's
+    // picture is what this airframe exists to buy. Range then falls out at ~3x
+    // theatre diameter, the top of the #1862 standoff band — a decoy must arrive
+    // before, and outlast, the salvo it screens.
+    max_fuel: 90.0,
+    hit_points: 4.0,
+    // Estimated: half the ~0.3 m body diameter (#5193). A tube-launched airframe
+    // is sized by the cell it flies out of, so this sits with the M-series bodies
+    // (M-300 0.13, M-500 0.17) rather than with the RQ-10's 0.25 — that is a
+    // fuselage built around a payload bay and landing gear, not a launch tube.
+    full_damage_radius_m: 0.15,
+    drag: 0.100,
+    mast_height: 0.0,
+    // The airframe's OWN signature; what it portrays is the decoy payload's job
+    // (#5168). RCS scales with area, so the 4.4 m Swift takes the 5.0 m RQ-10's
+    // 0.1 scaled by length squared: 0.1 x (4.4/5.0)^2 = 0.077, rounded to clean
+    // data. It sits ON that curve and not under it, because a decoy has no
+    // business buying a stealthy skin — its concealment is a payload, and it
+    // wants to be detected, as something else. The M-500's 0.05 is below the
+    // curve for the opposite reason: deliberate penetrator shaping bought to
+    // survive the run in, which does not transfer to a hull whose mission is to
+    // be seen.
+    em_signatures: Some((rcs: 0.08, ir_base: 4.0, visual_cross_section: 0.1)),
+    acoustic_signatures: None,
+    physics: FixedWing(
+        min_altitude: 50.0,
+        max_altitude: 8000.0,
+        // Deliberately the same 500 m the MQ-160/220/450 and RQ-10 hold: a decoy
+        // must fly where the platforms it imitates fly, or its altitude alone
+        // discriminates it (ADR-0009 — objective sim state, not AI weighting).
+        default_altitude: 500.0,
+        // The Swift can never fly an Attack order: no warhead mounts on it, and
+        // `target_domains` below is empty. It therefore authors no attack
+        // envelope, rather than the `Some(0.0)` every ramming air hull needs
+        // for the #4125 fuze clamp.
+        min_attack_altitude: None,
+        max_attack_altitude: None,
+        // VLS booster kick, per the M-500 template, sized to a far lighter
+        // airframe: 120 m/s is 2.7x stall, ample to fly off the rail.
+        launch_speed: Some(120.0),
+        max_pitch_rate: 0.40,
+        max_yaw_rate: 0.24,
+        stall_speed: 45.0,
+        max_lateral_g: 5.0,
+        // No Lofted: lofting exists for the terminal dive attack, which this hull
+        // can never fly. TerrainFollow supports the low ingress before a decoy
+        // climbs into the picture it wants to be seen in.
+        supported_trajectories: [Direct, TerrainFollow],
+        terrain_clearance: 30.0,
+    ),
+    // Load-bearing, not flavour: `propulsion` is the DC-36.6 classification
+    // signature a capable radar reads off the real hull, so only a turbojet Swift
+    // is signature-consistent portraying the turbojet platforms worth imitating
+    // (#5168, #5169).
+    propulsion: Turbojet,
+    // Small-turbojet fuel consumption is deliberately poor: 2.0 kg/min per kN
+    // against the M-500's and MQ-160's ~0.7, the real SFC penalty a MALD-class
+    // TJ-50 pays against a large engine. Endurance comes from the fuel fraction
+    // and a low cruise bell, not from engine efficiency.
+    engine: Powered((thrust_n: 2450.0, fuel_burn_rate: 5.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
+    // No `Category(Warheads)`: the Swift is structurally incapable of becoming a
+    // cheap cruise missile, not merely priced out of it. Sensors ARE allowed on
+    // purpose — an expendable ESM scout pays the full sensor price and throws it
+    // away every sortie, so the niche self-prices through attrition, and it is
+    // the only sensor reach a VLS hull with no flight deck has. The RQ-10 keeps
+    // the recoverable scout / loitering-munition role (#5168).
+    allowed_components: [Category(Sensors), Category(Decoys), Category(Utility)],
+    carrier: false,
+    availability: PlayerAvailable,
+    // NOT `Explicit(Missile)`, unlike the M-series rounds this shares a launch
+    // tube with — a deliberate departure, and reverting it to match them breaks
+    // the epic. `kin_bucket` takes a contact's kinematic bucket from the TRUE
+    // hull's `ntds_class()` whenever a signature-capable radar gets a propulsion
+    // read, and the classifier then hard-penalises every candidate chassis in a
+    // different bucket. A missile-classed Swift would therefore be unmasked by
+    // any capable radar the instant it portrayed an air chassis, which is the
+    // whole purpose of the airframe (#5168, #5169).
+    ntds_classification: DeriveFromDomain,
+    target_domains: [],
+    // An autonomous platform, not a guided munition: it flies its own mission and
+    // reads no midcourse fire-control refinement from its launcher.
+    guidance_uplink: None,
+    battery_capacity_kwh: 0.3,
+    base_power_draw_kw: 0.5,
+    // 2.5 kW of payload headroom is the budget the air-class decoy payloads are
+    // sized against (#5171, #5172); the surface classes draw more than any air
+    // hull supplies and mount only on surface hulls.
+    power_supply_kw: 3.0,
+    engine_bells: (loiter: Some(0.10), cruise: Some(0.35), full: Some(0.75)),
+)

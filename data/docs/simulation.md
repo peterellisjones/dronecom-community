@@ -97,6 +97,17 @@ via `dc_sim`'s `CoreSharedResources`; whether anything reads it for
 territory purposes is a separate question, see
 `dc_app_state::win_condition::zones_active`.
 
+### `envelope_matching` : [`EnvelopeMatchingSection`](#envelopematchingsection)
+
+Portrayal envelope-matching warn thresholds (#5237): when the window a
+matched platform is left with is narrow enough to tell the player about.
+Warn-only — the clamp applies either way. Consumed by the portrayal
+derive (`dc_sim`) and the unit panel (`dc_ui_client`).
+
+Deliberately not inside `sensors.emulation`, which holds thresholds a
+*sensor* resolves into objective sim state; these change no simulation
+outcome at all.
+
 ## `AutopilotSection`
 
 Autopilot tuning parameters.
@@ -157,12 +168,14 @@ ceiling is capped at `from_y + this`; a feature needing more ascent
 becomes non-navigable so the A* gate routes around. A full-envelope
 fallback still reaches targets that require a larger ascent. #1865.
 
-### `air_climb_rate_fraction` : f32
+### `air_climb_above_command_cost` : f32
 
-Fraction (0,1] of an aircraft's max climb rate used for en-route
-terrain planning. A gentler routing gradient makes steep/close peaks
-non-navigable so the gate routes around them; gentle/distant climbs
-still go over. Falls back to the full rate if no route is found. #1865.
+Route length (metres) an aircraft's navigation route treats one metre
+of climb above its commanded altitude as costing. Climbing up to the
+commanded altitude is free; above it, a detour is taken when it is
+shorter than this many metres per metre of climb it avoids, so small
+hills are crossed and large ridges beside open water are flown around.
+Terrain the aircraft cannot climb over in time is never crossed. #5221.
 
 ### `terrain_avoidance` : [`TerrainAvoidanceConfig`](#terrainavoidanceconfig)
 
@@ -594,6 +607,11 @@ its NTDS-tree projection. Used only when noisy sensing is enabled.
 Fire-control lock tuning (DC-946.1): acquisition dwell and lock-drop
 timeout for the cued-lock pass in `run_detection`.
 
+### `emulation` : [`EmulationSection`](#emulationsection)
+
+Signature-emulation tuning (#5169): the thresholds the objective
+decoy-discrimination rules compare against.
+
 ## `SectorSection`
 
 Configuration for team sector geometry. Loaded from
@@ -607,6 +625,16 @@ Fraction of each team's full segment that forms the access arc.
 
 Minimum angular separation between carriers of the same team (degrees).
 
+### `delivery_inset_m` : f32
+
+How far inside the playable circle purchased units arrive (metres).
+
+Deliveries appear on the map border nearest their destination carrier
+and fly in from there, so the gap between this arc and the carrier is
+the transit a purchase pays. The inset keeps the arrival point off the
+boundary itself, where the playable-circle containment rules apply
+(#5426).
+
 ## `InterceptSection`
 
 Intercept behavior tuning parameters. Loaded from
@@ -617,6 +645,12 @@ Intercept behavior tuning parameters. Loaded from
 Fallback standoff distance (metres) used when the dynamic feedback
 controller has no SNR data yet (e.g. first frame of intercept).
 
+Seeds an **autonomous** engagement only (#5429). A commanded `attack`
+seeds at its selected round's employment envelope instead — seeding a
+long-reach shooter here and ramping out at `standoff_adjust_rate` has it
+commanding itself *inward* for minutes while the hull is already under
+way.
+
 ### `min_standoff_range` : f32
 
 Minimum standoff range floor (metres). The feedback controller will
@@ -624,8 +658,22 @@ never command a range below this value.
 
 ### `max_standoff_range` : f32
 
-Maximum standoff range ceiling (metres). The feedback controller will
-never command a range above this value.
+Maximum standoff range ceiling (metres) for an **autonomous**
+engagement, and for any positioning caller holding no weapon (Monitor /
+Classify / shadow). The feedback controller will never command a range
+above this value in those cases.
+
+It is deliberately the same clip the Defend admission radius applies
+(`InterceptSection::standoff_fire_range`, ADR-0012 §4), so an
+autonomous engagement never positions outside the envelope that admitted
+it and the "no pounce" rule holds.
+
+A **commanded** engagement (`EngagementSource::Manual`) is not clipped by
+it (#5429): an unqualified attack order means "engage with the best round
+loaded", so its ceiling is that round's employment reach
+(`reach × standoff_reach_margin`). That is the sanctioned pounce a
+commander may order; admission is unchanged. See
+`dc_orders::StandoffCeiling`.
 
 ### `standoff_reach_margin` : f32
 
@@ -640,7 +688,10 @@ sits a few metres *outside* the kinematic firing envelope — the launcher
 parks just beyond its own reach and never fires (#2212 deadlock). The
 margin pulls the orbit inside the envelope so the gate can release. It
 applies only when the weapon range is the binding cap, never to
-`max_standoff_range`.
+`max_standoff_range` — and it applies under **both** standoff ceilings
+(#5429), including the commanded one that drops the `max_standoff_range`
+clip: without it that ceiling would park a launcher just outside its own
+kinematic reach, which is the #2212 deadlock again.
 
 ### `cruise_maneuver_allowance` : f32
 
@@ -705,6 +756,23 @@ from outside and so can never cross the gate (#4618).
 
 Orbit radius (metres) held while awaiting battle-damage assessment
 after a weapon detonates (`InterceptPhase::AwaitingBda`).
+
+### `point_defence_hold_buffer_seconds` : f32
+
+#5290: extra seconds of slack required before a launcher will hold a
+longer round in the hope a shorter one comes into range.
+
+The hold is declined unless the short round's intercept beats the
+threat's arrival by at least this. It is the only tunable in the hold,
+and it exists because the feasibility estimate assumes the threat keeps
+closing at its current rate; a weaving or decelerating inbound makes
+that prediction optimistic, and this is the slack that absorbs it.
+
+Not a keep-out threshold, and deliberately carries no standoff term.
+Measured intercepts happen 4,350-6,141 m out against a 150 m largest
+shipped blast radius, so standoff is never the binding question (#5290
+M2) — and a believed blast radius could not be read anyway, since a
+defender's picture resolves the threat's chassis, not its loadout.
 
 ### `climb_to_target_min_delta_m` : f32
 
@@ -973,6 +1041,18 @@ closest approach, and the radius wherever no time-to-go was resolved at
 all (the bearing-only cone, and the #3746 unresolved-velocity
 stand-in). See `InboundAlarmRadius`.
 
+Sized against a real failure mode (#5295), not raised on suspicion: a
+linear extrapolation of a still-correcting round's current velocity —
+one still homing onto a cued or bearing-only aimpoint, not yet its own
+resolved lock — can read several km wide of its eventual true closest
+approach. Swept across a dozen shipped M-300A engagement geometries
+(12-30 km spawn range, 0-45° off-axis), the worst observed straight-line
+overshoot was 5,548 m; this carries real margin above that. The
+`dc_tasking` "obviously not for me" fixture
+(`defend_anchor_declines_a_crossing_munition_passing_wide_of_the_anchor`)
+states its own distance well outside this radius, since that distance is
+derived FROM this ceiling and the two move together.
+
 ### `missile_cpa_floor_radius_m` : f32
 
 Radius (m) a weapon in flight earns at its own closest approach — the
@@ -1004,13 +1084,19 @@ sustained lateral acceleration `a` moves its closest approach by
 `½·a·t²`; this field is the time at which that correction covers the
 whole span from `missile_cpa_floor_radius_m` to `missile_cpa_radius_m`,
 so it states an implied turn authority of
-`2·(ceiling − floor)/horizon²`. At the shipped values that is 42 m/s²,
-about 4.3 g — roughly a fifth of an M-250's turn authority at cruise,
-deliberately: what the ramp asserts is not that a maximum-effort
-re-target is *impossible* inside the last few seconds, but that it is
-not credible, the round arriving off-axis and out of energy.
+`2·(ceiling − floor)/horizon²`. Read as a maximum-effort closing
+maneuver, at the shipped ceiling that implied figure is unrealistically
+high for any shipped airframe — the tell that the ceiling's job is no
+longer bounding *that* story alone: #5295 sized it against a
+*different*, additive failure mode (a still-correcting round's current
+velocity misreading its eventual closest approach), which this field is
+not the lever for — widening it would narrow the far-out radius exactly
+where #5295 needed it to stay wide, since the overshoot it measured
+occurs well beyond this horizon (12-20 s to go on a shipped ARM
+engagement, against the flat ceiling, not this ramp).
 
-A larger value keeps the whole formation reacting for longer; a
+A larger value keeps the whole formation reacting for longer, once the
+round is close enough for the ramp to be the active regime; a
 non-positive one describes no ramp and falls back to the flat ceiling.
 Consumed by the per-unit `ThreatAlerts<TEAM>` rollup (`dc_sensors`) and
 the defensive-fire worthiness gate (`dc_tasking`).
@@ -1030,7 +1116,7 @@ instantaneous rung. A unit that cleared a *fixed* radius was generally
 opening the range and did not come back.
 
 The band applies at every time-to-go and is bounded by construction at
-`missile_cpa_radius_m * missile_cpa_stand_down_margin` — 3125 m at the
+`missile_cpa_radius_m * missile_cpa_stand_down_margin` — 9,375 m at the
 shipped values. That is the widest a held rung can ever reach, and it is
 wider than the ceiling at which a fresh alarm could be raised.
 
@@ -1098,12 +1184,84 @@ does not alarm.
 0.0 restores the pre-#3392 bare-mean comparison. Consumed by the
 per-unit `ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
 
+### `munition_mass_admission` : f32
+
+Posterior munition probability at or above which the inbound-weapon
+test admits a track whose projected NTDS node has converged onto a
+non-munition leaf of a munition-bearing environment (#5202).
+
+The projected node is the deepest one holding
+`ClassificationSection::ntds_project_threshold` of the mass, so a
+boost-phase round can project to a small-drone leaf while missiles still
+hold a large share of the posterior. Reading only the label silenced the
+warning there. This gate reads the share instead.
+
+Alarm-biased on purpose, and so well below parity: a false admission
+costs one manoeuvre by a unit that faces the CPA test regardless, while
+a missed one costs the hull. Must lie in `(0, 1]`; 1.0 admits only a
+posterior already certain of a weapon, which the class arms already
+cover.
+
+No value separates a boost-phase round from a genuine small drone: with
+no propulsion read the two differ only by length. Measured against a
+3.2 m drone hull, the round's warning look holds 0.34 and the drone's
+first four looks hold 0.50 / 0.33 / 0.19 / 0.10. At 0.15 such a drone
+closing on a unit reads as a possible weapon for about three looks —
+the cost this value accepts. Consumed by the per-unit
+`ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+
+### `inferred_munition_lookahead_secs` : f32
+
+Longest time-to-closest-approach (s) at which a candidate admitted on
+**inferred** munition evidence alone may raise a weapon rung (#5425).
+
+Inferred means nothing resolved about the round says weapon: the
+projected node is a generic environment whose subtree holds one, #5202's
+posterior mass is at or above `munition_mass_admission`, or the speed
+reaches `ClassificationSection::missile_min_speed_mps` only through
+`missile_speed_sigma_admission`. A watched release, a munition class, a
+converged weapon leaf or a measured point speed at or above that floor is
+positive evidence and is never bounded by this.
+
+Such a candidate's measured point speed is below the missile floor, and
+that point velocity is what the closest-approach test solves with. So
+this bounds its alarm reach at about `(missile_min_speed_mps + own
+speed) * lookahead + missile_cpa_radius_m`, whatever the fix's σ: at the
+shipped values ~17 km for a stationary unit. Unbounded, an AEW cruising
+at 77 m/s alarmed units 68 km down its track, ~880 s from a closest
+approach.
+
+Sized above the lead time the inferential arms exist for: #3392's
+boost-phase round warned at 2.9 km and 174 m/s (~17 s to go), and
+#3883's measured inbound flew 5 s in all. A resolved zero velocity has
+no time-to-go and is already bounded by `missile_cpa_radius_m` itself, so
+it is not affected. A held rung stands down past
+`lookahead * missile_cpa_stand_down_margin`, for the same reason the
+radius does. Must be positive. Consumed by the per-unit
+`ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+
 ### `lock_clear_hysteresis_secs` : f32
 
-Seconds the unit's `ThreatAlert` must stay below `Targeted` before a
-lock-triggered evade (`EvadeReason::Locked`) clears and the unit
-resumes its previous assignment. Consumed by the tasking evade-clear
-check (`evading::tick`).
+Seconds a unit's `ThreatAlert` must stay below the rung a reaction is
+gated at before that reaction releases — the **one trailing window every
+reflex on this ladder shares**, measured from
+`UnitThreatState::last_admitted_time` by `reaction_stands`.
+
+Two reactions read it: the tier-1 lock-triggered evade
+(`EvadeReason::Locked`, `evading::tick`) and the automatic-EMCON go-quiet
+(`UnitThreatState::wants_emcon_quiet`, applied by
+`dc_sim::ops::applied_emcon`).
+
+It is sized against **sensor flicker** — an emitter that acquires, drops
+and re-acquires between sweeps must not bounce a unit in and out of its
+reaction — and deliberately not against a weapon's time of flight. A
+reaction that outlives its own evidence is #5294's job instead: a weapon
+whose track every sensor has lost stays an inbound candidate, so the
+ladder keeps asserting the rung from the extrapolated track and this
+window trails it rather than substituting for it. That is what lets a
+reflex which destroys its own evidence (going quiet switches off the
+radar the inbound track came from) share one rule with one that does
+not.
 
 ### `threat_alert_min_dwell_secs` : f32
 
@@ -1459,6 +1617,37 @@ Fraction of R marking the outer ring's outer edge: the ring is
 is zone-free water that belongs to no zone (3/4 since #4229, which
 widened the ring from the #4140 design's 2/3 — the centre disc was
 left alone, so the whole widening comes out of the zone-free water).
+
+## `EnvelopeMatchingSection`
+
+When a surviving window is narrow enough to warn the player about (#5237).
+
+These are **not** `EmulationSection` knobs, and the split is load-bearing:
+that section holds thresholds a *sensor* resolves, which decide objective sim
+state both sides read identically (ADR-0009). These decide when a *player*
+sees a warning chip, and change no simulation outcome at all — a `Narrow`
+axis is clamped exactly as a `Matched` one is.
+
+### `narrow_speed_band_frac` : f32
+
+Warn when the matched speed band is under this fraction of the
+platform's own band.
+
+Relative rather than absolute because "barely any room" means different
+speeds for a 10 m/s USV and a 200 m/s interceptor. A platform with no
+band of its own never warns: matching took nothing from it.
+
+### `narrow_altitude_band_m` : f32
+
+Warn when the matched altitude band is under this many metres.
+
+Absolute because the thing it measures is absolute: the room between the
+terrain floor a route must clear and the ceiling the window imposes.
+Below roughly twice `air_terrain_clearance` there is effectively none.
+
+A platform whose own band is already under this never warns, for the
+reason `Self::narrow_speed_band_frac` gives: a surface hull's window is
+a single point before any portrayal, and matching has taken nothing away.
 
 ## `TerrainAvoidanceConfig`
 
@@ -2334,6 +2523,13 @@ Multiplier (> 1) applied to a sensor's resolution cell when deciding to
 *split* an already-merged pair, versus the base cell used to *merge*. The
 dead band between merge and split stops formations flickering (AC#4).
 
+### `return_masking_db` : f32
+
+How far (dB) below a merged track's strongest member return another
+member's return must sit to be **masked**: buried in the dominant return,
+so its hull contributes no classification evidence to the track (#5264).
+Strictly positive.
+
 ## `ClassificationSection`
 
 Tuning for the staged contact classifier (DC-36.5). The classifier accumulates
@@ -2468,6 +2664,83 @@ going `Lost`.
 
 Seconds after a lock goes `Lost` (eval fails / gate no longer fits) at
 which the designation is released and the track de-designated.
+
+## `EmulationSection`
+
+Signature-emulation tuning (#5169).
+
+Every field is a *threshold a sensor can resolve*, not a weight — the
+discrimination rules these gate are objective sim state that human and AI
+sensing read identically (ADR-0009), so none of them is per-team.
+
+### `repeater_anomaly_tolerance_db` : f32
+
+How much brighter than a true skin return a repeated return may read
+before a signature-capable radar notices, in decibels.
+
+A fixed-gain repeater's return falls off as 1/R² against a skin
+return's 1/R⁴, so the excess is `20·log10(R₀/R)` and this tolerance
+fixes the range at which it becomes conclusive: larger = the decoy
+survives closer in.
+
+### `spoof_power_tolerance_db` : f32
+
+How far a spoofer's radiated power may differ from the rated power of
+the radar it claims to be before an ESM-class receiver rejects the
+claim, in decibels.
+
+An **absolute** band, compared against `|power_ratio_db|`: a cheap
+spoofer whispering where a SPY-310 would shout and one shouting where a
+navigation set would whisper are the same objective mismatch, and a
+one-sided bound would make "claim something far weaker than you are" a
+free lie.
+
+This is the knob the #5172 power-class ladder is balanced on: it decides
+how big a set a given spoofer can plausibly impersonate.
+
+### `kinematic_stall_margin_frac` : f32
+
+Fraction of the portrayed chassis's stall speed a contact may fly below
+before the portrayal is kinematically implausible.
+
+Slightly under 1.0 rather than exactly 1.0 so measurement noise on the
+observed speed cannot unmask a decoy that is genuinely flying the
+profile it claims.
+
+### `kinematic_ceiling_margin_frac` : f32
+
+Multiple of the portrayed chassis's class maximum speed a contact may
+exceed before the portrayal is kinematically implausible (#5222).
+
+The ceiling symmetric with `Self::kinematic_stall_margin_frac`'s floor,
+and wider than it, because a ceiling absorbs two errors a floor does not:
+fused-speed noise at the 30–80 km ranges where a portrayal decides an
+engagement, and a clamped platform's transient overshoot above its
+commanded speed.
+
+Must exceed 1.0. The #5237 envelope cap holds a matched platform at the
+portrayed maximum, so a margin at or below 1.0 would unmask a platform
+that is obeying the option meant to protect it.
+
+Unlike the stall floor this term binds on **every** powered portrayal,
+surface hulls included — which is the #5222 gap it closes, since
+`stall_speed_mps` is `None` for every non-fixed-wing hull and left that
+channel inert in both directions.
+
+### `kinematic_ceiling_margin_m` : f32
+
+How far above the portrayed chassis's authored altitude ceiling a
+height-resolved contact may be measured before the portrayal is
+kinematically implausible, in **metres** (#5222).
+
+Absolute rather than fractional, and that is correctness rather than
+taste: a surface hull's authored window is `[0, 0]`, so any fraction of
+it is zero and every surface portrayal would unmask on the first metre of
+elevation noise.
+
+Sized above resolved-elevation error and altitude-hold overshoot, and far
+below the bands that separate the hull classes a portrayal chooses
+between.
 
 ## `SalvoSection`
 

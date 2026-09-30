@@ -13,19 +13,38 @@
         // Hull sonar (#3081): torpedo warning (hears homing-seeker pings) +
         // last-ditch subsurface picture; the escorts are the real ASW screen
         (kind: Component(component_id: "an_sqs_40")),
-        // --- Point-defence VLS (SAMs) ---
-        // Point-defence SAM 1 (M-100)
+        // --- VLS: 12 of 12 cells (#5429) ---
+        // The rack is a three-tier air defence: 6 point-defence IR rounds for
+        // leakers, 2 BVR radar rounds, and 4 area SAMs. Before #5429 it held 6
+        // rounds in 12 cells and nothing aboard reached past 30 km, so a
+        // commanded attack on an air track 36 km out had no round that could
+        // engage from station. Cell accounting is one round per cell
+        // (`dc_mcp::tools::loadout`), so this list IS the cell count.
+        // Point-defence SAM 1 (M-100A, 9.6 km)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
-        // Point-defence SAM 2 (M-100)
+        // Point-defence SAM 2 (M-100A)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
-        // Point-defence SAM 3 (M-100)
+        // Point-defence SAM 3 (M-100A)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
-        // Point-defence SAM 4 (M-100)
+        // Point-defence SAM 4 (M-100A)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
-        // Area SAM 1 (M-250)
+        // Point-defence SAM 5 (M-100A)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // Point-defence SAM 6 (M-100A)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000008"))),
+        // BVR radar SAM 1 (M-250A Radar Missile, 30.3 km — NOT the area SAM,
+        // which is the M-400A below)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
-        // Area SAM 2 (M-250)
+        // BVR radar SAM 2 (M-250A)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
+        // Area SAM 1 (M-400A, 124.9 km)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000011"))),
+        // Area SAM 2 (M-400A)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000011"))),
+        // Area SAM 3 (M-400A)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000011"))),
+        // Area SAM 4 (M-400A)
+        (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000011"))),
         // --- Torpedo tubes ---
         // Torpedo 1 (MK-55)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000007"))),
@@ -87,6 +106,8 @@
         (blueprint: BlueprintId("00000000-0000-0000-0000-000000000003"), count: 8), // M-250
         // Spare cruise missiles + area SAMs (arsenal USV VLS) + heavy torpedoes (subs / tubes)
         (blueprint: BlueprintId("00000000-0000-0000-0000-000000000009"), count: 6), // M-500
+        // M-400 spares are the USV-200A arsenal ship's VLS reloads, NOT this
+        // carrier's rack (which carries its own four, above).
         (blueprint: BlueprintId("00000000-0000-0000-0000-000000000011"), count: 4), // M-400
         (blueprint: BlueprintId("00000000-0000-0000-0000-000000000007"), count: 8), // MK-55
         // Spare silent light torpedoes (ASW picket tubes)

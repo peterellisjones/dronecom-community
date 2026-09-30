@@ -28,6 +28,10 @@ Sensor-pricing tuning knobs (also reused to shape chassis stealth premiums).
 
 Warhead-pricing tuning knobs.
 
+### `decoy` : [`DecoyKnobs`](#decoyknobs)
+
+Decoy-pricing tuning knobs.
+
 ### `chassis` : [`ChassisKnobs`](#chassisknobs)
 
 Chassis-pricing tuning knobs.
@@ -239,6 +243,39 @@ Max fuze credit multiplier at saturation (e.g. 0.5 → up to 1.5×).
 ### `blast_credit_max` : f32
 
 Max blast (near-miss damage retention) credit at saturation.
+
+## `DecoyKnobs`
+
+Decoy-pricing tuning knobs (#5169, recalibrated #5172).
+
+See `super::price_decoy` for what each term buys and why radiated power is
+not among them. A decoy is transmit-only mimicry hardware, so it is priced
+as hardware: a box, its mass, and the amplifier it is rated for.
+
+### `base_cost` : f32
+
+Flat cost of the payload's non-scaling hardware — synthesizer, control
+and packaging. Also the floor that keeps a massless, powerless payload
+priced above zero, which `validate_component` requires.
+
+### `cost_per_kg` : f32
+
+Cost per kg of payload mass. Precision transmit electronics, so far
+above the `hull_per_kg` structural rate.
+
+### `cost_per_kw` : f32
+
+Cost per kW of rated transmit draw — the amplifier chain. Linear: twice
+the wattage is twice the amplifier, with no diminishing return.
+
+### `breadth_credit_max` : f32
+
+Maximum multiplier the emulation-breadth credit can add.
+
+### `reference_breadth` : f32
+
+Number of *extra* portrayals (beyond the first) at which the breadth
+credit reaches half its maximum.
 
 ## `ChassisKnobs`
 

@@ -28,7 +28,7 @@ the full display name.
 ### `category` : [`ComponentCategory`](#componentcategory)
 
 Which `ComponentCategory` this item belongs to (`Sensors` /
-`Warheads` / `Utility` / `CarriedEntities`) — drives
+`Warheads` / `Decoys` / `Utility` / `CarriedEntities`) — drives
 mount-compatibility filtering.
 
 ### `mount_rule` : [`MountRule`](#mountrule)
@@ -89,6 +89,7 @@ Variants:
 - **`Warheads`** — Weapon payloads (warheads); at most one per vehicle.
 - **`Utility`** — Support equipment with no sensor or warhead payload.
 - **`CarriedEntities`** — Carried sub-vehicles / munitions — blueprints stowed aboard for launch.
+- **`Decoys`** — Signature-emulation payloads: active repeaters and RWR spoofers that make a hull portray a signature that is not its own.
 
 ## `MountRule`
 
@@ -132,6 +133,7 @@ Variants:
 - **`Sensor`**(`Vec`<[`SensorDef`](#sensordef)>) — A detection component: one or more sensors (`SensorDef`). Multiple entries let a single component mount a sensor suite.
 - **`Warhead`**([`WarheadDef`](#warheaddef)) — A weapon payload: a single warhead (`WarheadDef`). At most one warhead per vehicle.
 - **`Utility`** — A support component with no sensor or warhead payload (fuel tanks, datalinks, structural/hardpoint items); its effect is its weight, power draw, and category.
+- **`Decoy`**([`DecoyDef`](#decoydef)) — A signature-emulation payload (`DecoyDef`): makes the hull portray a signature that is not its own on one long-range channel.
 
 ## `Domain`
 
@@ -291,6 +293,16 @@ Distinct from `proximity_fuze_radius_m`.
 
 True-proximity terminal-fuze trigger radius (m) for a range-blind PN weapon (#1696) — distinct from the lethal `blast_radius`.
 
+## `DecoyDef`
+
+A signature-emulation payload (#5169). Exactly one channel per component —
+a repeater cannot carry an emitter list and a spoofer cannot carry a chassis
+list, so a component that tries to be both is unrepresentable.
+
+### `channel` : [`DecoyChannel`](#decoychannel)
+
+Which long-range channel this payload lies to.
+
 ## `SensorKind`
 
 Kind of sensor hardware.
@@ -437,6 +449,25 @@ Variants:
 
 - **`None`** — Basic RWR — no FDOA contribution.
 - **`Capable`** — ESM-class RWR — can contribute an FDOA velocity measurement.
+
+## `DecoyChannel`
+
+The channel a decoy payload emulates on.
+
+Both channels are deliberately long-range only. IR and visual always read
+the hull's true signature, so a decoy is a BVR lie that dissolves inside a
+passive sensor's range — the close-range truth is the discrimination
+channel, and it costs no machinery.
+
+Variants:
+
+- **`RadarRepeater`** — Active repeater: receives the illuminating radar's pulse and retransmits amplified, presenting an emulated chassis's RCS in place of the hull's own. Silent until painted — the victim's own radar powers the lie.
+  - `emulates` : `Vec`<[`ChassisId`](#chassisid)> — Chassis this repeater may portray. Non-empty; every id must resolve in the chassis registry.
+  - `calibration_range_m` : f32 — Range (m) at which the repeater's fixed gain presents `emulates`' RCS exactly. Inside it the repeated return's ~1/R² falloff reads anomalously bright against a skin return's ~1/R⁴, which is what a signature-capable radar unmasks it on.
+- **`EmitterSpoofer`** — RWR spoofer: a fake emitter imitating a declared radar's fingerprint at the spoofer's own power.  Which emitter tree it radiates into is not authored. A spoofer is always `SensorKind::Rwr`, and the rest of the sim depends on that being true by construction rather than by validation: the portrayal derive maps a spoof override onto the `Rwr` emitter alone, and `fire_control_inputs` reads "an `Rwr`-kind `PassiveEmitter` on a decoy hull" as "a radiating spoofer" when deciding whether a gone-dark unit is still ARM-targetable. An authored kind would let a definition file express a spoofer that no consumer honours; the field is therefore absent rather than checked.
+  - `emulates` : `Vec`<[`ComponentId`](#componentid)> — Sensor components this spoofer may imitate. Non-empty; every id must resolve to an active, emitting **search** component — a spoofer that could claim a `Track`-capability seeker would fabricate inbound-weapon evidence fleet-wide (see `ClassEvidence::seeker_kind`'s reachability argument, which this would otherwise widen).
+  - `emission_strength` : f32 — The spoofer's real radiated power. Deliberately independent of what it claims: the gap between the two is the objective received-power mismatch an ESM-class receiver sees through.
+  - `mounting` : [`MountingPosition`](#mountingposition) — Drives the emitter's `y_offset`, which is real geometry: a mast-mounted spoofer clears the radar horizon further.  There is deliberately no `fov_h`/`fov_v`. A spoofer is omnidirectional by design — it *wants* to be intercepted, from every bearing, and a real one broadcasts rather than sweeps.
 
 ## `ContactCapacity`
 

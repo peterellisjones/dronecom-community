@@ -1,0 +1,67 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+//
+// Air-class active repeater (#5171) — the MALD payload. Receives the victim
+// radar's pulse and retransmits it amplified, presenting the emulated chassis's
+// `rcs` to that radar in place of the carrier's own. It is silent until painted:
+// a repeater has nothing to repeat while the enemy stays dark, so the enemy's
+// own radar powers the lie.
+//
+// `calibration_range_m` is the range its fixed gain is trimmed for. A repeater's
+// return falls off as 1/R^2 while a real skin return of that cross-section falls
+// off as 1/R^4, so the excess brightness in dB is 20*log10(R0/R) and the lie
+// dies to a signature-capable radar at `R0 * 10^(-repeater_anomaly_tolerance_db
+// / 20)` — at the shipped 6 dB, 10 km calibrates to a 5012 m unmask range.
+// Shipped, only two sensors can take that read: an_apg_15 (a missile seeker) and
+// an_spy_310 (the fleet array). Against an an_aps_440 the portrayal never fails
+// on brightness at all, and the counterplay is EO or an ESM picket.
+//
+// 10 km is chosen so the anomaly is the INTERMEDIATE discrimination channel:
+// closer in than the 15.4 km at which an an_spy_310 identifies a portrayed
+// MQ-450, further out than the ~800 m at which EO reads the truth. That leaves a
+// ~10 km band in which a carrier group must decide whether to spend an
+// interceptor, which is the decision this payload exists to force. It is
+// deliberately NOT a priced input (Balancing-Tsar ruling on #5172): the gain is
+// paid for through the draw that produces it, and `calibration_range_m` is a
+// discrimination input only.
+//
+// `emulates` must be propulsion-plausible from the carrier, which for this class
+// is the turbojet MQ-60 Swift. All three entries are Turbojet and share the
+// Swift's Air kinematic bucket. m_500 is absent despite matching propulsion
+// exactly: `Explicit(Missile)` puts it in a different kin bucket, which the
+// classifier hard-penalises, so a drone cannot convincingly portray a missile.
+// rq_10 (Propeller) and mh_180 (Rotary) are absent on propulsion signature. Keep
+// new entries inside both fences.
+//
+// ORDER IS LIVE GAMEPLAY. The first entry is what this payload portrays with no
+// doctrine selection, which is every decoy the player has not overridden and
+// every decoy the AI designs. mq_450 leads because an armed strike drone is the
+// most alarming default lie — and because it is the cheapest chassis in the
+// list, so it is the entry that binds the substitution guard.
+(
+    id: "an_ale_35",
+    designator: "AN/ALE-35",
+    codename: "Echo",
+    category: Decoys,
+    mount_rule: Single,
+    // Heavier than the 25 kg AN/ALQ-50 because a repeater is not transmit-only:
+    // it carries a receiver front-end as well, since it cannot retransmit a
+    // pulse it has not caught. Sized so the Swift can carry this AND the
+    // spoofer (70 kg against a 75 kg margin) but never both plus a receiver.
+    weight: 45.0,
+    // Fits the Swift's 2.5 kW spare supply alongside the 1.5 kW AN/ALQ-50,
+    // exactly. That is the airframe's design intent (#5219 sized the 3.0 kW
+    // supply knowing the spoofer had shipped), not a coincidence, and
+    // `shipped_decoy_airframe` pins both halves of it. Decoy draw is authored,
+    // never derived: it is the epic's class gate against `power_supply_kw`.
+    power_draw: Fixed(1.0),
+    // Unrestricted on purpose. Which hulls may carry a deception payload is the
+    // chassis's `Category(Decoys)` grant; which payload they can afford is the
+    // weight and power budget. No domain fiat.
+    allowed: [],
+    payload: Decoy((
+        channel: RadarRepeater(
+            emulates: ["mq_450", "mq_220", "mq_160"],
+            calibration_range_m: 10000.0,
+        ),
+    )),
+)
