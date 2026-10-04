@@ -7,7 +7,7 @@
     fuel_tank_percent: 1.0,
     inventory: [
         // Active radar seeker (terminal anti-ship homing)
-        (kind: Component(component_id: "an_apg_15")),
+        (kind: Component(component_id: "an_apg_17")),
         // Heavy ship-killer warhead
         (kind: Component(component_id: "mk_300")),
     ],

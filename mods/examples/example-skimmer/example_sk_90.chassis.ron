@@ -1,0 +1,56 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/chassis.md
+//
+// The fictional "SK-90 Wavecutter": a heavy sea-skimmer that trades range and
+// agility for speed and a very low cruise altitude. Derived from
+// assets/definitions/chassis/m_500.chassis.ron (the "Cutlass" cruise missile)
+// and tuned to be heavier, faster, lower, shorter-ranged and less agile.
+// Figures are hand-tuned for the example, not balanced against shipped parts.
+(
+    id: "example_sk_90",
+    designator: "SK-90",
+    codename: "Wavecutter",
+    domain: Air,
+    automatic_evasion_policy: Off,
+    launch_requires: [VLS, AirLaunch],
+    recovery_requires: [],
+    provides: [],
+    length: 9.0,
+    weight: 900.0,
+    max_weight: 1300.0,
+    // ~140 km kinematic range: 30 kg ÷ 9 kg/min = ~3.3 min powered at ~700 m/s.
+    max_fuel: 30.0,
+    hit_points: 12.0,
+    full_damage_radius_m: 0.38,
+    drag: 0.100,
+    mast_height: 0.0,
+    em_signatures: Some((rcs: 0.10, ir_base: 40.0, visual_cross_section: 0.4)),
+    acoustic_signatures: None,
+    physics: FixedWing(
+        min_altitude: 5.0,
+        max_altitude: 14000.0,
+        // Sea-skimming: the whole point of the design.
+        default_altitude: 10.0,
+        min_attack_altitude: Some(0.0),
+        max_attack_altitude: None,
+        launch_speed: Some(250.0),
+        max_pitch_rate: 0.40,
+        max_yaw_rate: 0.25,
+        stall_speed: 120.0,
+        max_lateral_g: 15.0,
+        // No Lofted: climbing would put it in radar view and defeat a sea-skimmer.
+        supported_trajectories: [Direct, TerrainFollow],
+        terrain_clearance: 5.0,
+    ),
+    propulsion: Turbojet,
+    engine: Powered((thrust_n: 11000.0, fuel_burn_rate: 9.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
+    allowed_components: [Category(Sensors), Category(Warheads), Category(Utility)],
+    carrier: false,
+    availability: PlayerAvailable,
+    ntds_classification: Explicit(Missile),
+    target_domains: [SeaSurface],
+    guidance_uplink: FromLauncher,
+    battery_capacity_kwh: 0.05,
+    base_power_draw_kw: 0.5,
+    power_supply_kw: 1.5,
+    engine_bells: (loiter: None, cruise: None, full: None),
+)

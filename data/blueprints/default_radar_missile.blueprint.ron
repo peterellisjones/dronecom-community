@@ -7,7 +7,7 @@
     fuel_tank_percent: 1.0,
     inventory: [
         // Active radar seeker
-        (kind: Component(component_id: "an_apg_15")),
+        (kind: Component(component_id: "an_apg_17")),
         // Warhead
         (kind: Component(component_id: "mk_120")),
     ],

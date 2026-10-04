@@ -7,7 +7,7 @@
     automatic_evasion_policy: On,
     launch_requires: [WellDeck],
     recovery_requires: [WellDeck],
-    provides: [(facility: VLS, cells: 8, max_simultaneous_launches: 8), (facility: TorpedoTube, cells: 2, max_simultaneous_launches: 2)],
+    provides: [(facility: VLS, cells: 4, max_simultaneous_launches: 4), (facility: TorpedoTube, cells: 2, max_simultaneous_launches: 2)],
     length: 10.0,
     weight: 2500.0,
     max_weight: 3500.0,

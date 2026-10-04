@@ -52,19 +52,19 @@ group_panel:
     "zh-TW": "· 領隊"
   # #1574: terse marker shown in the subtitle when the whole group is stowed
   # (no airborne anchor) — the panel still renders, but kinematics/mission are
-  # a read-only plan.
+  # a read-only plan. #5538: follows the stowed icon, so no leading separator.
   stowed_indicator:
-    de: "· VERSTAUT"
-    en: "· STOWED"
-    es: "· ESTIBADO"
-    fr: "· ARRIMÉ"
-    it: "· STIVATO"
-    ja: "· 格納中"
-    ko: "· 격납됨"
-    "pt-BR": "· GUARDADO"
-    ru: "· В АНГАРЕ"
-    zh: "· 已收纳"
-    "zh-TW": "· 已收納"
+    de: "VERSTAUT"
+    en: "STOWED"
+    es: "ESTIBADO"
+    fr: "ARRIMÉ"
+    it: "STIVATO"
+    ja: "格納中"
+    ko: "격납됨"
+    "pt-BR": "GUARDADO"
+    ru: "В АНГАРЕ"
+    zh: "已收纳"
+    "zh-TW": "已收納"
   subtitle:
     de: "%{domain} · %{count} Mitglieder"
     en: "%{domain} · %{count} members"

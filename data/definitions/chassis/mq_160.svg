@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" data-nose="up" viewBox="0 0 224 320" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <title>MQ-160 Falcon</title>
+  <path d="M112 12 L99 52 L94 82 L70 100 L70 119 L93 108 L87 127 L12 229 L12 251 L83 232 L98 244 L66 276 L66 296 L100 287 L100 308 L124 308 L124 287 L158 296 L158 276 L126 244 L141 232 L212 251 L212 229 L137 127 L131 108 L154 119 L154 100 L130 82 L125 52 Z"/>
+  <path d="M100 287 L104 286 L98 244 M124 287 L120 286 L126 244"/>
+  <path d="M100 298 L124 298 M93 108 L94 82 M131 108 L130 82"/>
+  <path d="M87 127 L83 232 M137 127 L141 232"/>
+  <path d="M93 108 L98 244 M131 108 L126 244"/>
+</svg>

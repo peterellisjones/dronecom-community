@@ -30,6 +30,10 @@ SimConfig(
         formation_catchup_headroom_frac: 0.15,
         formation_headroom_ramp_per_sec: 0.5,
         formation_reform_converge_min_mps: 2.0,
+        // #5632: a climbing formation's vertical band — the last stretch of the
+        // climb it leaves to the anchor's own altitude hold, and how far an
+        // in-slot follower may fall below the anchor before the anchor waits.
+        formation_climb_band_m: 30.0,
         terminal_homing: (
             gate_range_steps: 4.0,
             // dt-independent terminal-endgame time-to-go (s) at the mover's MAX
@@ -818,6 +822,24 @@ SimConfig(
             // saturate a carrier's defenses with unlimited weapons in flight.
             command_ship: Unlimited,
         ),
+        // #5004: an airborne round whose target has no hull left may be
+        // re-issued an attack on another contact instead of being spent —
+        // through its launcher's datalink only (the round's chassis must accept
+        // the launcher uplink, and the launcher must be alive). `Off` restores
+        // the #4999 spend for every orphaned round.
+        //
+        // `max_off_boresight_deg` bounds the turn a retarget may ask for: the
+        // remaining-energy reach solve credits a launch-shaped shot from the
+        // round's position and never charges the turn, so the reach guard
+        // (`airborne_retarget_credit_arrives_through_the_turn_cap` in
+        // `dc_autopilot/tests/flown_reach_guard.rs`) flies arrivals through
+        // this angle and fails if it is widened past what it measures. 75°,
+        // not 90°: at 90° the Radar Missile from sea level at 75% fuel is
+        // credited 2.4% past the farthest target it can turn onto and reach.
+        airborne_retarget: (
+            policy: LauncherDatalink,
+            max_off_boresight_deg: 75.0,
+        ),
     ),
     patrol: (
         min_radius: 500.0,
@@ -922,6 +944,10 @@ SimConfig(
         // gate REJECTS units, so an over-tight cone silences a warning, while an
         // over-wide one only weaves a unit that was never in danger.
         bearing_cone_sigma_admission: 3.0,
+        // σ multiple on a track's speed estimate (#3392): the inbound-weapon
+        // gate admits at `speed + k·σ >= missile_min_speed_mps`, and the
+        // classifier asserts an elevation-blind track airborne only at
+        // `speed - k·σ > surface_max_speed_mps` (#5446).
         missile_speed_sigma_admission: 2.0,
         // #5202: posterior munition probability that admits an inbound weapon
         // whose projected node converged onto a non-munition leaf (a boost-phase
@@ -940,6 +966,21 @@ SimConfig(
         // wide the fix. Above #3392's ~17 s boost-phase warning and #3883's 5 s
         // flight; an AEW 68 km out (~880 s) no longer alarms the fleet.
         inferred_munition_lookahead_secs: 30.0,
+        // #5534: a hostile round whose path meets one of our own in-flight
+        // munitions first (an interceptor fired at our outbound round) does not
+        // raise MissileInbound on the units behind it, nor draw their point
+        // defence, until it is past our munition — provided at least this long
+        // would remain between the encounter and the unit. That is the warning
+        // a real round on the reciprocal of our own is guaranteed to keep. Sized
+        // at missile_cpa_horizon_secs, where the #4866 radius starts to narrow.
+        own_munition_screen_min_remaining_secs: 10.0,
+        // #5534: an encounter further ahead than this screens nothing. A real
+        // anti-ship round on the reciprocal of our own outbound round is
+        // indistinguishable from an interceptor fired at it, so this bounds how
+        // long point defence can be held off one: measured on the #5153
+        // salvo exploit, an uncapped screen cost three extra hulls. It still
+        // covers the reported case (met ~4 s after first held).
+        own_munition_screen_max_encounter_secs: 5.0,
         // The one trailing window every reflex on the threat ladder shares — the
         // tier-1 lock-evade (#2863) and the automatic-EMCON go-quiet (#2997).
         // Sized against SENSOR FLICKER (an emitter that drops and re-acquires
@@ -1011,6 +1052,12 @@ SimConfig(
         // team's angle arrives on top of it. 15 km excludes ~35.4° of ring per
         // team (~20% at 2 teams, ~39% at 4), leaving ample water to draw from.
         start_keep_out_m: 15000.0,
+        // #5577: a new game opens with `target_population` civilians already at
+        // sea. A seeded crosser starts this far along its crossing — never at
+        // the rim (that is an ordinary arrival) and never at the exit (it would
+        // retire within seconds of the match opening).
+        seed_crossing_progress_min: 0.15,
+        seed_crossing_progress_max: 0.85,
         // #3707: the full six-type roster. Weights are first-pass — flagged
         // for a balance pass once the cast is actually visible in matches.
         mix: [
@@ -1020,7 +1067,7 @@ SimConfig(
             (blueprint: "Autonomous Factory Trawler", weight: 1.0, behavior: ClusterAnchor),
             // #3460: the two air neutrals chase the action rather than hopping
             // at random — a fresh wreck, then a launch, then a command ship.
-            (blueprint: "Peacekeeping Observation Drone", weight: 1.0, behavior: ActionHop),
+            (blueprint: "AWC Observation Drone", weight: 1.0, behavior: ActionHop),
             (blueprint: "Press War Correspondent Drone", weight: 1.0, behavior: ActionHop),
         ],
         // #5125: what a confirmed-neutral hull on each chassis reads as, once
@@ -1041,7 +1088,7 @@ SimConfig(
             (chassis: "autonomous_lng_tanker", role: LngTanker, evidence: ChassisAlone),
             (chassis: "autonomous_fishing_vessel", role: FishingVessel, evidence: ChassisAlone),
             (chassis: "autonomous_factory_trawler", role: FactoryTrawler, evidence: ChassisAlone),
-            (chassis: "mq_450", role: PeacekeepingObserver, evidence: ChassisAndIff),
+            (chassis: "mq_450", role: AwcObserver, evidence: ChassisAndIff),
             (chassis: "mq_220", role: Press, evidence: ChassisAndIff),
         ],
         // #3707: orbit-hop / cluster tuning. `orbit_radius_m` is shared by

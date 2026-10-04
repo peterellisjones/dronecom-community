@@ -1,0 +1,22 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+//
+// Mounts this mod's own chassis (example_sk_90) with a shipped active-radar
+// seeker and heavy warhead, mirroring assets/blueprints/default_cruise_missile.
+(
+    id: BlueprintId("10000000-0000-0000-0000-000000000090"),
+    codename: "Wavecutter",
+    designator: "SK-90A",
+    chassis_id: "example_sk_90",
+    fuel_tank_percent: 1.0,
+    inventory: [
+        // Active radar seeker (terminal anti-ship homing)
+        (kind: Component(component_id: "an_apg_15")),
+        // Heavy ship-killer warhead
+        (kind: Component(component_id: "mk_300")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: TerrainFollow,
+    default_altitude: Chassis,
+    unknown_range_launch: Withhold,
+    stores: [],
+)

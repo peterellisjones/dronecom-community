@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" data-nose="right" viewBox="0 0 320 88" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <title>MK-55 Hammerhead heavy torpedo</title>
+  <path d="M38 36 L66 30 H292 Q308 30 308 44 Q308 58 292 58 H66 L38 52"/>
+  <path d="M12 30 H38 V58 H12 Z" stroke-linejoin="miter"/>
+  <path d="M282 30 V58 M18 30 V58"/>
+</svg>

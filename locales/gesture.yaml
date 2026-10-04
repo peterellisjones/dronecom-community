@@ -31,17 +31,7 @@ gesture:
     zh: "回收"
     "zh-TW": "回收"
   cycle_hint:
-    de: "TAB"
     en: "TAB"
-    es: "TAB"
-    fr: "TAB"
-    it: "TAB"
-    ja: "TAB"
-    ko: "TAB"
-    "pt-BR": "TAB"
-    ru: "TAB"
-    zh: "TAB"
-    "zh-TW": "TAB"
   attack:
     # Appended to the ATTACK verb line (AC5, AC7, AC10) — planned expenditure
     # / existing commitment, or the exact bounded selection once inventory

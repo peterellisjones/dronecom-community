@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" data-nose="up" viewBox="0 0 256 176" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <title>RQ-10 Jackal</title>
+  <path d="M128 14 Q119 30 119 44 V83 L12 136 V148 L119 103 V130 Q119 151 128 168 Q137 151 137 130 V103 L244 148 V136 L137 83 V44 Q137 30 128 14 Z"/>
+  <path d="M119 44 H137 M119 83 V103 M137 83 V103 M119 130 H137"/>
+  <path d="M113 154 H143 M128 116 V144"/>
+</svg>

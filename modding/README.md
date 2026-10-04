@@ -17,6 +17,7 @@ guide walks through below.
 - [The manifest: `mod.ron`](#the-manifest-modron)
 - [The dev loop](#the-dev-loop)
 - [Writing your first mod](#writing-your-first-mod)
+- [Optional chassis artwork](#optional-chassis-artwork)
 - [Pricing](#pricing)
 - [ID collisions](#id-collisions)
 - [Using another mod's parts](#using-another-mods-parts)
@@ -41,7 +42,8 @@ my-radar-pack/
   folder as a mod at all. Its schema is documented in
   [`mod-manifest.md`](../data/docs/mod-manifest.md).
 - **`preview.png`** is your Workshop item's thumbnail. If you don't include
-  one, the game falls back to a default image on publish.
+  one, the game generates one from your mod's content on publish (see
+  [Publishing a mod folder](#publishing-a-mod-folder-parts)).
 - **`workshop.ron`** records the Steam Workshop item id after your first
   publish, so a later publish updates the same item instead of creating a
   duplicate. The game writes this file for you — don't hand-edit it.
@@ -78,9 +80,10 @@ Every mod needs exactly one `mod.ron` at its root:
 )
 ```
 
-`name` and `description` seed your Workshop item's title and description the
-first time you publish (you can still edit them on the Workshop page
-afterwards — they aren't kept in sync). All three fields are required, and
+`name` and `description` become your Workshop item's title and description,
+and the game appends a stats section for each chassis and design in the mod.
+Every publish sets them again, so make lasting edits in `mod.ron` rather than
+on the Workshop page. All three fields are required, and
 an unrecognized field is rejected outright rather than silently ignored —
 see [`mod-manifest.md`](../data/docs/mod-manifest.md) for the full field
 reference.
@@ -135,6 +138,64 @@ A mod that adds a new part and a demonstration blueprint together works the
 same way, as long as both files live in the same mod folder — the loader
 resolves a mod's own blueprints against its own definitions plus the base
 game, so an intra-mod reference like this always works.
+
+### Optional chassis artwork
+
+Chassis illustrations are optional. Put an SVG beside its chassis definition
+with the same stem: `my_airframe.chassis.ron` uses
+`my_airframe.svg`. The game applies this rule identically to built-in and
+modded chassis. It considers artwork only for the definition source that was
+accepted into the registry, so a rejected mod cannot supply artwork for an
+otherwise accepted chassis.
+
+No SVG is required. An absent sidecar is normal. An unreadable, invalid, or
+unsupported sidecar produces a non-blocking warning; the chassis still loads.
+In either case the UI shows no artwork, placeholder, substitute symbol, or
+empty image space. Restart after adding or changing a sidecar: artwork is
+loaded with the chassis definitions at startup.
+
+#### SVG outline subset
+
+Author a compact, outline-only vector drawing. The SVG root may set a `viewBox`
+(and optional dimensions, `preserveAspectRatio`, or version); use `g` groups
+and `path` elements for the drawing, with optional `title` and `desc`. Paths
+may use normal path geometry and affine transforms. Every visible path needs
+an opaque solid stroke and a positive stroke width; use `fill="none"`.
+Supported caps are `butt`, `round`, and `square`; supported joins are `miter`,
+`miter-clip`, `round`, and `bevel`.
+Presentation properties may be attributes or simple `name: value;` inline
+declarations. CSS comments and `!important` are outside this subset. Path data
+and canvas attributes must parse completely; malformed trailing data is rejected.
+
+The root may also declare `data-nose="up"` or `data-nose="right"`: the
+direction the drawn nose points. The designer then draws the outline to scale
+on a metre grid, treating the drawing's extent along that axis (path
+centrelines, nose to tail) as the chassis `length`. Draw top-down aircraft
+nose-up or nose-right and side-on hulls, helicopters and munitions nose-right.
+Without `data-nose` the outline still renders, on a plain grid with no scale
+caption; any other value rejects the sidecar.
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" data-nose="right"
+     fill="none" stroke="currentColor" stroke-width="1.6"
+     stroke-linecap="round" stroke-linejoin="round">
+  <title>My airframe</title>
+  <path d="M12 60 H308 M80 60 L140 20 M180 20 L240 60"/>
+</svg>
+```
+
+The UI applies its own semantic tint, so artwork should use `currentColor`
+rather than encode a gameplay meaning in its stroke color. Keep the `viewBox`
+tight around the art: previews preserve its aspect ratio.
+
+[`example-skimmer`](../mods/examples/example-skimmer/) ships a complete
+worked example: `example_sk_90.svg` beside `example_sk_90.chassis.ron`.
+
+Do not use fills, transparency, dashed strokes, non-default vector effects,
+filters, masks, clipping, gradients or other URL paint, animation, text,
+images, external references, DTDs, processing instructions, or other SVG elements.
+One unsupported feature rejects the entire sidecar rather than partially
+rendering it.
 
 ### Combining parts from several mods
 
@@ -232,13 +293,35 @@ uploaded), or if another publish is already running. Clicking it re-validates
 the folder one more time, then uploads its content — including any
 `.blueprint.ron` files it contains — as one Workshop item, tagged
 automatically by what it contributes (chassis, sensors, warheads, and/or
-blueprints). If the folder has a `preview.png`, that becomes the item's
-thumbnail.
+blueprints). A mod with only a `mod.ron` has nothing to publish, so its button
+is disabled.
+
+The item's description is your `mod.ron` description followed by one section
+per chassis and per design — headed **Chassis:** or **Blueprint:** and its
+name — listing the same stats the Drone Designer shows (in your language and
+unit settings). A design's section also lists, within it, what that design
+carries under the designer's own headings: COMPONENTS, LOADOUT, and STORES. Sections that would
+push the description past Steam's limit are left off.
+
+If the folder has a `preview.png`, that becomes the item's thumbnail.
+Otherwise the game generates one from the first of these it finds:
+
+1. A chassis with [artwork](#optional-chassis-artwork): its outline centred
+   on the designer's grid panel, which fills the image.
+2. A design whose chassis has artwork (yours or a built-in chassis): its
+   chassis outline, the same way.
+3. A chassis or design without artwork: its classification icon.
+4. A sensor, warhead, or decoy: the Drone Designer's icon for its category,
+   in the same color.
+
+Generated thumbnails are 512×512 squares with no text: Steam shows the
+item's title beside them.
 
 ### Publishing a design
 
 In the **Drone Designer**'s library, each of your own saved designs (not a
-default or an already-published Workshop design, which are read-only) has an
+default or a subscribed Workshop design: those are read-only, and editing one
+saves your changes as a new design of your own) has an
 upload icon — tooltip **Publish to the Workshop**. It's disabled if Steam is
 unavailable, another publish is running, or the design itself doesn't
 validate (weight, category limits, and so on) — but a design that uses
@@ -247,13 +330,15 @@ modded parts, or nests another design, is otherwise publishable; see
 means in practice. Publishing stages your design — plus every one of your
 own designs it nests, however deeply — as a small mod behind the scenes: the
 item's title is your design's codename, the author is your Steam persona
-name, and the description is your design's designator and chassis name.
+name, and the description is your design's designator and chassis name,
+followed by the design's stats section.
 
 The Workshop thumbnail is generated for you from the design itself — its
-classification icon (in your designer's per-class color) over its name and
-chassis — so it always matches what's actually in the upload. Unlike a mod
-folder (above), a design has no `preview.png` of its own to override this
-with.
+chassis outline on the designer's grid panel when the chassis has artwork,
+otherwise its classification icon (in your designer's per-class color) — so
+it always matches what's actually in the upload.
+Unlike a mod folder (above), a design has no `preview.png` of its own to
+override this with.
 
 ### First publish: accept the legal agreement
 
@@ -287,6 +372,25 @@ single-player-only, only the specific designs built from its parts.
 
 RE-CHECK never removes a mod's content from the running game — restart to
 pick up an update, exactly as when installing one for the first time.
+
+## Enabling and disabling mods
+
+Each row on the Mods screen has an **ENABLED** checkbox. Untick it to stop a
+mod loading without unsubscribing or deleting its folder; tick it again to
+bring the mod back. The choice is saved in `settings.ron` and survives
+restarts, and a mod you remove and later reinstall or re-subscribe to keeps
+it.
+
+Like installing a mod, the change applies **the next time you start the
+game**. Until then the row shows **RESTART TO APPLY** and a warning heads the
+Mods screen. The rows update at once to show what the next launch will load:
+a disabled mod reads **DISABLED**, and any mod built on its content shows
+the missing reference it will hit.
+
+To the game a disabled mod is the same as an uninstalled one. Designs built
+on its parts are reported as unavailable in the designer, and saved units
+built from them are dropped from a save as described below. A disabled local
+mod can't be published until you enable it again.
 
 Removing or unsubscribing from a mod does not stop a single-player save from
 loading. Units built from that mod's chassis or components are dropped from

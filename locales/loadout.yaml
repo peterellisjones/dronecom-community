@@ -76,6 +76,34 @@ loadout:
     ru: "Флот включает недействительный проект: %{names}"
     zh: "舰队包含无效设计：%{names}"
     "zh-TW": "艦隊包含無效設計：%{names}"
+  # Hover on the Start gate's invalid-design refusal (#5432): `%{designs}` is
+  # one `start_invalid_carrier_line` per selected design that cannot be used.
+  start_invalid_carrier_tooltip:
+    de: "Entfernen Sie diese Designs aus der Flotte oder beheben Sie sie im Designer:\n%{designs}"
+    en: "Remove these designs from the fleet or fix them in the designer:\n%{designs}"
+    es: "Quite estos diseños de la flota o corríjalos en el diseñador:\n%{designs}"
+    fr: "Retirez ces modèles de la flotte ou corrigez-les dans le concepteur :\n%{designs}"
+    it: "Rimuovi questi progetti dalla flotta o correggili nel progettista:\n%{designs}"
+    ja: "これらの設計を艦隊から外すか、デザイナーで修正してください:\n%{designs}"
+    ko: "이 설계들을 함대에서 제거하거나 디자이너에서 수정하세요:\n%{designs}"
+    "pt-BR": "Remova estes projetos da frota ou corrija-os no projetista:\n%{designs}"
+    ru: "Уберите эти проекты из флота или исправьте их в конструкторе:\n%{designs}"
+    zh: "请将这些设计移出舰队，或在设计器中修复：\n%{designs}"
+    "zh-TW": "請將這些設計移出艦隊，或在設計器中修復：\n%{designs}"
+  # One design in `start_invalid_carrier_tooltip`: its name and the rule(s) it
+  # breaks.
+  start_invalid_carrier_line:
+    de: "%{name}: %{reason}"
+    en: "%{name}: %{reason}"
+    es: "%{name}: %{reason}"
+    fr: "%{name} : %{reason}"
+    it: "%{name}: %{reason}"
+    ja: "%{name}: %{reason}"
+    ko: "%{name}: %{reason}"
+    "pt-BR": "%{name}: %{reason}"
+    ru: "%{name}: %{reason}"
+    zh: "%{name}：%{reason}"
+    "zh-TW": "%{name}：%{reason}"
   # #3076: placeholder name for a selected carrier whose library entry was
   # deleted outright (rather than edited invalid) — shown in place of a
   # codename `start_invalid_carrier` would otherwise list.
@@ -265,18 +293,20 @@ loadout:
     ru: "%{count} ошибок"
     zh: "%{count} 错误"
     "zh-TW": "%{count} 錯誤"
+  # `%{errors}` is one line per rule the draft breaks, in the designer's own
+  # words (`designer.error_*`, #5432).
   unavailable_invalid_tooltip:
-    de: "Dieses Design besteht %{count} Prüfung(en) im Designer nicht. Öffnen Sie es dort, um die Fehler zu sehen und zu beheben."
-    en: "This design fails %{count} check(s) in the designer. Open it there to see and fix them."
-    es: "Este diseño no supera %{count} comprobación(es) en el diseñador. Ábralo allí para verlas y corregirlas."
-    fr: "Ce modèle échoue à %{count} vérification(s) dans le concepteur. Ouvrez-le pour les voir et les corriger."
-    it: "Questo progetto non supera %{count} controllo/i nel progettista. Aprilo lì per vederli e correggerli."
-    ja: "この設計はデザイナーの検査に %{count} 件不合格です。デザイナーで開いて確認・修正してください。"
-    ko: "이 설계는 디자이너 검사 %{count}건을 통과하지 못했습니다. 디자이너에서 열어 확인하고 수정하세요."
-    "pt-BR": "Este projeto falha em %{count} verificação(ões) no projetista. Abra-o lá para vê-las e corrigi-las."
-    ru: "Этот проект не проходит %{count} проверок в конструкторе. Откройте его там, чтобы увидеть и исправить их."
-    zh: "此设计未通过设计器中的 %{count} 项检查。在设计器中打开以查看并修复。"
-    "zh-TW": "此設計未通過設計器中的 %{count} 項檢查。在設計器中開啟以查看並修復。"
+    de: "Dieses Design besteht diese Prüfungen im Designer nicht:\n%{errors}\nÖffnen Sie es dort, um sie zu beheben."
+    en: "This design fails these checks in the designer:\n%{errors}\nOpen it there to fix them."
+    es: "Este diseño no supera estas comprobaciones en el diseñador:\n%{errors}\nÁbralo allí para corregirlas."
+    fr: "Ce modèle échoue à ces vérifications du concepteur :\n%{errors}\nOuvrez-le pour les corriger."
+    it: "Questo progetto non supera questi controlli nel progettista:\n%{errors}\nAprilo lì per correggerli."
+    ja: "この設計はデザイナーの次の検査に不合格です:\n%{errors}\nデザイナーで開いて修正してください。"
+    ko: "이 설계는 디자이너의 다음 검사를 통과하지 못했습니다:\n%{errors}\n디자이너에서 열어 수정하세요."
+    "pt-BR": "Este projeto falha nestas verificações do projetista:\n%{errors}\nAbra-o lá para corrigi-las."
+    ru: "Этот проект не проходит следующие проверки конструктора:\n%{errors}\nОткройте его там, чтобы исправить их."
+    zh: "此设计未通过设计器中的以下检查：\n%{errors}\n在设计器中打开以修复。"
+    "zh-TW": "此設計未通過設計器中的以下檢查：\n%{errors}\n在設計器中開啟以修復。"
   unavailable_not_spawnable:
     de: "nicht baubar"
     en: "cannot be built"
@@ -470,6 +500,18 @@ loadout:
     ru: "Принадлежности"
     zh: "阵营关系"
     "zh-TW": "陣營關係"
+  alliance_versus:
+    de: "%{a} gegen %{b}"
+    en: "%{a} vs %{b}"
+    es: "%{a} contra %{b}"
+    fr: "%{a} contre %{b}"
+    it: "%{a} contro %{b}"
+    ja: "%{a} 対 %{b}"
+    ko: "%{a} 대 %{b}"
+    "pt-BR": "%{a} contra %{b}"
+    ru: "%{a} против %{b}"
+    zh: "%{a} 对 %{b}"
+    "zh-TW": "%{a} 對 %{b}"
   alliance_summary_tooltip:
     de: "Wer an wessen Seite kämpft. Wie viel verbündete Teams voneinander sehen, legt der Verbündeten-Modus unter Taktischer Realismus fest."
     en: "Who fights alongside whom. How much allied teams see of each other is set by the ally mode under Tactical Realism."

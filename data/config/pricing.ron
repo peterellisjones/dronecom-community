@@ -69,6 +69,12 @@
         bearing_only_quality: 0.6,
         fdoa_quality: 0.9,
         emitter_tax: 0.85,
+        // #5498: surface search (holding stopped hulls by echo strength) makes
+        // every km² a radar covers worth more, so it scales the capability
+        // value rather than riding flat. Up to +50%, half of it at a 20 MHz
+        // waveform: 20 MHz → +25%, 50 MHz → +36%, 100 MHz → +42%.
+        surface_search_premium_max: 0.5,
+        surface_search_half_point_hz: 20000000.0,
     ),
     warhead: (
         damage_exponent: 0.9,

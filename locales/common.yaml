@@ -5,6 +5,19 @@ common:
   # the player authored. Shared by the tactical inspect masthead and the Drone
   # Designer library — both are tactical zones, so ALL CAPS in both, with the
   # same prose explanation on hover.
+  # #5477: joins a run-in list of names. CJK lists use the enumeration comma.
+  list_separator:
+    de: ", "
+    en: ", "
+    es: ", "
+    fr: ", "
+    it: ", "
+    ja: "、"
+    ko: ", "
+    "pt-BR": ", "
+    ru: ", "
+    zh: "、"
+    "zh-TW": "、"
   default_design_badge:
     de: "STANDARD"
     en: "DEFAULT"
@@ -29,6 +42,33 @@ common:
     ru: "Входит в комплект игры. Скопируйте его в конструкторе дронов, чтобы редактировать."
     zh: "游戏自带设计。可在无人机设计室中复制以编辑。"
     "zh-TW": "遊戲內建設計。可在無人機設計室中複製以編輯。"
+  # #5433: the accent chip marking a design the player authored, in every
+  # design list beside DEFAULT and WORKSHOP. Same word as the designer
+  # library's MINE source filter, but singular: it tags one design.
+  player_design_badge:
+    de: "EIGENER"
+    en: "MINE"
+    es: "PROPIO"
+    fr: "PERSO"
+    it: "MIO"
+    ja: "自作"
+    ko: "내 설계"
+    "pt-BR": "MEU"
+    ru: "МОЙ"
+    zh: "自制"
+    "zh-TW": "自製"
+  player_design_badge_tooltip:
+    de: "Dein eigener Entwurf aus dem Drohnen-Designer."
+    en: "Your own design from the Drone Designer."
+    es: "Tu propio diseño del Diseñador de Drones."
+    fr: "Votre propre modèle, créé dans le Concepteur de drones."
+    it: "Un tuo progetto del Progettista di droni."
+    ja: "ドローン設計室で自作した設計。"
+    ko: "드론 설계실에서 직접 만든 설계입니다."
+    "pt-BR": "Seu próprio projeto do Projetista de Drones."
+    ru: "Ваша собственная конструкция из конструктора дронов."
+    zh: "你在无人机设计室中自制的设计。"
+    "zh-TW": "你在無人機設計室中自製的設計。"
   # #2717: the click / shift-click interaction hint appended to every vehicle
   # entity link's hover tooltip. Guidance prose, so sentence case — the tooltip
   # body above it is the ALL-CAPS tactical readout.

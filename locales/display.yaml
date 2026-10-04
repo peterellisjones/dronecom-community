@@ -713,17 +713,17 @@ doctrine:
       zh: "不可逃逸"
       "zh-TW": "不可逃逸"
     no_escape_tooltip:
-      de: "Feuer zurückhalten, bis die Waffe das Ziel erreichen kann, bevor es entkommt"
-      en: "Hold fire until the weapon can reach the target before it escapes"
-      es: "Retener el fuego hasta que el arma pueda alcanzar al objetivo antes de que escape"
-      fr: "Retenir le tir jusqu'à ce que l'arme puisse atteindre la cible avant qu'elle ne s'échappe"
-      it: "Trattieni il fuoco finché l'arma non può raggiungere il bersaglio prima che fugga"
-      ja: "目標が逃れる前に兵器が到達できるまで発射を控える"
-      ko: "표적이 벗어나기 전에 무기가 도달할 수 있을 때까지 발사 보류"
-      "pt-BR": "Conter o fogo até que a arma possa alcançar o alvo antes que ele escape"
-      ru: "Удерживать огонь, пока оружие не сможет поразить цель до её ухода"
-      zh: "保持不开火，直到武器能在目标逃脱前命中"
-      "zh-TW": "保持不開火，直到武器能在目標逃脫前命中"
+      de: "Feuer zurückhalten, bis die Waffe das Ziel erreichen kann, bevor es entkommt. Ein Schuss auf Peilung gegen einen Kontakt ohne bestimmbare Entfernung wird mit Rmax freigegeben, nicht nach dieser Regel."
+      en: "Hold fire until the weapon can reach the target before it escapes. A commit-on-bearing shot at a contact with no resolved range is released under Rmax, not held to this rule."
+      es: "Retener el fuego hasta que el arma pueda alcanzar al objetivo antes de que escape. Un disparo comprometido por rumbo contra un contacto sin distancia resuelta se libera según Rmax, no según esta regla."
+      fr: "Retenir le tir jusqu'à ce que l'arme puisse atteindre la cible avant qu'elle ne s'échappe. Un tir engagé sur relèvement contre un contact sans distance résolue est lâché selon Rmax, sans cette règle."
+      it: "Trattieni il fuoco finché l'arma non può raggiungere il bersaglio prima che fugga. Un colpo impegnato sul rilevamento contro un contatto senza distanza risolta viene rilasciato secondo Rmax, non questa regola."
+      ja: "目標が逃れる前に兵器が到達できるまで発射を控える。距離が確定していない目標への方位のみでの発射は、この規則ではなくRmaxで解放される。"
+      ko: "표적이 벗어나기 전에 무기가 도달할 수 있을 때까지 발사 보류. 거리가 확인되지 않은 접촉에 대한 방위 기반 발사는 이 규칙이 아닌 Rmax에 따라 발사됩니다."
+      "pt-BR": "Conter o fogo até que a arma possa alcançar o alvo antes que ele escape. Um disparo comprometido por marcação contra um contato sem distância resolvida é liberado sob Rmax, não sob esta regra."
+      ru: "Удерживать огонь, пока оружие не сможет поразить цель до её ухода. Выстрел по пеленгу в контакт без определённой дальности выполняется по Rmax, а не по этому правилу."
+      zh: "保持不开火，直到武器能在目标逃脱前命中。对未解算距离的接触按方位发射时，按Rmax放行，不受此规则约束。"
+      "zh-TW": "保持不開火，直到武器能在目標逃脫前命中。對未解算距離的接觸按方位發射時，按Rmax放行，不受此規則約束。"
   emcon:
     # EMCON value labels use the operational command wording (Silent / Radiate),
     # the single canonical label shared by the in-game editor and the designer

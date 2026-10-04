@@ -73,6 +73,18 @@ join_modal:
     ru: "Отмена"
     zh: "取消"
     "zh-TW": "取消"
+  steam_lobby:
+    de: "Steam-Lobby %{id}"
+    en: "Steam lobby %{id}"
+    es: "sala de Steam %{id}"
+    fr: "salon Steam %{id}"
+    it: "lobby Steam %{id}"
+    ja: "Steamロビー %{id}"
+    ko: "Steam 로비 %{id}"
+    "pt-BR": "lobby da Steam %{id}"
+    ru: "лобби Steam %{id}"
+    zh: "Steam 大厅 %{id}"
+    "zh-TW": "Steam 大廳 %{id}"
   connecting:
     de: "Verbinde mit %{address}..."
     en: "Connecting to %{address}…"

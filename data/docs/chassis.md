@@ -523,9 +523,9 @@ How a missile shapes its vertical path from launch to target.
 
 Variants:
 
-- **`Direct`** — Fly straight at the target (baseline behaviour).
-- **`TerrainFollow`** — Follow the terrain: hold clearance above max(ground, sea level), sampled at the vehicle XZ — hugs ridges over land, skims over water. High drag, short range, late detection.
-- **`Lofted`** — Powered climb → cruise high in thin air → glide on a gravity arc after burnout → terminal dive. The single long-range profile: cruise altitude scales with launch range (farther targets loft higher), so a long shot banks more altitude and trades it back for downrange in an unpowered best-glide once the motor runs dry. Subsumes the former Ballistic profile.
+- **`Direct`** — Pursue the target without an authored impact-angle objective, respecting launch-clearance and safety floors. Not necessarily straight or fastest.
+- **`TerrainFollow`** — Follow the terrain: hold clearance above max(ground, sea level), sampled at the vehicle XZ — hugs ridges over land, skims over water to reduce detection. Range depends on the airframe, guidance and launch conditions.
+- **`Lofted`** — Angular guidance shapes a climbing arc toward a steep target-arrival angle, subject to the flight envelope and available energy. Not a scheduled climb/cruise/dive or a guaranteed range advantage over Direct. Subsumes the former Ballistic profile.
 
 ## `EngineSpec`
 

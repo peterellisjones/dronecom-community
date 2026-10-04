@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" data-nose="up" viewBox="0 0 256 138" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <title>MQ-450 Panther</title>
+  <path d="M128 14 Q121 14 121 28 V44 Q121 52 122 57 V59 L12 70 V77 L122 74 V108 L105 111 V118 L122 116 V122 H134 V116 L151 118 V111 L134 108 V74 L244 77 V70 L134 59 V57 Q135 52 135 44 V28 Q135 14 128 14 Z"/>
+  <path d="M122 108 V116 M134 108 V116 M122 59 V74 M134 59 V74"/>
+</svg>

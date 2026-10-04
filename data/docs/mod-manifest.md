@@ -14,7 +14,7 @@ diagnostic, never silently substitute a default.
 
 ### `name` : `String`
 
-Display name. Seeds the Workshop item title on first publish.
+Display name. The Workshop item's title, set on every publish.
 
 ### `author` : `String`
 
@@ -22,4 +22,5 @@ The mod author's name, shown on the Mods screen and Workshop page.
 
 ### `description` : `String`
 
-Short description. Seeds the Workshop item description on first publish.
+Short description. Opens the Workshop item's description, followed by a
+generated stats section per chassis and design, set on every publish.

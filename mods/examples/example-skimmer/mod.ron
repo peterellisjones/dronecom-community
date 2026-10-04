@@ -1,0 +1,6 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/mod-manifest.md
+(
+    name: "SK-90 Wavecutter (Example)",
+    author: "big_beard_games",
+    description: "A fast, heavy sea-skimming anti-ship missile, plus a ready-to-fly design that mounts it — a self-contained worked example of a chassis + blueprint mod.",
+)

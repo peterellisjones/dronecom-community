@@ -226,6 +226,18 @@ Product quality when fdoa: Capable restores passive ranging (≤ 1.0).
 
 Counter-detection multiplier when the sensor emits (RWR-visible), < 1.
 
+### `surface_search_premium_max` : f32
+
+Largest premium a radar's surface search earns, as a fraction of its
+capability value (#5498): a radar whose waveform is unboundedly fine
+approaches `1.0 + this` (e.g. 0.5 → up to ×1.5).
+
+### `surface_search_half_point_hz` : f32
+
+`saturating_credit` half-point for the surface-search premium, in Hz of
+surface-search bandwidth: a waveform this wide earns half of
+`SensorKnobs::surface_search_premium_max`.
+
 ## `WarheadKnobs`
 
 Tuning knobs for the warhead value formula (`super::price_warhead`): the

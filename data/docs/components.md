@@ -349,27 +349,26 @@ Variants:
 Sensor-kind-specific detection characteristics.
 
 Replaces the per-field Options that were implicitly discriminated by `SensorKind`.
-Radar and active sonar have doppler processing (notching); radar also has
-look-down and low-altitude clutter models.
+Radar and active sonar have doppler processing (notching); radar also
+competes with sea clutter.
 
 Neither model is authored per sensor — both describe the environment (or a
 generic antenna response), not any one part, and live in
-`crate::formulas`: the clutter magnitudes as four constants (#3768), the
-notch model as two per-kind pairs (#3897). The clutter model's fifth number,
-the altitude ceiling both its terms gate on, is not a constant either — it
-is derived from the radar's own beamwidth and the range to the target
-(`crate::formulas::surface_clutter_ceiling_m`, #3364), reading the same
-`aperture_m` / `carrier_freq_hz` the resolution and accuracy models do.
+`crate::formulas`: the notch model as two per-kind pairs (#3897), the sea
+clutter as one reflectivity constant with every antenna term derived from
+the radar's own physics (`crate::formulas::sea_clutter_rcs_m2`, #5498).
+The one per-radar choice is `SurfaceSearch`.
 
-`Radar` and `SonarActive` are deliberately **empty struct variants**
-(`Radar {}`, not the bare unit variant `Radar`) rather than
-data-carrying ones — see the
-`crate::formulas` module doc for why that distinction is load-bearing
-for old-definition compatibility.
+`Radar` and `SonarActive` are **struct variants** (`Radar(..)` in RON, not
+the bare unit variant `Radar`): RON's unit-variant parse rejects any
+trailing parenthesised content, so only a struct variant lets a definition
+still carrying the fields #3768/#3897 removed parse with them ignored — see
+the `crate::formulas` module doc.
 
 Variants:
 
-- **`Radar`** — Radar: doppler notching (shared constants, `crate::formulas::RADAR_V_NOTCH` / `crate::formulas::RADAR_NOTCH_FRACTION`), plus the shared look-down and low-altitude clutter model from `crate::formulas`.
+- **`Radar`** — Radar: doppler notching (shared constants, `crate::formulas::RADAR_V_NOTCH` / `crate::formulas::RADAR_NOTCH_FRACTION`), plus the shared sea-clutter model from `crate::formulas`.
+  - `surface_search` : [`SurfaceSearch`](#surfacesearch) — Whether this radar also searches the sea surface by echo strength.
 - **`SonarActive`** — Active sonar: doppler notching only (shared constants, `crate::formulas::SONAR_ACTIVE_V_NOTCH` / `crate::formulas::SONAR_ACTIVE_NOTCH_FRACTION`).
 - **`Simple`** — No kind-specific characteristics (passive sonar, IR, visual, RWR).
 
@@ -496,3 +495,28 @@ Variants:
 
 - **`WhileScanning`** — Track-while-scan — searches and holds locks concurrently (modern AESA).
 - **`ScanOrTrack`** — Exclusive — holding any lock suspends the search (mechanically-scanned).
+
+## `SurfaceSearch`
+
+Whether a radar also searches the sea surface by echo strength, alongside
+its pulse-Doppler search (#5498).
+
+Pulse-Doppler search discards everything at the sea's own Doppler, so a
+hull that is stopped, or crossing the line of sight, is notched out with the
+sea. Surface search compares a hull's echo with the sea sharing its
+resolution cell instead: speed does not matter, only whether the hull
+out-echoes the sea. A `Capable` radar runs both at once and keeps whichever
+detects better — for targets on the surface only, so notching an aircraft
+or missile is unchanged.
+
+Surface search runs its own waveform. Its `bandwidth_hz` sets the range
+cell, and so the patch of sea a hull competes with (`c / 2B`): sea-search
+waveforms are far wider-band than a long-range air search, and that is
+what lets them hold small craft. Air search — track merging, range
+accuracy — keeps the radar's `SensorPhysics` bandwidth.
+
+Variants:
+
+- **`None`** — Pulse-Doppler search only.
+- **`Capable`** — Pulse-Doppler and surface search together.
+  - `bandwidth_hz` : f32 — Bandwidth of the surface-search waveform (Hz).

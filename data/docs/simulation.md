@@ -243,6 +243,14 @@ well-formed orbiting group stops chronically shaving patrol speed, while a
 genuinely lagging member on a straight leg (closing at a real speed delta)
 still holds the leader back until it is in slot. DC-1155.
 
+### `formation_climb_band_m` : f32
+
+A climbing fixed-wing formation's vertical band (m, #5632): it climbs
+in shape only while its hold altitude is more than this above the
+anchor — the last band is the anchor's ordinary altitude hold — and its
+anchor holds level while an in-slot follower has fallen more than this
+below it.
+
 ### `terminal_homing` : [`TerminalHomingSection`](#terminalhomingsection)
 
 Terminal-homing substep tuning (DC-976).
@@ -681,13 +689,14 @@ Safety margin (fraction in `(0, 1]`) applied to the *weapon's* static
 `max_range` when it caps the standoff orbit ceiling. The standoff orbit
 radius is governed by the longest stowed weapon's static `max_range`
 (`crate::StandoffWeapon::Selected`), but the launch gate fires on the
-*kinematic* reach `reach_m` (`Vehicle::classify_reach`), which is `<=`
-the static max and shrinks as the launcher decelerates to orbit. Without
-this margin a strong SNR pushes the orbit out to the static ceiling, which
-sits a few metres *outside* the kinematic firing envelope — the launcher
-parks just beyond its own reach and never fires (#2212 deadlock). The
-margin pulls the orbit inside the envelope so the gate can release. It
-applies only when the weapon range is the binding cap, never to
+*kinematic* reach `reach_m` (`Vehicle::classify_reach`), which includes
+fuel, altitude, target aspect and maneuver allowances. Without this
+margin the static ceiling can sit a few metres *outside* that envelope,
+parking the launcher just beyond its own reach (#2212 deadlock).
+Platform-speed credit (#5541) may extend the gate's envelope, but the
+hold never relies on speed the launcher can lose while orbiting. The
+margin pulls the orbit inside the stationary envelope so the gate can
+release. It applies only when the weapon range is the binding cap, never to
 `max_standoff_range` — and it applies under **both** standoff ceilings
 (#5429), including the commanded one that drops the `max_standoff_range`
 clip: without it that ceiling would park a launcher just outside its own
@@ -829,6 +838,11 @@ target's believed hull into a number of rounds
 #4688: fleet-wide cap on weapons in flight against a single contact —
 moved off `Doctrine` (no player or AI can ever set it, so it is a
 simulation rule, not per-commander intent).
+
+### `airborne_retarget` : [`AirborneRetargetSection`](#airborneretargetsection)
+
+#5004: whether, and through what, an airborne round whose target died
+may be given a new one instead of being spent.
 
 ## `PatrolSection`
 
@@ -1181,8 +1195,15 @@ be sampled mid-boost. A well-tracked contact has a tight σ and is
 unaffected: at 2.0 a 200 m/s fighter held to ±10 m/s reads 220 and still
 does not alarm.
 
-0.0 restores the pre-#3392 bare-mean comparison. Consumed by the
-per-unit `ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+The classifier reads the same multiple in the other direction (#5446):
+an elevation-blind track is asserted airborne from speed alone only when
+`speed − k·σ` clears `ClassificationSection`'s `surface_max_speed_mps`,
+so one noisy passive-fix sample cannot claim an environment its own
+uncertainty does not support.
+
+0.0 restores the pre-#3392 bare-mean comparison in both places.
+Consumed by the per-unit `ThreatAlerts<TEAM>` rollup in `dc_sensors`
+(`manage_contacts`) and by `dc_sensors`' `ClassificationTuning`.
 
 ### `munition_mass_admission` : f32
 
@@ -1239,6 +1260,58 @@ it is not affected. A held rung stands down past
 `lookahead * missile_cpa_stand_down_margin`, for the same reason the
 radius does. Must be positive. Consumed by the per-unit
 `ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+
+### `own_munition_screen_min_remaining_secs` : f32
+
+Least time (s) a hostile weapon must still need, after it reaches one of
+our own munitions, before it reaches a unit, for that unit to defer
+raising a weapon rung on it (#5534).
+
+A hostile round whose straight-line path meets one of our in-flight
+one-way munitions first (closest approach inside
+`missile_cpa_floor_radius_m`) has not been shown to be coming for the
+units behind that munition: an interceptor fired at our round is spent
+on the encounter, and only a round that survives it threatens anything
+further down its track. A unit whose own closest approach comes at
+least this long after the encounter therefore does not raise
+`MissileInbound` until the round is past our munition, and the #4130
+defensive-fire worthiness gate declines it on the same terms, so point
+defence does not spend a round on an interceptor that threatens no hull.
+
+This is the warning a genuine round on the exact reciprocal of our own
+outbound munition is guaranteed to keep: deferral never consumes more
+of a unit's warning than the time to the encounter, and never applies
+when less than this would remain after it. A munition engaging that
+very track never screens it, and a rung a unit already holds is never
+released by screening. Sized at `missile_cpa_horizon_secs`, the
+time-to-go at which the #4866 radius starts to narrow. Must be finite
+and non-negative. Consumed by the per-unit `ThreatAlerts<TEAM>` rollup
+in `dc_sensors` (`manage_contacts`) and the defensive-fire worthiness
+gate (`dc_tasking`).
+
+### `own_munition_screen_max_encounter_secs` : f32
+
+Longest time (s) ahead at which a hostile weapon's encounter with one of
+our own munitions may screen it (#5534); an encounter further off than
+this screens nothing.
+
+The screen defers a unit's alarm, and the #4130 gate's defensive fire,
+until the weapon is past our munition. On the weapon's own kinematics an
+interceptor fired at our outbound round and an anti-ship round flying
+the reciprocal of that round's track are the same observation, and in a
+salvo exchange the reciprocal is the common case: both sides fire along
+the same line. Measured on the #5153 cued-IR-salvo exploit, an uncapped
+screen held the defenders' interceptors off inbound anti-ship rounds for
+up to 29 s (median 4.1 s) and cost three extra hulls.
+
+This cap bounds that cost: a reciprocal round met by our munition within
+the cap is deferred by at most the cap, and one met later is engaged
+as if the screen did not exist. It must still cover the reported case,
+where the interceptor met our round about 4 s after it was first held.
+Must be finite and non-negative; 0 disables the screen. Consumed by the
+per-unit `ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`)
+and the defensive-fire worthiness gate (`dc_tasking`), through the one
+shared encounter test.
 
 ### `lock_clear_hysteresis_secs` : f32
 
@@ -1475,6 +1548,22 @@ transit past; it sets up there for its whole visit count.
 Measured against the start positions, which are fixed at new-game and
 never move, so this excludes a fixed arc of the ring rather than
 following the fleet around the map.
+
+### `seed_crossing_progress_min` : f32
+
+Nearest a crossing civilian seeded at match start may sit to its entry
+point, as a fraction of the way from entry to exit (#5577).
+
+A new game opens with `target_population` civilians already at sea
+rather than an empty interior that fills from the rim. A seeded crosser
+starts somewhere along its drawn crossing: near 0 it would look like an
+ordinary rim arrival, which is what seeding exists to avoid.
+
+### `seed_crossing_progress_max` : f32
+
+Furthest along its crossing a seeded civilian may start — see
+`Self::seed_crossing_progress_min`. Below 1.0 so a seeded crosser
+does not retire within seconds of the match opening.
 
 ### `mix` : `Vec`<[`TrafficTypeSection`](#traffictypesection)>
 
@@ -2882,6 +2971,26 @@ Cap for every contact class except `CommandShip`.
 
 Cap for `CommandShip` contacts — the game-ending win-condition target.
 
+## `AirborneRetargetSection`
+
+Airborne-retarget tuning (#5004).
+
+**Balance knob.** Re-using a salvo's surplus raises the value of every
+round in an oversized salvo; `SalvoSection::max_derived_salvo` and
+`CommitLimits::regular` were sized assuming that surplus was wasted. See
+`docs/plans/5004-airborne-retarget.md` for the measured delta.
+
+### `policy` : [`AirborneRetarget`](#airborneretarget)
+
+Who may retarget an orphaned round.
+
+### `max_off_boresight_deg` : f32
+
+Widest angle (degrees) between a round's velocity and the bearing to a
+new target that a retarget may ask it to turn through. The reach credit
+is a launch-shaped solve that never charges the turn, so this bounds
+the turn the reach guard measures arriving through. In `(0, 180]`.
+
 ## `TrafficTypeSection`
 
 One civilian type the traffic director may spawn, and how often.
@@ -3122,6 +3231,20 @@ Variants:
 - **`Limited`**(u8) — At most this many weapons may be in flight against the contact.
 - **`Unlimited`** — No committed-attacker cap — the target may be saturated.
 
+## `AirborneRetarget`
+
+Who may hand an airborne round a new target once the one it was fired at
+has no hull left behind it (#5004).
+
+An enum rather than a bool because the gate is a *capability*, and the one
+capability not yet offered — a round re-acquiring on its own search-capable
+seeker — would be a third variant, not a second flag.
+
+Variants:
+
+- **`Off`** — Never: an orphaned round is spent (#4999).
+- **`LauncherDatalink`** — Through the launcher's datalink: a round whose chassis accepts the launcher uplink, while that launcher is alive, may be re-issued an attack on a contact in the team picture.
+
 ## `TrafficBehavior`
 
 What a civilian does once the traffic director has put it on the map.
@@ -3135,7 +3258,7 @@ Variants:
 - **`OrbitHop`** — Enter from the rim, then work a local patch of theatre: hold an orbit for a few laps, hop to a new *nearby* point drawn at random, repeat for a handful of visits, then head back out to the rim and leave. The unaffiliated loiterers, with no interest in where anyone else is (#3707). The shipped mix carries none today: the two air neutrals it was written for became `ActionHop` in #3460, which is this behaviour plus a preference for recent combat.
 - **`ClusterAnchor`** — Anchors a cluster: enters from the rim, holds a single long-parked orbit (many more dwell periods than an `OrbitHop` visit), then heads out and leaves, same as any other civilian. `ClusterEscort` mix entries hop around whichever `ClusterAnchor` hull is currently alive and nearest.
 - **`ClusterEscort`** — Like `OrbitHop`, but every point it visits — its spawn point included — is drawn near the nearest live `ClusterAnchor` hull rather than near its own last position, so it reads as escorting that hull instead of wandering independently. Falls back to a plain `OrbitHop`-style local hop if no anchor is currently alive (its trawler has retired or been destroyed).
-- **`ActionHop`** — Like `OrbitHop`, but each point it visits — its spawn station included — is the **nearest recent combat site** rather than a point drawn at random: a fresh wreck first, then a missile launch, then a command ship or carrier, and only if none of those is within `TrafficSection::action_search_radius_m` does it hop at random like a plain `OrbitHop`. The press and peacekeeping-observer drones — war correspondents go where the story is.  Only where the hull *goes* changes. It still carries no tasking, doctrine or threat evaluation of its own: it flies **toward** combat and never away from it, and the damage reaction (`abandon_and_flee_when_damaged`) remains the only thing that overrides a station.
+- **`ActionHop`** — Like `OrbitHop`, but each point it visits — its spawn station included — is the **nearest recent combat site** rather than a point drawn at random: a fresh wreck first, then a missile launch, then a command ship or carrier, and only if none of those is within `TrafficSection::action_search_radius_m` does it hop at random like a plain `OrbitHop`. The press and AWC-observer drones — war correspondents go where the story is.  Only where the hull *goes* changes. It still carries no tasking, doctrine or threat evaluation of its own: it flies **toward** combat and never away from it, and the damage reaction (`abandon_and_flee_when_damaged`) remains the only thing that overrides a station.
 
 ## `NeutralRoleEntry`
 
@@ -3190,7 +3313,7 @@ Variants:
 - **`LngTanker`** — Autonomous LNG Tanker — the second big merchant silhouette.
 - **`FishingVessel`** — Autonomous Fishing Vessel — small, slow, clustered loiterer.
 - **`FactoryTrawler`** — Autonomous Factory Trawler — anchors a fishing cluster and runs a fish-finder active sonar, which is why "active sonar" never implies hostile.
-- **`PeacekeepingObserver`** — Peacekeeping Observation Drone — the ruinously expensive one to shoot.
+- **`AwcObserver`** — AWC Observation Drone — the Autonomous Warfare Commission's own monitor, and the ruinously expensive one to shoot.
 - **`Press`** — Press War Correspondent Drone — flies toward the story.
 
 ## `RoleEvidence`

@@ -202,15 +202,15 @@ info_panel:
       "zh-TW": "取消"
   tasking_status:
     waiting_for_launch:
-      "de": "Wartet auf Start"
-      "en": "Waiting for launch"
-      "es": "Esperando lanzamiento"
-      "fr": "En attente de lancement"
-      "it": "In attesa di lancio"
+      "de": "Vor Start"
+      "en": "Await launch"
+      "es": "Por lanzar"
+      "fr": "Avant tir"
+      "it": "Pre-lancio"
       "ja": "発射待ち"
       "ko": "발사 대기 중"
-      "pt-BR": "Aguardando lançamento"
-      "ru": "Ожидание запуска"
+      "pt-BR": "A disparar"
+      "ru": "До пуска"
       "zh": "等待发射"
       "zh-TW": "等待發射"
     target_covered:
@@ -226,15 +226,15 @@ info_panel:
       "zh": "已覆盖"
       "zh-TW": "已覆蓋"
     awaiting_assessment:
-      "de": "Wirkungsauswertung"
-      "en": "Awaiting assessment"
-      "es": "Evaluando impacto"
-      "fr": "Évaluation en cours"
-      "it": "Valutazione in corso"
+      "de": "BDA offen"
+      "en": "Await BDA"
+      "es": "Espera BDA"
+      "fr": "Attend BDA"
+      "it": "Attesa BDA"
       "ja": "戦果確認中"
       "ko": "전과 확인 중"
-      "pt-BR": "Avaliando impacto"
-      "ru": "Оценка результата"
+      "pt-BR": "Espera BDA"
+      "ru": "Оценка"
       "zh": "评估战果中"
       "zh-TW": "評估戰果中"
     # DC-819: a group still assembling all members before running its mission.
@@ -242,7 +242,7 @@ info_panel:
       de: "Sammeln"
       en: "Forming up"
       es: "Formando"
-      fr: "Rassemblement"
+      fr: "Formation"
       it: "Formazione"
       ja: "編成中"
       ko: "편성 중"
@@ -270,7 +270,7 @@ info_panel:
     # arrived word ("on station" / "orbiting" / "holding range") must not read
     # while it is still en route.
     en_route:
-      de: Im Anmarsch
+      de: Anmarsch
       en: En route
       es: En ruta
       fr: En route
@@ -284,15 +284,15 @@ info_panel:
     # #2672: a follower still routing to catch up to its leader — "joining" the
     # formation, not yet in trail.
     joining:
-      de: Aufschließen
+      de: Anschluss
       en: Joining
-      es: Incorporándose
+      es: Uniéndose
       fr: Ralliement
-      it: Ricongiungimento
+      it: Ricongiunge
       ja: 合流中
       ko: 합류 중
-      "pt-BR": Incorporando
-      ru: Присоединение
+      "pt-BR": Reunindo
+      ru: Пристройка
       zh: 归队中
       "zh-TW": 歸隊中
     holding_range:
@@ -311,17 +311,17 @@ info_panel:
     # busy — distinct from the generic "Recovering", which now means the craft
     # is actually closing on its carrier.
     holding_deck_slot:
-      de: "Wartet auf Dockplatz"
-      en: "Holding for deck slot"
-      es: "Esperando puesto en dique"
-      fr: "Attente de place au radier"
-      it: "In attesa di posto in bacino"
-      ja: "ウェルデッキ待機中"
-      ko: "웰 데크 대기 중"
-      "pt-BR": "Aguardando vaga na doca"
-      ru: "Ожидание места в док-камере"
-      zh: "等待坞舱空位"
-      "zh-TW": "等待塢艙空位"
+      de: "Dock belegt"
+      en: "Deck hold"
+      es: "Espera dique"
+      fr: "Attente radier"
+      it: "Attesa bacino"
+      ja: "ウェルデッキ待機"
+      ko: "데크 대기"
+      "pt-BR": "Aguarda doca"
+      ru: "Ожид. дока"
+      zh: "等待坞舱"
+      "zh-TW": "等待塢艙"
     tracking:
       de: Verfolgt
       en: Tracking
@@ -337,9 +337,9 @@ info_panel:
     closing:
       de: Nähert sich
       en: Closing
-      es: Acercándose
-      fr: En approche
-      it: In avvicinamento
+      es: Acercando
+      fr: Approche
+      it: Approccio
       ja: 接近中
       ko: 접근 중
       "pt-BR": Aproximando
@@ -347,23 +347,23 @@ info_panel:
       zh: 接近中
       "zh-TW": 接近中
     searching_lkp:
-      de: Sucht letzte Position
+      de: Nachsuche
       en: Searching LKP
-      es: Buscando última posición
-      fr: Recherche dernière position
-      it: Cerca ultima posizione
+      es: Última pos.
+      fr: Fouille
+      it: Ultima pos.
       ja: 最終位置探索中
-      ko: 최종 위치 수색 중
-      "pt-BR": Buscando última posição
-      ru: Поиск последней позиции
+      ko: 최종 위치 수색
+      "pt-BR": Última pos
+      ru: Поиск цели
       zh: 搜索最后位置
       "zh-TW": 搜尋最後位置
     acquiring:
-      de: Zielerfassung
+      de: Erfassung
       en: Acquiring
-      es: Adquiriendo
-      fr: Acquisition
-      it: Acquisizione
+      es: Captando
+      fr: Accrochage
+      it: Aggancio
       ja: 捕捉中
       ko: 포착 중
       "pt-BR": Adquirindo
@@ -375,7 +375,7 @@ info_panel:
       en: Evading
       es: Evadiendo
       fr: Évasion
-      it: In evasione
+      it: Evasione
       ja: 回避中
       ko: 회피 중
       "pt-BR": Evadindo
@@ -386,28 +386,28 @@ info_panel:
     # (the straight-flee Order::Evade) so STATUS names the weave execution
     # phase without doubling the "Evading" mission overlay.
     jinking:
-      de: Ausweichmanöver
+      de: Zickzack
       en: Jinking
-      es: Maniobra evasiva
-      fr: Manœuvre évasive
-      it: Manovra evasiva
+      es: Esquivando
+      fr: Esquive
+      it: Schivata
       ja: 回避機動中
-      ko: 회피 기동 중
-      "pt-BR": Manobra evasiva
-      ru: Противоракетный манёвр
+      ko: 회피 기동
+      "pt-BR": Esquivando
+      ru: Манёвр
       zh: 机动规避中
       "zh-TW": 機動規避中
     # #2206: unit is stuck with no valid route — holds position and retries.
     no_route:
-      de: "KEINE ROUTE"
+      de: "OHNE ROUTE"
       en: "NO ROUTE"
       es: "SIN RUTA"
-      fr: "AUCUNE ROUTE"
-      it: "NESSUNA ROTTA"
+      fr: "SANS ROUTE"
+      it: "SENZA ROTTA"
       ja: "経路なし"
       ko: "경로 없음"
       "pt-BR": "SEM ROTA"
-      ru: "НЕТ МАРШРУТА"
+      ru: "НЕТ ПУТИ"
       zh: "无路径"
       "zh-TW": "無路徑"
     # #2300: a launcher is holding fire because its target is inside the
@@ -421,7 +421,7 @@ info_panel:
       ja: "デッドゾーン"
       ko: "사각지대"
       "pt-BR": "ZONA MORTA"
-      ru: "МЁРТВАЯ ЗОНА"
+      ru: "МЁРТВ.ЗОНА"
       zh: "死区"
       "zh-TW": "死區"
     terrain_masked:
@@ -442,15 +442,15 @@ info_panel:
     # where a range exists but is not trustworthy: naming a single passive
     # source here would be false.
     range_unknown:
-      de: "NUR PEILUNG"
+      de: "NUR PEIL"
       en: "BRG ONLY"
       es: "SOLO DEMORA"
       fr: "RELÈV SEUL"
       it: "SOLO RILEV"
       ja: "方位のみ"
       ko: "방위만"
-      "pt-BR": "SÓ MARCAÇÃO"
-      ru: "ТОЛЬКО ПЕЛЕНГ"
+      "pt-BR": "SÓ MARC"
+      ru: "ПЕЛЕНГ"
       zh: "仅方位"
       "zh-TW": "僅方位"
     # #2520: a launcher is holding fire because the target's range is not
@@ -464,7 +464,7 @@ info_panel:
       it: "SENZA DIST"
       ja: "距離不明"
       ko: "거리 미상"
-      "pt-BR": "SEM ALCANCE"
+      "pt-BR": "SEM DIST"
       ru: "НЕТ ДАЛЬН"
       zh: "距离未知"
       "zh-TW": "距離未知"
@@ -548,58 +548,58 @@ info_panel:
       "zh-TW": "暫緩開火：超出射程"
     error:
       not_recoverable:
-        de: Nicht rückholbar
-        en: Not Recoverable
+        de: Keine Bergung
+        en: "No recovery"
         es: No recuperable
-        fr: Non récupérable
-        it: Non recuperabile
+        fr: Irrécupérable
+        it: Irrecuperabile
         ja: 回収不可
         ko: 회수 불가
         "pt-BR": Não recuperável
-        ru: Не подлежит возврату
+        ru: "Без возврата"
         zh: 无法回收
         "zh-TW": 無法回收
       no_ammo:
         de: Keine Munition
         en: No Ammo
         es: Sin munición
-        fr: Pas de munitions
-        it: Senza munizioni
+        fr: Sans munitions
+        it: Senza colpi
         ja: 弾薬なし
         ko: 탄약 없음
         "pt-BR": Sem munição
-        ru: Нет боеприпасов
+        ru: Нет боезапаса
         zh: 无弹药
         "zh-TW": 無彈藥
       cannot_engage:
-        de: Kein Angriff möglich
+        de: Kein Angriff
         en: Cannot Engage
         es: No puede atacar
-        fr: Engagement impossible
-        it: Impossibile ingaggiare
+        fr: Tir impossible
+        it: Non ingaggia
         ja: 交戦不可
         ko: 교전 불가
         "pt-BR": Não pode engajar
-        ru: Атака невозможна
+        ru: Атака невозм.
         zh: 无法交战
         "zh-TW": 無法交戰
       target_not_found:
-        de: Ziel nicht gefunden
-        en: Target Not Found
-        es: Objetivo no encontrado
-        fr: Cible introuvable
-        it: Bersaglio non trovato
-        ja: 目標未発見
-        ko: 표적 미발견
-        "pt-BR": Alvo não encontrado
-        ru: Цель не обнаружена
-        zh: 未找到目标
-        "zh-TW": 未找到目標
+        de: "Kein Ziel"
+        en: "No target"
+        es: "Sin objetivo"
+        fr: "Pas de cible"
+        it: "Nessun target"
+        ja: "目標なし"
+        ko: "표적 없음"
+        "pt-BR": "Sem alvo"
+        ru: "Нет цели"
+        zh: "无目标"
+        "zh-TW": "無目標"
       doctrine_hold:
         de: Waffensperre
         en: Weapons Hold
         es: Armas retenidas
-        fr: Armes en attente
+        fr: Tir retenu
         it: Armi in attesa
         ja: 兵装保留
         ko: 무장 보류
@@ -611,13 +611,13 @@ info_panel:
     pursuing:
       de: Verfolgend
       en: Pursuing
-      es: Persiguiendo
-      fr: En poursuite
-      it: Inseguimento
+      es: Persecución
+      fr: Poursuite
+      it: Insegue
       ja: 追跡中
       ko: 추적 중
-      "pt-BR": Perseguindo
-      ru: Преследование
+      "pt-BR": Caçando
+      ru: Погоня
       zh: 追踪中
       "zh-TW": 追蹤中
     launching:
@@ -633,52 +633,52 @@ info_panel:
       zh: 发射中
       "zh-TW": 發射中
     committed:
-      de: Feuerbereit
+      de: Angesetzt
       en: Committed
-      es: Comprometido
+      es: Empeñado
       fr: Engagé
       it: Impegnato
       ja: 攻撃確定
       ko: 교전 확정
-      "pt-BR": Comprometido
+      "pt-BR": Engajado
       ru: Применено
       zh: 已投射
       "zh-TW": 已投射
   guidance_phase:
     midcourse:
-      de: Mittelphase
+      de: Marschflug
       en: Midcourse
       es: Fase media
-      fr: Phase médiane
-      it: Fase intermedia
+      fr: Mi-course
+      it: Intermedia
       ja: 中間誘導
       ko: 중간 유도
       "pt-BR": Fase média
-      ru: Маршевая фаза
+      ru: Марш. фаза
       zh: 中段制导
       "zh-TW": 中段導引
     terminal:
       de: Endphase
       en: Terminal
-      es: Fase terminal
-      fr: Phase terminale
-      it: Fase terminale
+      es: Terminal
+      fr: Terminale
+      it: Terminale
       ja: 終末誘導
       ko: 종말 유도
-      "pt-BR": Fase terminal
-      ru: Конечная фаза
+      "pt-BR": Terminal
+      ru: Кон. фаза
       zh: 末段制导
       "zh-TW": 末段導引
     coasting:
-      de: Antriebslos
+      de: Freiflug
       en: Coasting
       es: Sin guía
-      fr: Vol balistique
-      it: Volo inerziale
+      fr: Balistique
+      it: Inerziale
       ja: 慣性飛行
       ko: 관성 비행
-      "pt-BR": Voo inercial
-      ru: Инерциальный полёт
+      "pt-BR": Inercial
+      ru: Инерция
       zh: 惯性飞行
       "zh-TW": 慣性飛行
     midcourse_tip:
@@ -1005,6 +1005,18 @@ info_panel:
   # Richer tooltips (#1532): the BINGO warning tag appended to the FUEL readout
   # when a unit is low on fuel, and the CEIL label prefixed before the service
   # ceiling on the SPC readout.
+  fuel_range:
+    de: "RW %{range}"
+    en: "RNG %{range}"
+    es: "ALC %{range}"
+    fr: "PORT %{range}"
+    it: "RAGG %{range}"
+    ja: "航続 %{range}"
+    ko: "항속 %{range}"
+    "pt-BR": "ALC %{range}"
+    ru: "ДАЛ %{range}"
+    zh: "航程 %{range}"
+    "zh-TW": "航程 %{range}"
   bingo_tag:
     de: "BINGO"
     en: "BINGO FUEL"
@@ -1252,17 +1264,7 @@ info_panel:
     # Universal military acronym — Vertical Launch System — identical in every
     # locale; an acronym stays uppercase even in the mixed-case source.
     vls:
-      de: "VLS"
       en: "VLS"
-      es: "VLS"
-      fr: "VLS"
-      it: "VLS"
-      ja: "VLS"
-      ko: "VLS"
-      "pt-BR": "VLS"
-      ru: "VLS"
-      zh: "VLS"
-      "zh-TW": "VLS"
     torpedo_tube:
       de: "Torpedorohr"
       en: "Torpedo Tube"
@@ -1668,6 +1670,21 @@ info_panel:
         ru: "У этой единицы нет активных датчиков: всегда в тишине"
         zh: "此载具没有主动传感器：始终静默"
         "zh-TW": "此載具沒有主動感測器：始終靜默"
+      # #3963: a group leader's row edits the group's EMCON, so it locks only
+      # when no member has an active sensor — and says so, rather than naming
+      # the leader's hull.
+      silent_locked_group_tooltip:
+        de: "Kein Fahrzeug dieser Gruppe hat aktive Sensoren: immer lautlos"
+        en: "No vehicle in this group has active sensors: always silent"
+        es: "Ningún vehículo de este grupo tiene sensores activos: siempre en silencio"
+        fr: "Aucun véhicule de ce groupe n'a de capteur actif : toujours silencieux"
+        it: "Nessun veicolo di questo gruppo ha sensori attivi: sempre in silenzio"
+        ja: "この編隊の機体にはアクティブセンサーがありません：常に静粛"
+        ko: "이 그룹의 기체에는 능동 센서가 없습니다：항상 침묵"
+        "pt-BR": "Nenhum veículo deste grupo tem sensores ativos: sempre em silêncio"
+        ru: "Ни у одной единицы этой группы нет активных датчиков: всегда в тишине"
+        zh: "此编组中没有载具装有主动传感器：始终静默"
+        "zh-TW": "此編組中沒有載具裝有主動感測器：始終靜默"
     # #2817: read-only reaction readout in the shared doctrine editor (replaces the
     # removed ENGAGE WITHIN / BREAK OFF AT sliders). A launcher's reaction envelope
     # is weapon-derived (the standoff-fire cap, ADR-0013); a warhead's is the fixed
@@ -1976,15 +1993,15 @@ info_panel:
       zh: 返航中
       "zh-TW": 返航中
     holding_pattern:
-      de: Warteschleife
-      en: Holding Pattern
-      es: Patrón de espera
-      fr: "Circuit d'attente"
-      it: "Circuito d'attesa"
+      de: Kreisen
+      en: "Holding"
+      es: "En espera"
+      fr: "Attente"
+      it: "In attesa"
       ja: 待機旋回
       ko: 대기 선회
-      "pt-BR": Padrão de espera
-      ru: Зона ожидания
+      "pt-BR": "Em espera"
+      ru: "Ожидание"
       zh: 等待航线
       "zh-TW": 等待航線
     landing:
@@ -2129,18 +2146,18 @@ info_panel:
       ru: Траулер-завод
       zh: 加工拖网船
       "zh-TW": 加工拖網船
-    peacekeeping_observer:
-      de: Friedensbeobachter
-      en: Peacekeeping observer
-      es: Observador de paz
-      fr: Observateur de paix
-      it: Osservatore di pace
-      ja: 平和維持監視機
-      ko: 평화유지 감시기
-      "pt-BR": Observador de paz
-      ru: Миротворческий наблюдатель
-      zh: 维和观察机
-      "zh-TW": 維和觀察機
+    awc_observer:
+      de: AWC-Beobachter
+      en: AWC observer
+      es: Observador de la AWC
+      fr: Observateur de l'AWC
+      it: Osservatore AWC
+      ja: AWC監視機
+      ko: AWC 감시기
+      "pt-BR": Observador da AWC
+      ru: Наблюдатель AWC
+      zh: AWC观察机
+      "zh-TW": AWC觀察機
     press:
       de: Presse
       en: Press
@@ -2931,6 +2948,30 @@ info_panel:
         ru: Ноучинг
         zh: 陷波
         "zh-TW": 陷波
+      surface_search:
+        de: "Oberflächensuche"
+        en: "Surface search"
+        es: "Búsqueda de superficie"
+        fr: "Veille surface"
+        it: "Ricerca di superficie"
+        ja: "対水上捜索"
+        ko: "대수상 탐색"
+        "pt-BR": "Busca de superfície"
+        ru: "Надводный поиск"
+        zh: "对海搜索"
+        "zh-TW": "對海搜索"
+      surface_search_value:
+        de: "+%{db}DB ggü. Doppler"
+        en: "+%{db}DB vs Doppler"
+        es: "+%{db}DB vs. Doppler"
+        fr: "+%{db}DB vs Doppler"
+        it: "+%{db}DB vs Doppler"
+        ja: "ドップラー比 +%{db}DB"
+        ko: "도플러 대비 +%{db}DB"
+        "pt-BR": "+%{db}DB vs. Doppler"
+        ru: "+%{db}DB отн. доплера"
+        zh: "较多普勒 +%{db}DB"
+        "zh-TW": "較都卜勒 +%{db}DB"
       reverberation_loss:
         de: Nachhallverlust
         en: Reverberation loss
@@ -2943,7 +2984,7 @@ info_panel:
         ru: Потери реверберации
         zh: 混响损失
         "zh-TW": 混響損失
-      look_down_clutter:
+      sea_clutter:
         de: Clutter
         en: Clutter
         es: Clutter
@@ -3128,17 +3169,17 @@ info_panel:
         zh: "并发"
         "zh-TW": "併發"
       effective_accuracy:
-        de: ACC
+        de: "GENAUIGKEIT"
         en: ACC
-        es: ACC
-        fr: ACC
-        it: ACC
-        ja: ACC
-        ko: ACC
-        "pt-BR": ACC
-        ru: ACC
-        zh: ACC
-        "zh-TW": ACC
+        es: "PRECISIÓN"
+        fr: "PRÉCISION"
+        it: "PRECISIONE"
+        ja: "精度"
+        ko: "정확도"
+        "pt-BR": "PRECISÃO"
+        ru: "ТОЧНОСТЬ"
+        zh: "精度"
+        "zh-TW": "精度"
       # #2896: Shift-held per-row explanations for the sensor tooltip. Each
       # `*_gloss` pairs with the label of the same name; revealed while Shift is
       # held (rich tooltips can't host a nested hover). Sentence-case prose.
@@ -3202,6 +3243,18 @@ info_panel:
         ru: "Потеря сигнала из-за того, что движение цели попадает в доплеровскую слепую зону РЛС."
         zh: "因目标运动落入雷达的多普勒盲区（陷波）而损失的信号。"
         "zh-TW": "因目標運動落入雷達的都卜勒盲區（陷波）而損失的信號。"
+      surface_search_gloss:
+        de: "Die Oberflächensuche hat dieses Schiff allein nach Echostärke erfasst, ohne Doppler-Notch und mit feinerer Entfernungszelle. Der Wert sagt, wie viel besser das war als die Puls-Doppler-Suche – ein Vergleich, der nicht mitgerechnet wird; der Verlust steht in der Clutter-Zeile."
+        en: "Surface search held this hull by echo strength alone, with no Doppler notch and a finer range cell. The figure is how much better that did than pulse-Doppler search would have. It is a comparison, not added to the total; the loss it took is the Clutter row."
+        es: "La búsqueda de superficie mantuvo este casco solo por la intensidad del eco, sin muesca Doppler y con una celda de distancia más fina. La cifra indica cuánto mejor lo hizo que la búsqueda Doppler de pulsos. Es una comparación y no se suma al total; la pérdida sufrida está en la fila de Clutter."
+        fr: "La veille surface a tenu cette coque à la seule force de l'écho, sans encoche Doppler et avec une cellule de distance plus fine. Le chiffre indique de combien elle a fait mieux que la recherche Doppler à impulsions. C'est une comparaison, non ajoutée au total ; la perte subie figure sur la ligne Fouillis."
+        it: "La ricerca di superficie ha mantenuto questo scafo con la sola intensità dell'eco, senza tacca Doppler e con una cella di distanza più fine. Il valore indica quanto ha fatto meglio della ricerca Doppler a impulsi. È un confronto, non sommato al totale; la perdita subita è nella riga Clutter."
+        ja: "対水上捜索は、ドップラーノッチなしで、より細かい距離セルを使い、エコー強度だけでこの艦を捕捉した。数値はパルスドップラー捜索より何dB有利だったかを示す。比較値であり合計には加算しない。実際の損失はクラッター行に示す。"
+        ko: "대수상 탐색은 도플러 노치 없이 더 정밀한 거리 셀로 반사 강도만으로 이 선체를 포착했다. 수치는 펄스 도플러 탐색보다 얼마나 나았는지를 나타낸다. 비교값이며 합계에 더하지 않는다. 실제 손실은 클러터 행에 있다."
+        "pt-BR": "A busca de superfície manteve este casco apenas pela intensidade do eco, sem entalhe Doppler e com uma célula de distância mais fina. O valor mostra o quanto ela foi melhor que a busca Doppler pulsada. É uma comparação e não entra no total; a perda sofrida está na linha Clutter."
+        ru: "Надводный поиск удержал этот корабль только по силе эха, без доплеровской режекции и с более мелким элементом дальности. Значение показывает, насколько это лучше импульсно-доплеровского поиска. Это сравнение, оно не входит в сумму; понесённая потеря указана в строке «Помехи»."
+        zh: "对海搜索仅凭回波强度保持了对该舰的探测，没有多普勒陷波，且距离单元更细。数值表示其比脉冲多普勒搜索好多少。这是比较值，不计入总和；实际损失见杂波一行。"
+        "zh-TW": "對海搜索僅憑回波強度保持了對該艦的探測，沒有都卜勒陷波，且距離單元更細。數值表示其比脈衝都卜勒搜索好多少。這是比較值，不計入總和；實際損失見雜波一行。"
       reverberation_loss_gloss:
         de: "Sonarsignalverlust durch Echos, die an Oberfläche, Meeresboden und Wasservolumen streuen."
         en: "Sonar signal lost to echoes scattering off the surface, seabed, and water volume."
@@ -3214,18 +3267,18 @@ info_panel:
         ru: "Потеря сигнала сонара из-за эха, рассеиваемого поверхностью, дном и толщей воды."
         zh: "因声呐信号在海面、海底和水体中散射的回响而损失。"
         "zh-TW": "因聲納信號在海面、海底與水體中散射的回響而損失。"
-      look_down_clutter_gloss:
-        de: "Signalverlust durch Boden- oder Seeclutter, wenn der Sensor auf ein tiefes Ziel herabblickt."
-        en: "Signal lost to ground or sea clutter when the sensor looks down on a low target."
-        es: "Señal perdida por retorno del terreno o del mar cuando el sensor mira hacia abajo a un blanco bajo."
-        fr: "Signal perdu à cause du fouillis de sol ou de mer lorsque le capteur regarde vers le bas un objectif bas."
-        it: "Segnale perso a causa del clutter di terra o mare quando il sensore guarda in basso verso un bersaglio basso."
-        ja: "低空目標を見下ろす際、地表や海面のクラッターで失われる信号。"
-        ko: "저고도 표적을 내려다볼 때 지면·해면 클러터로 손실되는 신호."
-        "pt-BR": "Sinal perdido para o retorno de solo ou mar quando o sensor olha para baixo em um alvo baixo."
-        ru: "Потеря сигнала из-за отражений от земли или моря при взгляде датчика вниз на низкую цель."
-        zh: "传感器俯视低空目标时，被地面或海面杂波掩盖而损失的信号。"
-        "zh-TW": "感測器俯視低空目標時，被地面或海面雜波掩蓋而損失的信號。"
+      sea_clutter_gloss:
+        de: "Signalverlust durch Seerückstrahlungen in der Auflösungszelle des Ziels."
+        en: "Signal lost to sea returns sharing the target's resolution cell."
+        es: "Señal perdida por los retornos del mar que comparten la celda de resolución del blanco."
+        fr: "Signal perdu à cause des échos de mer partageant la cellule de résolution de la cible."
+        it: "Segnale perso a causa dei ritorni del mare che condividono la cella di risoluzione del bersaglio."
+        ja: "目標の分解能セルを共有する海面反射によって失われる信号。"
+        ko: "표적의 분해능 셀을 공유하는 해면 반사로 손실되는 신호."
+        "pt-BR": "Sinal perdido para os retornos do mar que compartilham a célula de resolução do alvo."
+        ru: "Потеря сигнала из-за отражений от моря в том же элементе разрешения, что и цель."
+        zh: "因与目标共用分辨单元的海面回波而损失的信号。"
+        "zh-TW": "因與目標共用解析單元的海面回波而損失的信號。"
       thermocline_loss_gloss:
         de: "Sonarsignalverlust beim Durchqueren der Sprungschicht — der Temperaturgrenze, die Schall beugt und blockiert."
         en: "Sonar signal lost crossing the thermocline — the temperature boundary that bends and blocks sound."
@@ -3359,17 +3412,17 @@ info_panel:
         zh: "该传感器是否在保持锁定的同时继续搜索，还是必须停止搜索才能保持锁定。"
         "zh-TW": "該感測器是否在保持鎖定的同時繼續搜索，還是必須停止搜索才能保持鎖定。"
       effective_accuracy_gloss:
-        de: "Die aktuelle 1 SD-Unsicherheit von Position und Peilung dieser Ortung; sie wird bei stärkerem Signal enger und mit der Entfernung größer."
-        en: "The current 1 SD position and bearing uncertainty of this fix; it tightens with a stronger signal and widens with range."
-        es: "La incertidumbre actual de 1 SD en posición y marcación de esta fijación; se estrecha con una señal más fuerte y se amplía con la distancia."
-        fr: "L'incertitude actuelle à 1 SD en position et relèvement de ce point ; elle se resserre avec un signal plus fort et s'élargit avec la distance."
-        it: "L'incertezza attuale a 1 SD di posizione e rilevamento di questo fix; si restringe con un segnale più forte e si allarga con la distanza."
-        ja: "この測位の現在の1 SD位置・方位誤差。信号が強いほど小さく、距離が伸びるほど大きくなる。"
-        ko: "이 측위의 현재 1 SD 위치·방위 불확실성; 신호가 강할수록 좁아지고 거리가 멀수록 넓어진다."
-        "pt-BR": "A incerteza atual de 1 SD em posição e marcação desta fixação; ela diminui com um sinal mais forte e aumenta com a distância."
-        ru: "Текущая неопределённость этого измерения (1 SD) по позиции и пеленгу; уменьшается при сильном сигнале и растёт с дальностью."
-        zh: "该定位当前的 1 SD 位置与方位不确定度；信号越强越收窄，距离越远越扩大。"
-        "zh-TW": "該定位當前的 1 SD 位置與方位不確定度；信號越強越收窄，距離越遠越擴大。"
+        de: "Die aktuelle 1 SD-Unsicherheit dieser Ortung: Position, Peilung und, falls der Sensor die Elevation auflöst, Höhe. Ein stärkeres Signal verengt sie; die Position streut mit der Entfernung."
+        en: "The current 1 SD uncertainty of this fix: position, bearing and, if the sensor resolves elevation, altitude. A stronger signal tightens it; position spreads with range."
+        es: "La incertidumbre actual de 1 SD de esta fijación: posición, marcación y, si el sensor resuelve la elevación, altitud. Una señal más fuerte la estrecha; la posición se dispersa con la distancia."
+        fr: "L'incertitude actuelle à 1 SD de ce point : position, relèvement et, si le capteur résout l'élévation, altitude. Un signal plus fort la resserre ; la position s'étale avec la distance."
+        it: "L'incertezza attuale a 1 SD di questo fix: posizione, rilevamento e, se il sensore risolve l'elevazione, quota. Un segnale più forte la restringe; la posizione si allarga con la distanza."
+        ja: "この測位の現在の1 SD誤差：位置、方位、そして仰角を分解できるセンサーでは高度。信号が強いほど小さく、位置誤差は距離とともに広がる。"
+        ko: "이 측위의 현재 1 SD 불확실성: 위치, 방위, 그리고 고각을 분해하는 센서라면 고도. 신호가 강할수록 좁아지고, 위치는 거리에 따라 넓어진다."
+        "pt-BR": "A incerteza atual de 1 SD desta fixação: posição, marcação e, se o sensor resolve a elevação, altitude. Um sinal mais forte a reduz; a posição se espalha com a distância."
+        ru: "Текущая неопределённость этого измерения (1 SD): позиция, пеленг и, если датчик измеряет угол места, высота. Сильный сигнал её уменьшает; позиция расплывается с дальностью."
+        zh: "该定位当前的 1 SD 不确定度：位置、方位，以及（若传感器能分辨仰角）高度。信号越强越收窄；位置随距离扩散。"
+        "zh-TW": "該定位當前的 1 SD 不確定度：位置、方位，以及（若感測器能分辨仰角）高度。信號越強越收窄；位置隨距離擴散。"
   emissions:
     portraying:
       de: "TARNT ALS"
@@ -3616,31 +3669,43 @@ info_panel:
       "zh-TW": 目標遺失
     # Contact tooltip TRK readout — fix type, last-fix framing, engager count,
     # and the passive-sensor qualifier on the DET readout.
+    track_age:
+      de: "ALTER %{age}"
+      en: "AGE %{age}"
+      es: "EDAD %{age}"
+      fr: "ÂGE %{age}"
+      it: "ETÀ %{age}"
+      ja: "経過 %{age}"
+      ko: "경과 %{age}"
+      "pt-BR": "IDADE %{age}"
+      ru: "ДАВН %{age}"
+      zh: "经过 %{age}"
+      "zh-TW": "經過 %{age}"
     fix:
       firm:
-        de: FIRM
+        de: "FEST"
         en: FIRM
-        es: FIRM
-        fr: FIRM
-        it: FIRM
-        ja: FIRM
-        ko: FIRM
-        "pt-BR": FIRM
-        ru: FIRM
-        zh: FIRM
-        "zh-TW": FIRM
+        es: "FIRME"
+        fr: "FERME"
+        it: "CERTO"
+        ja: "確定"
+        ko: "확정"
+        "pt-BR": "FIRME"
+        ru: "ТОЧНЫЙ"
+        zh: "确定"
+        "zh-TW": "確定"
       bearing_only:
-        de: BEARING-ONLY
+        de: "NUR PEILUNG"
         en: BEARING-ONLY
-        es: BEARING-ONLY
-        fr: BEARING-ONLY
-        it: BEARING-ONLY
-        ja: BEARING-ONLY
-        ko: BEARING-ONLY
-        "pt-BR": BEARING-ONLY
-        ru: BEARING-ONLY
-        zh: BEARING-ONLY
-        "zh-TW": BEARING-ONLY
+        es: "SOLO DEMORA"
+        fr: "RELÈVEMENT SEUL"
+        it: "SOLO RILEVAMENTO"
+        ja: "方位のみ"
+        ko: "방위만"
+        "pt-BR": "APENAS MARCAÇÃO"
+        ru: "ТОЛЬКО ПЕЛЕНГ"
+        zh: "仅方位"
+        "zh-TW": "僅方位"
     passive_qualifier:
       de: "(passiv)"
       en: "(passive)"
@@ -3653,18 +3718,18 @@ info_panel:
       ru: "(пассив.)"
       zh: "(被动)"
       "zh-TW": "(被動)"
-    rel_from:
-      de: "VON"
-      en: "FROM"
-      es: "DE"
-      fr: "DE"
-      it: "DA"
-      ja: "←"
-      ko: "←"
-      "pt-BR": "DE"
-      ru: "ОТ"
-      zh: "自"
-      "zh-TW": "自"
+    rel_bearing_range_from:
+      de: "%{bearing} · %{range} VON"
+      en: "%{bearing} · %{range} FROM"
+      es: "%{bearing} · %{range} DE"
+      fr: "%{bearing} · %{range} DE"
+      it: "%{bearing} · %{range} DA"
+      ja: "%{bearing} · %{range} ←"
+      ko: "%{bearing} · %{range} ←"
+      "pt-BR": "%{bearing} · %{range} DE"
+      ru: "%{bearing} · %{range} ОТ"
+      zh: "%{bearing} · %{range} 自"
+      "zh-TW": "%{bearing} · %{range} 自"
     engagers:
       de: "%{count} freundlich"
       en: "%{count} friendly"
@@ -3824,44 +3889,30 @@ info_panel:
       ru: "%{secs} сек. назад"
       zh: "%{secs}秒前"
       "zh-TW": "%{secs}秒前"
-    # DC-1133.5: masthead tracking-age readout ("how long has this track
-    # been held"), appended to the class subtitle line.
-    tracking_age_minutes:
-      de: "verfolgt seit %{mins} Min. %{secs} Sek."
-      en: "tracked %{mins}m %{secs}s"
-      es: "seguido %{mins} min %{secs} s"
-      fr: "suivi depuis %{mins} min %{secs} s"
-      it: "tracciato da %{mins} min %{secs} s"
-      ja: "追尾 %{mins}分%{secs}秒"
-      ko: "추적 %{mins}분 %{secs}초"
-      "pt-BR": "rastreado %{mins}min %{secs}s"
-      ru: "сопровождается %{mins} мин. %{secs} сек."
-      zh: "已跟踪%{mins}分%{secs}秒"
-      "zh-TW": "已追蹤%{mins}分%{secs}秒"
-    tracking_age_seconds:
-      de: "verfolgt seit %{secs} Sek."
-      en: "tracked %{secs}s"
-      es: "seguido %{secs} s"
-      fr: "suivi depuis %{secs} s"
-      it: "tracciato da %{secs} s"
-      ja: "追尾 %{secs}秒"
-      ko: "추적 %{secs}초"
-      "pt-BR": "rastreado %{secs}s"
-      ru: "сопровождается %{secs} сек."
-      zh: "已跟踪%{secs}秒"
-      "zh-TW": "已追蹤%{secs}秒"
+    tracking_age_label:
+      de: ALTER
+      en: AGE
+      es: EDAD
+      fr: ÂGE
+      it: ETÀ
+      ja: 経過
+      ko: 경과
+      "pt-BR": IDADE
+      ru: ВОЗРАСТ
+      zh: 时长
+      "zh-TW": 時長
     tracking_age_tooltip:
-      de: "Gemeldete Klasse, dann die Zeit seit der letzten Sensoraktualisierung dieser Spur. Je älter sie wird, desto weiter ist die dargestellte Position koppelnavigiert."
-      en: "Reported class, then how long since a sensor last updated this track. The older it gets, the further the plotted position has been dead-reckoned."
-      es: "Clase informada y, a continuación, el tiempo transcurrido desde la última actualización de esta traza por un sensor. Cuanto más envejece, más se estima por navegación a estima la posición mostrada."
-      fr: "Classe rapportée, puis le temps écoulé depuis la dernière mise à jour de cette piste par un capteur. Plus elle vieillit, plus la position affichée est extrapolée à l'estime."
-      it: "Classe riportata, poi da quanto tempo un sensore non aggiorna questa traccia. Più invecchia, più la posizione mostrata è estrapolata per stima."
-      ja: "報告されたクラスと、このトラックがセンサーで最後に更新されてからの経過時間。古くなるほど、表示位置は推測航法による外挿に頼ることになる。"
-      ko: "보고된 등급과, 센서가 이 항적을 마지막으로 갱신한 뒤 지난 시간입니다. 오래될수록 표시된 위치는 추측 항법으로 더 멀리 외삽된 것입니다."
-      "pt-BR": "Classe informada e, em seguida, há quanto tempo um sensor atualizou esta trilha pela última vez. Quanto mais envelhece, mais a posição exibida é estimada por navegação estimada."
-      ru: "Заявленный класс, затем время с последнего обновления этого следа датчиком. Чем он старше, тем дальше показанная позиция экстраполирована счислением."
-      zh: "报告类别，以及自传感器上次更新该航迹以来的时间。时间越久，所标绘的位置就越依赖航位推算外推。"
-      "zh-TW": "報告類別，以及自感測器上次更新該航跡以來的時間。時間越久，所標繪的位置就越依賴航位推算外推。"
+      de: "Zeit, seit diese Spur erstmals erfasst wurde. Je älter sie wird, desto weiter ist die dargestellte Position koppelnavigiert."
+      en: "Time since this track was first recorded. The older it gets, the further the plotted position has been dead-reckoned."
+      es: "Tiempo transcurrido desde que se registró por primera vez esta traza. Cuanto más envejece, más se estima por navegación a estima la posición mostrada."
+      fr: "Temps écoulé depuis le premier enregistrement de cette piste. Plus elle vieillit, plus la position affichée est extrapolée à l'estime."
+      it: "Tempo trascorso dalla prima registrazione di questa traccia. Più invecchia, più la posizione mostrata è estrapolata per stima."
+      ja: "このトラックが最初に記録されてからの経過時間。時間が経つほど、表示位置は推測航法による外挿に頼ることになる。"
+      ko: "이 항적이 처음 기록된 뒤 지난 시간입니다. 오래될수록 표시된 위치는 추측 항법으로 더 멀리 외삽된 것입니다."
+      "pt-BR": "Tempo decorrido desde que esta trilha foi registrada pela primeira vez. Quanto mais envelhece, mais a posição exibida é estimada por navegação estimada."
+      ru: "Время с момента первой регистрации этого следа. Чем он старше, тем дальше показанная позиция экстраполирована счислением."
+      zh: "自该航迹首次记录以来的时间。时间越久，所标绘的位置就越依赖航位推算外推。"
+      "zh-TW": "自該航跡首次記錄以來的時間。時間越久，所標繪的位置就越依賴航位推算外推。"
     # DC-1133.5: live summary on the DET accordion row header.
     det_summary:
       de: "%{units} EINHEITEN · %{sensors} SENSOREN"
@@ -4246,17 +4297,7 @@ info_panel:
           zh: 微多普勒
           "zh-TW": 微多普勒
         demon:
-          de: DEMON
           en: DEMON
-          es: DEMON
-          fr: DEMON
-          it: DEMON
-          ja: DEMON
-          ko: DEMON
-          "pt-BR": DEMON
-          ru: DEMON
-          zh: DEMON
-          "zh-TW": DEMON
       node:
         unknown:
           de: UNBEKANNT
@@ -6011,6 +6052,34 @@ info_panel:
       ru: "Добавляет отдельный заказ на покупку для этого носителя."
       zh: "为此航母添加一个独立购买订单。"
       "zh-TW": "為此航母新增一個獨立購買訂單。"
+    # #5554: the terse transfer words on an INV / STR row, which lead with the
+    # FromStores / ToStores direction icon (whose tooltips are the
+    # `*_from_stores` / `*_to_stores` phrases below), so the word need not say
+    # where the round is going.
+    loading:
+      de: "WIRD GELADEN"
+      en: "LOADING"
+      es: "CARGANDO"
+      fr: "CHARGEMENT"
+      it: "CARICAMENTO"
+      ja: "搭載中"
+      ko: "탑재 중"
+      "pt-BR": "CARREGANDO"
+      ru: "ЗАГРУЗКА"
+      zh: "装填中"
+      "zh-TW": "裝填中"
+    unloading:
+      de: "WIRD ENTLADEN"
+      en: "UNLOADING"
+      es: "DESCARGANDO"
+      fr: "DÉCHARGEMENT"
+      it: "SCARICAMENTO"
+      ja: "取卸中"
+      ko: "하역 중"
+      "pt-BR": "DESCARREGANDO"
+      ru: "ВЫГРУЗКА"
+      zh: "卸载中"
+      "zh-TW": "卸載中"
     loading_from_stores:
       de: "WIRD AUS LAGER GELADEN"
       en: "LOADING FROM STORES"
@@ -6673,41 +6742,41 @@ info_panel:
   trajectory:
     active:
       direct:
-        de: "Direct"
+        de: "Direkt"
         en: "Direct"
-        es: "Direct"
+        es: "Directo"
         fr: "Direct"
-        it: "Direct"
-        ja: "Direct"
-        ko: "Direct"
-        "pt-BR": "Direct"
-        ru: "Direct"
-        zh: "Direct"
-        "zh-TW": "Direct"
+        it: "Diretto"
+        ja: "直進"
+        ko: "직선"
+        "pt-BR": "Direto"
+        ru: "Настильная"
+        zh: "直线"
+        "zh-TW": "直線"
       terrain_follow:
-        de: "Terrain-Follow"
+        de: "Geländefolgeflug"
         en: "Terrain-Follow"
-        es: "Terrain-Follow"
-        fr: "Terrain-Follow"
-        it: "Terrain-Follow"
-        ja: "Terrain-Follow"
-        ko: "Terrain-Follow"
-        "pt-BR": "Terrain-Follow"
-        ru: "Terrain-Follow"
-        zh: "Terrain-Follow"
-        "zh-TW": "Terrain-Follow"
+        es: "Seguimiento del terreno"
+        fr: "Suivi de terrain"
+        it: "Inseguimento del terreno"
+        ja: "地形追随"
+        ko: "지형 추적"
+        "pt-BR": "Acompanhamento do terreno"
+        ru: "Огибание рельефа"
+        zh: "地形跟随"
+        "zh-TW": "地形跟隨"
       lofted:
-        de: "Lofted"
+        de: "Hochbogen"
         en: "Lofted"
-        es: "Lofted"
-        fr: "Lofted"
-        it: "Lofted"
-        ja: "Lofted"
-        ko: "Lofted"
-        "pt-BR": "Lofted"
-        ru: "Lofted"
-        zh: "Lofted"
-        "zh-TW": "Lofted"
+        es: "Elevada"
+        fr: "Lobée"
+        it: "Arcuata"
+        ja: "ロフテッド"
+        ko: "로프티드"
+        "pt-BR": "Elevada"
+        ru: "Навесная"
+        zh: "高抛"
+        "zh-TW": "高拋"
   # DC-1133.4: live summaries on the vehicle panel's NAV / SNR / CON / INV
   # accordion rows. Terse caps console style in Latin scripts; %{alt} /
   # %{depth} / %{spd} / %{range} are pre-formatted with locale units.
