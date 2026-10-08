@@ -30,13 +30,16 @@ Nominal angular-profile glide descent angle below the horizon (radians)
 after burnout. An observed impact-angle residual can relax the coast pitch
 ceiling toward level flight; it cannot authorize an unpowered climb.
 
-### `lofted_impact_angle_rad` : f32
+### `loft_height_per_ground_range` : f32
 
-Lofted's terminal flight-path elevation (radians; negative is downward).
+A lofting shot's loft altitude above its target, per metre of ground
+range measured when the shot settles (#5860). Capped at the airframe's
+ceiling and never below the round's own altitude.
 
-### `lofted_impact_tolerance_rad` : f32
+### `loft_pushover_rad` : f32
 
-Acceptance tolerance (radians) around `lofted_impact_angle_rad`.
+Sight-line depression (radians below the horizon) at which a lofting
+shot pushes over from its loft altitude into terminal homing.
 
 ### `skim_impact_angle_rad` : f32
 

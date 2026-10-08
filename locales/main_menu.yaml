@@ -355,6 +355,18 @@ main_menu:
     ru: "Конструктор дронов"
     zh: "无人机设计器"
     "zh-TW": "無人機設計器"
+  benches:
+    de: "Testgelände"
+    en: "Test Range"
+    es: "Campo de pruebas"
+    fr: "Champ d'essais"
+    it: "Poligono di prova"
+    ja: "試験場"
+    ko: "시험장"
+    "pt-BR": "Campo de provas"
+    ru: "Полигон"
+    zh: "试验场"
+    "zh-TW": "試驗場"
   mods:
     de: "Mods"
     en: "Mods"

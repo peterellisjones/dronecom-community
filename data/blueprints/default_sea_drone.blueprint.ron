@@ -10,9 +10,6 @@
         (kind: Component(component_id: "an_sps_90")),
         // Ship RWR
         (kind: Component(component_id: "an_slr_40")),
-        // EO/IR mast (#3081): passive layer so the picket still sees with
-        // the radar silent (and gets a passive channel on sea-skimmers)
-        (kind: Component(component_id: "an_say_25")),
         // Radar Missile 1 (M-250)
         (kind: Blueprint(id: BlueprintId("00000000-0000-0000-0000-000000000003"))),
         // Radar Missile 2 (M-250)

@@ -12,11 +12,9 @@
         (kind: Component(component_id: "mk_120")),
     ],
     doctrine_setting: Suggested,
-    // Boost-sustain BVR loft (#2185): the M-250 lofts so the sustain motor's
-    // energy buys long reach. The mandated terminal dive angle (#5196) applies
-    // uniformly regardless of range, so a short shot pays the same steep-dive
-    // cost as a genuine BVR one — reach at close range is traded for the
-    // authored impact angle, not preserved by a range-adaptive shallow cruise.
+    // Boost-sustain BVR loft (#2185, #5860): a long shot lofts so the sustain
+    // motor's energy buys reach in thin air; a shot inside the fitted loft
+    // crossover flies as Direct.
     trajectory: Lofted,
     default_altitude: Chassis,
     unknown_range_launch: Withhold,

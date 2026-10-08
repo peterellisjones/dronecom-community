@@ -15,8 +15,10 @@
         (kind: Component(component_id: "mk_40")),
     ],
     doctrine_setting: Suggested,
-    // Lofted = the dive attack: cruise high, terminal-dive on the target (#3090).
-    trajectory: Lofted,
+    // Direct: homing dives onto the target as steeply as the geometry needs
+    // (#5195); Lofted lofts for range, which a loitering drone does not need
+    // (#5860).
+    trajectory: Direct,
     default_altitude: Chassis,
     unknown_range_launch: Withhold,
     stores: [],

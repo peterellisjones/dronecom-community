@@ -38,14 +38,20 @@
         max_yaw_rate: 0.26,
         stall_speed: 35.0,
         max_lateral_g: 4.0,
-        // #3090: Lofted supports the loitering-munition dive attack — within
-        // terminal-handoff range the profile hands the dive to terminal guidance
-        // straight from launch (#2175), the Switchblade-style top attack.
+        // Existing player designs may select Lofted. A recoverable aircraft
+        // without a fitted crossover executes that choice as Direct.
         supported_trajectories: [Direct, TerrainFollow, Lofted],
         terrain_clearance: 100.0,
     ),
     propulsion: Propeller,
-    engine: Powered((thrust_n: 1000.0, fuel_burn_rate: 3.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
+    // Thrust is sized for climb, not top speed (#3252): the absolute ceiling
+    // at MTOW (~7.4 km here) must clear `max_altitude` with margin, or
+    // air-density thrust lapse and induced drag stall the climb out below it.
+    // Every RQ-10 design reaches 5,000 m from 500 m in ~14-18 min. Fuel burn
+    // is sized with thrust (constant thrust-specific consumption), and
+    // `engine_bells` below ask for the same absolute thrust at loiter, cruise
+    // and full, so only the climb and the flank dash use the extra power.
+    engine: Powered((thrust_n: 1600.0, fuel_burn_rate: 4.8, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
     // #3148: no AirLaunch cells to deploy carried entities from, so the scout
     // chassis mounts sensors / its own warhead / utility only.
     allowed_components: [Category(Sensors), Category(Warheads), Category(Decoys), Category(Utility)],
@@ -61,5 +67,5 @@
     battery_capacity_kwh: 0.5,
     base_power_draw_kw: 0.5,
     power_supply_kw: 3.0,
-    engine_bells: (loiter: Some(0.12), cruise: Some(0.4), full: Some(0.76)),
+    engine_bells: (loiter: Some(0.075), cruise: Some(0.25), full: Some(0.475)),
 )

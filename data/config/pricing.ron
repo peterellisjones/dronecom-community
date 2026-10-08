@@ -75,6 +75,13 @@
         // waveform: 20 MHz → +25%, 50 MHz → +36%, 100 MHz → +42%.
         surface_search_premium_max: 0.5,
         surface_search_half_point_hz: 20000000.0,
+        // #5730: a hosting credit for mass and draw, which only large hulls
+        // can carry. Burden is counted in reference air hulls
+        // (kg / reference_payload_kg + kW / reference_supply_kw); half the
+        // 50% ceiling at a burden of 4. A 45 kg, 0.4 kW sensor is ~5% cheaper;
+        // a 600 kg, 139 kW fleet array ~42% cheaper.
+        hosting_credit_max: 0.5,
+        hosting_half_point: 4.0,
     ),
     warhead: (
         damage_exponent: 0.9,

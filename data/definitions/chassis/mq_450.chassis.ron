@@ -40,7 +40,15 @@
         terrain_clearance: 100.0,
     ),
     propulsion: Turbojet,
-    engine: Powered((thrust_n: 8600.0, fuel_burn_rate: 5.0, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
+    // Thrust is sized for climb, not top speed (#3252). Thrust lapses with
+    // air density and induced drag grows as the air thins, so the absolute
+    // ceiling at MTOW (~9.3 km here) must clear `max_altitude` with margin or
+    // the climb stalls out below it. The AEW reaches its 8,000 m ceiling ~13
+    // min after leaving 500 m, an MTOW build ~19 min. Fuel burn is sized with
+    // thrust (constant thrust-specific consumption), and `engine_bells` below
+    // ask for the same absolute thrust at loiter, cruise and full, so only
+    // the climb and the flank dash use the extra power.
+    engine: Powered((thrust_n: 11500.0, fuel_burn_rate: 6.69, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Decoys), Category(Utility), Category(CarriedEntities)],
     carrier: false,
     availability: PlayerAvailable,
@@ -54,5 +62,5 @@
     battery_capacity_kwh: 1.0,
     base_power_draw_kw: 1.0,
     power_supply_kw: 30.0,
-    engine_bells: (loiter: Some(0.15), cruise: Some(0.5), full: Some(0.8)),
+    engine_bells: (loiter: Some(0.112), cruise: Some(0.374), full: Some(0.598)),
 )

@@ -210,6 +210,12 @@ SimConfig(
         evade_weave_amplitude_rad: 0.6,
         evade_weave_period_secs: 8.0,
         evade_weave_look_ahead_m: 1200.0,
+        // #5694: performance only, every value simulates identically. Each
+        // domain autopilot steps a team's vehicles in parallel tasks of at
+        // least `min_batch`; fewer than two batches' worth step serially.
+        // Measured in instructions retired on the arena and the 400-drone
+        // stress world. `Serial` turns the parallel step off.
+        vehicle_step_batching: Parallel(min_batch: 8),
     ),
     launch: (
         launch_altitude_offset: 10.0,
@@ -631,6 +637,10 @@ SimConfig(
             // Bonus (match) / penalty (mismatch) for a candidate's propulsion
             // class vs the signature read — narrows same-bucket hulls.
             signature_match_weight: 1.0,
+            // #5708: seconds a track must hold convergence on one hull before
+            // its team hears "identified" (or "reclassified", for a different
+            // hull). Two 2 s scans, so a flapping posterior announces nothing.
+            identity_announce_dwell_secs: 4.0,
         ),
         // DC-946.1 fire-control lock tuning (cued-lock pass in run_detection).
         // #5169 signature emulation: the thresholds the objective decoy
@@ -880,6 +890,13 @@ SimConfig(
         cz_falloff_per_ring_db: 4.0,
         cz_q: 1.5,
         cz_min_depth: 300.0,
+        // #1367: hydrostatic pressure raises a hull's cavitation inception
+        // speed with depth. The knee scales as sqrt((depth + head) / head),
+        // the square root of absolute pressure relative to the surface, so
+        // this is one atmosphere expressed as metres of seawater
+        // (101.325 kPa / (1025 kg/m^3 * 9.81 m/s^2) = 10.08 m). At the
+        // surface the knee is the chassis' authored `cavitation_speed`.
+        cavitation_atmospheric_head_m: 10.0,
     ),
     match_end: (
         // Imminent match-end warning thresholds (seconds remaining, strictly
@@ -958,6 +975,14 @@ SimConfig(
         // looks — so such a drone closing on a unit is treated as a possible
         // weapon for about three looks. That is the accepted cost.
         munition_mass_admission: 0.15,
+        // #3921: lowest IR-to-visual signature ratio, read by one platform's IR
+        // and visual channels on the same scan, that marks a contact as a
+        // munition. Range cancels, so the ratio is the emitter's own
+        // ir_base / visual_cross_section. Derived from the shipped catalog's
+        // gap: the highest non-munition is the MQ-60 decoy at 40 (4.0 / 0.1)
+        // and the lowest munition the M-400 at 89 (16.0 / 0.18). 60 is the
+        // geometric midpoint, sqrt(40 * 89), so each side keeps ~1.5x margin.
+        signature_contrast_munition_ratio: 60.0,
         // #5425: longest time-to-closest-approach at which a track admitted only
         // on INFERRED munition evidence (generic air/subsurface node, posterior
         // mass, or a speed that reaches the missile floor only through its σ)
@@ -1013,6 +1038,11 @@ SimConfig(
         // calibration. Acoustic changes can also change observed SNR.
         snr_closing_min_db_per_sec: 0.005,
         engagement_commitment_max_secs: 90.0,
+        // #5696: threat intake's RNG-free per-track and per-unit passes run in
+        // parallel tasks of at least this many items, applied in input order,
+        // so the value changes speed only. Fewer than two batches, or a
+        // one-thread pool (every headless app), stays serial.
+        intake_batching: Parallel(min_batch: 16),
     ),
     traffic: (
         // #3705 (epic #3459). Eight hulls on a 100 km-wide theatre is sparse
@@ -1157,5 +1187,33 @@ SimConfig(
         // Roughly 2x air_terrain_clearance (100 m), below which there is no
         // room to route between the two.
         narrow_altitude_band_m: 200.0,
+    ),
+    // Arena bench (#5734): the main menu's private two-team simulation.
+    arena_bench: (
+        unit_spacing_m: 1000.0,
+        // 10 Hz: fine enough for terminal homing and fuzing, coarse enough
+        // that a twenty-minute run streams ahead of 16x playback.
+        tick_millis: 100,
+        // Two seconds of simulated time per streamed chunk.
+        chunk_ticks: 20,
+        // Units per team, across all of its groups.
+        max_team_count: 16,
+        max_team_groups: 4,
+        // 10 nm.
+        default_range_m: 18520.0,
+        // Twelve Strike Drones against twelve Interceptors.
+        default_alpha_designator: "MQ-220A",
+        default_beta_designator: "MQ-160A",
+        default_team_count: 12,
+        min_range_m: 1000.0,
+        max_range_m: 400000.0,
+        default_time_cap_secs: 1200.0,
+        max_time_cap_secs: 3600.0,
+        map_margin_m: 50000.0,
+        commander_period_secs: 1.0,
+        exhausted_grace_secs: 5.0,
+        // Labels, sensor lines and locks change slower than positions, which
+        // every tick carries.
+        picture_period_secs: 0.5,
     ),
 )

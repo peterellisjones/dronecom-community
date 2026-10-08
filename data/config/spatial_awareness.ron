@@ -1,6 +1,6 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/spatial-awareness.md
 (
-    quadtree_depth: 4,
+    sectors_per_side: 16,
     update_interval_secs: 3.0,
     coverage_half_life_secs: 30.0,
     threat_weight_surface: 1.0,

@@ -46,14 +46,10 @@
     ntds_classification: Explicit(Missile),
     target_domains: [Air, SeaSurface, Land],
     guidance_uplink: FromLauncher,
-    // Coast reserve sized to outlast a full BVR loft (#2247): after the ~21 s
-    // boost+sustain the missile glides on the battery (seeker + electronics), and
-    // running it dry mid-coast despawns the missile (BatteryDepleted) before it
-    // reaches its target. The worst case is the longest committed shot — the
-    // operational max-reach loft (~33 km) from the MQ-450 air-launch ceiling
-    // (8 km) — which coasts ~83 s. At the 8.5 kW seeker+base draw, 0.32 kWh gives
-    // ~135 s of coast endurance (~1.6× the coast, over the 1.5× floor). Guarded by
-    // `dc_autopilot` `radar_missile_battery_outlasts_best_range_loft`.
+    // After boost and sustain, the battery powers the seeker and electronics.
+    // The shipped Radar Missile must cover its fitted max-reach flight from
+    // the MQ-450's 8 km launch ceiling with a 1.5x coast-endurance margin.
+    // Guarded by `dc_autopilot::radar_missile_battery_outlasts_best_range_loft`.
     battery_capacity_kwh: 0.32,
     base_power_draw_kw: 0.5,
     power_supply_kw: 1.1,

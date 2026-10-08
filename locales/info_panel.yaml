@@ -26,17 +26,17 @@ info_panel:
     zh: "燃料已耗尽；平台正依靠应急电池储备运行，耗尽后将坠毁（迫降）。"
     "zh-TW": "燃料已耗盡；平台正依靠應急電池儲備運行，耗盡後將墜毀（迫降）。"
   cavitating_tooltip:
-    de: "Diese Plattform kavitiert: Sie fährt so schnell, dass der Propeller kollabierende Blasen erzeugt, was den abgestrahlten Lärm stark erhöht."
-    en: "This platform is cavitating: moving fast enough that its propeller throws off collapsing bubbles, sharply raising the noise it radiates."
-    es: "Esta plataforma está cavitando: navega tan rápido que su hélice genera burbujas que colapsan, elevando bruscamente el ruido que irradia."
-    fr: "Cette plateforme cavite : elle avance assez vite pour que son hélice produise des bulles qui implosent, augmentant fortement le bruit qu'elle émet."
-    it: "Questa piattaforma sta cavitando: procede così veloce che l'elica genera bolle che collassano, aumentando bruscamente il rumore irradiato."
-    ja: "このプラットフォームはキャビテーションを起こしている。速力が高くプロペラが崩壊する気泡を発生させ、放射雑音が急増している。"
-    ko: "이 플랫폼은 캐비테이션을 일으키고 있습니다: 속도가 빨라 프로펠러가 붕괴하는 기포를 만들어 방사 소음이 급격히 커집니다."
-    "pt-BR": "Esta plataforma está cavitando: navega rápido o bastante para que a hélice gere bolhas que implodem, elevando bruscamente o ruído irradiado."
-    ru: "Эта платформа кавитирует: идёт так быстро, что винт создаёт схлопывающиеся пузыри, резко повышая излучаемый шум."
-    zh: "该平台正在发生空泡：航速过快使螺旋桨产生溃灭的气泡，辐射噪声急剧上升。"
-    "zh-TW": "該平台正在發生空泡：航速過快使螺旋槳產生潰滅的氣泡，輻射噪聲急劇上升。"
+    de: "Diese Plattform kavitiert: Sie fährt so schnell, dass der Propeller kollabierende Blasen erzeugt, was den abgestrahlten Lärm stark erhöht. In größerer Tiefe setzt Kavitation erst bei höherer Fahrt ein."
+    en: "This platform is cavitating: moving fast enough that its propeller throws off collapsing bubbles, sharply raising the noise it radiates. Running deeper raises the speed at which this starts."
+    es: "Esta plataforma está cavitando: navega tan rápido que su hélice genera burbujas que colapsan, elevando bruscamente el ruido que irradia. A mayor profundidad, la cavitación empieza a mayor velocidad."
+    fr: "Cette plateforme cavite : elle avance assez vite pour que son hélice produise des bulles qui implosent, augmentant fortement le bruit qu'elle émet. Plus elle navigue profond, plus la vitesse d'apparition de la cavitation est élevée."
+    it: "Questa piattaforma sta cavitando: procede così veloce che l'elica genera bolle che collassano, aumentando bruscamente il rumore irradiato. Più in profondità, la cavitazione inizia a velocità più alta."
+    ja: "このプラットフォームはキャビテーションを起こしている。速力が高くプロペラが崩壊する気泡を発生させ、放射雑音が急増している。深度が深いほど、キャビテーションが始まる速力は高くなる。"
+    ko: "이 플랫폼은 캐비테이션을 일으키고 있습니다: 속도가 빨라 프로펠러가 붕괴하는 기포를 만들어 방사 소음이 급격히 커집니다. 더 깊이 항주할수록 캐비테이션이 시작되는 속도가 높아집니다."
+    "pt-BR": "Esta plataforma está cavitando: navega rápido o bastante para que a hélice gere bolhas que implodem, elevando bruscamente o ruído irradiado. Quanto mais fundo navega, maior a velocidade em que isso começa."
+    ru: "Эта платформа кавитирует: идёт так быстро, что винт создаёт схлопывающиеся пузыри, резко повышая излучаемый шум. Чем больше глубина, тем выше скорость, при которой начинается кавитация."
+    zh: "该平台正在发生空泡：航速过快使螺旋桨产生溃灭的气泡，辐射噪声急剧上升。航行深度越大，开始产生空泡的航速越高。"
+    "zh-TW": "該平台正在發生空泡：航速過快使螺旋槳產生潰滅的氣泡，輻射噪聲急劇上升。航行深度越大，開始產生空泡的航速越高。"
   # #2879/#2884: summary-row (accordion) hover hints. The footer swaps its line
   # to the shift-click bulk action while a header is hovered (open-all vs
   # close-all, matching what a shift-click would do); the clickable header band
@@ -3316,17 +3316,17 @@ info_panel:
         zh: "汇聚区将声波重新聚焦，延伸远距离声呐探测所带来的增益。"
         "zh-TW": "匯聚區將聲波重新聚焦，延伸遠距離聲納偵測所帶來的增益。"
       cavitation_gloss:
-        de: "Zusätzliches Signal durch das Kavitationsgeräusch der Zielschraube, das einen schnellen, tief laufenden Läufer verrät."
-        en: "Extra signal from the target's own propeller cavitation noise, which betrays a fast, deep runner."
-        es: "Señal extra del ruido de cavitación de la hélice del blanco, que delata a un objetivo rápido y profundo."
-        fr: "Signal supplémentaire dû au bruit de cavitation de l'hélice de la cible, qui trahit une cible rapide et profonde."
-        it: "Segnale aggiuntivo dal rumore di cavitazione dell'elica del bersaglio, che tradisce un bersaglio veloce e profondo."
-        ja: "目標のスクリューによるキャビテーション音がもたらす追加信号。高速で深く走る目標を暴く。"
-        ko: "표적 스크루의 캐비테이션 소음에서 나오는 추가 신호; 빠르고 깊이 달리는 표적을 드러낸다."
-        "pt-BR": "Sinal extra do ruído de cavitação da hélice do alvo, que denuncia um alvo rápido e profundo."
-        ru: "Дополнительный сигнал от шума кавитации винта цели, выдающий быструю глубоко идущую цель."
-        zh: "来自目标螺旋桨空化噪声的额外信号，会暴露高速深潜的目标。"
-        "zh-TW": "來自目標螺旋槳空化噪聲的額外信號，會暴露高速深潛的目標。"
+        de: "Zusätzliches Signal durch das Kavitationsgeräusch der Zielschraube, das ein Ziel verrät, das für seine Tiefe zu schnell läuft."
+        en: "Extra signal from the target's own propeller cavitation noise, which betrays a target running fast for its depth."
+        es: "Señal extra del ruido de cavitación de la hélice del blanco, que delata a un objetivo demasiado rápido para su profundidad."
+        fr: "Signal supplémentaire dû au bruit de cavitation de l'hélice de la cible, qui trahit une cible trop rapide pour sa profondeur."
+        it: "Segnale aggiuntivo dal rumore di cavitazione dell'elica del bersaglio, che tradisce un bersaglio troppo veloce per la sua profondità."
+        ja: "目標のスクリューによるキャビテーション音がもたらす追加信号。深度に比して高速で走る目標を暴く。"
+        ko: "표적 스크루의 캐비테이션 소음에서 나오는 추가 신호; 심도에 비해 빠르게 달리는 표적을 드러낸다."
+        "pt-BR": "Sinal extra do ruído de cavitação da hélice do alvo, que denuncia um alvo rápido demais para sua profundidade."
+        ru: "Дополнительный сигнал от шума кавитации винта цели, выдающий цель, идущую слишком быстро для своей глубины."
+        zh: "来自目标螺旋桨空化噪声的额外信号，会暴露相对其深度航速过高的目标。"
+        "zh-TW": "來自目標螺旋槳空化噪聲的額外信號，會暴露相對其深度航速過高的目標。"
       net_snr_gloss:
         de: "Das endgültige Signal-Rausch-Verhältnis nach allen Verlusten und Gewinnen; die Ortung hält, solange es positiv bleibt."
         en: "The final signal-to-noise ratio after every loss and gain; the detection holds while this stays positive."
@@ -3926,20 +3926,20 @@ info_panel:
       ru: "%{units} ЕД. · %{sensors} ДАТЧ."
       zh: "%{units}个单位 · %{sensors}个传感器"
       "zh-TW": "%{units}個單位 · %{sensors}個感測器"
-    # DC-1133.5: live summary on the EVD accordion row header — the number
-    # of observed classification attributes.
+    # Live summary on the EVD accordion row header: the applicable
+    # classification channels read, and the leading candidate hull.
     evd_summary:
-      de: "%{count} MERKMALE"
-      en: "%{count} ATTRIBUTES"
-      es: "%{count} ATRIBUTOS"
-      fr: "%{count} ATTRIBUTS"
-      it: "%{count} ATTRIBUTI"
-      ja: "%{count}件の属性"
-      ko: "속성 %{count}개"
-      "pt-BR": "%{count} ATRIBUTOS"
-      ru: "%{count} ПРИЗН."
-      zh: "%{count}项特征"
-      "zh-TW": "%{count}項特徵"
+      de: "%{read}/%{total} %{chassis}"
+      en: "%{read}/%{total} %{chassis}"
+      es: "%{read}/%{total} %{chassis}"
+      fr: "%{read}/%{total} %{chassis}"
+      it: "%{read}/%{total} %{chassis}"
+      ja: "%{read}/%{total} %{chassis}"
+      ko: "%{read}/%{total} %{chassis}"
+      "pt-BR": "%{read}/%{total} %{chassis}"
+      ru: "%{read}/%{total} %{chassis}"
+      zh: "%{read}/%{total} %{chassis}"
+      "zh-TW": "%{read}/%{total} %{chassis}"
     # DC-1133.5: primary-section header of the contact inspect panel.
     assessment:
       de: Bewertung
@@ -4018,17 +4018,17 @@ info_panel:
         zh: 类型
         "zh-TW": 類型
       type_tooltip:
-        de: "Die grobe NTDS-Kategorie des Kontakts (Luft, Oberfläche, Unterwasser, …) und ob sie bestätigt oder vorläufig ist."
-        en: "The contact's broad NTDS category (air, surface, subsurface, …) and whether it's confirmed or tentative."
-        es: "La categoría NTDS general del contacto (aéreo, de superficie, submarino…) y si es confirmada o provisional."
-        fr: "La catégorie NTDS générale du contact (aérien, surface, sous-marin, …) et si elle est confirmée ou provisoire."
-        it: "La categoria NTDS generale del contatto (aereo, di superficie, subacqueo, …) e se è confermata o provvisoria."
-        ja: "接触対象の大まかなNTDS区分（空中・水上・水中など）と、それが確定か暫定かを示す。"
-        ko: "접촉 대상의 대략적인 NTDS 분류(공중, 수상, 수중 등)와 이것이 확정인지 잠정인지를 나타냅니다."
-        "pt-BR": "A categoria NTDS geral do contato (aéreo, de superfície, subaquático…) e se ela é confirmada ou provisória."
-        ru: "Общая категория NTDS контакта (воздушный, надводный, подводный и т.д.) и подтверждена она или предварительна."
-        zh: "该目标的大类 NTDS 分类（空中、水面、水下等），以及该分类是确认的还是暂定的。"
-        "zh-TW": "該目標的大類 NTDS 分類（空中、水面、水下等），以及該分類是確認的還是暫定的。"
+        de: "Die grobe Kategorie des Kontakts: Luft, Oberfläche, Unterwasser, Flugkörper usw., abgeleitet aus beobachteter Höhe, Geschwindigkeit und Signatur. Über den genauen Rumpf sagt sie nichts aus; siehe Plattform."
+        en: "The contact's broad category: air, surface, subsurface, missile and so on, read from its observed altitude, speed and signature. It says nothing about which exact hull it is; see Platform."
+        es: "La categoría general del contacto: aéreo, de superficie, submarino, misil, etc., deducida de su altitud, velocidad y firma observadas. No dice nada del casco exacto; véase Plataforma."
+        fr: "La catégorie générale du contact : aérien, de surface, sous-marin, missile, etc., déduite de son altitude, de sa vitesse et de sa signature observées. Elle ne dit rien de la coque exacte ; voir Plateforme."
+        it: "La categoria generale del contatto: aereo, di superficie, subacqueo, missile e così via, ricavata da quota, velocità e firma osservate. Non dice nulla dello scafo esatto; vedi Piattaforma."
+        ja: "目標の大まかな種別（航空・水上・水中・ミサイルなど）。観測された高度・速度・シグネチャから判定する。正確な機体については何も示さない。プラットフォームを参照。"
+        ko: "표적의 대분류(공중, 수상, 수중, 미사일 등)로, 관측된 고도·속도·신호로 판단합니다. 정확한 선체에 대해서는 알려 주지 않으니 플랫폼을 보십시오."
+        "pt-BR": "A categoria geral do contato: aéreo, de superfície, submarino, míssil etc., deduzida da altitude, velocidade e assinatura observadas. Não diz nada sobre o casco exato; veja Plataforma."
+        ru: "Общая категория контакта: воздушный, надводный, подводный, ракета и т. д., по наблюдаемым высоте, скорости и сигнатуре. О конкретном корпусе она ничего не говорит; см. «Платформа»."
+        zh: "目标的大类：空中、水面、水下、导弹等，依据观测到的高度、速度和特征判定。它不说明具体是哪种船体；请看“平台”。"
+        "zh-TW": "目標的大類：空中、水面、水下、飛彈等，依據觀測到的高度、速度和特徵判定。它不說明具體是哪種船體；請看「平台」。"
       platform:
         de: Plattform
         en: Platform
@@ -4042,17 +4042,17 @@ info_panel:
         zh: 平台
         "zh-TW": 平台
       platform_tooltip:
-        de: "Der wahrscheinlichste identifizierte Fahrzeugtyp anhand der gesammelten Sensordaten, mit Konfidenz."
-        en: "The most likely specific platform identified from the sensor evidence gathered so far, with confidence."
-        es: "La plataforma específica más probable identificada a partir de la evidencia sensorial recopilada hasta ahora, con nivel de confianza."
-        fr: "La plateforme spécifique la plus probable identifiée à partir des données capteur recueillies jusqu'ici, avec le niveau de confiance."
-        it: "La piattaforma specifica più probabile identificata dai dati sensore raccolti finora, con il livello di confidenza."
-        ja: "これまでに収集されたセンサー証拠から識別された、最も可能性の高い具体的なプラットフォームと、その確信度。"
-        ko: "지금까지 수집된 센서 증거로 식별된 가장 유력한 구체적 플랫폼과 그 신뢰도."
-        "pt-BR": "A plataforma específica mais provável identificada a partir das evidências de sensor coletadas até agora, com o nível de confiança."
-        ru: "Наиболее вероятная конкретная платформа, установленная по накопленным данным датчиков, с уровнем достоверности."
-        zh: "根据目前收集到的传感器证据识别出的最可能具体平台，及其置信度。"
-        "zh-TW": "根據目前收集到的感測器證據識別出的最可能具體平台，及其信賴度。"
+        de: "Um welchen Rumpf genau es sich handelt. BESTÄTIGT, sobald sich die Indizien auf einen Rumpf festgelegt haben (durchgezogenes Kartensymbol); VORLÄUFIG, solange noch mehrere abgewogen werden (gestricheltes Symbol). TENDENZ nennt den derzeitigen Favoriten und seine Wahrscheinlichkeit, bevor etwas feststeht."
+        en: "Which exact hull this is. CONFIRMED once the evidence has settled on one hull (a solid map symbol); TENTATIVE while it is still weighing several (a dashed symbol). LEANING names the current front-runner and its probability before anything is settled."
+        es: "Qué casco exacto es. CONFIRMADO cuando las pruebas se han decantado por un casco (símbolo de mapa continuo); PROVISIONAL mientras aún se sopesan varios (símbolo discontinuo). INCLINADO A nombra el favorito actual y su probabilidad antes de que nada se decida."
+        fr: "De quelle coque exacte il s'agit. CONFIRMÉ dès que les indices se sont fixés sur une coque (symbole de carte plein) ; PROVISOIRE tant que plusieurs sont encore pesées (symbole en pointillés). PENCHE VERS nomme le favori actuel et sa probabilité avant que rien ne soit tranché."
+        it: "Di quale scafo esatto si tratta. CONFERMATO quando gli indizi si sono fissati su uno scafo (simbolo di mappa pieno); PROVVISORIO finché ne vengono ancora valutati diversi (simbolo tratteggiato). PROPENDE PER indica il favorito attuale e la sua probabilità prima che nulla sia deciso."
+        ja: "正確にどの機体か。証拠が一つの機体に定まれば「確認済み」（地図記号は実線）、まだ複数を比較している間は「暫定」（破線）。何も定まる前は「有力」が現時点の最有力候補とその確率を示す。"
+        ko: "정확히 어떤 선체인지. 증거가 한 선체로 확정되면 확인됨(지도 기호 실선), 아직 여러 후보를 따지는 중이면 잠정적(점선)입니다. 확정 전에는 유력이 현재 선두 후보와 그 확률을 보여 줍니다."
+        "pt-BR": "Qual é o casco exato. CONFIRMADO quando as evidências se fixaram em um casco (símbolo de mapa contínuo); PROVISÓRIO enquanto ainda pesam vários (símbolo tracejado). INCLINADO A nomeia o favorito atual e sua probabilidade antes de algo se definir."
+        ru: "Какой это конкретно корпус. ПОДТВЕРЖДЁН, когда данные сошлись на одном корпусе (сплошной символ на карте); ПРЕДВАРИТЕЛЬНО, пока ещё взвешиваются несколько (пунктирный символ). СКОРЕЕ называет текущего фаворита и его вероятность, пока ничего не решено."
+        zh: "具体是哪种船体。证据确定为一种船体时显示“已确认”（地图符号为实线）；仍在权衡多种时显示“暂定”（虚线）。尚未确定时，“倾向”给出当前最可能的候选及其概率。"
+        "zh-TW": "具體是哪種船體。證據確定為一種船體時顯示「已確認」（地圖符號為實線）；仍在權衡多種時顯示「暫定」（虛線）。尚未確定時，「傾向」給出目前最可能的候選及其機率。"
       role:
         de: Rolle
         en: Role
@@ -4077,6 +4077,67 @@ info_panel:
         ru: "Для чего предназначен этот гражданский аппарат. Появляется только после точного опознания платформы, а для двух планеров двойного назначения — лишь после запроса IFF, подтвердившего нейтральность контакта."
         zh: "该民用载具的用途。仅在平台被确定识别后显示；对两种军民两用机体，还需 IFF 询问确认该目标为中立后才会显示。"
         "zh-TW": "該民用載具的用途。僅在平台被確定識別後顯示；對兩種軍民兩用機體，還需 IFF 詢問確認該目標為中立後才會顯示。"
+      decoy:
+        de: TÄUSCHKÖRPER
+        en: DECOY
+        es: SEÑUELO
+        fr: LEURRE
+        it: ESCA
+        ja: デコイ
+        ko: 기만체
+        "pt-BR": ENGODO
+        ru: ЛОЖНАЯ ЦЕЛЬ
+        zh: 诱饵
+        "zh-TW": 誘餌
+      decoy_tooltip:
+        de: "Dieser Kontakt gibt sich auf dem Radar als ein anderer Rumpf aus, und unsere Sensoren durchschauen es gerade. Die Zeile zeigt, woran: Solange sie steht, ist die Radar-Identität eine Täuschung."
+        en: "This contact poses on radar as a different hull, and our sensors are seeing through it right now. The row says how. While it shows, the radar identity is a disguise."
+        es: "Este contacto se hace pasar en el radar por otro casco, y nuestros sensores lo están desenmascarando ahora mismo. La fila indica cómo. Mientras se muestre, la identidad de radar es un disfraz."
+        fr: "Ce contact se fait passer au radar pour une autre coque, et nos capteurs voient clair dans son jeu en ce moment. La ligne indique comment. Tant qu'elle s'affiche, l'identité radar est un déguisement."
+        it: "Questo contatto si spaccia al radar per un altro scafo, e i nostri sensori lo stanno smascherando in questo momento. La riga indica come. Finché è visibile, l'identità radar è un travestimento."
+        ja: "この目標はレーダー上で別の船体を装っており、現在こちらのセンサーがそれを見破っている。この行はその根拠を示す。表示中は、レーダー上の識別は偽装である。"
+        ko: "이 표적은 레이더상에서 다른 선체로 위장하고 있으며, 지금 아군 센서가 이를 간파하고 있습니다. 이 행은 그 근거를 보여 줍니다. 표시되는 동안 레이더 식별은 위장입니다."
+        "pt-BR": "Este contato se passa por outro casco no radar, e nossos sensores estão desmascarando-o agora. A linha mostra como. Enquanto ela aparecer, a identidade de radar é um disfarce."
+        ru: "Этот контакт выдаёт себя на радаре за другой корпус, и наши датчики сейчас видят его насквозь. Строка показывает, по какому признаку. Пока она видна, радарное опознание — маскировка."
+        zh: "该目标在雷达上伪装成另一种船体，我方传感器此刻正在识破它。此行说明识破依据。显示期间，雷达识别结果为伪装。"
+        "zh-TW": "該目標在雷達上偽裝成另一種船體，我方感測器此刻正在識破它。此行說明識破依據。顯示期間，雷達識別結果為偽裝。"
+      decoy_cause:
+        true_size:
+          de: Auf IR/Sicht erkannt
+          en: Seen on IR/visual
+          es: Visto en IR/visual
+          fr: Vu en IR/visuel
+          it: Visto in IR/visivo
+          ja: IR/目視で確認
+          ko: IR/육안으로 확인
+          "pt-BR": Visto em IR/visual
+          ru: Замечен в ИК/визуально
+          zh: 红外/目视识破
+          "zh-TW": 紅外/目視識破
+        repeater_anomaly:
+          de: Repeater-Echo zu stark
+          en: Repeater return too bright
+          es: Retorno del repetidor demasiado intenso
+          fr: Écho du répéteur trop fort
+          it: Eco del ripetitore troppo intensa
+          ja: リピーター反射が強すぎる
+          ko: 리피터 반사가 너무 강함
+          "pt-BR": Retorno do repetidor forte demais
+          ru: Слишком яркий ответ ретранслятора
+          zh: 转发回波过强
+          "zh-TW": 轉發回波過強
+        kinematic:
+          de: Bewegt sich, wie es der dargestellte Rumpf nicht kann
+          en: Moving in a way its portrayed hull cannot
+          es: Se mueve como no puede hacerlo el casco que simula
+          fr: Se déplace d'une façon impossible pour la coque simulée
+          it: Si muove in un modo impossibile per lo scafo simulato
+          ja: 装っている船体には不可能な動き
+          ko: 위장한 선체로는 불가능한 기동
+          "pt-BR": Move-se de um jeito impossível para o casco simulado
+          ru: Движется так, как не может изображаемый корпус
+          zh: 运动方式与其伪装的船体不符
+          "zh-TW": 運動方式與其偽裝的船體不符
       basis:
         de: Basis
         en: Basis
@@ -4137,6 +4198,18 @@ info_panel:
         ru: ПЛАТФОРМА НЕ УСТАНОВЛЕНА
         zh: 平台未识别
         "zh-TW": 平台未識別
+      platform_leaning:
+        de: "TENDENZ %{name}"
+        en: "LEANING %{name}"
+        es: "INCLINADO A %{name}"
+        fr: "PENCHE VERS %{name}"
+        it: "PROPENDE PER %{name}"
+        ja: "有力 %{name}"
+        ko: "유력 %{name}"
+        "pt-BR": "INCLINADO A %{name}"
+        ru: "СКОРЕЕ %{name}"
+        zh: "倾向 %{name}"
+        "zh-TW": "傾向 %{name}"
       platform_cluster:
         de: "EINES VON %{names}"
         en: "ONE OF %{names}"
@@ -4560,30 +4633,152 @@ info_panel:
         ru: "Наблюдаемая электромагнитная, инфракрасная или визуальная сигнатура, учитываемая как признак в пользу наиболее вероятной платформы."
         zh: "观测到的电磁、红外或视觉特征，作为判定最可能平台的证据权重之一。"
         "zh-TW": "觀測到的電磁、紅外或視覺特徵，作為判定最可能平台的證據權重之一。"
-      acoustic_na_airborne:
-        de: n. v. (Luftziel)
-        en: n/a (airborne)
-        es: n/d (aéreo)
-        fr: s.o. (aérien)
-        it: n/d (aereo)
-        ja: 対象外 (空中)
-        ko: 해당 없음 (공중)
-        "pt-BR": n/d (aéreo)
-        ru: н/д (воздушная)
-        zh: 不适用 (空中)
-        "zh-TW": 不適用 (空中)
-      signature_none:
-        de: Noch keine Signatur
-        en: no signature yet
-        es: sin firma aún
-        fr: pas encore de signature
-        it: nessuna firma ancora
-        ja: シグネチャ未取得
-        ko: 시그니처 없음
-        "pt-BR": sem assinatura ainda
-        ru: сигнатуры пока нет
-        zh: 暂无特征
-        "zh-TW": 暫無特徵
+      acoustic_heard:
+        de: "gehört"
+        en: "heard"
+        es: "oído"
+        fr: "entendu"
+        it: "udito"
+        ja: "探知"
+        ko: "청음됨"
+        "pt-BR": "ouvido"
+        ru: "слышен"
+        zh: "已听到"
+        "zh-TW": "已聽到"
+      margin_tooltip:
+        de: "Log-Likelihood auf diesem Kanal: führender Rumpf %{leader}, nächster Rumpf %{next}. Höher spricht für diesen Rumpf; der Abstand entscheidet das Urteil."
+        en: "Log-likelihood on this channel: leading hull %{leader}, next hull %{next}. Higher favours that hull; the gap decides the verdict."
+        es: "Log-verosimilitud en este canal: casco líder %{leader}, siguiente casco %{next}. Más alto favorece a ese casco; la diferencia decide el veredicto."
+        fr: "Log-vraisemblance sur ce canal : coque en tête %{leader}, coque suivante %{next}. Plus haut favorise cette coque ; l'écart décide du verdict."
+        it: "Log-verosimiglianza su questo canale: scafo in testa %{leader}, scafo successivo %{next}. Più alto favorisce quello scafo; il divario decide il verdetto."
+        ja: "このチャネルの対数尤度：最有力 %{leader}、次点 %{next}。高いほどその機体を支持し、差が判定を決める。"
+        ko: "이 채널의 로그 우도: 선두 선체 %{leader}, 차순위 선체 %{next}. 높을수록 그 선체에 유리하며, 차이가 판정을 정합니다."
+        "pt-BR": "Log-verossimilhança neste canal: casco líder %{leader}, casco seguinte %{next}. Mais alto favorece esse casco; a diferença decide o veredito."
+        ru: "Логарифм правдоподобия по этому каналу: ведущий корпус %{leader}, следующий %{next}. Выше — в пользу корпуса; разница определяет вердикт."
+        zh: "该通道的对数似然：领先船体 %{leader}，次选船体 %{next}。越高越支持该船体；两者差距决定判断。"
+        "zh-TW": "該通道的對數概似：領先船體 %{leader}，次選船體 %{next}。越高越支持該船體；兩者差距決定判斷。"
+      verdict:
+        supports:
+          de: "stützt"
+          en: "supports"
+          es: "respalda"
+          fr: "conforte"
+          it: "conferma"
+          ja: "支持"
+          ko: "뒷받침"
+          "pt-BR": "apoia"
+          ru: "подтверждает"
+          zh: "支持"
+          "zh-TW": "支持"
+        argues_against:
+          de: "spricht dagegen"
+          en: "argues against"
+          es: "lo contradice"
+          fr: "le contredit"
+          it: "lo contraddice"
+          ja: "否定的"
+          ko: "반대 근거"
+          "pt-BR": "contradiz"
+          ru: "против"
+          zh: "反对"
+          "zh-TW": "反對"
+        inconclusive:
+          de: "unentschieden"
+          en: "inconclusive"
+          es: "no concluyente"
+          fr: "non concluant"
+          it: "non conclusivo"
+          ja: "決め手なし"
+          ko: "판단 불가"
+          "pt-BR": "inconclusivo"
+          ru: "неоднозначно"
+          zh: "无定论"
+          "zh-TW": "無定論"
+      hint:
+        size:
+          de: "braucht Radar, IR oder Sicht"
+          en: "needs radar, IR or visual"
+          es: "requiere radar, IR o visual"
+          fr: "requiert radar, IR ou visuel"
+          it: "serve radar, IR o visivo"
+          ja: "レーダー・赤外線・目視が必要"
+          ko: "레이더·적외선·육안 필요"
+          "pt-BR": "requer radar, IR ou visual"
+          ru: "нужен радар, ИК или визуал"
+          zh: "需要雷达、红外或目视"
+          "zh-TW": "需要雷達、紅外或目視"
+        kinematics:
+          de: "braucht eine Positionsbestimmung"
+          en: "needs a position fix"
+          es: "requiere un fijo de posición"
+          fr: "requiert un point de position"
+          it: "serve un fix di posizione"
+          ja: "位置の確定が必要"
+          ko: "위치 확정 필요"
+          "pt-BR": "requer um fixo de posição"
+          ru: "нужна фиксация позиции"
+          zh: "需要位置定位"
+          "zh-TW": "需要位置定位"
+        environment:
+          de: "braucht eine Höhenbestimmung"
+          en: "needs an altitude fix"
+          es: "requiere un fijo de altitud"
+          fr: "requiert une mesure d'altitude"
+          it: "serve un fix di quota"
+          ja: "高度の確定が必要"
+          ko: "고도 확정 필요"
+          "pt-BR": "requer um fixo de altitude"
+          ru: "нужна фиксация высоты"
+          zh: "需要高度定位"
+          "zh-TW": "需要高度定位"
+        acoustic:
+          de: "braucht Sonar"
+          en: "needs sonar"
+          es: "requiere sonar"
+          fr: "requiert un sonar"
+          it: "serve un sonar"
+          ja: "ソナーが必要"
+          ko: "소나 필요"
+          "pt-BR": "requer sonar"
+          ru: "нужен сонар"
+          zh: "需要声呐"
+          "zh-TW": "需要聲納"
+        signature_air:
+          de: "braucht ein signaturfähiges Radar"
+          en: "needs a signature-capable radar"
+          es: "requiere un radar capaz de leer firmas"
+          fr: "requiert un radar capable de lire les signatures"
+          it: "serve un radar in grado di leggere le firme"
+          ja: "シグネチャ識別可能なレーダーが必要"
+          ko: "신호 식별 가능 레이더 필요"
+          "pt-BR": "requer um radar capaz de ler assinaturas"
+          ru: "нужен радар, читающий сигнатуры"
+          zh: "需要可识别特征的雷达"
+          "zh-TW": "需要可識別特徵的雷達"
+        signature_water:
+          de: "braucht ein signaturfähiges Sonar"
+          en: "needs a signature-capable sonar"
+          es: "requiere un sonar capaz de leer firmas"
+          fr: "requiert un sonar capable de lire les signatures"
+          it: "serve un sonar in grado di leggere le firme"
+          ja: "シグネチャ識別可能なソナーが必要"
+          ko: "신호 식별 가능 소나 필요"
+          "pt-BR": "requer um sonar capaz de ler assinaturas"
+          ru: "нужен сонар, читающий сигнатуры"
+          zh: "需要可识别特征的声呐"
+          "zh-TW": "需要可識別特徵的聲納"
+        signature_any:
+          de: "braucht ein signaturfähiges Radar oder Sonar"
+          en: "needs a signature-capable radar or sonar"
+          es: "requiere un radar o sonar capaz de leer firmas"
+          fr: "requiert un radar ou un sonar capable de lire les signatures"
+          it: "serve un radar o sonar in grado di leggere le firme"
+          ja: "シグネチャ識別可能なレーダーかソナーが必要"
+          ko: "신호 식별 가능 레이더나 소나 필요"
+          "pt-BR": "requer um radar ou sonar capaz de ler assinaturas"
+          ru: "нужен радар или сонар, читающий сигнатуры"
+          zh: "需要可识别特征的雷达或声呐"
+          "zh-TW": "需要可識別特徵的雷達或聲納"
   follow:
     de: Folgen
     en: Follow
@@ -6739,6 +6934,47 @@ info_panel:
     ru: "Пусковая платформа недоступна"
     zh: "发射平台不可用"
     "zh-TW": "發射平台不可用"
+  # #5799: a stowed drone in a loadout that is not its carrier's complement —
+  # popped into an active or queued transfer.
+  launch_disabled_in_transfer:
+    de: "Wird gerade umgeladen — Start nach Abschluss des Transfers"
+    en: "In transfer — launch once the transfer completes"
+    es: "En transferencia: lance cuando termine la transferencia"
+    fr: "En transfert — lancez une fois le transfert terminé"
+    it: "In trasferimento — lancia al termine del trasferimento"
+    ja: "移送中 — 移送完了後に発艦できます"
+    ko: "이송 중 — 이송이 끝나면 발진할 수 있습니다"
+    "pt-BR": "Em transferência — lance quando a transferência terminar"
+    ru: "В процессе передачи — запуск после её завершения"
+    zh: "转运中——转运完成后方可发射"
+    "zh-TW": "轉運中——轉運完成後方可發射"
+  # #5799: the carrier provides none of the facilities the drone launches from.
+  launch_disabled_facility:
+    de: "Diese Plattform hat keine passende Starteinrichtung"
+    en: "This platform has no facility this craft can launch from"
+    es: "Esta plataforma no tiene una instalación desde la que pueda lanzarse esta aeronave"
+    fr: "Cette plateforme n'a aucune installation d'où cet appareil peut être lancé"
+    it: "Questa piattaforma non ha una struttura da cui questo mezzo possa essere lanciato"
+    ja: "このプラットフォームには、この機体を発艦させる設備がありません"
+    ko: "이 플랫폼에는 이 기체를 발진시킬 시설이 없습니다"
+    "pt-BR": "Esta plataforma não tem instalação da qual esta aeronave possa ser lançada"
+    ru: "На этой платформе нет средств для запуска этого аппарата"
+    zh: "该平台没有可供此机体发射的设施"
+    "zh-TW": "該平台沒有可供此機體發射的設施"
+  # #5799: the quick-launch icon on a DCK hangar row and an ASSETS stowed row —
+  # the same launch as LAUNCH, without changing the selection.
+  quick_launch_tooltip:
+    de: "Starten — Plattform räumen, dann halten"
+    en: "Launch — clear the platform, then hold"
+    es: "Lanzar: despejar la plataforma y esperar"
+    fr: "Lancer — dégager la plateforme, puis attendre"
+    it: "Lancia — sgombra la piattaforma, poi resta in attesa"
+    ja: "発艦 — プラットフォームを離れて待機"
+    ko: "발진 — 플랫폼을 벗어난 뒤 대기"
+    "pt-BR": "Lançar — liberar a plataforma e aguardar"
+    ru: "Запуск — отойти от платформы и ждать"
+    zh: "发射——离开平台后待命"
+    "zh-TW": "發射——離開平台後待命"
   trajectory:
     active:
       direct:

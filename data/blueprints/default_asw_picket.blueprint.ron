@@ -13,8 +13,6 @@
     inventory: [
         // Hull sonar (passive listen + active localizer)
         (kind: Component(component_id: "an_sqs_40")),
-        // EO/IR mast
-        (kind: Component(component_id: "an_say_25")),
         // Ship RWR
         (kind: Component(component_id: "an_slr_40")),
         // Light Torpedo 1 (MK-30, tube)

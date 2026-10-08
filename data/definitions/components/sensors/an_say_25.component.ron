@@ -5,9 +5,10 @@
     codename: "Lookout",
     category: Sensors,
     mount_rule: Single,
-    weight: 45.0,
+    weight: 200.0,
     power_draw: Derived,
-    // Navalized EO/IR mast (#3081): the AAQ-55 optics in a marinized housing.
+    // Navalized EO/IR mast (#3081) with 3x the AAQ-55's aperture (#5730): a
+    // mass only a ship carries, buying 3x the IR and 2x the visual range.
     // Gives surface ships a fully passive detection layer — a silent USV is no
     // longer blind to everything but radar emitters, and sea-skimmers get a
     // passive early-warning channel that doesn't radiate.
@@ -16,7 +17,7 @@
         (
             kind: Ir,
             capability: Search( tracks: Limited(12), lock_detection: false ),
-            threshold: 0.000001,
+            threshold: 0.00000011111111,
             scan_interval: 2.0,
             acquire_dwell_secs: 1.0,
             bearing_rate_tau_secs: 2.0,
@@ -38,7 +39,7 @@
         (
             kind: Visual,
             capability: Search( tracks: Limited(12), lock_detection: false ),
-            threshold: 0.0000001,
+            threshold: 0.000000025,
             scan_interval: 2.0,
             acquire_dwell_secs: 1.0,
             bearing_rate_tau_secs: 2.0,
@@ -48,7 +49,7 @@
             fov_h: 360.0,
             fov_v: 180.0,
             mounting: MastDetector,
-            iff_threshold: 0.00000015625,
+            iff_threshold: 0.0000000390625,
             spreading_exponent: 2.0,
             characteristics: Simple,
             physics: Optical(ifov_microrad: 8727.0),

@@ -542,18 +542,20 @@ doctrine:
       ru: "Преследовать"
       zh: "追击"
       "zh-TW": "追擊"
+    # #4132: states what Pursue trades away when it attacks: lock evasion,
+    # shooting at a missile inbound on it, and the defence of others.
     pursue_tooltip:
-      de: Feinde ohne Reichweitenbegrenzung verfolgen und bekämpfen
-      en: Pursue and engage hostiles without range limit
-      es: Perseguir y atacar enemigos sin límite de alcance
-      fr: Poursuivre et engager les ennemis sans limite de portée
-      it: Inseguire e ingaggiare i nemici senza limite di portata
-      ja: 射程制限なしで敵を追跡・交戦する
-      ko: 사거리 제한 없이 적을 추격하고 교전
-      "pt-BR": Perseguir e engajar inimigos sem limite de alcance
-      ru: Преследовать и атаковать врагов без ограничения дальности
-      zh: 无距离限制地追击和交战敌方目标
-      "zh-TW": 無距離限制地追擊和交戰敵方目標
+      de: "Feinde ohne Reichweitenbegrenzung verfolgen und bekämpfen. Im Angriff bleibt es am Ziel: Es bricht weder ab, um einer Aufschaltung auszuweichen, noch um einen anfliegenden Flugkörper abzuschießen, und schützt keine anderen Einheiten."
+      en: "Pursue and engage hostiles without range limit. When attacking it presses the attack: it does not break off to evade a lock or to shoot down a missile inbound on it, and defends no other unit."
+      es: "Perseguir y atacar enemigos sin límite de alcance. Al atacar mantiene el ataque: no se retira para evadir un fijado ni para derribar un misil que se le acerca, y no defiende a otras unidades."
+      fr: "Poursuivre et engager les ennemis sans limite de portée. En attaque, il maintient l'attaque : il ne décroche ni pour esquiver un verrouillage ni pour abattre un missile qui arrive sur lui, et ne défend aucune autre unité."
+      it: "Inseguire e ingaggiare i nemici senza limite di portata. In attacco mantiene l'attacco: non si disimpegna per eludere un aggancio né per abbattere un missile in arrivo su di sé, e non difende altre unità."
+      ja: "射程制限なしで敵を追跡・交戦する。攻撃中は攻撃を続行し、ロックオン回避や自機に向かうミサイルの迎撃のために離脱せず、他の部隊も守らない。"
+      ko: "사거리 제한 없이 적을 추격하고 교전. 공격 중에는 공격을 계속하며, 락온 회피나 자신에게 날아오는 미사일 요격을 위해 이탈하지 않고 다른 부대도 지키지 않는다."
+      "pt-BR": "Perseguir e engajar inimigos sem limite de alcance. Ao atacar, mantém o ataque: não desengaja para evadir um travamento nem para abater um míssil vindo em sua direção, e não defende outras unidades."
+      ru: "Преследовать и атаковать врагов без ограничения дальности. В атаке продолжает атаку: не выходит из боя ни чтобы уклониться от захвата, ни чтобы сбить летящую на неё ракету, и не прикрывает другие единицы."
+      zh: "无距离限制地追击和交战敌方目标。攻击时坚持攻击：不会为规避锁定或拦截来袭自身的导弹而脱离，也不掩护其他单位。"
+      "zh-TW": "無距離限制地追擊和交戰敵方目標。攻擊時堅持攻擊：不會為規避鎖定或攔截來襲自身的飛彈而脫離，也不掩護其他單位。"
     defend:
       de: "Verteidigen"
       en: "Defend"

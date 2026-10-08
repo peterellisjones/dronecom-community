@@ -108,6 +108,13 @@ Deliberately not inside `sensors.emulation`, which holds thresholds a
 *sensor* resolves into objective sim state; these change no simulation
 outcome at all.
 
+### `arena_bench` : [`ArenaBenchSection`](#arenabenchsection)
+
+Arena bench tuning (#5734): spawn spacing, the bench world's tick and
+streaming chunk, and the ranges the bench UI offers. Consumed by the
+bench UI (`dc_ui`) and the bench runner in the composition root; never
+read by a match.
+
 ## `AutopilotSection`
 
 Autopilot tuning parameters.
@@ -368,6 +375,12 @@ maneuver (`evade_weave`, #2863).
 Forward look-ahead distance (m) used to project the weave's target
 point ahead of the unit along the current beam heading. Consumed by
 the autopilot weave maneuver (`evade_weave`, #2863).
+
+### `vehicle_step_batching` : [`VehicleStepBatching`](#vehiclestepbatching)
+
+How each domain autopilot spreads one team's vehicles of its domain
+over the compute pool (#5694). Performance only: every value steps the
+same simulation.
 
 ## `LaunchSection`
 
@@ -1019,6 +1032,14 @@ Depth scaling exponent for CZ gain.
 
 Minimum water depth required for convergence zone formation (metres).
 
+### `cavitation_atmospheric_head_m` : f32
+
+Seawater head (metres) equal to one atmosphere of surface pressure —
+the depth scale of the cavitation inception speed (#1367). A hull's
+knee at depth `d` is its surface knee times
+`sqrt((d + head) / head)`; see
+`dc_definitions::PassiveSonarNoise::at_altitude`.
+
 ## `MatchEndSection`
 
 Imminent match-end warning tuning, loaded from
@@ -1230,6 +1251,23 @@ first four looks hold 0.50 / 0.33 / 0.19 / 0.10. At 0.15 such a drone
 closing on a unit reads as a possible weapon for about three looks —
 the cost this value accepts. Consumed by the per-unit
 `ThreatAlerts<TEAM>` rollup in `dc_sensors` (`manage_contacts`).
+
+### `signature_contrast_munition_ratio` : f32
+
+Lowest IR-to-visual signature ratio that reads as a munition when one
+platform's IR and visual channels hold a contact on the same scan
+(#3921). The two channels share the range and its `R^n` loss, so the
+ratio of their received signals is the emitter's own
+`ir_base / visual_cross_section`, with no range in it.
+
+Set from the gap in the shipped catalog, not tuned against a fixture.
+The highest non-munition is the MQ-60 decoy at 40 (4.0 / 0.1); the
+lowest munition is the M-400 at 89 (16.0 / 0.18). The floor is the
+geometric midpoint, √(40 · 89) ≈ 60, which leaves the same factor
+(≈ 1.5, 1.7 dB) of margin on each side. A guard test in `dc_sensors`
+fails if a shipped chassis lands within a factor of 1.25 of it.
+Must be finite and above 1. Consumed by the per-unit `ThreatAlerts<TEAM>`
+rollup in `dc_sensors` (`manage_contacts`).
 
 ### `inferred_munition_lookahead_secs` : f32
 
@@ -1447,6 +1485,14 @@ the `HoldFire` firing safety or to an inbound missile the unit cannot
 fight. Consumed by the intercept supervisor's doctrine gate
 (`threat_response::engaged_track`) and the engaging-unit survival reflex
 (`engagement::tick_if_engaging`).
+
+### `intake_batching` : [`VehicleStepBatching`](#vehiclestepbatching)
+
+How each team's threat intake spreads its RNG-free per-track and
+per-unit passes over the compute pool (#5696): candidate gathering, the
+per-unit alert derivation and the signature-contrast read. Results are
+applied in input order, so every value produces the same simulation.
+Performance only.
 
 ## `TrafficSection`
 
@@ -1737,6 +1783,91 @@ Below roughly twice `air_terrain_clearance` there is effectively none.
 A platform whose own band is already under this never warns, for the
 reason `Self::narrow_speed_band_frac` gives: a surface hull's window is
 a single point before any portrayal, and matching has taken nothing away.
+
+## `ArenaBenchSection`
+
+Arena bench tuning (#5734), loaded from `assets/config/simulation.ron`
+(`arena_bench` section). The bench is a menu tool that runs a private
+simulation; none of this affects a match.
+
+### `unit_spacing_m` : f32
+
+Lateral spacing between units standing line abreast in one team
+(metres).
+
+### `tick_millis` : u64
+
+Simulated time per tick of the bench world (milliseconds).
+
+### `chunk_ticks` : u32
+
+Ticks the worker records before streaming them to the menu as one chunk.
+
+### `max_team_count` : u8
+
+Largest number of units the bench offers per team, across all of the
+team's groups.
+
+### `max_team_groups` : u8
+
+Largest number of groups (one design each) the bench offers per team.
+
+### `default_range_m` : f32
+
+Range between the teams' spawn centres a fresh bench starts with
+(metres).
+
+### `default_alpha_designator` : `String`
+
+The designator of the design Alpha starts with, when the library has
+it; otherwise the first design listed.
+
+### `default_beta_designator` : `String`
+
+The designator of the design Beta starts with, as for Alpha.
+
+### `default_team_count` : u8
+
+How many units each team's one starting group has, up to
+`max_team_count`.
+
+### `min_range_m` : f32
+
+Shortest range the bench offers (metres).
+
+### `max_range_m` : f32
+
+Longest range the bench offers (metres).
+
+### `default_time_cap_secs` : f32
+
+Time cap a fresh bench starts with (seconds of simulated time).
+
+### `max_time_cap_secs` : f32
+
+Longest time cap the bench offers (seconds of simulated time).
+
+### `map_margin_m` : f32
+
+Open sea kept around the spawn lines on every side (metres), so a unit
+that overshoots or turns away stays on the map.
+
+### `commander_period_secs` : f32
+
+How often the bench's commander reviews each team's units and sends
+any that are free onto a target (seconds of simulated time).
+
+### `exhausted_grace_secs` : f32
+
+How long neither side may have anything able to hurt the other before
+the run ends as exhausted (seconds of simulated time). Covers the
+frames a launch spends between leaving the magazine and flying.
+
+### `picture_period_secs` : f32
+
+How often the worker records both teams' map pictures, units and
+contacts, for the Test Range's map to replay (seconds of simulated
+time). Positions between pictures come from the per-tick frames.
 
 ## `TerrainAvoidanceConfig`
 
@@ -2153,6 +2284,22 @@ both directions — wide where a cell corner caught land, blind where none
 did. Read the arrest rise against
 `Census::bounded_false_positives`' own docs in `dc_autopilot`, which
 state why that control counts standoff work as waste on this arm.
+
+## `VehicleStepBatching`
+
+How a per-vehicle loop spreads one team's vehicles over the compute pool:
+each domain autopilot's step (#5694, `dc_autopilot::autopilot::vehicle_steps`)
+and the bridge's wire-unit build (#5695, `dc_core_client`'s `sync_units`).
+
+Performance only. Each loop keeps one vehicle's work independent of its
+siblings' and puts its ordered outputs back in serial order, so every value
+produces the same result.
+
+Variants:
+
+- **`Serial`** — Step every vehicle on the system's own thread.
+- **`Parallel`** — Step vehicles in parallel tasks of at least `min_batch` each. A team-domain with fewer than two such batches, or a compute pool with a single thread, steps serially, so a small fleet pays no task overhead.
+  - `min_batch` : `NonZeroUsize` — The fewest vehicles one task steps.
 
 ## `DeckPhaseSection`
 
@@ -2738,6 +2885,14 @@ the speed-derived bucket — a fast helicopter still resolves rotary.
 
 Per-look bonus (matched) / penalty (mismatched) for a candidate whose
 propulsion class agrees with a signature read. Narrows same-bucket hulls.
+
+### `identity_announce_dwell_secs` : f32
+
+Seconds a track must hold convergence on one chassis before the
+observing team is told it was identified, or reclassified when it names
+a different hull from the last announcement (#5708). Two scans of the
+shipped 2 s search cadence: a posterior that alternates between hulls
+from scan to scan never holds this long, so it announces nothing.
 
 ## `FireControlSection`
 

@@ -1,18 +1,19 @@
 // Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/trajectory.md
-// Missile trajectory controller tuning — terminal impact-angle guidance,
-// post-burnout glide, terrain-follow hold, terrain commitment. Consumed by
-// dc_autopilot::trajectory (#5196).
+// Missile trajectory controller tuning — range loft, post-burnout glide,
+// terrain-follow hold and skim angle, terrain commitment. Consumed by
+// dc_autopilot::trajectory (#5196, #5860).
 TrajectoryConfig(
     cruise_reached_tolerance: 150.0,
     // Standing terrain/presentation safety-commitment slant (#3409/#3449),
     // not a loft/reach handoff — no impact-law switch depends on it.
     terrain_commitment_range: 4000.0,
     glide_descent_rad: 0.209, // ≈ 12° below horizon (~4.7:1 glide)
-    // Impact-angle guidance (#5196): a Lofted round's terminal-elevation bias
-    // steers toward this angle continuously from launch, replacing the
-    // former geometric loft cruise/FOV-height cap.
-    lofted_impact_angle_rad: -1.04719755, // -pi/3, 60° below horizon
-    lofted_impact_tolerance_rad: 0.0872664626, // 5°
+    // Range loft (#5860): a Lofted shot beyond its fit-measured crossover
+    // range climbs to this fraction of its ground range above the target,
+    // coasts in the thin air, and pushes over into homing once the target
+    // sits this far below the horizon.
+    loft_height_per_ground_range: 0.15,
+    loft_pushover_rad: 0.5235988, // 30° below horizon
     // A TerrainFollow round's shallow skim-angle terminal objective.
     skim_impact_angle_rad: -0.0872664626, // 5° below horizon
     skim_impact_tolerance_rad: 0.0523598776, // 3°

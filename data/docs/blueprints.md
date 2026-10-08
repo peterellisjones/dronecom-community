@@ -143,7 +143,7 @@ Variants:
 
 - **`Direct`** — Pursue the target without an authored impact-angle objective, respecting launch-clearance and safety floors. Not necessarily straight or fastest.
 - **`TerrainFollow`** — Follow the terrain: hold clearance above max(ground, sea level), sampled at the vehicle XZ — hugs ridges over land, skims over water to reduce detection. Range depends on the airframe, guidance and launch conditions.
-- **`Lofted`** — Angular guidance shapes a climbing arc toward a steep target-arrival angle, subject to the flight envelope and available energy. Not a scheduled climb/cruise/dive or a guaranteed range advantage over Direct. Subsumes the former Ballistic profile.
+- **`Lofted`** — Loft for range (#5860): a shot long enough for the loft to pay off climbs into thin air, coasts there, then pushes over into the same unconstrained homing as Direct. A shorter shot flies exactly as Direct. The boundary is the design's fit-measured loft crossover range, so the choice is made per shot (`AirProfile`), not per design. Subsumes the former Ballistic profile.
 
 ## `DefaultAltitude`
 

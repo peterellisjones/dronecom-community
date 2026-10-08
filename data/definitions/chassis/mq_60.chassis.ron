@@ -66,9 +66,8 @@
         max_yaw_rate: 0.24,
         stall_speed: 45.0,
         max_lateral_g: 5.0,
-        // No Lofted: lofting exists for the terminal dive attack, which this hull
-        // can never fly. TerrainFollow supports the low ingress before a decoy
-        // climbs into the picture it wants to be seen in.
+        // This decoy flies navigation orders, not range-gated munition attacks.
+        // TerrainFollow supports low ingress before climbing into view.
         supported_trajectories: [Direct, TerrainFollow],
         terrain_clearance: 30.0,
     ),

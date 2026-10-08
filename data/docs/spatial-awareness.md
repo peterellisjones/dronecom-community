@@ -10,9 +10,13 @@ Configuration for the spatial awareness grid.
 
 Loaded from `assets/config/spatial_awareness.ron`.
 
-### `quadtree_depth` : u32
+### `sectors_per_side` : [`SectorsPerSide`](#sectorsperside)
 
-Terrain quadtree depth level that determines grid cell size.
+How many sectors the AI spatial grid has along each side. The grid
+spans the terrain's square extent, so a sector is that extent divided
+by this count: 12.8 km on the shipped 100 km map at 16. The count is
+fixed rather than the size, so smaller maps get proportionally smaller
+sectors; choosing an absolute size in metres is tracked in #5844.
 
 ### `update_interval_secs` : f32
 
@@ -78,3 +82,17 @@ Higher values make the AI more eager to scout toward enemy territory.
 
 Maximum distance (metres) from the camera at which overlay cells are drawn.
 Cells beyond this distance are culled to avoid horizon line artifacts.
+
+## `SectorsPerSide`
+
+The AI spatial grid's sectors per side: an even count in `2..=256`.
+
+Even, so the grid's corner (minus half the terrain extent) is a whole
+number of sectors from the world origin, and sector boundaries fall on exact
+multiples of the sector size from it. An odd count, or one outside that
+range, is refused when the config file is read, and the game runs on the
+shipped file instead.
+
+### `0` : u32
+
+The count of sectors along one side.

@@ -238,6 +238,21 @@ approaches `1.0 + this` (e.g. 0.5 → up to ×1.5).
 surface-search bandwidth: a waveform this wide earns half of
 `SensorKnobs::surface_search_premium_max`.
 
+### `hosting_credit_max` : f32
+
+Largest hosting credit a sensor earns, as a fraction of its capability
+value (#5730): a sensor unboundedly heavy and power-hungry approaches
+`1.0 - this` of its capability price (e.g. 0.5 → down to ×0.5). Mass
+and draw are what only large hulls can carry, so at equal capability
+the heavier, hungrier sensor is the cheaper one.
+
+### `hosting_half_point` : f32
+
+`saturating_credit` half-point for the hosting credit, in **reference
+air hulls** of burden: `weight / Envelope::reference_payload_kg +
+draw / Envelope::reference_supply_kw`. A sensor with this burden earns
+half of `SensorKnobs::hosting_credit_max`.
+
 ## `WarheadKnobs`
 
 Tuning knobs for the warhead value formula (`super::price_warhead`): the
