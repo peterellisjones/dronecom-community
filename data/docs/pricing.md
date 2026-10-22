@@ -94,8 +94,9 @@ Normalizers for the delivery/survivability currencies.
 
 ### `reference_speed_mps` : f32
 
-Reference platform speed (m/s). The delivery currency's mobility factor
-normalizes a hull's top speed against this (`mobility = (speed / reference_speed_mps)^exp`).
+Reference platform speed (m/s). Delivery normalizes powered top speed
+or unpowered best-L/D horizontal speed at sea level against this
+(`mobility = (speed / reference_speed_mps)^exp`).
 
 ### `reference_supply_kw` : f32
 
@@ -131,7 +132,8 @@ $ per normalized delivery point (payload × mobility × radius gate).
 
 ### `persistence` : f32
 
-$ per unit of on-station availability (0..1).
+$ per unit of powered on-station availability (0..1). Unpowered hulls
+have no persistence credit; electrical life only bounds their delivery.
 
 ### `hp` : f32
 
@@ -356,6 +358,7 @@ Expendable (munition-class) hulls are excluded — their speed is already
 priced super-linearly through
 `ChassisKnobs::munition_speed_exponent`, and charging both would
 price one capability twice.
+Unpowered hulls are excluded: terminal dive speed is not powered dash.
 
 ### `dash_half_point_mps` : f32
 
@@ -372,9 +375,9 @@ spread (design §5a).
 
 ### `coverage_avail_cap` : f32
 
-Cap on the persistence coverage floor (design §5b) — the highest
+Cap on the powered persistence coverage floor (design §5b) — the highest
 floored availability credited to a hull whose speed × endurance sweeps
-the reference map in one sortie.
+the reference map in one sortie. Unpowered hulls earn no such floor.
 
 ### `coverage_map_transits` : f32
 

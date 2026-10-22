@@ -1,0 +1,17 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+(
+    id: "m_250_warhead",
+    designator: "M-250 Warhead",
+    codename: "Claymore",
+    category: Warheads,
+    mount_rule: SoleInCategory,
+    // Secondary AIM-120C-5-class mass estimate; damage effects remain gameplay-authored.
+    weight: 18.1,
+    power_draw: Fixed(0.0),
+    allowed: [Chassis("m_250")],
+    payload: Warhead((
+        damage: 120.0,
+        blast_radius: 100.0,
+        proximity_fuze_radius_m: 30.0,
+    )),
+)

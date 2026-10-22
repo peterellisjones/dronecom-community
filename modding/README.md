@@ -134,6 +134,12 @@ numbers. Each is a complete, independent mod you could publish on its own.
 Field references: [`chassis.md`](../data/docs/chassis.md) and
 [`components.md`](../data/docs/components.md).
 
+A chassis's propulsion signature (the feature a sensor reads to classify it)
+belongs to its engine: write it as `signature` inside the powered engine, e.g.
+`engine: Powered((thrust_n: …, thrust_schedule: BoostCoast, signature: Turbojet))`.
+A chassis with `engine: Unpowered` has no signature, and a top-level
+`propulsion:` field is rejected.
+
 A mod that adds a new part and a demonstration blueprint together works the
 same way, as long as both files live in the same mod folder — the loader
 resolves a mod's own blueprints against its own definitions plus the base

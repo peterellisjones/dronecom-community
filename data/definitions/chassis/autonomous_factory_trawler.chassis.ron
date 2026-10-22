@@ -38,9 +38,8 @@
         draft: 5.0,
         min_turn_rate_fraction: 0.3,
     ),
-    propulsion: Screw,
     // #3704: zero `fuel_burn_rate` — see `autonomous_cargo_ship.chassis.ron`.
-    engine: Powered((thrust_n: 133900.0, fuel_burn_rate: 0.0, idle_burn_fraction: 0.15, thrust_response: Constant, thrust_schedule: BoostCoast)),
+    engine: Powered((thrust_n: 133900.0, fuel_burn_rate: 0.0, idle_burn_fraction: 0.15, thrust_response: Constant, thrust_schedule: BoostCoast, signature: Screw)),
     allowed_components: [Category(Sensors), Category(Utility)],
     carrier: true,
     availability: CivilianOnly,

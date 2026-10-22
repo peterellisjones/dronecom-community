@@ -217,6 +217,16 @@ When active & enabled, this sensor emits a signal detectable by sensors of this 
 
 Signal strength of the emission.
 
+### `lock_emission` : `Option`<[`LockEmission`](#lockemission)>
+
+Whether this sensor's fire-control locks can be heard by their target
+(#5886). `Some(Illuminating)`: a lock illuminates its target, whose
+lock-detecting RWR raises a being-tracked / being-targeted warning.
+`Some(Covert)`: a track-while-scan lock held from ordinary search
+returns; it refines tracks and feeds launcher datalinks but the target
+hears only the search sweep. Required (`Some`) exactly when the sensor is
+active, emits, and can lock; `None` for every other sensor.
+
 ### `fov_h` : f32
 
 Horizontal field of view in degrees (0-360).
@@ -332,6 +342,21 @@ Variants:
   - `locks` : [`LockCapacity`](#lockcapacity) — Maximum number of simultaneous fire-control locks.
   - `concurrency` : [`TrackConcurrency`](#trackconcurrency) — Whether searching and locking happen at once (track-while-scan) or a lock suspends the search (mechanically-scanned).
   - `lock_detection` : bool — Whether the sensor warns when it is itself being fire-control-locked.
+
+## `LockEmission`
+
+Whether a sensor's fire-control lock can be heard by its target (#5886).
+
+Authored per sensor, separately from `TrackConcurrency`: "can search while
+locked" and "the target hears the lock" are independent. A track-while-scan
+radar holds its tracks from ordinary search returns, so its target's RWR
+hears only the sweep. Carried as `Option<LockEmission>`; which sensors take
+`Some` is `validate_lock_emission`.
+
+Variants:
+
+- **`Illuminating`** — The lock illuminates its target (single-target track, CW illumination, an active seeker): a `lock_detection` receiver that hears the emitter raises its being-tracked / being-targeted warning.
+- **`Covert`** — The lock is held from ordinary search returns (track-while-scan): it still refines its owner's track and feeds a launcher datalink, but publishes nothing for the target to hear.
 
 ## `MountingPosition`
 

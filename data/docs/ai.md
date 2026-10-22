@@ -31,3 +31,10 @@ queued behind other launches.
 Cadence (seconds) between AI Quartermaster procurement passes (#327).
 A dedicated slow cadence keeps spending bounded across cycles; the
 pass is gated on this interval in `tick_ai_core`.
+
+### `deployment_min_start_fuel_fraction` : f32
+
+Fraction of its tank an AI-deployed submarine must still hold after
+paying its forward transit charge (#4208). The AI's own opening
+reserve, not a rule: the deployment planner pushes each sub forward
+only as far as this leaves fuel for the fight.

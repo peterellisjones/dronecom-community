@@ -5,11 +5,10 @@
     designator: "USV-200A",
     chassis_id: "usv_200",
     fuel_tank_percent: 0.9,
-    // The fleet's long-range magazine (#3082): strike (M-500) + area air
-    // defence (M-400) — a 53 km SAM umbrella the drones can't carry (the
-    // M-400 is VLS-only). The M-250s moved off (they live on the air wing
-    // and the USV-80A picket) and the torpedoes went with #3081's roster
-    // split: ASW belongs to the escorts and submarines, not the magazine.
+    // The fleet's VLS magazine (#3082): strike (M-500) plus area air defence
+    // (M-400), which the drones cannot carry. The M-250s live on the air wing
+    // and the USV-80A picket; ASW belongs to the escorts and submarines, not
+    // this magazine.
     inventory: [
         // Light surface-search radar
         (kind: Component(component_id: "an_sps_90")),

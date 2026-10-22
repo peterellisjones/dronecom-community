@@ -43,7 +43,6 @@
         supported_trajectories: [Direct, TerrainFollow, Lofted],
         terrain_clearance: 100.0,
     ),
-    propulsion: Propeller,
     // Thrust is sized for climb, not top speed (#3252): the absolute ceiling
     // at MTOW (~7.4 km here) must clear `max_altitude` with margin, or
     // air-density thrust lapse and induced drag stall the climb out below it.
@@ -51,7 +50,7 @@
     // is sized with thrust (constant thrust-specific consumption), and
     // `engine_bells` below ask for the same absolute thrust at loiter, cruise
     // and full, so only the climb and the flank dash use the extra power.
-    engine: Powered((thrust_n: 1600.0, fuel_burn_rate: 4.8, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast)),
+    engine: Powered((thrust_n: 1600.0, fuel_burn_rate: 4.8, idle_burn_fraction: 0.10, thrust_response: AirDensity, thrust_schedule: BoostCoast, signature: Propeller)),
     // #3148: no AirLaunch cells to deploy carried entities from, so the scout
     // chassis mounts sensors / its own warhead / utility only.
     allowed_components: [Category(Sensors), Category(Warheads), Category(Decoys), Category(Utility)],

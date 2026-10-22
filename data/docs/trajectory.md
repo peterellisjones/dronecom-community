@@ -26,9 +26,10 @@ commitment (#3409/#3449). The impact objective applies on both sides.
 
 ### `glide_descent_rad` : f32
 
-Nominal angular-profile glide descent angle below the horizon (radians)
-after burnout. An observed impact-angle residual can relax the coast pitch
-ceiling toward level flight; it cannot authorize an unpowered climb.
+Nominal energy-descent angle below the horizon (radians), including
+high `TerrainFollow` ingress across burnout. Outside ingress, an observed
+impact-angle residual can relax the coast pitch ceiling toward level
+flight; it cannot authorize an unpowered climb.
 
 ### `loft_height_per_ground_range` : f32
 

@@ -9,7 +9,7 @@
         // IR seeker
         (kind: Component(component_id: "an_aas_20")),
         // Warhead
-        (kind: Component(component_id: "mk_40")),
+        (kind: Component(component_id: "m_100_warhead")),
     ],
     doctrine_setting: Suggested,
     trajectory: Direct,

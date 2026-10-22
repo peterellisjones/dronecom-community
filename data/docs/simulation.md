@@ -340,6 +340,14 @@ gliding, settles onto the sea and is removed as a terrain collision
 instead (the battery drain treats the surface as terrain for a
 projectile, #3378).
 
+### `unpowered_hull_rest_speed_mps` : f32
+
+Speed (m/s) below which an unpowered sea hull is at rest (#5869). With
+no engine its speed decays under quadratic water drag, `v' = −k·v²`,
+which only approaches zero asymptotically; below this speed the hull
+stops outright, so it comes to rest in a bounded time and distance.
+Powered hulls brake on their own deceleration and never read it.
+
 ### `munition_out_of_bounds_scuttle_margin_m` : f32
 
 How far (metres) beyond the quadtree extent (`half_extent`) a projectile
@@ -656,6 +664,12 @@ the transit a purchase pays. The inset keeps the arrival point off the
 boundary itself, where the playable-circle containment rules apply
 (#5426).
 
+### `min_deployed_hull_separation_m` : f32
+
+Minimum distance (m) between any two hulls a team deploys before the
+match, carriers excepted (they keep `min_carrier_separation_deg`).
+Keeps placed hulls from starting stacked on one point (#4208).
+
 ## `InterceptSection`
 
 Intercept behavior tuning parameters. Loaded from
@@ -698,18 +712,20 @@ commander may order; admission is unchanged. See
 
 ### `standoff_reach_margin` : f32
 
-Safety margin (fraction in `(0, 1]`) applied to the *weapon's* static
-`max_range` when it caps the standoff orbit ceiling. The standoff orbit
-radius is governed by the longest stowed weapon's static `max_range`
+Safety margin (fraction in `(0, 1]`) applied to the weapon's positioning
+reach when it caps the standoff orbit ceiling. Powered weapons use their
+static `max_range`; gliders use current altitude/speed with an aligned
+release bearing. The longest eligible stowed weapon governs the radius
 (`crate::StandoffWeapon::Selected`), but the launch gate fires on the
 *kinematic* reach `reach_m` (`Vehicle::classify_reach`), which includes
 fuel, altitude, target aspect and maneuver allowances. Without this
 margin the static ceiling can sit a few metres *outside* that envelope,
 parking the launcher just beyond its own reach (#2212 deadlock).
-Platform-speed credit (#5541) may extend the gate's envelope, but the
-hold never relies on speed the launcher can lose while orbiting. The
-margin pulls the orbit inside the stationary envelope so the gate can
-release. It applies only when the weapon range is the binding cap, never to
+Powered platform-speed credit (#5541) may extend the gate's envelope,
+but its hold does not rely on that speed. A glider has no powered
+reference: its positioning reach is refreshed as release energy changes.
+Neither class assumes the launcher is already pointing at the target.
+The margin applies only when weapon reach is the binding cap, never to
 `max_standoff_range` — and it applies under **both** standoff ceilings
 (#5429), including the commanded one that drops the `max_standoff_range`
 clip: without it that ceiling would park a launcher just outside its own
@@ -717,8 +733,8 @@ kinematic reach, which is the #2212 deadlock again.
 
 ### `cruise_maneuver_allowance` : f32
 
-Fraction of a **cruise** weapon's reach (torpedoes; every non-boost-coast
-munition) withheld as maneuver allowance before the fire gate will call a
+Fraction of a **cruise** weapon's reach (torpedoes and other steady-cruise
+munitions) withheld as maneuver allowance before the fire gate will call a
 shot `InsideNoEscape`, and equally withheld from the standoff ceiling that
 orbit holds at (#2984). See `crate::ManeuverAllowance` for the full
 rationale and the lockstep invariant that keeps the two from deadlocking.
@@ -856,6 +872,12 @@ simulation rule, not per-commander intent).
 
 #5004: whether, and through what, an airborne round whose target died
 may be given a new one instead of being spent.
+
+### `max_secondary_engagements` : usize
+
+#5884: the most secondary tracks one engaged launcher may fire
+channel-free rounds at alongside its primary, counting those it already
+has rounds in flight at. Bounds how widely one platform spreads its fire.
 
 ## `PatrolSection`
 
@@ -1869,6 +1891,17 @@ How often the worker records both teams' map pictures, units and
 contacts, for the Test Range's map to replay (seconds of simulated
 time). Positions between pictures come from the per-tick frames.
 
+### `batch_sizes` : [`ArenaBatchSizes`](#arenabatchsizes)
+
+How many runs the bench offers to run in one batch, smallest first.
+The first is what a fresh bench starts with.
+
+### `replay_budget_mib` : u32
+
+The memory a batch's finished replays may hold, compressed (MiB). Past
+it, the oldest replays not being watched are dropped; their results
+stay.
+
 ## `TerrainAvoidanceConfig`
 
 Tuning for terrain-aware climbing/steering in autopilots.
@@ -1896,6 +1929,19 @@ is inert on all of them. It bounds the cost of a hull authored with an
 extreme thrust-to-mass ratio, whose turn circle — and so whose per-tick
 terrain query on each of the probed headings — would otherwise be
 unbounded. Aviation and submarine avoidance ignore this field.
+
+### `landing_terrain_clearance_fraction` : f32
+
+Fraction of an aircraft's height above the deck that it holds as
+terrain clearance while landing (#5922), capped at
+`air_terrain_clearance`.
+
+The deck sits far below the cruise clearance, so a landing aircraft
+holds an approach surface sloping down to the deck instead: terrain
+must stay below `deck + (1 − fraction) × (altitude − deck)`. Water is
+always below the deck and never triggers avoidance; land standing
+proud of the glide still does. `1.0` would demand terrain below the
+deck itself; smaller values let the glide pass closer over low land.
 
 ## `TerminalHomingSection`
 
@@ -3185,6 +3231,15 @@ One entry per civilian chassis, in roster order. Order is presentational
 only — `Self::entry_for` matches on the chassis, and
 `every_civilian_chassis_has_exactly_one_role_entry` rejects duplicates,
 so no entry can shadow another.
+
+## `ArenaBatchSizes`
+
+The batch sizes the arena bench offers: at least one, ascending.
+
+### `0` : `Vec`<`NonZeroU8`>
+
+Each size the runs picker offers, in runs, smallest first; the first is
+the picker's default.
 
 ## `VlsPhases`
 

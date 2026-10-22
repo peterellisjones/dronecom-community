@@ -1,0 +1,17 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+(
+    id: "m_100_warhead",
+    designator: "M-100 Warhead",
+    codename: "Stiletto",
+    category: Warheads,
+    mount_rule: SoleInCategory,
+    // Secondary AIM-9M-class mass estimate; damage effects remain gameplay-authored.
+    weight: 9.4,
+    power_draw: Fixed(0.0),
+    allowed: [Chassis("m_100")],
+    payload: Warhead((
+        damage: 65.0,
+        blast_radius: 70.0,
+        proximity_fuze_radius_m: 20.0,
+    )),
+)

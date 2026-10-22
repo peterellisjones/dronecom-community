@@ -1,0 +1,18 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+(
+    id: "sm_2",
+    designator: "SM-2",
+    codename: "Standard",
+    category: Warheads,
+    mount_rule: SoleInCategory,
+    // Secondary SM-2-class estimate (#5352); this is deliberately distinct
+    // from the shared MK-120 so other missile designs retain their mass.
+    weight: 62.0,
+    power_draw: Fixed(0.0),
+    allowed: [Chassis("m_400")],
+    payload: Warhead((
+        damage: 120.0,
+        blast_radius: 100.0,
+        proximity_fuze_radius_m: 30.0,
+    )),
+)

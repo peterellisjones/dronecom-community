@@ -9,9 +9,15 @@
     recovery_requires: [],
     provides: [],
     length: 3.5,
-    weight: 140.0,
-    max_weight: 240.0,
-    max_fuel: 3.0,
+    // AIM-120C-5-class structure derived from its 161.5 kg official gross mass
+    // after the provisional propellant and class-warhead estimates below.
+    weight: 80.1,
+    // Ceiling: 97 kg of seeker and warhead on a full tank, so a MK-120 mounts
+    // at a performance cost. The stock M-250A carries 30.1 kg of that and
+    // flies at the AIM-120C-5-class 161.5 kg gross mass.
+    max_weight: 228.4,
+    // Provisional C-5 solid-propellant estimate.
+    max_fuel: 51.3,
     hit_points: 10.0,
     // Estimated: half the ~0.2 m missile body diameter (#5193).
     full_damage_radius_m: 0.1,
@@ -33,20 +39,16 @@
         supported_trajectories: [Direct, Lofted],
         terrain_clearance: 20.0,
     ),
-    propulsion: Rocket,
-    // Boost-sustain (#2185): a real-AMRAAM energy-management motor. A ~4 s boost
-    // accelerates the missile, then a reduced-thrust sustain holds energy through
-    // the engagement so a medium-range shot flies powered-direct (clean PN, no
-    // forced loft-and-dive) and only lofts for genuine BVR. boost_fuel 1.0 / burn
-    // 15 → ~4 s boost; sustain 2.0 / 7 → ~17 s at 45% thrust.
-    engine: Powered((thrust_n: 12000.0, fuel_burn_rate: 15.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostSustain(boost_fuel_kg: 1.0, sustain_thrust_fraction: 0.45, sustain_burn_rate: 7.0))),
+    // Provisional C-5-class estimate: 51.3 kg at 384.4 kg/min powers this
+    // 16.7 kN BoostCoast phase for 8.0 s (approximately 265.7 s effective Isp).
+    engine: Powered((thrust_n: 16_700.0, fuel_burn_rate: 384.4, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostCoast, signature: Rocket)),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility)],
     carrier: false,
     availability: PlayerAvailable,
     ntds_classification: Explicit(Missile),
     target_domains: [Air, SeaSurface, Land],
     guidance_uplink: FromLauncher,
-    // After boost and sustain, the battery powers the seeker and electronics.
+    // After burnout, the battery powers the seeker and electronics.
     // The shipped Radar Missile must cover its fitted max-reach flight from
     // the MQ-450's 8 km launch ceiling with a 1.5x coast-endurance margin.
     // Guarded by `dc_autopilot::radar_missile_battery_outlasts_best_range_loft`.

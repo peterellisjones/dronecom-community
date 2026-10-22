@@ -9,12 +9,12 @@
         // Active radar seeker
         (kind: Component(component_id: "an_apg_17")),
         // Warhead
-        (kind: Component(component_id: "mk_120")),
+        (kind: Component(component_id: "m_250_warhead")),
     ],
     doctrine_setting: Suggested,
-    // Boost-sustain BVR loft (#2185, #5860): a long shot lofts so the sustain
-    // motor's energy buys reach in thin air; a shot inside the fitted loft
-    // crossover flies as Direct.
+    // BVR loft (#2185, #5860): a long shot lofts so the motor's energy buys
+    // reach in thin air; a shot inside the fitted loft crossover flies as
+    // Direct.
     trajectory: Lofted,
     default_altitude: Chassis,
     unknown_range_launch: Withhold,

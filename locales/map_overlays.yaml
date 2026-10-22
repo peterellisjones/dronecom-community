@@ -2,23 +2,62 @@ _version: 2
 
 # Map-overlay discoverability hints (#2895): guidance copy for the tactical
 # map's drawn affordances that were previously unexplained. `waypoint_hint` is
-# the pointer tooltip shown when hovering a route waypoint marker (naming the
-# two edit gestures); `drag_select_count` is the live tally painted on the
+# the pointer tooltip shown when hovering a route waypoint marker (naming its
+# edit gestures) and `hold_station_hint` its counterpart for a move's
+# destination; the two `waypoint_drop_*` lines are the cursor prompt stating
+# why a dragged marker cannot be dropped where it is (#5895, the wording of the
+# deployment refusals); `drag_select_count` is the live tally painted on the
 # marquee while box-selecting. Sentence-case prose (guidance), but the count is
 # rendered ALL CAPS at the call site as tactical data.
 map_overlays:
   waypoint_hint:
-    de: "Wegpunkt %{index} von %{total}. Rechtsklick beendet die Route hier; Umschalt+Rechtsklick schließt sie zu einem Patrouillenkreis."
-    en: "Waypoint %{index} of %{total}. Right-click ends the route here; shift-right-click loops it into a patrol circuit."
-    es: "Punto de ruta %{index} de %{total}. Clic derecho para terminar la ruta aquí; Mayús+clic derecho para cerrarla en un circuito de patrulla."
-    fr: "Point de route %{index} sur %{total}. Clic droit pour terminer la route ici ; Maj+clic droit pour la boucler en circuit de patrouille."
-    it: "Waypoint %{index} di %{total}. Clic destro per terminare la rotta qui; Maiusc+clic destro per chiuderla in un circuito di pattuglia."
-    ja: "ウェイポイント %{index}/%{total}。右クリックでここでルートを終了。Shift+右クリックで哨戒巡回に閉じる。"
-    ko: "경유지 %{index}/%{total}. 우클릭하면 여기서 경로가 끝나고, Shift+우클릭하면 순찰 순환로로 닫힙니다."
-    "pt-BR": "Ponto de rota %{index} de %{total}. Clique com o botão direito para terminar a rota aqui; Shift+clique direito para fechá-la em um circuito de patrulha."
-    ru: "Точка маршрута %{index} из %{total}. Правый клик завершает маршрут здесь; Shift+правый клик замыкает его в патрульный круг."
-    zh: "航点 %{index}/%{total}。右键单击在此结束航线；Shift+右键单击将其闭合为巡逻回路。"
-    "zh-TW": "航點 %{index}/%{total}。右鍵點擊在此結束航線；Shift+右鍵點擊將其閉合為巡邏迴路。"
+    de: "Wegpunkt %{index} von %{total}. Ziehen verschiebt ihn. Rechtsklick beendet die Route hier; Umschalt+Rechtsklick schließt sie zu einem Patrouillenkreis."
+    en: "Waypoint %{index} of %{total}. Drag to move it. Right-click ends the route here; shift-right-click loops it into a patrol circuit."
+    es: "Punto de ruta %{index} de %{total}. Arrastra para moverlo. Clic derecho para terminar la ruta aquí; Mayús+clic derecho para cerrarla en un circuito de patrulla."
+    fr: "Point de route %{index} sur %{total}. Faites glisser pour le déplacer. Clic droit pour terminer la route ici ; Maj+clic droit pour la boucler en circuit de patrouille."
+    it: "Waypoint %{index} di %{total}. Trascina per spostarlo. Clic destro per terminare la rotta qui; Maiusc+clic destro per chiuderla in un circuito di pattuglia."
+    ja: "ウェイポイント %{index}/%{total}。ドラッグで移動。右クリックでここでルートを終了。Shift+右クリックで哨戒巡回に閉じる。"
+    ko: "경유지 %{index}/%{total}. 드래그하면 이동합니다. 우클릭하면 여기서 경로가 끝나고, Shift+우클릭하면 순찰 순환로로 닫힙니다."
+    "pt-BR": "Ponto de rota %{index} de %{total}. Arraste para movê-lo. Clique com o botão direito para terminar a rota aqui; Shift+clique direito para fechá-la em um circuito de patrulha."
+    ru: "Точка маршрута %{index} из %{total}. Перетащите, чтобы переместить. Правый клик завершает маршрут здесь; Shift+правый клик замыкает его в патрульный круг."
+    zh: "航点 %{index}/%{total}。拖动可移动。右键单击在此结束航线；Shift+右键单击将其闭合为巡逻回路。"
+    "zh-TW": "航點 %{index}/%{total}。拖曳可移動。右鍵點擊在此結束航線；Shift+右鍵點擊將其閉合為巡邏迴路。"
+  hold_station_hint:
+    de: "Ziel. Ziehen verschiebt es."
+    en: "Destination. Drag to move it."
+    es: "Destino. Arrastra para moverlo."
+    fr: "Destination. Faites glisser pour la déplacer."
+    it: "Destinazione. Trascina per spostarla."
+    ja: "目的地。ドラッグで移動。"
+    ko: "목적지. 드래그하면 이동합니다."
+    "pt-BR": "Destino. Arraste para movê-lo."
+    ru: "Пункт назначения. Перетащите, чтобы переместить."
+    zh: "目的地。拖动可移动。"
+    "zh-TW": "目的地。拖曳可移動。"
+  waypoint_drop_off_map:
+    de: "Außerhalb der Karte"
+    en: "Outside the map"
+    es: "Fuera del mapa"
+    fr: "Hors de la carte"
+    it: "Fuori dalla mappa"
+    ja: "マップの外"
+    ko: "지도 밖입니다"
+    "pt-BR": "Fora do mapa"
+    ru: "За пределами карты"
+    zh: "在地图之外"
+    "zh-TW": "在地圖之外"
+  waypoint_drop_not_navigable:
+    de: "Das Wasser ist hier zu flach"
+    en: "The water is too shallow here"
+    es: "El agua es demasiado poco profunda aquí"
+    fr: "L'eau est trop peu profonde ici"
+    it: "L'acqua qui è troppo bassa"
+    ja: "ここは水深が浅すぎる"
+    ko: "이곳은 수심이 너무 얕습니다"
+    "pt-BR": "A água é rasa demais aqui"
+    ru: "Здесь слишком мелко"
+    zh: "此处水太浅"
+    "zh-TW": "此處水太淺"
   drag_select_count:
     de: "%{count} ausgewählt"
     en: "%{count} selected"

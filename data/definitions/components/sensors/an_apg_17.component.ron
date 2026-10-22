@@ -22,6 +22,7 @@
         is_active: true,
         emits: Some(Rwr),
         emission_strength: 50000000.0,
+        lock_emission: Some(Illuminating),
         fov_h: 60.0,
         fov_v: 60.0,
         mounting: MastBoth,

@@ -28,6 +28,7 @@
         is_active: false,
         emits: None,
         emission_strength: 0.0,
+        lock_emission: None,
         // Forward-hemisphere acquisition cone. The launch gate withholds the
         // commit-on-bearing shot until the launcher points within `fov_h / 2` of
         // the emitter bearing (#2194), so a wide-but-not-omni cone keeps the ARM

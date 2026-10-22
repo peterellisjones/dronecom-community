@@ -10,10 +10,12 @@
     launch_requires: [VLS],
     recovery_requires: [],
     provides: [],
-    length: 6.5,
-    weight: 300.0,
-    max_weight: 480.0,
-    max_fuel: 6.0,
+    length: 4.72,
+    weight: 418.2908,
+    // Ceiling: 174 kg of seeker and warhead on a full tank. The stock M-400A
+    // carries 74 kg of that and flies at the SM-2-MR-class 708 kg gross mass.
+    max_weight: 808.0,
+    max_fuel: 215.7092,
     hit_points: 12.0,
     // Estimated: half the ~0.35 m missile body diameter (#5193).
     full_damage_radius_m: 0.18,
@@ -37,15 +39,14 @@
         supported_trajectories: [Direct, Lofted],
         terrain_clearance: 20.0,
     ),
-    propulsion: Rocket,
-    // Boost-sustain area-SAM motor (#3082): a ~4.8 s boost (2.0 / 25.0 × 60)
-    // accelerates the heavy round off the VLS cold-launch, then a
-    // reduced-thrust sustain (4.0 kg / 8.0 → ~30 s at 45%) holds energy
-    // through the lofted flyout. Credited sea-level reach ≈ 53 km — ~2.2×
-    // the M-250, the long-range tier of the AA ladder (M-100 WVR → M-250
-    // BVR → M-400 area), measured through `fit_reach` in the
-    // `munition_battery_reserve` guard (sea-level VLS geometry).
-    engine: Powered((thrust_n: 20000.0, fuel_burn_rate: 25.0, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostSustain(boost_fuel_kg: 2.0, sustain_thrust_fraction: 0.45, sustain_burn_rate: 8.0))),
+    // SM-2-MR-class dual-thrust estimate (#5352): 50 kN boost at 1,176.6
+    // kg/min consumes 98.0592 kg in 5.0005 s; 20 kN sustain at 470.6 kg/min
+    // consumes 117.65 kg in 15 s at 40% thrust. Together the 215.7092 kg
+    // tank delivers approximately 550 kN-s at an estimated 260 s Isp. The
+    // 418.2908 kg chassis, 12 kg seeker and 62 kg class warhead close to the
+    // approved 708 kg loaded mass. Reach is derived from measured physical
+    // flyout.
+    engine: Powered((thrust_n: 50000.0, fuel_burn_rate: 1176.6, idle_burn_fraction: 1.0, thrust_response: Constant, thrust_schedule: BoostSustain(boost_fuel_kg: 98.0592, sustain_thrust_fraction: 0.4, sustain_burn_rate: 470.6), signature: Rocket)),
     allowed_components: [Category(Sensors), Category(Warheads), Category(Utility), Category(CarriedEntities)],
     carrier: false,
     availability: PlayerAvailable,

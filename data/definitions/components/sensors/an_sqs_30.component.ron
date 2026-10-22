@@ -25,6 +25,7 @@
         emits: Some(SonarPassive),
         // Compact transducer — far quieter than the SQS-85 "Orca" hull array.
         emission_strength: 188000000000000000000.0,
+        lock_emission: Some(Illuminating),
         // Forward homing cone (the seeker snakes in azimuth), NOT a 360 search field.
         fov_h: 90.0,
         fov_v: 60.0,

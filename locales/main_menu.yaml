@@ -28,6 +28,18 @@ main_menu:
     ru: "Новая операция"
     zh: "新行动"
     "zh-TW": "新行動"
+  tutorial:
+    de: "Tutorial"
+    en: "Tutorial"
+    es: "Tutorial"
+    fr: "Tutoriel"
+    it: "Tutorial"
+    ja: "チュートリアル"
+    ko: "튜토리얼"
+    "pt-BR": "Tutorial"
+    ru: "Обучение"
+    zh: "教程"
+    "zh-TW": "教學"
   load_game:
     de: "Operation laden"
     en: "Load Operation"

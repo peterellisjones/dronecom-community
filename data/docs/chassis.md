@@ -99,9 +99,11 @@ and non-negative.
 
 Lumped horizontal drag area — drag coefficient × reference area (m²).
 Higher drag means a lower top speed: it sets the air-domain thrust = drag
-equilibrium speed (see `terminal_max_speed`). Sea and submarine top
-speed is thrust-to-weight and ignores this value; rotary-wing vertical
-motion uses the separate, larger `vertical_drag_area`.
+equilibrium speed and an unpowered fixed wing's terminal dive speed (see
+`terminal_max_speed`). Sea and submarine top speed is thrust-to-weight
+and ignores this value; for sea it sets the water drag of unpowered sea
+hulls only, which brings them to rest. Rotary-wing vertical motion uses
+the separate, larger `vertical_drag_area`.
 
 ### `mast_height` : f32
 
@@ -125,15 +127,10 @@ undetectable by sonar.
 Domain-specific movement parameters (altitude/depth band, turn, draft);
 the `PhysicsParams` variant selects the movement model.
 
-### `propulsion` : [`PropulsionSignature`](#propulsionsignature)
-
-Propulsion signature (DC-36.6) — the feature a signature-capable sensor
-reads to classify platform type independent of speed.
-
 ### `engine` : [`ChassisEngine`](#chassisengine)
 
-Built-in engine (thrust/fuel). Distinct from `propulsion`, which is the
-sensor-classification signature. `Unpowered` for mines / gravity bombs.
+Built-in engine (thrust/fuel and propulsion signature). `Unpowered` for
+mines / gravity bombs, which have no propulsion signature.
 
 ### `allowed_components` : `Vec`<[`ComponentFilter`](#componentfilter)>
 
@@ -356,28 +353,14 @@ Variants:
   - `min_attack_depth` : `Option`<f32> — Minimum depth (as positive number) when executing an Attack order.
   - `max_attack_depth` : `Option`<f32> — Maximum depth (as positive number) when executing an Attack order (e.g. torpedo diving deep).
 
-## `PropulsionSignature`
-
-A platform's propulsion signature — the feature a capable sensor reads to
-classify type independent of instantaneous speed.
-
-Variants:
-
-- **`Rotary`** — Rotor-blade flash (helicopters) — radar micro-Doppler.
-- **`Turbojet`** — Jet-engine modulation, JEM (fast fixed-wing) — radar.
-- **`Propeller`** — Propeller modulation (slow fixed-wing UAVs) — radar.
-- **`Rocket`** — Rocket motor (missiles) — no air-breathing modulation.
-- **`Screw`** — Marine propeller blade-rate (ships, subs, torpedoes) — sonar DEMON.
-- **`Pumpjet`** — Pump-jet — quiet, broadband (modern subs/torpedoes) — sonar DEMON.
-
 ## `ChassisEngine`
 
 A chassis is either powered by a built-in engine or unpowered (gravity
-bombs, mines, drifting objects — `VehiclePropulsion::Unpowered` at runtime).
+bombs, mines, drifting objects — `PropulsionDesign::Unpowered` at runtime).
 
 Variants:
 
-- **`Unpowered`** — No engine — gravity bombs, mines, and drifting objects. Contributes zero thrust and burns no fuel (`VehiclePropulsion::Unpowered` at runtime).
+- **`Unpowered`** — No engine — gravity bombs, mines, and drifting objects. Contributes zero thrust and burns no fuel (`PropulsionDesign::Unpowered` at runtime).
 - **`Powered`**([`EngineSpec`](#enginespec)) — Driven by a built-in engine with the given `EngineSpec` (thrust, fuel burn, and altitude thrust response/schedule).
 
 ## `ComponentFilter`
@@ -555,9 +538,14 @@ thrust scaling.
 
 ### `thrust_schedule` : [`ThrustSchedule`](#thrustschedule)
 
-How thrust varies over the burn: a single `BoostCoast` pulse (every
-existing chassis) or a `BoostSustain` boost→sustain→coast profile (the
-real-AMRAAM energy-management motor).
+How thrust varies over the burn: one `BoostCoast` powered phase, or a
+`BoostSustain` boost→sustain→coast profile.
+
+### `signature` : [`PropulsionSignature`](#propulsionsignature)
+
+Propulsion signature (DC-36.6) — the feature a signature-capable sensor
+reads to classify platform type independent of speed. Its domain must
+agree with the chassis domain.
 
 ## `ComponentCategory`
 
@@ -648,8 +636,22 @@ edge). `Self::resolve` is consulted only while the engine is still powered.
 
 Variants:
 
-- **`BoostCoast`** — Single full-thrust phase until fuel exhaustion, then coast. The `FuelCurve` owns the burn rate (throttle-modulated). This is every existing chassis — drones, ships, the M-100 IR missile, the M-500 cruise missile — and the behaviour-preserving default.
-- **`BoostSustain`** — Full-thrust **boost**, then a reduced-thrust **sustain** phase, then coast (the real-AMRAAM energy-management profile). The schedule owns the sustain burn rate; a solid-propellant boost-sustain motor does not throttle, so the burn is flat (see `Self::debug_validate`).
+- **`BoostCoast`** — Single full-thrust phase until fuel exhaustion, then coast. The `FuelCurve` owns the burn rate (throttle-modulated). Used by single-phase rockets and continuously powered engines.
+- **`BoostSustain`** — Full-thrust **boost**, then a reduced-thrust **sustain** phase, then coast. The schedule owns the sustain burn rate; a solid-propellant boost-sustain motor does not throttle, so the burn is flat (see `Self::debug_validate`).
   - `boost_fuel_kg` : f32 — Fuel (kg) burned during boost; the remaining tank funds the sustain phase. Must be `> 0` and `<` the tank capacity.
   - `sustain_thrust_fraction` : f32 — Sustain thrust as a fraction of peak (boost) thrust. In `(0, 1)`.
   - `sustain_burn_rate` : f32 — Sustain fuel burn rate (kg/min) — lower than the boost burn rate.
+
+## `PropulsionSignature`
+
+A platform's propulsion signature — the feature a capable sensor reads to
+classify type independent of instantaneous speed.
+
+Variants:
+
+- **`Rotary`** — Rotor-blade flash (helicopters) — radar micro-Doppler.
+- **`Turbojet`** — Jet-engine modulation, JEM (fast fixed-wing) — radar.
+- **`Propeller`** — Propeller modulation (slow fixed-wing UAVs) — radar.
+- **`Rocket`** — Rocket motor (missiles) — no air-breathing modulation.
+- **`Screw`** — Marine propeller blade-rate (ships, subs, torpedoes) — sonar DEMON.
+- **`Pumpjet`** — Pump-jet — quiet, broadband (modern subs/torpedoes) — sonar DEMON.

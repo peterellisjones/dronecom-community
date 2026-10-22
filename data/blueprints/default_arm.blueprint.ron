@@ -9,8 +9,8 @@
         // Passive anti-radiation (RWR-homing) seeker — homes on a live emitter's
         // radiation bearing; the emitter going dark starves it (#2524).
         (kind: Component(component_id: "an_alr_60")),
-        // Warhead
-        (kind: Component(component_id: "mk_120")),
+        // M-300-specific HARM-class warhead.
+        (kind: Component(component_id: "m_300_warhead")),
     ],
     doctrine_setting: Suggested,
     // Direct SEAD profile: fly a powered-direct energy course onto the emitter.

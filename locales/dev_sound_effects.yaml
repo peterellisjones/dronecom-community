@@ -49,6 +49,18 @@ dev_sound_effects:
     ru: "Подтверждение приказа"
     zh: "命令确认"
     "zh-TW": "命令確認"
+  purchase_delivered:
+    de: "Kauf geliefert"
+    en: "Purchase delivered"
+    es: "Compra entregada"
+    fr: "Achat livré"
+    it: "Acquisto consegnato"
+    ja: "購入品の配送完了"
+    ko: "구매품 배송 완료"
+    "pt-BR": "Compra entregue"
+    ru: "Покупка доставлена"
+    zh: "购买交付"
+    "zh-TW": "購買交付"
   launch:
     de: "Start"
     en: "Launch"

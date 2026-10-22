@@ -22,6 +22,9 @@ SimConfig(
             // Must stay well above the shipped Sea fleet's 25 m full-speed turn
             // radius or this clips a hull we ship (#4179).
             turn_circle_cap_m: 200.0,
+            // #5922: while landing, terrain must stay below the midpoint
+            // between the deck and the aircraft.
+            landing_terrain_clearance_fraction: 0.5,
         ),
         group_target_lookahead_secs: 0.1,
         formation_reform_gain: 0.5,
@@ -199,6 +202,10 @@ SimConfig(
         // missile glides on at flight speed, two orders of magnitude clear, so it
         // is never near this. 1 m/s ≈ 2 kt: no hull under way is this slow.
         munition_derelict_speed_mps: 1.0,
+        // #5869: below this speed an unpowered sea hull, coasting down under
+        // quadratic water drag, is at rest and stops outright — the drag alone
+        // would only approach zero asymptotically. 0.1 m/s ≈ 0.2 kt.
+        unpowered_hull_rest_speed_mps: 0.1,
         // #2515: how far past the quadtree extent (`half_extent`, ~51.2 km on the
         // 50 km production map) a projectile may stray before it is scuttled.
         // `half_extent` is the exact boundary past which `find_path` can't route a
@@ -687,6 +694,8 @@ SimConfig(
         // The inset keeps the arrival point off the boundary itself, matching
         // patrol's boundary_buffer.
         delivery_inset_m: 100.0,
+        // #4208: minimum metres between any two non-carrier hulls a team deploys.
+        min_deployed_hull_separation_m: 1000.0,
     ),
     intercept: (
         fallback_standoff_range: 3000.0,
@@ -850,6 +859,11 @@ SimConfig(
             policy: LauncherDatalink,
             max_off_boresight_deg: 75.0,
         ),
+        // #5884: how many tracks besides its primary one engaged launcher may
+        // put channel-free (own-seeker) rounds on from where it is, counting
+        // those it already has rounds in flight at. Bounds how widely one
+        // platform spreads its fire; 0 restores one target per launcher.
+        max_secondary_engagements: 3,
     ),
     patrol: (
         min_radius: 500.0,
@@ -1215,5 +1229,9 @@ SimConfig(
         // Labels, sensor lines and locks change slower than positions, which
         // every tick carries.
         picture_period_secs: 0.5,
+        // Runs offered per batch; a fresh bench starts on the first.
+        batch_sizes: [1, 5, 10, 25, 100],
+        // A default 12 v 12 fight's replay deflates to ~2.4 MiB (#5919).
+        replay_budget_mib: 1024,
     ),
 )

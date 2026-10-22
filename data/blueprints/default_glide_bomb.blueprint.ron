@@ -1,0 +1,17 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/blueprints.md
+(
+    id: BlueprintId("49630c7d-8b9e-42a0-bf8e-94b7379553d5"),
+    codename: "Glide Bomb",
+    designator: "GB-220A",
+    chassis_id: "gb_220",
+    fuel_tank_percent: 0.0,
+    inventory: [
+        (kind: Component(component_id: "an_apg_17")),
+        (kind: Component(component_id: "mk_120")),
+    ],
+    doctrine_setting: Suggested,
+    trajectory: Direct,
+    default_altitude: Chassis,
+    unknown_range_launch: Withhold,
+    stores: [],
+)

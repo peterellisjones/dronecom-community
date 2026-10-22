@@ -1,0 +1,17 @@
+// Field reference: https://github.com/peterellisjones/dronecom-community/blob/main/data/docs/components.md
+(
+    id: "m_300_warhead",
+    designator: "M-300W",
+    codename: "HARM Class",
+    category: Warheads,
+    mount_rule: SoleInCategory,
+    // Secondary-source HARM-class warhead-mass estimate (#5353).
+    weight: 66.0,
+    power_draw: Fixed(0.0),
+    allowed: [Chassis("m_300")],
+    payload: Warhead((
+        damage: 120.0,
+        blast_radius: 100.0,
+        proximity_fuze_radius_m: 30.0,
+    )),
+)

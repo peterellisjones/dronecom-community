@@ -9,8 +9,8 @@
         // Active radar seeker (same head as the M-250 — the airframe and
         // motor, not the seeker, buy the extra reach)
         (kind: Component(component_id: "an_apg_15")),
-        // Warhead
-        (kind: Component(component_id: "mk_120")),
+        // M-400-specific area-defense warhead
+        (kind: Component(component_id: "sm_2")),
     ],
     doctrine_setting: Suggested,
     // Boost-sustain area-defence loft (#3082): the long sustain only pays at

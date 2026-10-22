@@ -7,7 +7,7 @@
     fuel_tank_percent: 1.0,
     inventory: [
         // Warhead. This missile takes guidance from its launcher; it has no onboard seeker.
-        (kind: Component(component_id: "mk_120")),
+        (kind: Component(component_id: "m_250_warhead")),
     ],
     doctrine_setting: Suggested,
     trajectory: Lofted,

@@ -48,11 +48,10 @@
         draft: 10.0,
         min_turn_rate_fraction: 0.15,
     ),
-    propulsion: Screw,
     // #3704: zero `fuel_burn_rate` is pure data (`FuelCurve::ZERO` shape) — a
     // civilian hull that never depletes its tank, no sim-side exemption. Every
     // consumer of `fuel_burn_rate` already guards `> 0.0` before dividing.
-    engine: Powered((thrust_n: 784800.0, fuel_burn_rate: 0.0, idle_burn_fraction: 0.15, thrust_response: Constant, thrust_schedule: BoostCoast)),
+    engine: Powered((thrust_n: 784800.0, fuel_burn_rate: 0.0, idle_burn_fraction: 0.15, thrust_response: Constant, thrust_schedule: BoostCoast, signature: Screw)),
     allowed_components: [Category(Sensors), Category(Utility)],
     carrier: true,
     availability: CivilianOnly,
